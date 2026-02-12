@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import CaptureIcon from "../assets/social/facebook.svg";
 import SwitchIcon from "../assets/social/facebook.svg";
+import useSendVisitorMessage from "./submitContact";
+
 
 
 export default function ShareContact({ userId, onToggle }) {
@@ -19,6 +21,7 @@ export default function ShareContact({ userId, onToggle }) {
   const contentRef = useRef(null);
 const [showScrollHint, setShowScrollHint] = useState(false);
 
+const { sendMessage, loading } = useSendVisitorMessage();
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -124,33 +127,35 @@ const handleScroll = () => {
   }, [stopCamera]);
 
   // Submit
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const payload = {
-      sharedBy: userId,
-      name,
-      phone,
-      email,
-      note,
-      photo: photoBlob,
-    };
+  const result = await sendMessage({
+    profileUserId: userId,
+    visitorName: name,
+    visitorPhone: phone,
+    visitorEmail: email,
+    message: note,
+    photo: photoBlob,
+  });
 
-    console.log("Submitting:", payload);
+  if (!result) return;
 
-    stopCamera();
-    setCameraActive(false);
-    setPhotoPreview(null);
-    setPhotoBlob(null);
-    setIsOpen(false);
-    onToggle?.(false);
+  stopCamera();
+  setCameraActive(false);
+  setPhotoPreview(null);
+  setPhotoBlob(null);
+  setIsOpen(false);
+  onToggle?.(false);
 
-    setName("");
-    setPhone("");
-    setEmail("");
-    setNote("");
-    setSubmitted(true);
-  };
+  setName("");
+  setPhone("");
+  setPhone("");
+  setEmail("");
+  setNote("");
+  setSubmitted(true);
+};
+
 
   // Auto-hide success message
   useEffect(() => {
@@ -162,14 +167,15 @@ const handleScroll = () => {
   return (
     <div className="share-contact-wrapper">
       <button
-        className="share-your-contact-btn-main"
-        onClick={() => {
-          setIsOpen(true);
-          onToggle?.(true);
-        }}
-      >
-        Share Your Contact
-      </button>
+  className="share-contact-float"
+  onClick={() => {
+    setIsOpen(true);
+    onToggle?.(true);
+  }}
+>
+  Share
+</button>
+
 
       {isOpen && (
         <div className="share-contact-modal">
@@ -286,9 +292,10 @@ const handleScroll = () => {
               <canvas ref={canvasRef} hidden />
             
               <div className="modal-buttons">
-                <button type="submit" className="submit-btn">
-                  Submit
-                </button>
+                <button type="submit" className="submit-btn" disabled={loading}>
+                    {loading ? "Submitting..." : "Submit"}
+                  </button>
+
 
                 <button
                   type="button"

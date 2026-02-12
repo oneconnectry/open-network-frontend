@@ -1,9 +1,10 @@
 import React from "react";
 
 import OpenNetworkProfile from "./OpenNetworkProfile";
+import ServiceProfile from "./ServiceProfile";
+import ProfessionalProfile from "./ProfessionalProfile";
 import BusinessProfile from "./BusinessProfile";
-import PersonalProfile from "./PersonalProfile";
-import CreatorProfile from "./CreatorProfile";
+
 
 export default function ProfileRenderer({ user, accountType }) {
   if (!user) return null;
@@ -11,14 +12,14 @@ export default function ProfileRenderer({ user, accountType }) {
 
 
   switch (user.profile_type) {
+    case "service":
+      return <ServiceProfile user={user} accountType={accountType} />;
+
+    case "professionals":
+      return <ProfessionalProfile user={user} accountType={accountType} />;
+
     case "business":
-      return <BusinessProfile user={user} />;
-
-    case "personal":
-      return <PersonalProfile user={user} />;
-
-    case "creator":
-      return <CreatorProfile user={user} />;
+      return <BusinessProfile user={user} accountType={accountType} />;
 
     default:
       return <OpenNetworkProfile user={user} accountType={accountType} />;

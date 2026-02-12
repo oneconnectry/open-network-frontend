@@ -3,7 +3,7 @@
 @import "./styles/components/coverImage.css";
 @import "./styles/components/profileInfo.css";
 @import "./styles/components/basicInfoCard.css";
-@import "./styles/components/languagesSocial.css";
+@import "./styles/components/selectedLanguage.css";
 @import "./styles/components/documents.css";
 @import "./styles/components/customLinks.css";
 @import "./styles/components/contactInfo.css";
@@ -13,5 +13,14 @@
 @import "./styles/components/profileSkeleton.css";
 @import "./styles/responsive/mobile.css";
 @import "./styles/base/global.css";
-@import "./styles/components/shareConatct.css"
+@import "./styles/components/shareConatct.css";
+@import "./styles/pages/serviceProfile.css";
+@import "./styles/components/serviceExpertise.css";
+@import "./styles/components/callChatButtons.css";
+@import "./styles/components//GalleryImages.css";
+@import "./styles/components/servicesOffered.css";
+
+/* ===== SERVICE PROFILE ===== */
+@import "./styles/profiles/service/index.css";
+
 

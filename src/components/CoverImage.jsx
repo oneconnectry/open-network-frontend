@@ -1,18 +1,22 @@
 import React from "react";
 import { API_BASE_URL } from "../services/apiConfig";
+import defaultCover from "../assets/social/defaultCover.svg";
 
 export default function CoverImage({ url, birthYear, gender }) {
-  if (!url) return null;
-
   const currentYear = new Date().getFullYear();
   const age = birthYear ? currentYear - birthYear : null;
+
+  const coverSrc = url
+    ? `${API_BASE_URL}${url}`
+    : defaultCover;
 
   return (
     <div className="cover-section">
       <img
         className="cover-image"
-        src={`${API_BASE_URL}${url}`}
+        src={coverSrc}
         alt="Cover"
+        onError={(e) => (e.target.src = defaultCover)}
       />
 
       <div className="cover-badges">
@@ -22,3 +26,4 @@ export default function CoverImage({ url, birthYear, gender }) {
     </div>
   );
 }
+

@@ -25,7 +25,8 @@
   display: flex;
   align-items: center;
   position: relative;
-  margin: 5px;
+  margin: 14px;
+  margin-bottom: 0px;
 }
 
 
@@ -66,7 +67,7 @@
 ========================= */
 .emergency-wrapper {
   margin-top: 10px;
-  margin: 5px;
+  margin: 14px;
 }
 
 .emergency-btn {

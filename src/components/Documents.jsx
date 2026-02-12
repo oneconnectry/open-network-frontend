@@ -9,7 +9,7 @@ export default function Document({ documents }) {
 
   return (
     <div className="info-card">
-      <h3>Documents</h3>
+  
 
       {docs.map((doc, index) => (
         <div key={index}>

@@ -12,7 +12,7 @@
   border: 2px solid #f5f5f5;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   transition: box-shadow 0.2s ease;
-  margin: 5px;
+  margin: 14px;
 }
 
 .address-card:hover {

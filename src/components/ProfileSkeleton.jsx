@@ -1,8 +1,8 @@
 import React from "react";
 
-export default function ProfileSkeleton() {
+export default function ProfileSkeleton({ type = "default" }) {
   return (
-    <div className="profile-card-wrapper">
+    <div className={`profile-card-wrapper profile-${type}`}>
       <div className="skeleton-cover shimmer"></div>
 
       <div className="skeleton-header">

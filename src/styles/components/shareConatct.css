@@ -269,3 +269,42 @@
     border-bottom: 2px solid #6366f1;
   }
 }
+
+
+
+
+.share-contact-float {
+  position: fixed;
+  bottom: 70px;
+  right: 20px;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  box-shadow: 0 10px 25px rgba(99,102,241,0.5);
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  animation: swing 2.5s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+@keyframes swing {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(8deg); }
+  40% { transform: rotate(-8deg); }
+  60% { transform: rotate(5deg); }
+  80% { transform: rotate(-5deg); }
+  100% { transform: rotate(0deg); }
+}
+.share-contact-float:hover {
+  transform: scale(1.1);
+  animation: none;
+}

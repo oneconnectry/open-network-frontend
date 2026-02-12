@@ -1,0 +1,33 @@
+.services-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 16px;
+
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin: 14px;
+}
+
+.services-title {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #222;
+  margin-top: 0px;
+}
+
+.services-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.services-item {
+  padding: 8px 0;
+  font-size: 14px;
+  color: #555;
+  border-bottom: 1px solid #eee;
+}
+
+.services-item:last-child {
+  border-bottom: none;
+}

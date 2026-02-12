@@ -24,7 +24,7 @@
   color: #fff;
   cursor: pointer;
   transition: background 0.2s ease, transform 0.1s ease;
-  margin: 5px;
+  margin: 14px;
 }
 
 .upi-pay-btn:hover {

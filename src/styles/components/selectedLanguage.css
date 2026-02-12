@@ -1,0 +1,33 @@
+/* Card */
+.profile-languages-card {
+  margin-bottom: 10px;
+}
+
+/* Title */
+.profile-languages-card h3 {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 5px;
+  padding: 6px 0;
+  border-radius: 8px;
+}
+
+/* Languages */
+.profile-languages-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+/* Badge */
+.profile-language-badge {
+  padding: 6px 14px;
+  background: #e1e9ff;
+  color: #6d2eff ;
+  border-radius: 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border: 1px solid #d7e2ff;
+}

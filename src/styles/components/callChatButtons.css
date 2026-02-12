@@ -1,0 +1,25 @@
+.call-chat-wrapper {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 14px;
+  align-items: center;
+}
+
+/* Buttons */
+.call-chat-wrapper a {
+  text-align: center;
+  padding: 8px 22px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  min-width: 100px;     /* smaller width */
+}
+
+/* CALL */
+.call-btn {
+  background: #465aff;
+  color: #ffffff;
+}
+

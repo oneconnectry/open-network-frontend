@@ -24,7 +24,7 @@ export default function PublicProfile() {
             ...response.user,
             profile_type: response.accountType || "open", // fallback to "open"
           };
-
+          
           setData({ ...response, user: userWithType });
         })
         .catch((err) => {
@@ -40,6 +40,8 @@ export default function PublicProfile() {
 
   if (error) return <div>Error: {error}</div>;
   if (!data) return <ProfileSkeleton />;
+
+  console.log("👉 Data before render:", data);
 
   return <ProfileRenderer user={data.user} accountType={data.accountType} />;
 }
