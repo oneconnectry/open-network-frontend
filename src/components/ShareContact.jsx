@@ -168,13 +168,17 @@ const handleScroll = () => {
     <div className="share-contact-wrapper">
       <button
   className="share-contact-float"
+  
   onClick={() => {
     setIsOpen(true);
     onToggle?.(true);
   }}
 >
-  Share
+  
+  Share your Contact
 </button>
+
+
 
 
       {isOpen && (

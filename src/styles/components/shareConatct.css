@@ -273,57 +273,82 @@
 
 
 
-
-/* ===== FLOAT BUTTON ===== */
+/* ===== PREMIUM FLOAT BUTTON ===== */
 .share-contact-float {
   position: fixed;
-  bottom: 70px;
-  right: 20px; /* default for mobile (320px+) */
+  bottom: 80px;
+  right: 20px;
 
-  width: 65px;
-  height: 65px;
+  width: 68px;
+  height: 68px;
   border-radius: 50%;
   border: none;
   cursor: pointer;
-  font-size: 13px;
+
+  font-size: 11px;
   font-weight: 600;
-  color: #fff;
-  background: linear-gradient(135deg, #6366f1, #8b5cf6);
-  box-shadow: 0 10px 25px rgba(99,102,241,0.5);
-  z-index: 1000;
+  letter-spacing: 0.5px;
+  color: #ffffff;
+
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+box-shadow:
+  0 8px 20px rgba(37, 99, 235, 0.35),
+  0 4px 8px rgba(0, 0, 0, 0.15);
+/* background: linear-gradient(135deg, #0f172a, #4338ca);
+box-shadow:
+  0 8px 20px rgba(67, 56, 202, 0.35),
+  0 4px 8px rgba(0, 0, 0, 0.2); */
+
+
+
+  backdrop-filter: blur(6px);
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  animation: swing 2.5s ease-in-out infinite;
-  transition: transform 0.3s ease;
+  z-index: 1000;
+
+  transition: all 0.3s ease;
+  animation: pulseGlow 3s infinite ease-in-out;
 }
 
-/* Desktop (750px centered layout support) */
+/* 750px centered layout support */
 @media (min-width: 750px) {
   .share-contact-float {
     right: calc((100vw - 750px) / 2 + 20px);
   }
 }
 
-/* Hover */
+/* Hover Effect */
 .share-contact-float:hover {
-  transform: scale(1.1);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow:
+    0 12px 30px rgba(79, 70, 229, 0.45),
+    0 6px 12px rgba(0, 0, 0, 0.15);
   animation: none;
 }
 
-/* Swing Animation */
-@keyframes swing {
-  0% { transform: rotate(0deg); }
-  20% { transform: rotate(8deg); }
-  40% { transform: rotate(-8deg); }
-  60% { transform: rotate(5deg); }
-  80% { transform: rotate(-5deg); }
-  100% { transform: rotate(0deg); }
+/* Click Effect */
+.share-contact-float:active {
+  transform: scale(0.95);
 }
 
-.share-contact-float:hover {
-  transform: scale(1.1);
-  animation: none;
+/* Subtle Corporate Pulse */
+@keyframes pulseGlow {
+  0% {
+    box-shadow:
+      0 8px 20px rgba(37, 99, 235, 0.35),
+      0 0 0 0 rgba(37, 99, 235, 0.45);
+  }
+  70% {
+    box-shadow:
+      0 8px 20px rgba(37, 99, 235, 0.35),
+      0 0 0 14px rgba(37, 99, 235, 0);
+  }
+  100% {
+    box-shadow:
+      0 8px 20px rgba(37, 99, 235, 0.35),
+      0 0 0 0 rgba(37, 99, 235, 0);
+  }
 }
