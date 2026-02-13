@@ -268,15 +268,18 @@
     border-right: 2px solid #6366f1;
     border-bottom: 2px solid #6366f1;
   }
+  
 }
 
 
 
 
+/* ===== FLOAT BUTTON ===== */
 .share-contact-float {
   position: fixed;
   bottom: 70px;
-  right: 20px;
+  right: 20px; /* default for mobile (320px+) */
+
   width: 65px;
   height: 65px;
   border-radius: 50%;
@@ -294,8 +297,23 @@
   justify-content: center;
 
   animation: swing 2.5s ease-in-out infinite;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease;
 }
+
+/* Desktop (750px centered layout support) */
+@media (min-width: 750px) {
+  .share-contact-float {
+    right: calc((100vw - 750px) / 2 + 20px);
+  }
+}
+
+/* Hover */
+.share-contact-float:hover {
+  transform: scale(1.1);
+  animation: none;
+}
+
+/* Swing Animation */
 @keyframes swing {
   0% { transform: rotate(0deg); }
   20% { transform: rotate(8deg); }
@@ -304,6 +322,7 @@
   80% { transform: rotate(-5deg); }
   100% { transform: rotate(0deg); }
 }
+
 .share-contact-float:hover {
   transform: scale(1.1);
   animation: none;

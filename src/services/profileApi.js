@@ -9,7 +9,7 @@
  */
 export async function fetchUserProfile(userId) {
   try {
-    const response = await fetch(`http://192.168.1.4:5000/api/public/profile/${userId}`);
+    const response = await fetch(`http://10.89.147.22:5000/api/public/profile/${userId}`);
     if (!response.ok) {
       throw new Error("Profile not found");
     }
