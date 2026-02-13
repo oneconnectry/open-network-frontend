@@ -24,25 +24,30 @@
 }
 
 /* EACH LINK */
+/* EACH LINK */
 .custom-link {
   display: flex;
   flex-direction: column;
   padding: 12px 14px;
-  background: #f8f9fb;
-  border: 1px solid #e6e8ee;
+
+  background: #e8f0ff;          /* Light blue background */
+  border: 2px solid #7ba7ff;    /* Soft blue border */
+
   border-radius: 10px;
   text-decoration: none;
-  color: #333;
-  transition: all 0.2s ease;
+  color: #1e3a8a;               /* Deep blue text */
+
+  transition: all 0.25s ease;
 }
 
 /* HOVER EFFECT */
 .custom-link:hover {
-  background: #eef4ff;
-  border-color: #c9dcff;
-  color: #1a5eff;
-  transform: translateY(-1px);
+  background: #e0edff;          /* Slightly stronger blue */
+  border-color: #bcd3ff;
+  color: #1d4ed8;
+  transform: translateY(-2px);
 }
+
 
 /* LINK TITLE */
 .link-title {

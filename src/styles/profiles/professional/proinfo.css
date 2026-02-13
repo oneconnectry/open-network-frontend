@@ -1,0 +1,83 @@
+/* ===== PROFESSIONAL PROFILE OVERRIDES ===== */
+
+.profile-professionals .profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  margin: 16px;
+  padding: 24px 20px;
+  border-radius: 20px;
+
+  background: #ffffff;
+  border: 1px solid #eef2f7;
+
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, 0.08);
+
+  transition: all 0.3s ease;
+  margin-top: -4px;
+}
+
+.profile-professionals .profile-info:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Profile Image */
+.profile-professionals .profile-image-avatar {
+  width: 170px;
+  height: 170px;
+
+  margin-top: -120px;
+  border-radius: 50%;
+  border: 4px solid #ffffff;
+  background: #ffffff;
+  object-fit: cover;
+  z-index: 10;
+
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Name */
+.profile-professionals .profile-text h2 {
+  margin: 12px 0 6px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+/* Tagline */
+.profile-professionals .professional-tagline {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 4px 0 8px;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+/* Location */
+.profile-professionals .profile-location {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* Bio */
+/* ===== PROFESSIONAL BIO SEPARATE CARD ===== */
+.profile-professionals .bio-card {
+  margin: 0 16px 16px;
+  padding: 20px;
+
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #eef2f7;
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+  font-size: 0.95rem;
+  color: #475569;
+  line-height: 1.6;
+}

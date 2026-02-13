@@ -5,25 +5,41 @@ export default function ProfileAgeAndGender({
   name,
   namelocation,
   bio,
+  tagline, 
   profileUrl,
 
 }) {
   return (
-    <div className="profile-info">
-      <img
-        className="profile-image-avatar"
-        src={profileUrl ? `${API_BASE_URL}${profileUrl}` : "/default-avatar.png"}
-        alt={name}
-      />
+    <>
+      <div className="profile-info">
+        <img
+          className="profile-image-avatar"
+          src={profileUrl ? `${API_BASE_URL}${profileUrl}` : "/default-avatar.png"}
+          alt={name}
+        />
 
-      <div className="profile-text">
-        <h2>{name}</h2>
+        <div className="profile-text">
+          <h2>{name}</h2>
 
-        {location && (
-            <span className="profile-location">📍{namelocation}</span>
+          {tagline && (
+            <p className="professional-tagline">
+              {tagline}
+            </p>
           )}
-        <p className="bio-of_profile">{bio}</p>
+
+          {namelocation && (
+            <span className="profile-location">
+              📍{namelocation}
+            </span>
+          )}
+        </div>
       </div>
-    </div>
+
+      {bio && (
+        <div className="bio-card">
+        {bio}
+        </div>
+      )}
+    </>
   );
 }

@@ -26,8 +26,7 @@ export default function ProfessionalProfile({ user, accountType }) {
       cover={
         <CoverImage
           url={user.cover_image}
-          gender={user.gender}
-          birthYear={Number(user.birth_year)}
+
         />
       }
       info={
@@ -35,6 +34,7 @@ export default function ProfessionalProfile({ user, accountType }) {
           name={user.name}
           namelocation={user.namelocation}
           bio={user.bio}
+          tagline={user.tagline}
           profileUrl={user.profile_image}
         />
       }

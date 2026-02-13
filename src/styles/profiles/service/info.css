@@ -7,6 +7,7 @@
   text-align: center;
   margin-bottom: 20px;
   padding: 0 15px;
+  
 }
 
 .profile-service .profile-image-avatar {
@@ -37,8 +38,7 @@
   margin-bottom: 0px;
 }
 
-
-.profile-service .bio-of_profile {
+.profile-service .bio-card {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
@@ -46,8 +46,9 @@
   background: #ffffff;
   padding: 16px 18px;
   border-radius: 14px;
-  margin: 12px 0;
+  margin: 12px;
   box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+
 }
 
 
@@ -56,6 +57,6 @@
   margin: 6px 0 0 0;
 }
 
-.profile-service .bio-of_profile {
+.profile-service .bio-card {
   color: #5a5a5a;
 }
