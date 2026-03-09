@@ -38,6 +38,8 @@
   color: #1e3a8a;               /* Deep blue text */
 
   transition: all 0.25s ease;
+  margin: 6px;
+  margin-top: 0px;
 }
 
 /* HOVER EFFECT */
