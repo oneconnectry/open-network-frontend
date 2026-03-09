@@ -1,0 +1,37 @@
+.profile-professional-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 22px;
+  margin: 20px 15px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+}
+
+.profile-card-section {
+  margin-bottom: 18px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #ececec; /* light line */
+}
+
+.profile-card-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+/* Label normal */
+.label {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: #959595;
+  margin-bottom: 4px;
+}
+
+/* Value bold */
+.value {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 700;
+  color: #222;
+  line-height: 1.5;
+}

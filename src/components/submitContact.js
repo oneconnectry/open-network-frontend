@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { API_BASE_URL } from "../services/apiConfig";
 
 export default function useSendVisitorMessage() {
   const [loading, setLoading] = useState(false);
@@ -34,7 +35,7 @@ export default function useSendVisitorMessage() {
     }
 
     try {
-      const response = await fetch("http://10.89.147.22:5000/api/vist/visitor/message", {
+      const response = await fetch(`${API_BASE_URL}:5000/api/vist/visitor/message`, {
         method: "POST",
         body: formData,
       });

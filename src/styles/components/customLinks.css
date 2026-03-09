@@ -33,7 +33,7 @@
   background: #e8f0ff;          /* Light blue background */
   border: 2px solid #7ba7ff;    /* Soft blue border */
 
-  border-radius: 10px;
+  border-radius: 16px;
   text-decoration: none;
   color: #1e3a8a;               /* Deep blue text */
 
@@ -51,8 +51,8 @@
 
 /* LINK TITLE */
 .link-title {
-  font-weight: 500;
-  font-size: 0.95rem;
+  font-weight: 600;
+  font-size: 14px;
   margin-bottom: 4px;
   color: #222;
 }
@@ -60,4 +60,55 @@
 /* LAST ITEM FIX */
 .custom-link:last-child {
   margin-bottom: 20px;
+}
+
+/* LINK COLORS VARIATION */
+/* 1 - Blue */
+.custom-link:nth-child(5n+1){
+  background:#e8f0ff;
+  border-color:#7ba7ff;
+  color:#1e3a8a; /* text color */
+}
+.custom-link:nth-child(5n+1) .link-title{
+  color:#1e3a8a;
+}
+
+/* 2 - Green */
+.custom-link:nth-child(5n+2){
+  background:#e9f9ee;
+  border-color:#5ed48a;
+  color:#1f7a45;
+}
+.custom-link:nth-child(5n+2) .link-title{
+  color:#1f7a45;
+}
+
+/* 3 - Purple */
+.custom-link:nth-child(5n+3){
+  background:#f1e9ff;
+  border-color:#b28cff;
+  color:#5b2ea6;
+}
+.custom-link:nth-child(5n+3) .link-title{
+  color:#5b2ea6;
+}
+
+/* 4 - Orange */
+.custom-link:nth-child(5n+4){
+  background:#fff1e6;
+  border-color:#ffb37a;
+  color:#c05621;
+}
+.custom-link:nth-child(5n+4) .link-title{
+  color:#c05621;
+}
+
+/* 5 - Teal */
+.custom-link:nth-child(5n+5){
+  background:#e6fbfb;
+  border-color:#63d6d6;
+  color:#0f766e;
+}
+.custom-link:nth-child(5n+5) .link-title{
+  color:#0f766e;
 }

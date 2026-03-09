@@ -1,0 +1,20 @@
+.profile-services-card{
+  background:#ffffff;
+  border-radius:18px;
+  padding:20px;
+  margin:10px 15px;
+  box-shadow:0 6px 18px rgba(0,0,0,0.06);
+  border: 1px solid #eef2f7;
+}
+
+.services-heading{
+  font-size:16px;
+  font-weight:700;
+  margin-bottom:8px;
+}
+
+.service-item{
+  font-size:14px;
+  color:#444;
+  padding:2px 0;
+}

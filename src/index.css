@@ -19,6 +19,9 @@
 @import "./styles/components/callChatButtons.css";
 @import "./styles/components//GalleryImages.css";
 @import "./styles/components/servicesOffered.css";
+@import "./styles/components/professionalDetails.css";
+@import "./styles/components/ProfileAvailabilityPreview.css";
+@import "./styles/components/ProfileServices.css";
 
 /* ===== SERVICE PROFILE ===== */
 @import "./styles/profiles/service/index.css";

@@ -1,5 +1,7 @@
 import React from "react";
 import { API_BASE_URL } from "../services/apiConfig";
+import CallChatButtons from "./CallChatButtons";
+import UPIPaymentButton from "./UPIPaymentButton";
 
 export default function ProfileAgeAndGender({
   name,
@@ -7,6 +9,9 @@ export default function ProfileAgeAndGender({
   bio,
   tagline, 
   profileUrl,
+   phone,
+  upiId,
+  showPayButton = false, 
 
 }) {
   return (
@@ -31,7 +36,23 @@ export default function ProfileAgeAndGender({
             <span className="profile-location">
               📍{namelocation}
             </span>
+
           )}
+
+          <div className="profile-action-buttons professionals-buttons">
+  
+  <div className="btn-item professional-call">
+    <CallChatButtons phone={phone} />
+  </div>
+
+  {showPayButton && (
+    <div className="btn-item professional-pay">
+      <UPIPaymentButton upiId={upiId} buttonText="Pay" />
+    </div>
+  )}
+
+</div>
+          
         </div>
       </div>
 

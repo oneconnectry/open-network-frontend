@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import copyIcon from "../assets/social/iinstagram.png";
 
-export default function UPIPaymentButton({ upiId }) {
+export default function UPIPaymentButton({ upiId, buttonText = "Pay with UPI" }) {
+  
   const [showAlert, setShowAlert] = useState(false);
   const alertRef = useRef(null);
+  
 
   // all hooks at top level
   useEffect(() => {
@@ -46,8 +48,8 @@ export default function UPIPaymentButton({ upiId }) {
   return (
     <div className="info-card upi-card">
       <button className="upi-pay-btn" onClick={payWithUPI}>
-        Pay with UPI
-      </button>
+  {buttonText}
+</button>
 
       {showAlert && (
         <div className="upi-alert-popup" ref={alertRef}>

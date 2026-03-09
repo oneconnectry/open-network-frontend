@@ -15,6 +15,10 @@ import ContactInfo from "../ContactInfo";
 import SaveContactButton from "../saveContact/SaveContactButton";
 import ShareContact from "../ShareContact";
 import GalleryImages from "../GalleryImages";
+import ServiceExpertise from "../ServiceExpertise";
+import ProfileProfessionalCard from "../ProfessionalDetails";
+import ProfileAvailabilityPreview from "../ProfileAvailabilityPreview";
+import ProfileServices from "../ProfileServices";
 
 export default function ProfessionalProfile({ user, accountType }) {
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -36,22 +40,40 @@ export default function ProfessionalProfile({ user, accountType }) {
           bio={user.bio}
           tagline={user.tagline}
           profileUrl={user.profile_image}
+          phone={user.phone_number}     // ✅ add this
+          upiId={user.upi_id}           // ✅ add this
+          showPayButton={true}
         />
       }
       sections={
         <>
-          <BasicInfo statusType={user.status_type} fillOne={user.fillone} fillTwo={user.filltwo} />
-         
+         <ProfileProfessionalCard
+              company_name={user.company_name}
+              year_of_experience={user.year_of_experience}
+              selected_skills={user.selected_skills}
+              selected_certifications={user.selected_certifications}
+            />
           <SelectedLanguage languages={user.selected_languages || []} />
+
+          <ProfileAvailabilityPreview
+            availability={user.availability}
+          />
+
+          <Document documents={user.documents || []} />
+
+          <ProfileServices services={user.services} />
+
           <GalleryImages gallery_images={user.gallery_images || []} />
 
 
            <ShareContact userId={user.id} onToggle={setIsShareOpen} />
-          <Document documents={user.documents || []} />
+          
           <CustomLinks links={user.custom_links} />
-          <ContactInfo phone={user.phone_number} email={user.email} emergency={user.emergency_number} />
-          <UPIPaymentButton upiId={user.upi_id} />
           <AddressSection address={user.address} lat={user.lat} lng={user.lng} />
+          
+
+          <ContactInfo phone={user.phone_number} email={user.email}/>
+
           <SocialSection socials={user.social_accounts || {}} />
           <SaveContactButton user={user} hidden={isShareOpen} />
         </>

@@ -1,6 +1,6 @@
 // src/services/profileApi.js
 
-
+import { API_BASE_URL } from "./apiConfig";
 
 /**
  * Fetch public profile data from API
@@ -9,7 +9,7 @@
  */
 export async function fetchUserProfile(userId) {
   try {
-    const response = await fetch(`http://10.89.147.22:5000/api/public/profile/${userId}`);
+    const response = await fetch(`${API_BASE_URL}/api/public/profile/${userId}`);
     if (!response.ok) {
       throw new Error("Profile not found");
     }
