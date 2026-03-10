@@ -96,6 +96,9 @@
 /* ================================= */
 /* PROFESSIONAL PROFILE BUTTON ALIGN */
 /* ================================= */
+/* ================================= */
+/* PROFESSIONAL PROFILE BUTTON ALIGN */
+/* ================================= */
 
 .profile-professionals .professionals-buttons {
   display: flex;
@@ -104,18 +107,18 @@
   margin-bottom: -25px;
 }
 
-/* VERY IMPORTANT FIX */
+/* Each button container */
 .profile-professionals .professionals-buttons .btn-item {
   flex: 1;
   display: flex;
-  align-items: stretch;   /* THIS fixes shrinking */
 }
 
-/* Make UPI wrapper stretch */
+/* FIX wrapper issues */
+.profile-professionals .call-chat-wrapper,
 .profile-professionals .professional-pay .upi-card {
-  flex: 1;                 /* IMPORTANT */
-  display: flex;
+  flex: 1;
   width: 100%;
+  display: flex;
   padding: 0;
   margin: 0;
   background: none;
@@ -126,13 +129,14 @@
 /* CALL BUTTON */
 /* ================================= */
 
-.profile-professionals .professional-call a {
-  flex: 1;                 /* instead of width */
-  height: 36px;
+.profile-professionals .call-btn {
+  flex: 1;
+  height: 30px;
+
   background: #007bff;
   color: #fff;
 
-  border-radius: 12px;
+  border-radius: 14px;
   font-weight: 600;
   font-size: 14px;
 
@@ -144,7 +148,7 @@
   transition: 0.3s ease;
 }
 
-.profile-professionals .professional-call a:hover {
+.profile-professionals .call-btn:hover {
   background: #0056b3;
 }
 
@@ -152,14 +156,17 @@
 /* PAY BUTTON */
 /* ================================= */
 
-.profile-professionals .professional-pay .upi-pay-btn {
-  flex: 1;                 /* THIS is the real fix */
-  height: 36px;
+.profile-professionals .upi-pay-btn {
+  flex: 1;
+  height: 30px;
+  width: 100px;
+
   background: #25D366;
   color: #fff;
 
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
+
   font-weight: 600;
   font-size: 14px;
 
@@ -171,6 +178,6 @@
   transition: 0.3s ease;
 }
 
-.profile-professionals .professional-pay .upi-pay-btn:hover {
+.profile-professionals .upi-pay-btn:hover {
   background: #1ebe5d;
 }
