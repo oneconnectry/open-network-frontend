@@ -20,11 +20,7 @@
   margin-top: -4px;
 }
 
-.profile-professionals .profile-info:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 18px 40px rgba(0, 0, 0, 0.12);
-}
+
 
 /* Profile Image */
 .profile-professionals .profile-image-avatar {
