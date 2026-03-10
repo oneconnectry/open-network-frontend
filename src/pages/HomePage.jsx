@@ -6,6 +6,7 @@ export default function Home() {
     { id: "0b7ddbc8-ec37-4f93-9f45-058a79c3350c", name: "open newtork" },
     { id: "d985266e-86e9-4845-8634-8700df00ee30", name: "professional" },
     { id: "9feecc1f-0f6e-4ad5-90be-f54966cd71c2", name: "service" },
+    { id: "b5a9da2d-b15f-48b2-b48c-44b23792f34d", name: "business" },
   ];
 
   return (

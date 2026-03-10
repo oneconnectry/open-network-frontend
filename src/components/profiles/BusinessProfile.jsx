@@ -6,6 +6,7 @@ import ProfileAgeAndGender from "../ProfileAgeAndGender";
 import ContactInfo from "../ContactInfo";
 import AddressSection from "../AddressSection";
 import SocialSection from "../SocialSection";
+import ProfileProfessionalCard from "../ProfessionalDetails";
 
 export default function BusinessProfile({ user }) {
   return (
@@ -14,12 +15,27 @@ export default function BusinessProfile({ user }) {
       header={<ProfileHeader user={user} accountType="business" />}
       cover={<CoverImage url={user.cover_image} />}
       info={
-        <ProfileAgeAndGender
-          name={user.name}
-          namelocation={user.namelocation}
-          bio={user.bio}
-          profileUrl={user.profile_image}
-        />
+         <>
+          <ProfileAgeAndGender
+            name={user.name}
+            tagline={user.tagline}
+            namelocation={user.namelocation}
+            bio={user.bio}
+            profileUrl={user.profile_image}
+          />
+
+          {/* Under tagline */}
+          {user.selected_skills?.length > 0 && (
+            <ProfileProfessionalCard
+              selected_skills={user.selected_skills}
+              // company_name={user.company_name}
+              // year_of_experience={user.year_of_experience}
+              // selected_certifications={user.selected_certifications}
+            />
+          )}
+        </>
+        
+        
       }
       sections={
         <>
