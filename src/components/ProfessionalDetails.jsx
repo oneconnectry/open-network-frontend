@@ -5,6 +5,7 @@ export default function ProfileProfessionalCard({
   year_of_experience,
   selected_skills,
   selected_certifications,
+  showLabel = true,
 }) {
   return (
     <div className="profile-professional-card">
@@ -12,7 +13,9 @@ export default function ProfileProfessionalCard({
       {/* Skills */}
       {selected_skills?.length > 0 && (
         <div className="profile-card-section">
-          <span className="label">Professional Areas</span>
+          {showLabel && (
+            <span className="label">Professional Areas</span>
+          )}
           <p className="value">
             {selected_skills.join(", ")}
           </p>

@@ -16,7 +16,257 @@
 .profile-business .professional-tagline {
   font-size: 0.95rem;
   color: #64748b;
-  margin: 4px 0 8px;
+  margin: 6px 0 4px;
   font-weight: 500;
   letter-spacing: 0.3px;
+}
+
+
+.business-skill-badges{
+  display:flex;
+  justify-content:center;
+  margin:8px 0;
+}
+
+.business-skill-badge{
+  background:#e9edff;
+  color:#4e71fb !important;
+  padding:4px 12px;
+  border-radius:12px;
+  font-size:12px;
+  font-weight:600;
+  text-transform:capitalize;
+}
+
+/* Location (only business profile) */
+.profile-business .profile-location{
+  display:block;
+  font-size:14px;
+  color:#6b7280;
+  margin-top:4px;
+}
+
+/* Experience card */
+.profile-business .experience-card{
+  padding:8px 14px;
+  background:#f5f7ff;
+  border-radius:10px;
+  border:1px solid #e6e6e6;
+
+  display:block;
+  width:fit-content;
+  align-items: center;
+   margin:14px auto; 
+   text-align:center; 
+}
+
+/* Since year */
+.profile-business .since-year{
+  font-size:13px;
+  font-weight:600;
+  color:#000000;
+  line-height:1.2;
+}
+
+/* Experience text */
+.profile-business .experience-text{
+  display:block;
+  font-size:11px;
+  color:#83868d;
+  margin-top:5px;
+}
+
+
+/* ================================= */
+/* BUSINESS PROFILE BUTTON ROW */
+/* ================================= */
+
+.profile-business .professionals-buttons{
+  display:flex;
+  gap:15px;
+  width:100%;
+  margin-top:12px;
+}
+
+/* Button container */
+.profile-business .professionals-buttons .btn-item{
+  flex:1;
+  display:flex;
+}
+
+/* Remove card look */
+.profile-business .call-chat-wrapper,
+.profile-business .professional-pay .upi-card{
+  flex:1;
+  width:100%;
+  display:flex;
+
+  padding:0;
+  margin:0;
+
+  background:none;
+  box-shadow:none;
+}
+
+/* ================================= */
+/* BUSINESS CALL BUTTON */
+/* ================================= */
+
+.profile-business .call-btn{
+  flex:1;
+  height:30px;
+
+  background:#007bff;
+  color:#fff;
+
+  border-radius:14px;
+  font-weight:600;
+  font-size:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  text-decoration:none;
+  transition:0.25s ease;
+}
+
+.profile-business .call-btn:hover{
+  background:#0056b3;
+}
+
+/* ================================= */
+/* BUSINESS PAY BUTTON */
+/* ================================= */
+
+.profile-business .upi-pay-btn{
+  flex:1;
+  height:30px;
+
+  background:#25D366;
+  color:#fff;
+
+  border:none;
+  border-radius:14px;
+  width: 100px;
+
+  font-weight:600;
+  font-size:14px;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  cursor:pointer;
+  transition:0.25s ease;
+}
+
+.profile-business .upi-pay-btn:hover{
+  background:#1ebe5d;
+}
+/* ================================= */
+/* PROFESSIONAL PROFILE UPI POPUP */
+/* ================================= */
+
+.profile-business .upi-alert-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  width: 260px;
+
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #eef2f7;
+
+  padding: 16px;
+
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+
+  z-index: 1001;
+  text-align: center;
+}
+
+/* Dark background overlay */
+.profile-business .upi-alert-popup::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0,0,0,0.35);
+
+  z-index: -1;
+  border-radius: 16px;
+}
+
+/* Text */
+.profile-business .upi-alert-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+/* Row */
+.profile-business .upi-alert-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: #f8fafc;
+  border-radius: 10px;
+
+  padding: 8px 10px;
+}
+
+/* UPI ID */
+.profile-business .upi-alert-id {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1e293b;
+  word-break: break-all;
+}
+
+/* Copy icon */
+.profile-business .upi-copy-icon {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.profile-business .upi-alert-popup {
+  animation: upiPopup 0.25s ease;
+}
+
+@keyframes upiPopup {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* BUSINESS BIO CARD */
+
+.profile-business .bio-card{
+  margin-top:14px;
+  padding:14px 16px;
+
+  background:#ffffff;
+  border:1px solid #e8e8e8;
+  border-radius:12px;
+
+  font-size:13px;
+  line-height:1.6;
+  color:#4b5563;
+
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+  margin: 20px;
 }

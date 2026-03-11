@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { API_BASE_URL } from "../services/apiConfig";
 
 export default function GalleryImages({ gallery_images }) {
-  if (!Array.isArray(gallery_images) || gallery_images.length === 0) return null;
+
+  const [images, setImages] = useState(gallery_images || []);
+
+  if (!Array.isArray(images) || images.length === 0) return null;
+
+  const removeImage = (index) => {
+    setImages(prev => prev.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="gallery-section">
-      {gallery_images.map((img, index) => {
+      {images.map((img, index) => {
         const src = encodeURI(`${API_BASE_URL.replace(/\/$/, "")}${img.url}`);
 
         return (
@@ -15,9 +22,9 @@ export default function GalleryImages({ gallery_images }) {
               className="gallery-image"
               src={src}
               alt={img.name || `Gallery ${index + 1}`}
-              onError={(e) => {
+              onError={() => {
                 console.log("❌ Image failed:", src);
-                e.target.style.display = "none";
+                removeImage(index);   // remove broken image
               }}
             />
           </div>

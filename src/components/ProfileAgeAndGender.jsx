@@ -7,13 +7,19 @@ export default function ProfileAgeAndGender({
   name,
   namelocation,
   bio,
-  tagline, 
+  tagline,
   profileUrl,
-   phone,
+  phone,
   upiId,
-  showPayButton = false, 
-
+  selected_skills,
+  birth_year,
+  showPayButton = false,
 }) {
+
+  // calculate experience
+  const currentYear = new Date().getFullYear();
+  const experience = birth_year ? currentYear - birth_year : null;
+
   return (
     <>
       <div className="profile-info">
@@ -32,33 +38,53 @@ export default function ProfileAgeAndGender({
             </p>
           )}
 
+          {/* Business Skills */}
+          {selected_skills?.length > 0 && (
+            <div className="business-skill-badges">
+              {selected_skills.map((skill, index) => (
+                <span key={index} className="business-skill-badge">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {/* Location */}
           {namelocation && (
             <span className="profile-location">
-              📍{namelocation}
+              📍 {namelocation}
             </span>
+          )}
 
+          {/* Experience Card */}
+          {birth_year && (
+            <div className="experience-card">
+              <div className="since-year">Since {birth_year}</div>
+              <small className="experience-text">
+                {experience}+ Years Experience
+              </small>
+            </div>
           )}
 
           <div className="profile-action-buttons professionals-buttons">
-  
-  <div className="btn-item professional-call">
-    <CallChatButtons phone={phone} />
-  </div>
 
-  {showPayButton && (
-    <div className="btn-item professional-pay">
-      <UPIPaymentButton upiId={upiId} buttonText="Pay" />
-    </div>
-  )}
+            <div className="btn-item professional-call">
+              <CallChatButtons phone={phone} />
+            </div>
 
-</div>
-          
+            {showPayButton && (
+              <div className="btn-item professional-pay">
+                <UPIPaymentButton upiId={upiId} buttonText="Pay" />
+              </div>
+            )}
+
+          </div>
         </div>
       </div>
 
       {bio && (
         <div className="bio-card">
-        {bio}
+          {bio}
         </div>
       )}
     </>
