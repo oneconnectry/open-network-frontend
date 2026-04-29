@@ -11,10 +11,23 @@ export default function GalleryImages({ gallery_images }) {
     setImages(prev => prev.filter((_, i) => i !== index));
   };
 
+  // 🔥 FIX: smart URL handler
+  const getImageUrl = (path) => {
+    if (!path) return "";
+
+    // already full URL (CDN)
+    if (path.startsWith("http")) {
+      return encodeURI(path);
+    }
+
+    // local file
+    return encodeURI(`${API_BASE_URL.replace(/\/$/, "")}${path}`);
+  };
+
   return (
     <div className="gallery-section">
       {images.map((img, index) => {
-        const src = encodeURI(`${API_BASE_URL.replace(/\/$/, "")}${img.url}`);
+        const src = getImageUrl(img.url);
 
         return (
           <div key={index} className="gallery-item">
@@ -24,7 +37,7 @@ export default function GalleryImages({ gallery_images }) {
               alt={img.name || `Gallery ${index + 1}`}
               onError={() => {
                 console.log("❌ Image failed:", src);
-                removeImage(index);   // remove broken image
+                removeImage(index);
               }}
             />
           </div>

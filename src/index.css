@@ -22,10 +22,12 @@
 @import "./styles/components/professionalDetails.css";
 @import "./styles/components/ProfileAvailabilityPreview.css";
 @import "./styles/components/ProfileServices.css";
-
+@import "./styles/components/BusinessReviews.css";
+@import "./styles/components/offersSlider.css";
 /* ===== SERVICE PROFILE ===== */
 @import "./styles/profiles/service/index.css";
 @import "./styles/profiles/professional/proindex.css";
 @import "./styles/profiles/business/busindex.css";
+
 
 

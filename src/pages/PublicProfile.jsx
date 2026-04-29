@@ -8,40 +8,54 @@ export default function PublicProfile() {
   const { userId } = useParams();
 
   const [data, setData] = useState(null);
+  const [offers, setOffers] = useState([]); // ✅ NEW
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const resetTimer = setTimeout(() => {
-      setData(null);
-      setError(null);
-    }, 0);
+    const fetchData = async () => {
+      try {
+        setData(null);
+        setError(null);
+        setOffers([]);
 
-    const fetchTimer = setTimeout(() => {
-      fetchUserProfile(userId)
-        .then((response) => {
-          // Map accountType to profile_type
-          const userWithType = {
-            ...response.user,
-            profile_type: response.accountType || "open", // fallback to "open"
-          };
-          
-          setData({ ...response, user: userWithType });
-        })
-        .catch((err) => {
-          setError(err.message || "Failed to fetch user");
-        });
-    }, 500);
+        const response = await fetchUserProfile(userId);
 
-    return () => {
-      clearTimeout(resetTimer);
-      clearTimeout(fetchTimer);
+        // ✅ profile mapping
+        const userWithType = {
+          ...response.user,
+          profile_type: response.accountType || "open",
+        };
+
+        setData({ ...response, user: userWithType });
+
+        // 🔥 IMPORTANT: use offers from response
+        const filteredOffers = (response.offers || [])
+          .filter((o) => o.is_active)
+          .slice(0, 5);
+
+        setOffers(filteredOffers);
+
+      } catch (err) {
+        setError(err.message || "Failed to fetch user");
+      }
     };
+
+    fetchData();
   }, [userId]);
 
+  // ❌ Error
   if (error) return <div>Error: {error}</div>;
+
+  // ⏳ Loading
   if (!data) return <ProfileSkeleton />;
 
-  console.log("👉 Data before render:", data);
+  console.log("👉 Profile:", data);
 
-  return <ProfileRenderer user={data.user} accountType={data.accountType} />;
+  return (
+    <ProfileRenderer
+      user={data.user}
+      accountType={data.accountType}
+      offers={offers}   // 🔥 PASS HERE
+    />
+  );
 }
