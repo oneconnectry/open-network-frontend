@@ -12,14 +12,24 @@ import '../styles/pages/FaceVerify.css';
 export default function FaceVerify() {
   const videoRef = useRef(null);
   const { currentPose, isModelLoading } = useFaceDetection(videoRef);
-  const { activeStep, steps, currentStepIdx, holdProgress, status, reset } = useVerification(currentPose, videoRef);
+  
+  // Destructured capturedImages so the test panel can map over the captured photos
+  const { 
+    activeStep, 
+    steps, 
+    currentStepIdx, 
+    holdProgress, 
+    status, 
+    capturedImages, 
+    reset 
+  } = useVerification(currentPose, videoRef);
 
   if (isModelLoading) {
     return <div className="loading-screen">Loading Face Tracking Engines...</div>;
   }
 
   return (
-    <div className="face-verify-page">
+    <div className="face-verify-page" style={{ position: 'relative' }}>
       <h2>Biometric Identity Liveness Check</h2>
       
       <div className="interface-wrapper">
@@ -38,6 +48,22 @@ export default function FaceVerify() {
       <ProgressSteps steps={steps} currentStepIdx={currentStepIdx} />
       
       <StatusBar currentPose={currentPose} status={status} onReset={reset} />
+
+      {/* ========================================================= */}
+      {/* DIAGNOSTIC TEST PANEL OVERLAY (DELETE BEFORE PRODUCTION) */}
+      {/* ========================================================= */}
+      {Object.keys(capturedImages).length > 0 && (
+        <div className="test-panel-overlay">
+          <h5 className="test-panel-title">🔬 Test Snaps</h5>
+          {Object.entries(capturedImages).map(([pose, base64Data]) => (
+            <div key={pose} className="test-panel-card">
+              <div className="test-panel-badge">{pose}</div>
+              <img src={base64Data} alt={pose} className="test-panel-img" />
+            </div>
+          ))}
+        </div>
+      )}
+      {/* ========================================================= */}
     </div>
   );
 }

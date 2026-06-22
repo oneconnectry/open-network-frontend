@@ -285,3 +285,69 @@ h2 {
   letter-spacing: 0.5px;
   font-family: sans-serif;
 }
+
+/* --- Diagnostic Test Panel Styles --- */
+
+.test-panel-overlay {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(15, 23, 42, 0.95);
+  border: 2px dashed #00e676;
+  padding: 14px;
+  z-index: 99999;
+  border-radius: 16px;
+  max-height: 85vh;
+  overflow-y: auto;
+  width: 160px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: monospace;
+}
+
+.test-panel-title {
+  margin: 0 0 12px 0;
+  color: #00e676;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 6px;
+}
+
+.test-panel-card {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.test-panel-badge {
+  font-size: 10px;
+  color: #00e676;
+  font-weight: bold;
+  margin-bottom: 4px;
+  background: rgba(0, 230, 118, 0.1);
+  border-radius: 4px;
+  padding: 2px 0;
+}
+
+.test-panel-img {
+  width: 100%;
+  border-radius: 8px;
+  transform: scaleX(-1); /* Perfectly aligns with your mirrored webcam */
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom minimal scrollbar for the diagnostic panel drawer */
+.test-panel-overlay::-webkit-scrollbar {
+  width: 4px;
+}
+.test-panel-overlay::-webkit-scrollbar-track {
+  background: transparent;
+}
+.test-panel-overlay::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}

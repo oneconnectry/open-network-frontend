@@ -1,5 +1,5 @@
 // src/hooks/useVerification.js
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { DETECTED_POSES } from '../utils/poseUtils';
 import { captureCanvasFrame, uploadVerificationPayload } from '../utils/verificationUtils';
 
@@ -16,9 +16,14 @@ export function useVerification(currentPose, videoRef) {
   const [capturedImages, setCapturedImages] = useState({});
   const [status, setStatus] = useState('READY'); // READY, PROCESSING, SUCCESS, FAILED
   const [holdTime, setHoldTime] = useState(0); // Tracks stable pose duration
+  
+  // Strict gate: Pauses detection for a split second between steps to prevent auto-skipping
+  const [isReadyForInput, setIsReadyForInput] = useState(false);
 
-  // Added safety fallback structure: if out of bounds, use an empty fallback object
-  const activeStep = STEPS[currentStepIdx] || { id: -1, pose: null, label: 'Processing...' };
+  // Wrapped in useMemo to maintain a stable reference across renders
+  const activeStep = useMemo(() => {
+    return STEPS[currentStepIdx] || { id: -1, pose: null, label: 'Processing...' };
+  }, [currentStepIdx]);
 
   const handleSubmit = useCallback(async (images) => {
     setStatus('PROCESSING');
@@ -30,65 +35,70 @@ export function useVerification(currentPose, videoRef) {
       setStatus('FAILED');
     }
   }, []);
-// src/hooks/useVerification.js
 
-// 1. Keep handleStepCapture lightweight and focused ONLY on capturing
-const handleStepCapture = useCallback(() => {
-  const frame = captureCanvasFrame(videoRef.current);
-  if (!frame) return;
+  const handleStepCapture = useCallback(() => {
+    const frame = captureCanvasFrame(videoRef.current);
+    if (!frame || !activeStep.pose) return;
 
-  // Store the image using the current active step's pose name
-  setCapturedImages((prev) => ({ ...prev, [activeStep.pose]: frame }));
-
-  // Check if we are on the final step right now
-  if (currentStepIdx === STEPS.length - 1) {
-    // Collect the final payload structure safely
-    setCapturedImages((latestImages) => {
-      handleSubmit(latestImages);
-      return latestImages;
-    });
-  } else {
-    // Otherwise, increment cleanly to the next verification pose step
-    setCurrentStepIdx((idx) => idx + 1);
-  }
-}, [activeStep.pose, currentStepIdx, videoRef, handleSubmit]);
-
-// 2. Updated stable tracking timer engine
-useEffect(() => {
-  // If verification is already processing, or done, do nothing
-  if (status !== 'READY') return;
-
-  // If no face is in frame or activeStep configuration isn't ready, reset progress bar
-  if (!currentPose || !activeStep || !activeStep.pose) {
+    // 1. Lock the gate immediately so no other poses can pass through
+    setIsReadyForInput(false);
+    
+    // 2. FIX: Reset the progress bar right here inside the action handler, NOT in an effect!
     setHoldTime(0);
-    return;
-  }
 
-  // Check if the current camera pose matches our exact requested direction
-  if (currentPose === activeStep.pose) {
+    setCapturedImages((prevImages) => {
+      const updatedImages = { ...prevImages, [activeStep.pose]: frame };
+      
+      setCurrentStepIdx((prevIdx) => {
+        if (prevIdx === STEPS.length - 1) {
+          handleSubmit(updatedImages);
+          return prevIdx;
+        }
+        return prevIdx + 1;
+      });
+
+      return updatedImages;
+    });
+  }, [activeStep, handleSubmit, videoRef]);
+
+  // Transition Grace Period Loop
+  useEffect(() => {
+    const transitionalTimer = setTimeout(() => {
+      setIsReadyForInput(true);
+    }, 1500);
+
+    return () => clearTimeout(transitionalTimer);
+  }, [currentStepIdx]);
+
+  // Stable Tracking Timer Engine
+  useEffect(() => {
+    if (status !== 'READY' || !isReadyForInput || !activeStep.pose) return;
+
+    const isPoseMatching = currentPose === activeStep.pose;
+
     const interval = setInterval(() => {
       setHoldTime((prev) => {
+        if (!isPoseMatching) {
+          return 0; 
+        }
         if (prev >= 100) {
           clearInterval(interval);
           handleStepCapture();
           return 0;
         }
-        return prev + 50; // Faster step verification (400ms holding time total)
+        return prev + 25; // 800ms total holding window
       });
     }, 200);
 
     return () => clearInterval(interval);
-  } else {
-    // Reset back to zero if they look away or break alignment mid-timer
-    setHoldTime(0);
-  }
-// Removed handleStepCapture from dependency to prevent infinite reset cycles
-}, [currentPose, activeStep, status]);
+  }, [currentPose, activeStep, status, isReadyForInput, handleStepCapture]);
 
   return {
-    activeStep,
+    activeStep: isReadyForInput 
+      ? activeStep 
+      : { ...activeStep, label: `Get Ready... ${activeStep.label}` },
     steps: STEPS,
-    currentStepIdx: Math.min(currentStepIdx, STEPS.length - 1), // Keeps progress bars from breaking
+    currentStepIdx: Math.min(currentStepIdx, STEPS.length - 1),
     holdProgress: holdTime,
     status,
     capturedImages,
@@ -97,6 +107,7 @@ useEffect(() => {
       setCapturedImages({});
       setStatus('READY');
       setHoldTime(0);
+      setIsReadyForInput(false);
     }
   };
 }
