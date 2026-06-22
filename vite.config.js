@@ -23,9 +23,18 @@
 
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    visualizer({
+      open: true,
+      gzipSize: true,
+      filename: "stats.html",
+    }),
+  ],
+
   base: "/open-network-frontend/",
 
   build: {
@@ -35,10 +44,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           react: ["react", "react-dom"],
-
-          mediapipe: [
-            "@mediapipe/tasks-vision",
-          ],
         },
       },
     },
