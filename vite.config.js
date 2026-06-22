@@ -26,12 +26,9 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-
-  // GitHub Pages repository name
   base: "/open-network-frontend/",
 
   build: {
-    // Increase warning limit (optional)
     chunkSizeWarningLimit: 1000,
 
     rollupOptions: {
@@ -41,10 +38,6 @@ export default defineConfig({
 
           mediapipe: [
             "@mediapipe/tasks-vision",
-          ],
-
-          webcam: [
-            "react-webcam",
           ],
         },
       },
