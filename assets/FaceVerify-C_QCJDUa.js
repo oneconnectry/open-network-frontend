@@ -1,0 +1,5002 @@
+import{r as ot,j as De}from"./index-DhFA4cfC.js";import{g as Ig,b as kg,c as Ac}from"./react-Bce9NwRC.js";function Rg(n,e){for(var t=0;t<e.length;t++){const r=e[t];if(typeof r!="string"&&!Array.isArray(r)){for(const s in r)if(s!=="default"&&!(s in n)){const o=Object.getOwnPropertyDescriptor(r,s);o&&Object.defineProperty(n,s,o.get?o:{enumerable:!0,get:()=>r[s]})}}}return Object.freeze(Object.defineProperty(n,Symbol.toStringTag,{value:"Module"}))}function _g({videoRef:n}){return ot.useEffect(()=>{let e=null;async function t(){try{e=await navigator.mediaDevices.getUserMedia({video:{width:640,height:480,facingMode:"user"},audio:!1}),n.current&&(n.current.srcObject=e)}catch(r){console.error("Error accessing camera: ",r),alert("Please enable camera access to verify identity.")}}return t(),()=>{e&&e.getTracks().forEach(r=>r.stop())}},[n]),De.jsx("div",{className:"camera-container",children:De.jsx("video",{ref:n,autoPlay:!0,playsInline:!0,muted:!0,className:"camera-feed"})})}function Ag({holdProgress:n,instruction:e}){return De.jsxs("div",{className:"guide-overlay",children:[De.jsx("div",{className:`face-oval ${n>0?"holding":""}`,children:De.jsx("div",{className:"progress-ring",style:{height:`${n}%`}})}),De.jsx("div",{className:"instruction-toast",children:De.jsx("h3",{children:e})})]})}function Og({progress:n}){return n===0?null:De.jsx("div",{className:"countdown-bar",children:De.jsx("div",{className:"countdown-fill",style:{width:`${n}%`}})})}function Dg({steps:n,currentStepIdx:e}){return De.jsx("div",{className:"steps-timeline",children:n.map((t,r)=>De.jsx("div",{className:`step-dot ${r===e?"active":""} ${r<e?"completed":""}`,children:De.jsx("span",{children:r+1})},t.id))})}function Fg({currentPose:n,status:e,onReset:t}){return De.jsxs("div",{className:"status-bar",children:[De.jsxs("p",{children:["Detected Direction: ",De.jsx("strong",{children:n||"No face detected"})]}),e==="PROCESSING"&&De.jsx("p",{className:"loading-txt",children:"Processing Verification... Please Wait."}),e==="SUCCESS"&&De.jsxs("div",{className:"alert success",children:["🎉 Verification Complete! ",De.jsx("button",{onClick:t,children:"Retry"})]}),e==="FAILED"&&De.jsxs("div",{className:"alert error",children:["❌ Verification Failed. ",De.jsx("button",{onClick:t,children:"Try Again"})]})]})}const Pg=1e-7,Lg=1e-4;class Bg{constructor(e,t){this.backend=e,this.dataMover=t,this.data=new WeakMap,this.dataIdsCount=0}get(e){return this.data.has(e)||this.dataMover.moveData(this.backend,e),this.data.get(e)}set(e,t){this.dataIdsCount++,this.data.set(e,t)}has(e){return this.data.has(e)}delete(e){return this.dataIdsCount--,this.data.delete(e)}numDataIds(){return this.dataIdsCount}}class oh{refCount(e){return Dt("refCount")}incRef(e){return Dt("incRef")}timerAvailable(){return!0}time(e){return Dt("time")}read(e){return Dt("read")}readSync(e){return Dt("readSync")}readToGPU(e,t){return Dt("readToGPU")}numDataIds(){return Dt("numDataIds")}disposeData(e,t){return Dt("disposeData")}write(e,t,r){return Dt("write")}move(e,t,r,s,o){return Dt("move")}createTensorFromGPUData(e,t,r){return Dt("createTensorFromGPUData")}memory(){return Dt("memory")}floatPrecision(){return Dt("floatPrecision")}epsilon(){return this.floatPrecision()===32?Pg:Lg}dispose(){return Dt("dispose")}}function Dt(n){throw new Error(`'${n}' not yet implemented or not found in the registry. This kernel may not be supported by the tfjs backend you have chosen`)}function _a(n,e,t){return Math.max(n,Math.min(e,t))}function zu(n){return n%2===0?n:n+1}function lo(n,e,t){const r=n[e];n[e]=n[t],n[t]=r}function Vg(n){let e=0;for(let t=0;t<n.length;t++)e+=n[t];return e}function _(n,e){if(!n)throw new Error(typeof e=="string"?e:e())}function Ht(n,e,t=""){_(qe(n,e),()=>t+` Shapes ${n} and ${e} must match`)}function Os(n){_(n!=null,()=>"The input to the tensor constructor must be a non-null value.")}function ne(n){if(n.length===0)return 1;let e=n[0];for(let t=1;t<n.length;t++)e*=n[t];return e}function Mg(n,e){if(n===e)return!0;if(n==null||e==null||n.length!==e.length)return!1;for(let t=0;t<n.length;t++)if(n[t]!==null&&e[t]!==null&&n[t]!==e[t])return!1;return!0}function qe(n,e){if(n===e)return!0;if(n==null||e==null||n.length!==e.length)return!1;for(let t=0;t<n.length;t++)if(n[t]!==e[t])return!1;return!0}function Ns(n){return n%1===0}function Ji(n){const e=Math.ceil(Math.sqrt(n));return[e,Math.ceil(n/e)]}function $s(n,e){return e<=n.length?n:n+" ".repeat(e-n.length)}function Oc(n,e=s=>0,t,r){return new Promise((s,o)=>{let a=0;const i=()=>{if(n()){s();return}a++;const u=e(a);if(t!=null&&a>=t){o();return}r!=null?r(i,u):setTimeout(i,u)};i()})}function Ug(n,e){let t=1,r=-1;for(let o=0;o<n.length;++o)if(n[o]>=0)t*=n[o];else if(n[o]===-1){if(r!==-1)throw Error(`Shapes can only have 1 implicit size. Found -1 at dim ${r} and dim ${o}`);r=o}else if(n[o]<0)throw Error(`Shapes can not be < 0. Found ${n[o]} at dim ${o}`);if(r===-1){if(e>0&&e!==t)throw Error(`Size(${e}) must match the product of shape ${n}`);return n}if(t===0)throw Error(`Cannot infer the missing size in [${n}] when there are 0 elements`);if(e%t!==0)throw Error(`The implicit shape can't be a fractional number. Got ${e} / ${t}`);const s=n.slice();return s[r]=e/t,s}function ut(n,e){const t=e.length;return n=n==null?e.map((r,s)=>s):[].concat(n),_(n.every(r=>r>=-t&&r<t),()=>`All values in axis param must be in range [-${t}, ${t}) but got axis ${n}`),_(n.every(r=>Ns(r)),()=>`All values in axis param must be integers but got axis ${n}`),n.map(r=>r<0?t+r:r)}function xr(n,e){const t=[],r=[],s=e!=null&&Array.isArray(e)&&e.length===0,o=e==null||s?null:ut(e,n).sort();let a=0;for(let i=0;i<n.length;++i){if(o!=null){if(o[a]===i&&n[i]!==1)throw new Error(`Can't squeeze axis ${i} since its dim '${n[i]}' is not 1`);(o[a]==null||o[a]>i)&&n[i]===1&&(t.push(n[i]),r.push(i)),o[a]<=i&&a++}n[i]!==1&&(t.push(n[i]),r.push(i))}return{newShape:t,keptDims:r}}function pr(n,e){return it(n,e)}function it(n,e){let t=null;if(n==null||n==="float32")t=new Float32Array(e);else if(n==="int32")t=new Int32Array(e);else if(n==="bool")t=new Uint8Array(e);else if(n==="string")t=new Array(e);else throw new Error(`Unknown data type ${n}`);return t}function Wg(n,e){for(let t=0;t<n.length;t++){const r=n[t];if(isNaN(r)||!isFinite(r))throw Error(`A tensor of type ${e} being uploaded contains ${r}.`)}}function zg(n){return n==="bool"||n==="complex64"||n==="float32"||n==="int32"||n==="string"}function Gg(n,e){return!(e==="complex64"||e==="float32"&&n!=="complex64"||e==="int32"&&n!=="float32"&&n!=="complex64"||e==="bool"&&n==="bool")}function Aa(n){if(n==="float32"||n==="int32")return 4;if(n==="complex64")return 8;if(n==="bool")return 1;throw new Error(`Unknown dtype ${n}`)}function jg(n){if(n==null)return 0;let e=0;return n.forEach(t=>e+=t.length),e}function Ya(n){return typeof n=="string"||n instanceof String}function Hg(n){return typeof n=="boolean"}function Kg(n){return typeof n=="number"}function Ao(n){return Array.isArray(n)?Ao(n[0]):n instanceof Float32Array?"float32":n instanceof Int32Array||n instanceof Uint8Array||n instanceof Uint8ClampedArray?"int32":Kg(n)?"float32":Ya(n)?"string":Hg(n)?"bool":"float32"}function eu(n){return!!(n&&n.constructor&&n.call&&n.apply)}function tu(n,e){for(let t=e;t<n;++t)if(n%t===0)return t;return n}function dt(n){const e=n.length;if(e<2)return[];const t=new Array(e-1);t[e-2]=n[e-1];for(let r=e-3;r>=0;--r)t[r]=t[r+1]*n[r+1];return t}function ah(n,e,t,r=!1){const s=new Array;if(e.length===1){const o=e[0]*(r?2:1);for(let a=0;a<o;a++)s[a]=t[n+a]}else{const o=e[0],a=e.slice(1),i=a.reduce((u,c)=>u*c)*(r?2:1);for(let u=0;u<o;u++)s[u]=ah(n+u*i,a,t,r)}return s}function nu(n,e,t=!1){if(n.length===0)return e[0];const r=n.reduce((s,o)=>s*o)*(t?2:1);if(r===0)return[];if(r!==e.length)throw new Error(`[${n}] does not match the input size ${e.length}${t?" for a complex tensor":""}.`);return ah(0,n,e,t)}function ih(n,e){const t=fr(n,e);for(let r=0;r<t.length;r++)t[r]=1;return t}function fr(n,e){if(e==null||e==="float32"||e==="complex64")return new Float32Array(n);if(e==="int32")return new Int32Array(n);if(e==="bool")return new Uint8Array(n);throw new Error(`Unknown data type ${e}`)}function Kt(n){n.forEach(e=>{_(Number.isInteger(e)&&e>=0,()=>`Tensor must have a shape comprised of positive integers but got shape [${n}].`)})}function ru(n,e,t){if(e===0)return 0;if(e===1)return n[0];let r=n[n.length-1];for(let s=0;s<n.length-1;++s)r+=t[s]*n[s];return r}function Gu(n,e,t){if(e===0)return[];if(e===1)return[n];const r=new Array(e);for(let s=0;s<r.length-1;++s)r[s]=Math.floor(n/t[s]),n-=r[s]*t[s];return r[r.length-1]=n,r}function Gr(n){return n&&n.then&&typeof n.then=="function"}const Dc="tfjsflags";class Xg{constructor(e){this.global=e,this.flags={},this.flagRegistry={},this.urlFlags={},this.getQueryParams=qg,this.populateURLFlags()}setPlatform(e,t){this.platform!=null&&(j().getBool("IS_TEST")||j().getBool("PROD")||console.warn(`Platform ${this.platformName} has already been set. Overwriting the platform with ${e}.`)),this.platformName=e,this.platform=t}registerFlag(e,t,r){if(this.flagRegistry[e]={evaluationFn:t,setHook:r},this.urlFlags[e]!=null){const s=this.urlFlags[e];j().getBool("IS_TEST")||j().getBool("PROD")||console.warn(`Setting feature override from URL ${e}: ${s}.`),this.set(e,s)}}async getAsync(e){return e in this.flags?this.flags[e]:(this.flags[e]=await this.evaluateFlag(e),this.flags[e])}get(e){if(e in this.flags)return this.flags[e];const t=this.evaluateFlag(e);if(Gr(t))throw new Error(`Flag ${e} cannot be synchronously evaluated. Please use getAsync() instead.`);return this.flags[e]=t,this.flags[e]}getNumber(e){return this.get(e)}getBool(e){return this.get(e)}getString(e){return this.get(e)}getFlags(){return this.flags}get features(){return this.flags}set(e,t){if(this.flagRegistry[e]==null)throw new Error(`Cannot set flag ${e} as it has not been registered.`);this.flags[e]=t,this.flagRegistry[e].setHook!=null&&this.flagRegistry[e].setHook(t)}evaluateFlag(e){if(this.flagRegistry[e]==null)throw new Error(`Cannot evaluate flag '${e}': no evaluation function found.`);return this.flagRegistry[e].evaluationFn()}setFlags(e){this.flags=Object.assign({},e)}reset(){this.flags={},this.urlFlags={},this.populateURLFlags()}populateURLFlags(){if(typeof this.global>"u"||typeof this.global.location>"u"||typeof this.global.location.search>"u")return;const e=this.getQueryParams(this.global.location.search);Dc in e&&e[Dc].split(",").forEach(r=>{const[s,o]=r.split(":");this.urlFlags[s]=Qg(s,o)})}}function qg(n){const e={};return n.replace(/[?&]([^=?&]+)(?:=([^&]*))?/g,(t,...r)=>(Yg(e,r[0],r[1]),r.join("="))),e}function Yg(n,e,t){n[decodeURIComponent(e)]=decodeURIComponent(t||"")}function Qg(n,e){const t=e.toLowerCase();return t==="true"||t==="false"?t==="true":`${+t}`===t?+t:e}function j(){return uh}let uh=null;function Zg(n){uh=n}let Ei;function ch(){if(Ei==null){let n;if(typeof window<"u")n=window;else if(typeof global<"u")n=global;else if(typeof process<"u")n=process;else if(typeof self<"u")n=self;else throw new Error("Could not find a global object");Ei=n}return Ei}function Jg(){const n=ch();return n._tfGlobals==null&&(n._tfGlobals=new Map),n._tfGlobals}function ju(n,e){const t=Jg();if(t.has(n))return t.get(n);{const r=e();return t.set(n,r),t.get(n)}}const lh="Abs",hh="Acos",dh="Acosh",Hu="Add",ph="AddN",fh="All",mh="Any",gh="ArgMax",yh="ArgMin",xh="Asin",bh="Asinh",vh="Atan",wh="Atanh",$h="Atan2",Sh="AvgPool",e2="AvgPoolGrad",Ch="AvgPool3D",t2="AvgPool3DGrad",Th="BatchMatMul",Nh="BatchToSpaceND",Eh="Bincount",Ih="BitwiseAnd",kh="BroadcastArgs",Ku="Cast",Rh="Ceil",_h="ClipByValue",Ah="Complex",Oh="ComplexAbs",Dh="Concat",Fh="Conv2D",Ph="Conv2DBackpropFilter",Lh="Conv2DBackpropInput",Bh="Conv3D",n2="Conv3DBackpropFilterV2",Vh="Conv3DBackpropInputV2",Mh="Cos",Uh="Cosh",Wh="Cumprod",zh="Cumsum",Gh="CropAndResize",jh="DenseBincount",Hh="DepthToSpace",Kh="DepthwiseConv2dNative",Xh="DepthwiseConv2dNativeBackpropFilter",qh="DepthwiseConv2dNativeBackpropInput",Yh="Diag",Qh="Dilation2D",Zh="RealDiv",Jh="Einsum",ed="Elu",r2="EluGrad",td="Erf",nd="Equal",rd="Exp",sd="ExpandDims",od="Expm1",ad="FFT",id="Fill",ud="FlipLeftRight",cd="Floor",ld="FloorDiv",hd="FusedBatchNorm",dd="GatherV2",pd="GatherNd",fd="Greater",md="GreaterEqual",Xu="Identity",gd="IFFT",yd="Imag",xd="IsFinite",bd="IsInf",vd="IsNan",wd="LeakyRelu",$d="Less",Sd="LessEqual",Cd="LinSpace",Td="Log",Nd="Log1p",Ed="LogicalAnd",Id="LogicalNot",kd="LogicalOr",Rd="LRN",s2="LRNGrad",_d="Max",Ad="Maximum",Od="MaxPool",o2="MaxPoolGrad",Dd="MaxPool3D",a2="MaxPool3DGrad",Fd="MaxPoolWithArgmax",Pd="Mean",Ld="Min",Bd="Minimum",Vd="MirrorPad",Md="Mod",Ud="Multinomial",Wd="Multiply",zd="Neg",Gd="NotEqual",jd="NonMaxSuppressionV3",Hd="NonMaxSuppressionV4",Kd="NonMaxSuppressionV5",Xd="OnesLike",qd="OneHot",Yd="Pack",Qd="PadV2",Zd="Pow",Jd="Prelu",ep="Prod",tp="RaggedGather",np="RaggedRange",rp="RaggedTensorToTensor",sp="Range",op="Real",ap="Reciprocal",ip="Relu",up="Reshape",cp="ResizeNearestNeighbor",i2="ResizeNearestNeighborGrad",lp="ResizeBilinear",u2="ResizeBilinearGrad",hp="Relu6",dp="Reverse",pp="Round",fp="Rsqrt",mp="ScatterNd",gp="TensorScatterUpdate",yp="SearchSorted",xp="Select",bp="Selu",vp="Slice",wp="Sin",$p="Sinh",Sp="Sign",Cp="Sigmoid",Tp="Softplus",Np="Sqrt",Ep="Sum",Ip="SpaceToBatchND",kp="SplitV",Rp="Softmax",_p="SparseFillEmptyRows",Ap="SparseReshape",Op="SparseSegmentMean",Dp="SparseSegmentSum",Fp="SparseToDense",Pp="SquaredDifference",c2="Square",Lp="StaticRegexReplace",Bp="StridedSlice",Vp="StringNGrams",Mp="StringSplit",Up="StringToHashBucketFast",Wp="Sub",zp="Tan",Gp="Tanh",qu="Tile",jp="TopK",Hp="Transform",ba="Transpose",Kp="Unique",Xp="Unpack",qp="UnsortedSegmentSum",Yp="ZerosLike",Qp="Step",su="FromPixels",Zp="RotateWithOffset",ou="_FusedMatMul",au="FusedConv2D",iu="FusedDepthwiseConv2D";function yn(...n){j().getBool("IS_TEST")||j().getBool("PROD")||console.warn(...n)}function l2(...n){j().getBool("IS_TEST")||j().getBool("PROD")||console.log(...n)}const Oa=ju("kernelRegistry",()=>new Map),h2=ju("gradRegistry",()=>new Map);function uu(n,e){const t=Jp(n,e);return Oa.get(t)}function Fc(n){return h2.get(n)}function Pc(n){const e=Oa.entries(),t=[];for(;;){const{done:r,value:s}=e.next();if(r)break;const[o,a]=s,[i]=o.split("_");i===n&&t.push(a)}return t}function d2(n){const{kernelName:e,backendName:t}=n,r=Jp(e,t);Oa.has(r)&&yn(`The kernel '${e}' for backend '${t}' is already registered`),Oa.set(r,n)}function Jp(n,e){return`${e}_${n}`}function ef(n){return n instanceof Float32Array||n instanceof Int32Array||n instanceof Uint8Array||n instanceof Uint8ClampedArray}var Ii,Lc;function p2(){if(Lc)return Ii;Lc=1,Ii=e;var n=null;try{n=new WebAssembly.Instance(new WebAssembly.Module(new Uint8Array([0,97,115,109,1,0,0,0,1,13,2,96,0,1,127,96,4,127,127,127,127,1,127,3,7,6,0,1,1,1,1,1,6,6,1,127,1,65,0,11,7,50,6,3,109,117,108,0,1,5,100,105,118,95,115,0,2,5,100,105,118,95,117,0,3,5,114,101,109,95,115,0,4,5,114,101,109,95,117,0,5,8,103,101,116,95,104,105,103,104,0,0,10,191,1,6,4,0,35,0,11,36,1,1,126,32,0,173,32,1,173,66,32,134,132,32,2,173,32,3,173,66,32,134,132,126,34,4,66,32,135,167,36,0,32,4,167,11,36,1,1,126,32,0,173,32,1,173,66,32,134,132,32,2,173,32,3,173,66,32,134,132,127,34,4,66,32,135,167,36,0,32,4,167,11,36,1,1,126,32,0,173,32,1,173,66,32,134,132,32,2,173,32,3,173,66,32,134,132,128,34,4,66,32,135,167,36,0,32,4,167,11,36,1,1,126,32,0,173,32,1,173,66,32,134,132,32,2,173,32,3,173,66,32,134,132,129,34,4,66,32,135,167,36,0,32,4,167,11,36,1,1,126,32,0,173,32,1,173,66,32,134,132,32,2,173,32,3,173,66,32,134,132,130,34,4,66,32,135,167,36,0,32,4,167,11])),{}).exports}catch{}function e(V,R,q){this.low=V|0,this.high=R|0,this.unsigned=!!q}e.prototype.__isLong__,Object.defineProperty(e.prototype,"__isLong__",{value:!0});function t(V){return(V&&V.__isLong__)===!0}e.isLong=t;var r={},s={};function o(V,R){var q,te,he;return R?(V>>>=0,(he=0<=V&&V<256)&&(te=s[V],te)?te:(q=i(V,(V|0)<0?-1:0,!0),he&&(s[V]=q),q)):(V|=0,(he=-128<=V&&V<128)&&(te=r[V],te)?te:(q=i(V,V<0?-1:0,!1),he&&(r[V]=q),q))}e.fromInt=o;function a(V,R){if(isNaN(V))return R?C:x;if(R){if(V<0)return C;if(V>=f)return H}else{if(V<=-b)return G;if(V+1>=b)return W}return V<0?a(-V,R).neg():i(V%p|0,V/p|0,R)}e.fromNumber=a;function i(V,R,q){return new e(V,R,q)}e.fromBits=i;var u=Math.pow;function c(V,R,q){if(V.length===0)throw Error("empty string");if(V==="NaN"||V==="Infinity"||V==="+Infinity"||V==="-Infinity")return x;if(typeof R=="number"?(q=R,R=!1):R=!!R,q=q||10,q<2||36<q)throw RangeError("radix");var te;if((te=V.indexOf("-"))>0)throw Error("interior hyphen");if(te===0)return c(V.substring(1),R,q).neg();for(var he=a(u(q,8)),de=x,ge=0;ge<V.length;ge+=8){var be=Math.min(8,V.length-ge),$e=parseInt(V.substring(ge,ge+be),q);if(be<8){var Ie=a(u(q,be));de=de.mul(Ie).add(a($e))}else de=de.mul(he),de=de.add(a($e))}return de.unsigned=R,de}e.fromString=c;function l(V,R){return typeof V=="number"?a(V,R):typeof V=="string"?c(V,R):i(V.low,V.high,typeof R=="boolean"?R:V.unsigned)}e.fromValue=l;var h=65536,d=1<<24,p=h*h,f=p*p,b=f/2,y=o(d),x=o(0);e.ZERO=x;var C=o(0,!0);e.UZERO=C;var I=o(1);e.ONE=I;var k=o(1,!0);e.UONE=k;var P=o(-1);e.NEG_ONE=P;var W=i(-1,2147483647,!1);e.MAX_VALUE=W;var H=i(-1,-1,!0);e.MAX_UNSIGNED_VALUE=H;var G=i(0,-2147483648,!1);e.MIN_VALUE=G;var B=e.prototype;return B.toInt=function(){return this.unsigned?this.low>>>0:this.low},B.toNumber=function(){return this.unsigned?(this.high>>>0)*p+(this.low>>>0):this.high*p+(this.low>>>0)},B.toString=function(R){if(R=R||10,R<2||36<R)throw RangeError("radix");if(this.isZero())return"0";if(this.isNegative())if(this.eq(G)){var q=a(R),te=this.div(q),he=te.mul(q).sub(this);return te.toString(R)+he.toInt().toString(R)}else return"-"+this.neg().toString(R);for(var de=a(u(R,6),this.unsigned),ge=this,be="";;){var $e=ge.div(de),Ie=ge.sub($e.mul(de)).toInt()>>>0,_e=Ie.toString(R);if(ge=$e,ge.isZero())return _e+be;for(;_e.length<6;)_e="0"+_e;be=""+_e+be}},B.getHighBits=function(){return this.high},B.getHighBitsUnsigned=function(){return this.high>>>0},B.getLowBits=function(){return this.low},B.getLowBitsUnsigned=function(){return this.low>>>0},B.getNumBitsAbs=function(){if(this.isNegative())return this.eq(G)?64:this.neg().getNumBitsAbs();for(var R=this.high!=0?this.high:this.low,q=31;q>0&&(R&1<<q)==0;q--);return this.high!=0?q+33:q+1},B.isZero=function(){return this.high===0&&this.low===0},B.eqz=B.isZero,B.isNegative=function(){return!this.unsigned&&this.high<0},B.isPositive=function(){return this.unsigned||this.high>=0},B.isOdd=function(){return(this.low&1)===1},B.isEven=function(){return(this.low&1)===0},B.equals=function(R){return t(R)||(R=l(R)),this.unsigned!==R.unsigned&&this.high>>>31===1&&R.high>>>31===1?!1:this.high===R.high&&this.low===R.low},B.eq=B.equals,B.notEquals=function(R){return!this.eq(R)},B.neq=B.notEquals,B.ne=B.notEquals,B.lessThan=function(R){return this.comp(R)<0},B.lt=B.lessThan,B.lessThanOrEqual=function(R){return this.comp(R)<=0},B.lte=B.lessThanOrEqual,B.le=B.lessThanOrEqual,B.greaterThan=function(R){return this.comp(R)>0},B.gt=B.greaterThan,B.greaterThanOrEqual=function(R){return this.comp(R)>=0},B.gte=B.greaterThanOrEqual,B.ge=B.greaterThanOrEqual,B.compare=function(R){if(t(R)||(R=l(R)),this.eq(R))return 0;var q=this.isNegative(),te=R.isNegative();return q&&!te?-1:!q&&te?1:this.unsigned?R.high>>>0>this.high>>>0||R.high===this.high&&R.low>>>0>this.low>>>0?-1:1:this.sub(R).isNegative()?-1:1},B.comp=B.compare,B.negate=function(){return!this.unsigned&&this.eq(G)?G:this.not().add(I)},B.neg=B.negate,B.add=function(R){t(R)||(R=l(R));var q=this.high>>>16,te=this.high&65535,he=this.low>>>16,de=this.low&65535,ge=R.high>>>16,be=R.high&65535,$e=R.low>>>16,Ie=R.low&65535,_e=0,Le=0,Me=0,Qe=0;return Qe+=de+Ie,Me+=Qe>>>16,Qe&=65535,Me+=he+$e,Le+=Me>>>16,Me&=65535,Le+=te+be,_e+=Le>>>16,Le&=65535,_e+=q+ge,_e&=65535,i(Me<<16|Qe,_e<<16|Le,this.unsigned)},B.subtract=function(R){return t(R)||(R=l(R)),this.add(R.neg())},B.sub=B.subtract,B.multiply=function(R){if(this.isZero())return x;if(t(R)||(R=l(R)),n){var q=n.mul(this.low,this.high,R.low,R.high);return i(q,n.get_high(),this.unsigned)}if(R.isZero())return x;if(this.eq(G))return R.isOdd()?G:x;if(R.eq(G))return this.isOdd()?G:x;if(this.isNegative())return R.isNegative()?this.neg().mul(R.neg()):this.neg().mul(R).neg();if(R.isNegative())return this.mul(R.neg()).neg();if(this.lt(y)&&R.lt(y))return a(this.toNumber()*R.toNumber(),this.unsigned);var te=this.high>>>16,he=this.high&65535,de=this.low>>>16,ge=this.low&65535,be=R.high>>>16,$e=R.high&65535,Ie=R.low>>>16,_e=R.low&65535,Le=0,Me=0,Qe=0,hn=0;return hn+=ge*_e,Qe+=hn>>>16,hn&=65535,Qe+=de*_e,Me+=Qe>>>16,Qe&=65535,Qe+=ge*Ie,Me+=Qe>>>16,Qe&=65535,Me+=he*_e,Le+=Me>>>16,Me&=65535,Me+=de*Ie,Le+=Me>>>16,Me&=65535,Me+=ge*$e,Le+=Me>>>16,Me&=65535,Le+=te*_e+he*Ie+de*$e+ge*be,Le&=65535,i(Qe<<16|hn,Le<<16|Me,this.unsigned)},B.mul=B.multiply,B.divide=function(R){if(t(R)||(R=l(R)),R.isZero())throw Error("division by zero");if(n){if(!this.unsigned&&this.high===-2147483648&&R.low===-1&&R.high===-1)return this;var q=(this.unsigned?n.div_u:n.div_s)(this.low,this.high,R.low,R.high);return i(q,n.get_high(),this.unsigned)}if(this.isZero())return this.unsigned?C:x;var te,he,de;if(this.unsigned){if(R.unsigned||(R=R.toUnsigned()),R.gt(this))return C;if(R.gt(this.shru(1)))return k;de=C}else{if(this.eq(G)){if(R.eq(I)||R.eq(P))return G;if(R.eq(G))return I;var ge=this.shr(1);return te=ge.div(R).shl(1),te.eq(x)?R.isNegative()?I:P:(he=this.sub(R.mul(te)),de=te.add(he.div(R)),de)}else if(R.eq(G))return this.unsigned?C:x;if(this.isNegative())return R.isNegative()?this.neg().div(R.neg()):this.neg().div(R).neg();if(R.isNegative())return this.div(R.neg()).neg();de=x}for(he=this;he.gte(R);){te=Math.max(1,Math.floor(he.toNumber()/R.toNumber()));for(var be=Math.ceil(Math.log(te)/Math.LN2),$e=be<=48?1:u(2,be-48),Ie=a(te),_e=Ie.mul(R);_e.isNegative()||_e.gt(he);)te-=$e,Ie=a(te,this.unsigned),_e=Ie.mul(R);Ie.isZero()&&(Ie=I),de=de.add(Ie),he=he.sub(_e)}return de},B.div=B.divide,B.modulo=function(R){if(t(R)||(R=l(R)),n){var q=(this.unsigned?n.rem_u:n.rem_s)(this.low,this.high,R.low,R.high);return i(q,n.get_high(),this.unsigned)}return this.sub(this.div(R).mul(R))},B.mod=B.modulo,B.rem=B.modulo,B.not=function(){return i(~this.low,~this.high,this.unsigned)},B.and=function(R){return t(R)||(R=l(R)),i(this.low&R.low,this.high&R.high,this.unsigned)},B.or=function(R){return t(R)||(R=l(R)),i(this.low|R.low,this.high|R.high,this.unsigned)},B.xor=function(R){return t(R)||(R=l(R)),i(this.low^R.low,this.high^R.high,this.unsigned)},B.shiftLeft=function(R){return t(R)&&(R=R.toInt()),(R&=63)===0?this:R<32?i(this.low<<R,this.high<<R|this.low>>>32-R,this.unsigned):i(0,this.low<<R-32,this.unsigned)},B.shl=B.shiftLeft,B.shiftRight=function(R){return t(R)&&(R=R.toInt()),(R&=63)===0?this:R<32?i(this.low>>>R|this.high<<32-R,this.high>>R,this.unsigned):i(this.high>>R-32,this.high>=0?0:-1,this.unsigned)},B.shr=B.shiftRight,B.shiftRightUnsigned=function(R){if(t(R)&&(R=R.toInt()),R&=63,R===0)return this;var q=this.high;if(R<32){var te=this.low;return i(te>>>R|q<<32-R,q>>>R,this.unsigned)}else return R===32?i(q,0,this.unsigned):i(q>>>R-32,0,this.unsigned)},B.shru=B.shiftRightUnsigned,B.shr_u=B.shiftRightUnsigned,B.toSigned=function(){return this.unsigned?i(this.low,this.high,!1):this},B.toUnsigned=function(){return this.unsigned?this:i(this.low,this.high,!0)},B.toBytes=function(R){return R?this.toBytesLE():this.toBytesBE()},B.toBytesLE=function(){var R=this.high,q=this.low;return[q&255,q>>>8&255,q>>>16&255,q>>>24,R&255,R>>>8&255,R>>>16&255,R>>>24]},B.toBytesBE=function(){var R=this.high,q=this.low;return[R>>>24,R>>>16&255,R>>>8&255,R&255,q>>>24,q>>>16&255,q>>>8&255,q&255]},e.fromBytes=function(R,q,te){return te?e.fromBytesLE(R,q):e.fromBytesBE(R,q)},e.fromBytesLE=function(R,q){return new e(R[0]|R[1]<<8|R[2]<<16|R[3]<<24,R[4]|R[5]<<8|R[6]<<16|R[7]<<24,q)},e.fromBytesBE=function(R,q){return new e(R[4]<<24|R[5]<<16|R[6]<<8|R[7],R[0]<<24|R[1]<<16|R[2]<<8|R[3],q)},Ii}var tf=p2();const nf=Ig(tf),f2=Rg({__proto__:null,default:nf},[tf]);const Pr=nf||f2;function Qa(n){return Pr.fromString(n,!0,16)}const rf=Qa("c3a5c85c97cb3127"),Fr=Qa("b492b66fbe98f273"),wt=Qa("9ae16a3b2f90404f");function cu(n){return n.xor(n.shru(47))}function sf(n,e,t){const r=n.slice(e,e+t);return Pr.fromBytes(Array.from(r),!0,!0)}function ze(n,e){return sf(n,e,8)}function Bc(n,e){return sf(n,e,4)}function at(n,e){return e===0?n:n.shru(e).or(n.shl(64-e))}function cr(n,e,t=Qa("9ddfea08eb382d69")){let r=n.xor(e).mul(t);r=r.xor(r.shru(47));let s=e.xor(r).mul(t);return s=s.xor(s.shru(47)),s=s.mul(t),s}function m2(n,e,t,r,s,o){s=s.add(n),o=at(o.add(s).add(r),21);const a=s;return s=s.add(e),s=s.add(t),o=o.add(at(s,44)),[s.add(r),o.add(a)]}function ia(n,e,t,r){return m2(ze(n,e),ze(n,e+8),ze(n,e+16),ze(n,e+24),t,r)}function g2(n,e=n.length){if(e>=8){const t=wt.add(e*2),r=ze(n,0).add(wt),s=ze(n,e-8),o=at(s,37).mul(t).add(r),a=at(r,25).add(s).mul(t);return cr(o,a,t)}if(e>=4){const t=wt.add(e*2),r=Bc(n,0);return cr(r.shl(3).add(e),Bc(n,e-4),t)}if(e>0){const t=n[0],r=n[e>>1],s=n[e-1],o=t+(r<<8),a=e+(s<<2);return cu(wt.mul(o).xor(rf.mul(a))).mul(wt)}return wt}function y2(n,e=n.length){const t=wt.add(e*2),r=ze(n,0).mul(Fr),s=ze(n,8),o=ze(n,e-8).mul(t),a=ze(n,e-16).mul(wt);return cr(at(r.add(s),43).add(at(o,30)).add(a),r.add(at(s.add(wt),18)).add(o),t)}function x2(n,e=n.length){const t=wt.add(e*2),r=ze(n,0).mul(wt),s=ze(n,8),o=ze(n,e-8).mul(t),a=ze(n,e-16).mul(wt),i=at(r.add(s),43).add(at(o,30)).add(a),u=cr(i,r.add(at(s.add(wt),18)).add(o),t),c=ze(n,16).mul(t),l=ze(n,24),h=i.add(ze(n,e-32)).mul(t),d=u.add(ze(n,e-24)).mul(t);return cr(at(c.add(l),43).add(at(h,30)).add(d),c.add(at(l.add(r),18)).add(h),t)}function b2(n,e=n.length){const t=Pr.fromNumber(81,!0);if(e<=32)return e<=16?g2(n,e):y2(n,e);if(e<=64)return x2(n,e);let r=t,s=t.mul(Fr).add(113),o=cu(s.mul(wt).add(113)).mul(wt),a=[Pr.UZERO,Pr.UZERO],i=[Pr.UZERO,Pr.UZERO];r=r.mul(wt).add(ze(n,0));let u=0;const c=(e-1>>6)*64,l=c+(e-1&63)-63;do r=at(r.add(s).add(a[0]).add(ze(n,u+8)),37).mul(Fr),s=at(s.add(a[1]).add(ze(n,u+48)),42).mul(Fr),r=r.xor(i[1]),s=s.add(a[0]).add(ze(n,u+40)),o=at(o.add(i[0]),33).mul(Fr),a=ia(n,u,a[1].mul(Fr),r.add(i[0])),i=ia(n,u+32,o.add(i[1]),s.add(ze(n,u+16))),[o,r]=[r,o],u+=64;while(u!==c);const h=Fr.add(o.and(255).shl(1));return u=l,i[0]=i[0].add(e-1&63),a[0]=a[0].add(i[0]),i[0]=i[0].add(a[0]),r=at(r.add(s).add(a[0]).add(ze(n,u+8)),37).mul(h),s=at(s.add(a[1]).add(ze(n,u+48)),42).mul(h),r=r.xor(i[1].mul(9)),s=s.add(a[0].mul(9).add(ze(n,u+40))),o=at(o.add(i[0]),33).mul(h),a=ia(n,u,a[1].mul(h),r.add(i[0])),i=ia(n,u+32,o.add(i[1]),s.add(ze(n,u+16))),[o,r]=[r,o],cr(cr(a[0],i[0],h).add(cu(s).mul(rf)).add(o),cr(a[1],i[1],h).add(r),h)}function Ds(n,e){return e==="string"?Wr(n):Za([n],e)}function v2(n,e){return n instanceof Float32Array&&e==="float32"||n instanceof Int32Array&&e==="int32"||n instanceof Uint8Array&&e==="bool"}function Za(n,e){if(e==="string")throw new Error("Cannot convert a string[] to a TypedArray");if(Array.isArray(n)&&(n=jr(n)),j().getBool("DEBUG")&&Wg(n,e),v2(n,e))return n;if(e==null||e==="float32"||e==="complex64")return new Float32Array(n);if(e==="int32")return new Int32Array(n);if(e==="bool"){const t=new Uint8Array(n.length);for(let r=0;r<t.length;++r)Math.round(n[r])!==0&&(t[r]=1);return t}else throw new Error(`Unknown data type ${e}`)}function fn(){return j().platform.now()}function Wr(n,e="utf-8"){return e=e||"utf-8",j().platform.encode(n,e)}function Es(n,e="utf-8"){return e=e||"utf-8",j().platform.decode(n,e)}function on(n){return j().platform.isTypedArray!=null?j().platform.isTypedArray(n):ef(n)}function jr(n,e=[],t=!1){if(e==null&&(e=[]),typeof n=="boolean"||typeof n=="number"||typeof n=="string"||Gr(n)||n==null||on(n)&&t)e.push(n);else if(Array.isArray(n)||on(n))for(let r=0;r<n.length;++r)jr(n[r],e,t);else{let r=-1;for(const s of Object.keys(n))/^([1-9]+[0-9]*|0)$/.test(s)&&(r=Math.max(r,Number(s)));for(let s=0;s<=r;s++)jr(n[s],e,t)}return e}class w2{constructor(e,t){this.backendTimer=e,this.logger=t,t==null&&(this.logger=new S2)}profileKernel(e,t,r){let s;const o=()=>{s=r()};let a;const i=fn();if(this.backendTimer.timerAvailable())a=this.backendTimer.time(o);else{o();for(const c of s)c.dataSync();a=Promise.resolve({kernelMs:fn()-i})}if(j().getBool("CHECK_COMPUTATION_FOR_ERRORS"))for(let c=0;c<s.length;c++){const l=s[c];l.data().then(h=>{$2(h,l.dtype,e)})}return{kernelName:e,outputs:s,inputs:t,timeMs:a.then(c=>c.kernelMs),extraInfo:a.then(c=>c.getExtraProfileInfo!=null?c.getExtraProfileInfo():"")}}logKernelProfile(e){const{kernelName:t,outputs:r,timeMs:s,inputs:o,extraInfo:a}=e;r.forEach(i=>{Promise.all([i.data(),s,a]).then(u=>{this.logger.logKernelProfile(t,i,u[0],u[1],o,u[2])})})}}function $2(n,e,t){if(e!=="float32")return!1;for(let r=0;r<n.length;r++){const s=n[r];if(isNaN(s)||!isFinite(s))return console.warn(`Found ${s} in the result of '${t}'`),!0}return!1}class S2{logKernelProfile(e,t,r,s,o,a){const i=typeof s=="number"?$s(`${s}ms`,9):s.error,u=$s(e,25),c=t.rank,l=t.size,h=$s(t.shape.toString(),14);let d="";for(const p in o){const f=o[p];if(f!=null){const b=f.shape||t.shape,y=b.length;d+=`${p}: ${y}D ${y>0?b:""} `}}console.log(`%c${u}	%c${i}	%c${c}D ${h}	%c${l}	%c${d}	%c${a}`,"font-weight:bold","color:red","color:blue","color: orange","color: green","color: steelblue")}}function C2(n,e,t){const r={},s={};for(let u=0;u<e.length;u++)r[e[u].id]=!0;for(let u=0;u<n.length;u++){const c=n[u],l=c.inputs;for(const h in l){const d=l[h];let p=!1;for(let f=0;f<e.length;f++)if(r[d.id]){c.outputs.forEach(b=>r[b.id]=!0),p=!0,s[c.id]=!0;break}if(p)break}}const o={};o[t.id]=!0;const a={};for(let u=n.length-1;u>=0;u--){const c=n[u],l=c.inputs;for(let h=0;h<c.outputs.length;h++)if(o[c.outputs[h].id]){for(const d in l)o[l[d].id]=!0,a[c.id]=!0;break}}const i=[];for(let u=0;u<n.length;u++){const c=n[u];if(s[c.id]&&a[c.id]){const l={};for(const d in c.inputs){const p=c.inputs[d];r[p.id]&&(l[d]=p)}const h=Object.assign({},c);h.inputs=l,h.outputs=c.outputs,i.push(h)}}return i}function T2(n,e,t,r){for(let s=e.length-1;s>=0;s--){const o=e[s],a=[];if(o.outputs.forEach(u=>{const c=n[u.id];c!=null?a.push(c):a.push(null)}),o.gradient==null)throw new Error(`Cannot compute gradient: gradient function not found for ${o.kernelName}.`);const i=o.gradient(a);for(const u in o.inputs){if(!(u in i))throw new Error(`Cannot backprop through input ${u}. Available gradients found: ${Object.keys(i)}.`);const c=t(()=>i[u]());if(c.dtype!=="float32")throw new Error(`Error in gradient for op ${o.kernelName}. The gradient of input ${u} must have 'float32' dtype, but has '${c.dtype}'`);const l=o.inputs[u];if(!qe(c.shape,l.shape))throw new Error(`Error in gradient for op ${o.kernelName}. The gradient of input '${u}' has shape '${c.shape}', which does not match the shape of the input '${l.shape}'`);if(n[l.id]==null)n[l.id]=c;else{const h=n[l.id];n[l.id]=r(h,c),h.dispose()}}}}const Vc=20,ho=3,ki=7;function N2(n,e,t,r){const s=dt(e),o=E2(n,e,t,s),a=e.length,i=va(n,e,t,s,o),u=["Tensor"];return r&&(u.push(`  dtype: ${t}`),u.push(`  rank: ${a}`),u.push(`  shape: [${e}]`),u.push("  values:")),u.push(i.map(c=>"    "+c).join(`
+`)),u.join(`
+`)}function E2(n,e,t,r){const s=ne(e),o=r[r.length-1],a=new Array(o).fill(0),i=e.length,u=t==="complex64"?mo(n):n;if(i>1)for(let c=0;c<s/o;c++){const l=c*o;for(let h=0;h<o;h++)a[h]=Math.max(a[h],fo(u[l+h],0,t).length)}return a}function fo(n,e,t){let r;return Array.isArray(n)?r=`${parseFloat(n[0].toFixed(ki))} + ${parseFloat(n[1].toFixed(ki))}j`:Ya(n)?r=`'${n}'`:t==="bool"?r=of(n):r=parseFloat(n.toFixed(ki)).toString(),$s(r,e)}function of(n){return n===0?"false":"true"}function va(n,e,t,r,s,o=!0){const a=t==="complex64"?2:1,i=e[0],u=e.length;if(u===0){if(t==="complex64"){const b=mo(n);return[fo(b[0],0,t)]}return t==="bool"?[of(n[0])]:[n[0].toString()]}if(u===1){if(i>Vc){const y=ho*a;let x=Array.from(n.slice(0,y)),C=Array.from(n.slice((i-ho)*a,i*a));return t==="complex64"&&(x=mo(x),C=mo(C)),["["+x.map((I,k)=>fo(I,s[k],t)).join(", ")+", ..., "+C.map((I,k)=>fo(I,s[i-ho+k],t)).join(", ")+"]"]}return["["+(t==="complex64"?mo(n):Array.from(n)).map((y,x)=>fo(y,s[x],t)).join(", ")+"]"]}const c=e.slice(1),l=r.slice(1),h=r[0]*a,d=[];if(i>Vc){for(let b=0;b<ho;b++){const y=b*h,x=y+h;d.push(...va(n.slice(y,x),c,t,l,s,!1))}d.push("...");for(let b=i-ho;b<i;b++){const y=b*h,x=y+h;d.push(...va(n.slice(y,x),c,t,l,s,b===i-1))}}else for(let b=0;b<i;b++){const y=b*h,x=y+h;d.push(...va(n.slice(y,x),c,t,l,s,b===i-1))}const p=u===2?",":"";d[0]="["+(i>0?d[0]+p:"");for(let b=1;b<d.length-1;b++)d[b]=" "+d[b]+p;let f=`,
+`;for(let b=2;b<u;b++)f+=`
+`;return d[d.length-1]=" "+d[d.length-1]+"]"+(o?"":f),d}function mo(n){const e=[];for(let t=0;t<n.length;t+=2)e.push([n[t],n[t+1]]);return e}class Is{constructor(e,t,r){if(this.dtype=t,this.shape=e.slice(),this.size=ne(e),r!=null){const s=r.length;_(s===this.size,()=>`Length of values '${s}' does not match the size inferred by the shape '${this.size}'.`)}if(t==="complex64")throw new Error("complex64 dtype TensorBuffers are not supported. Please create a TensorBuffer for the real and imaginary parts separately and call tf.complex(real, imag).");this.values=r||it(t,this.size),this.strides=dt(e)}set(e,...t){t.length===0&&(t=[0]),_(t.length===this.rank,()=>`The number of provided coordinates (${t.length}) must match the rank (${this.rank})`);const r=this.locToIndex(t);this.values[r]=e}get(...e){e.length===0&&(e=[0]);let t=0;for(const s of e){if(s<0||s>=this.shape[t]){const o=`Requested out of range element at ${e}.   Buffer shape=${this.shape}`;throw new Error(o)}t++}let r=e[e.length-1];for(let s=0;s<e.length-1;++s)r+=this.strides[s]*e[s];return this.values[r]}locToIndex(e){if(this.rank===0)return 0;if(this.rank===1)return e[0];let t=e[e.length-1];for(let r=0;r<e.length-1;++r)t+=this.strides[r]*e[r];return t}indexToLoc(e){if(this.rank===0)return[];if(this.rank===1)return[e];const t=new Array(this.shape.length);for(let r=0;r<t.length-1;++r)t[r]=Math.floor(e/this.strides[r]),e-=t[r]*this.strides[r];return t[t.length-1]=e,t}get rank(){return this.shape.length}toTensor(){return mn().makeTensor(this.values,this.shape,this.dtype)}}let mn=null,bs=null;function I2(n){mn=n}function k2(n){bs=n}class Ze{constructor(e,t,r,s){this.kept=!1,this.isDisposedInternal=!1,this.shape=e.slice(),this.dtype=t||"float32",this.size=ne(e),this.strides=dt(e),this.dataId=r,this.id=s,this.rankType=this.rank<5?this.rank.toString():"higher"}get rank(){return this.shape.length}async buffer(){const e=await this.data();return bs.buffer(this.shape,this.dtype,e)}bufferSync(){return bs.buffer(this.shape,this.dtype,this.dataSync())}async array(){const e=await this.data();return nu(this.shape,e,this.dtype==="complex64")}arraySync(){return nu(this.shape,this.dataSync(),this.dtype==="complex64")}async data(){this.throwIfDisposed();const e=mn().read(this.dataId);if(this.dtype==="string"){const t=await e;try{return t.map(r=>Es(r))}catch{throw new Error("Failed to decode the string bytes into utf-8. To get the original bytes, call tensor.bytes().")}}return e}dataToGPU(e){return this.throwIfDisposed(),mn().readToGPU(this.dataId,e)}dataSync(){this.throwIfDisposed();const e=mn().readSync(this.dataId);if(this.dtype==="string")try{return e.map(t=>Es(t))}catch{throw new Error("Failed to decode the string bytes into utf-8. To get the original bytes, call tensor.bytes().")}return e}async bytes(){this.throwIfDisposed();const e=await mn().read(this.dataId);return this.dtype==="string"?e:new Uint8Array(e.buffer)}dispose(){this.isDisposed||(this.kerasMask&&this.kerasMask.dispose(),mn().disposeTensor(this),this.isDisposedInternal=!0)}get isDisposed(){return this.isDisposedInternal}throwIfDisposed(){if(this.isDisposed)throw new Error("Tensor is disposed.")}print(e=!1){return bs.print(this,e)}clone(){return this.throwIfDisposed(),bs.clone(this)}toString(e=!1){const t=this.dataSync();return N2(t,this.shape,this.dtype,e)}cast(e){return this.throwIfDisposed(),bs.cast(this,e)}variable(e=!0,t,r){return this.throwIfDisposed(),mn().makeVariable(this,e,t,r)}}Object.defineProperty(Ze,Symbol.hasInstance,{value:n=>!!n&&n.data!=null&&n.dataSync!=null&&n.throwIfDisposed!=null});function af(){return ju("Tensor",()=>Ze)}af();class Da extends Ze{constructor(e,t,r,s){super(e.shape,e.dtype,e.dataId,s),this.trainable=t,this.name=r}assign(e){if(e.dtype!==this.dtype)throw new Error(`dtype of the new value (${e.dtype}) and previous value (${this.dtype}) must match`);if(!qe(e.shape,this.shape))throw new Error(`shape of the new value (${e.shape}) and previous value (${this.shape}) must match`);mn().disposeTensor(this),this.dataId=e.dataId,mn().incRef(this,null)}dispose(){mn().disposeVariable(this),this.isDisposedInternal=!0}}Object.defineProperty(Da,Symbol.hasInstance,{value:n=>n instanceof Ze&&n.assign!=null&&n.assign instanceof Function});var Mc;(function(n){n.R0="R0",n.R1="R1",n.R2="R2",n.R3="R3",n.R4="R4",n.R5="R5",n.R6="R6"})(Mc||(Mc={}));var lu;(function(n){n.float32="float32",n.int32="int32",n.bool="int32",n.complex64="complex64"})(lu||(lu={}));var hu;(function(n){n.float32="float32",n.int32="int32",n.bool="bool",n.complex64="complex64"})(hu||(hu={}));var du;(function(n){n.float32="float32",n.int32="float32",n.bool="float32",n.complex64="complex64"})(du||(du={}));var pu;(function(n){n.float32="complex64",n.int32="complex64",n.bool="complex64",n.complex64="complex64"})(pu||(pu={}));const R2={float32:du,int32:lu,bool:hu,complex64:pu};function An(n,e){if(n==="string"||e==="string"){if(n==="string"&&e==="string")return"string";throw new Error(`Can not upcast ${n} with ${e}`)}return R2[n][e]}function Yu(n){return An(n,"int32")}function uf(n){return n!=null&&typeof n=="object"&&"texture"in n&&n.texture instanceof WebGLTexture}function cf(n){return typeof GPUBuffer<"u"&&n!=null&&typeof n=="object"&&"buffer"in n&&n.buffer instanceof GPUBuffer}function Je(n,e){if(n.dtype===e.dtype)return[n,e];const t=An(n.dtype,e.dtype);return[n.cast(t),e.cast(t)]}function _2(n,e){_(n.dtype===e.dtype,()=>`The dtypes of the first(${n.dtype}) and second(${e.dtype}) input must match`)}function lf(n){const e=[];return hf(n,e,new Set),e}function hf(n,e,t){if(n==null)return;if(n instanceof Ze){e.push(n);return}if(!A2(n))return;const r=n;for(const s in r){const o=r[s];t.has(o)||(t.add(o),hf(o,e,t))}}function A2(n){return Array.isArray(n)||typeof n=="object"}function Ri(n){return n.kernelName!=null}class Uc{constructor(){this.registeredVariables={},this.nextTapeNodeId=0,this.numBytes=0,this.numTensors=0,this.numStringTensors=0,this.numDataBuffers=0,this.gradientDepth=0,this.kernelDepth=0,this.scopeStack=[],this.numDataMovesStack=[],this.nextScopeId=0,this.tensorInfo=new WeakMap,this.profiling=!1,this.activeProfile={newBytes:0,newTensors:0,peakBytes:0,kernels:[],result:null,get kernelNames(){return Array.from(new Set(this.kernels.map(e=>e.name)))}}}dispose(){for(const e in this.registeredVariables)this.registeredVariables[e].dispose()}}class ks{constructor(e){this.ENV=e,this.registry={},this.registryFactory={},this.pendingBackendInitId=0,this.state=new Uc}async ready(){if(this.pendingBackendInit!=null)return this.pendingBackendInit.then(()=>{});if(this.backendInstance!=null)return;const e=this.getSortedBackends();for(let t=0;t<e.length;t++){const r=e[t];if(await this.initializeBackend(r).success){await this.setBackend(r);return}}throw new Error("Could not initialize any backends, all backend initializations failed.")}get backend(){if(this.pendingBackendInit!=null)throw new Error(`Backend '${this.backendName}' has not yet been initialized. Make sure to await tf.ready() or await tf.setBackend() before calling other methods`);if(this.backendInstance==null){const{name:e,asyncInit:t}=this.initializeBackendsAndReturnBest();if(t)throw new Error(`The highest priority backend '${e}' has not yet been initialized. Make sure to await tf.ready() or await tf.setBackend() before calling other methods`);this.setBackend(e)}return this.backendInstance}backendNames(){return Object.keys(this.registryFactory)}findBackend(e){if(!(e in this.registry))if(e in this.registryFactory){const{asyncInit:t}=this.initializeBackend(e);if(t)return null}else return null;return this.registry[e]}findBackendFactory(e){return e in this.registryFactory?this.registryFactory[e].factory:null}registerBackend(e,t,r=1){return e in this.registryFactory?(yn(`${e} backend was already registered. Reusing existing backend factory.`),!1):(this.registryFactory[e]={factory:t,priority:r},!0)}async setBackend(e){if(this.registryFactory[e]==null)throw new Error(`Backend name '${e}' not found in registry`);if(this.backendName=e,this.registry[e]==null){this.backendInstance=null;const{success:t,asyncInit:r}=this.initializeBackend(e);if(!(r?await t:t))return!1}return this.backendInstance=this.registry[e],this.setupRegisteredKernels(),this.profiler=new w2(this.backendInstance),!0}setupRegisteredKernels(){Pc(this.backendName).forEach(t=>{t.setupFunc!=null&&t.setupFunc(this.backendInstance)})}disposeRegisteredKernels(e){Pc(e).forEach(r=>{r.disposeFunc!=null&&r.disposeFunc(this.registry[e])})}initializeBackend(e){const t=this.registryFactory[e];if(t==null)throw new Error(`Cannot initialize backend ${e}, no registration found.`);try{const r=t.factory();if(r&&!(r instanceof oh)&&typeof r.then=="function"){const s=++this.pendingBackendInitId,o=r.then(a=>s<this.pendingBackendInitId?!1:(this.registry[e]=a,this.pendingBackendInit=null,!0)).catch(a=>(s<this.pendingBackendInitId||(this.pendingBackendInit=null,yn(`Initialization of backend ${e} failed`),yn(a.stack||a.message)),!1));return this.pendingBackendInit=o,{success:o,asyncInit:!0}}else return this.registry[e]=r,{success:!0,asyncInit:!1}}catch(r){return yn(`Initialization of backend ${e} failed`),yn(r.stack||r.message),{success:!1,asyncInit:!1}}}removeBackend(e){if(!(e in this.registryFactory))throw new Error(`${e} backend not found in registry`);this.backendName===e&&this.pendingBackendInit!=null&&this.pendingBackendInitId++,e in this.registry&&(this.disposeRegisteredKernels(e),this.registry[e].dispose(),delete this.registry[e]),delete this.registryFactory[e],this.backendName===e&&(this.pendingBackendInit=null,this.backendName=null,this.backendInstance=null)}getSortedBackends(){if(Object.keys(this.registryFactory).length===0)throw new Error("No backend found in registry.");return Object.keys(this.registryFactory).sort((e,t)=>this.registryFactory[t].priority-this.registryFactory[e].priority)}initializeBackendsAndReturnBest(){const e=this.getSortedBackends();for(let t=0;t<e.length;t++){const r=e[t],{success:s,asyncInit:o}=this.initializeBackend(r);if(o||s)return{name:r,asyncInit:o}}throw new Error("Could not initialize any backends, all backend initializations failed.")}moveData(e,t){const r=this.state.tensorInfo.get(t),s=r.backend,o=this.readSync(t),a=s.refCount(t);s.disposeData(t,!0),r.backend=e,e.move(t,o,r.shape,r.dtype,a),this.shouldCheckForMemLeaks()&&this.state.numDataMovesStack[this.state.numDataMovesStack.length-1]++}tidy(e,t){let r=null;if(t==null){if(typeof e!="function")throw new Error("Please provide a function to tidy()");t=e}else{if(typeof e!="string"&&!(e instanceof String))throw new Error("When calling with two arguments, the first argument to tidy() must be a string");if(typeof t!="function")throw new Error("When calling with two arguments, the 2nd argument to tidy() must be a function");r=e}let s;return this.scopedRun(()=>this.startScope(r),()=>this.endScope(s),()=>(s=t(),s instanceof Promise&&console.error("Cannot return a Promise inside of tidy."),s))}scopedRun(e,t,r){e();try{const s=r();return t(),s}catch(s){throw t(),s}}nextTensorId(){return ks.nextTensorId++}nextVariableId(){return ks.nextVariableId++}clone(e){const t=U.runKernel(Xu,{x:e}),r={x:e},s=a=>({x:()=>{const i="float32",u={x:a},c={dtype:i};return U.runKernel(Ku,u,c)}}),o=[];return this.addTapeNode(this.state.activeScope.name,r,[t],s,o,{}),t}runKernel(e,t,r){if(this.backendName==null&&this.backend,!(uu(e,this.backendName)!=null))throw new Error(`Kernel '${e}' not registered for backend '${this.backendName}'`);return this.runKernelFunc({kernelName:e,inputs:t,attrs:r})}shouldCheckForMemLeaks(){return this.ENV.getBool("IS_TEST")}checkKernelForMemLeak(e,t,r){const s=this.backend.numDataIds();let o=0;r.forEach(u=>{o+=u.dtype==="complex64"?3:1});const a=this.state.numDataMovesStack[this.state.numDataMovesStack.length-1],i=s-t-o-a;if(i>0)throw new Error(`Backend '${this.backendName}' has an internal memory leak (${i} data ids) after running '${e}'`)}runKernelFunc(e){let t,r=[];const s=this.isTapeOn(),o=this.state.numBytes,a=this.state.numTensors;this.shouldCheckForMemLeaks()&&this.state.numDataMovesStack.push(0);let i;this.backendName==null&&this.backend;let u;const c=Ri(e)?e.kernelName:this.state.activeScope!=null?this.state.activeScope.name:"";if(Ri(e)){const{kernelName:f,inputs:b,attrs:y}=e;this.backendName==null&&this.backend;const x=uu(f,this.backendName);_(x!=null,()=>`Cannot find registered kernel '${f}' for backend '${this.backendName}'`),i=()=>{const C=this.backend.numDataIds();u=x.kernelFunc({inputs:b,attrs:y,backend:this.backend});const I=Array.isArray(u)?u:[u];this.shouldCheckForMemLeaks()&&this.checkKernelForMemLeak(f,C,I);const k=I.map(P=>P.rank!=null?P:this.makeTensorFromTensorInfo(P));if(s){const P=this.getTensorsForGradient(f,b,k);r=this.saveTensorsForBackwardMode(P)}return k}}else{const{forwardFunc:f}=e,b=y=>{s&&(r=y.map(x=>this.keep(this.clone(x))))};i=()=>{const y=this.backend.numDataIds();u=this.tidy(()=>f(this.backend,b));const x=Array.isArray(u)?u:[u];return this.shouldCheckForMemLeaks()&&this.checkKernelForMemLeak(c,y,x),x}}const{inputs:l,attrs:h}=e,d=Ri(e)?null:e.backwardsFunc;let p;return this.scopedRun(()=>this.state.kernelDepth++,()=>this.state.kernelDepth--,()=>{!this.ENV.getBool("DEBUG")&&!this.state.profiling?t=i():(p=this.profiler.profileKernel(c,l,()=>i()),this.ENV.getBool("DEBUG")&&this.profiler.logKernelProfile(p),t=p.outputs)}),s&&this.addTapeNode(c,l,t,d,r,h),this.state.profiling&&this.state.activeProfile.kernels.push({name:c,bytesAdded:this.state.numBytes-o,totalBytesSnapshot:this.state.numBytes,tensorsAdded:this.state.numTensors-a,totalTensorsSnapshot:this.state.numTensors,inputShapes:Object.keys(l).map(f=>l[f]!=null?l[f].shape:null),outputShapes:t.map(f=>f.shape),kernelTimeMs:p.timeMs,extraInfo:p.extraInfo}),Array.isArray(u)?t:t[0]}saveTensorsForBackwardMode(e){return e.map(r=>this.keep(this.clone(r)))}getTensorsForGradient(e,t,r){const s=Fc(e);if(s!=null){const o=s.inputsToSave||[],a=s.outputsToSave||[];let i;s.saveAllInputs?(_(Array.isArray(t),()=>"saveAllInputs is true, expected inputs to be an array."),i=Object.keys(t).map(c=>t[c])):i=o.map(c=>t[c]);const u=r.filter((c,l)=>a[l]);return i.concat(u)}return[]}makeTensor(e,t,r,s){if(e==null)throw new Error("Values passed to engine.makeTensor() are null");r=r||"float32",s=s||this.backend;let o=e;r==="string"&&Ya(e[0])&&(o=e.map(u=>Wr(u)));const a=s.write(o,t,r),i=new Ze(t,r,a,this.nextTensorId());if(this.trackTensor(i,s),r==="string"){const u=this.state.tensorInfo.get(a),c=jg(o);this.state.numBytes+=c-u.bytes,u.bytes=c}return i}makeTensorFromDataId(e,t,r,s){r=r||"float32";const o={dataId:e,shape:t,dtype:r};return this.makeTensorFromTensorInfo(o,s)}makeTensorFromTensorInfo(e,t){const{dataId:r,shape:s,dtype:o}=e,a=new Ze(s,o,r,this.nextTensorId());return this.trackTensor(a,t),a}makeVariable(e,t=!0,r,s){r=r||this.nextVariableId().toString(),s!=null&&s!==e.dtype&&(e=e.cast(s));const o=new Da(e,t,r,this.nextTensorId());if(this.state.registeredVariables[o.name]!=null)throw new Error(`Variable with name ${o.name} was already registered`);return this.state.registeredVariables[o.name]=o,this.incRef(o,this.backend),o}trackTensor(e,t){this.state.numTensors++,e.dtype==="string"&&this.state.numStringTensors++;let r=0;e.dtype!=="complex64"&&e.dtype!=="string"&&(r=e.size*Aa(e.dtype)),this.state.numBytes+=r,this.state.tensorInfo.has(e.dataId)||(this.state.numDataBuffers++,this.state.tensorInfo.set(e.dataId,{backend:t||this.backend,dtype:e.dtype,shape:e.shape,bytes:r})),e instanceof Da||this.track(e)}incRef(e,t){this.trackTensor(e,t),this.backend.incRef(e.dataId)}removeDataId(e,t){this.state.tensorInfo.has(e)&&this.state.tensorInfo.get(e).backend===t&&(this.state.tensorInfo.delete(e),this.state.numDataBuffers--)}disposeTensor(e){if(!this.state.tensorInfo.has(e.dataId))return;const t=this.state.tensorInfo.get(e.dataId);if(this.state.numTensors--,e.dtype==="string"&&(this.state.numStringTensors--,this.state.numBytes-=t.bytes),e.dtype!=="complex64"&&e.dtype!=="string"){const r=e.size*Aa(e.dtype);this.state.numBytes-=r}t.backend.disposeData(e.dataId)&&this.removeDataId(e.dataId,t.backend)}disposeVariables(){for(const e in this.state.registeredVariables){const t=this.state.registeredVariables[e];this.disposeVariable(t)}}disposeVariable(e){this.disposeTensor(e),this.state.registeredVariables[e.name]!=null&&delete this.state.registeredVariables[e.name]}memory(){const e=this.backend.memory();return e.numTensors=this.state.numTensors,e.numDataBuffers=this.state.numDataBuffers,e.numBytes=this.state.numBytes,this.state.numStringTensors>0&&(e.unreliable=!0,e.reasons==null&&(e.reasons=[]),e.reasons.push("Memory usage by string tensors is approximate (2 bytes per character)")),e}async profile(e){this.state.profiling=!0;const t=this.state.numBytes,r=this.state.numTensors;this.state.activeProfile.kernels=[],this.state.activeProfile.result=await e(),this.state.profiling=!1,this.state.activeProfile.peakBytes=Math.max(...this.state.activeProfile.kernels.map(s=>s.totalBytesSnapshot)),this.state.activeProfile.newBytes=this.state.numBytes-t,this.state.activeProfile.newTensors=this.state.numTensors-r;for(const s of this.state.activeProfile.kernels)s.kernelTimeMs=await s.kernelTimeMs,s.extraInfo=await s.extraInfo;return this.state.activeProfile}isTapeOn(){return this.state.gradientDepth>0&&this.state.kernelDepth===0}addTapeNode(e,t,r,s,o,a){const i={id:this.state.nextTapeNodeId++,kernelName:e,inputs:t,outputs:r,saved:o},u=Fc(e);u!=null&&(s=u.gradFunc),s!=null&&(i.gradient=c=>(c=c.map((l,h)=>{if(l==null){const d=r[h],p=fr(d.size,d.dtype);return this.makeTensor(p,d.shape,d.dtype)}return l}),s(c.length>1?c:c[0],o,a))),this.state.activeTape.push(i)}keep(e){return e.kept=!0,e}startTape(){this.state.gradientDepth===0&&(this.state.activeTape=[]),this.state.gradientDepth++}endTape(){this.state.gradientDepth--}startScope(e){const t={track:[],name:"unnamed scope",id:this.state.nextScopeId++};e&&(t.name=e),this.state.scopeStack.push(t),this.state.activeScope=t}endScope(e){const t=lf(e),r=new Set(t.map(o=>o.id));for(let o=0;o<this.state.activeScope.track.length;o++){const a=this.state.activeScope.track[o];!a.kept&&!r.has(a.id)&&a.dispose()}const s=this.state.scopeStack.pop();this.state.activeScope=this.state.scopeStack.length===0?null:this.state.scopeStack[this.state.scopeStack.length-1],t.forEach(o=>{!o.kept&&o.scopeId===s.id&&this.track(o)})}gradients(e,t,r,s=!1){if(_(t.length>0,()=>"gradients() received an empty list of xs."),r!=null&&r.dtype!=="float32")throw new Error(`dy must have 'float32' dtype, but has '${r.dtype}'`);const o=this.scopedRun(()=>this.startTape(),()=>this.endTape(),()=>this.tidy("forward",e));_(o instanceof Ze,()=>"The result y returned by f() must be a tensor.");const a=C2(this.state.activeTape,t,o);if(!s&&a.length===0&&t.length>0)throw new Error("Cannot compute gradient of y=f(x) with respect to x. Make sure that the f you passed encloses all operations that lead from x to y.");return this.tidy("backward",()=>{const i={};i[o.id]=r??O2(o.shape),T2(i,a,c=>this.tidy(c),D2);const u=t.map(c=>i[c.id]);return this.state.gradientDepth===0&&(this.state.activeTape.forEach(c=>{for(const l of c.saved)l.dispose()}),this.state.activeTape=null),{value:o,grads:u}})}customGrad(e){return _(eu(e),()=>"The f passed in customGrad(f) must be a function."),(...t)=>{_(t.every(i=>i instanceof Ze),()=>"The args passed in customGrad(f)(x1, x2,...) must all be tensors");let r;const s={};t.forEach((i,u)=>{s[u]=i});const o=(i,u)=>(r=e(...t,u),_(r.value instanceof Ze,()=>"The function f passed in customGrad(f) must return an object where `obj.value` is a tensor"),_(eu(r.gradFunc),()=>"The function f passed in customGrad(f) must return an object where `obj.gradFunc` is a function."),r.value),a=(i,u)=>{const c=r.gradFunc(i,u),l=Array.isArray(c)?c:[c];_(l.length===t.length,()=>"The function f passed in customGrad(f) must return an object where `obj.gradFunc` is a function that returns the same number of tensors as inputs passed to f(...)."),_(l.every(d=>d instanceof Ze),()=>"The function f passed in customGrad(f) must return an object where `obj.gradFunc` is a function that returns a list of only tensors.");const h={};return l.forEach((d,p)=>{h[p]=()=>d}),h};return this.runKernelFunc({forwardFunc:o,backwardsFunc:a,inputs:s})}}readSync(e){return this.state.tensorInfo.get(e).backend.readSync(e)}read(e){return this.state.tensorInfo.get(e).backend.read(e)}readToGPU(e,t){return this.state.tensorInfo.get(e).backend.readToGPU(e,t)}async time(e){const t=fn(),r=await this.backend.time(e);return r.wallMs=fn()-t,r}track(e){return this.state.activeScope!=null&&(e.scopeId=this.state.activeScope.id,this.state.activeScope.track.push(e)),e}get registeredVariables(){return this.state.registeredVariables}reset(){this.pendingBackendInitId++,this.state.dispose(),this.ENV.reset(),this.state=new Uc;for(const e in this.registry)this.disposeRegisteredKernels(e),this.registry[e].dispose(),delete this.registry[e];this.backendName=null,this.backendInstance=null,this.pendingBackendInit=null}}ks.nextTensorId=0;ks.nextVariableId=0;function O2(n){const e=ih(ne(n),"float32");return U.makeTensor(e,n,"float32")}function df(){const n=ch();if(n._tfengine==null){const e=new Xg(n);n._tfengine=new ks(e)}return Zg(n._tfengine.ENV),I2(()=>n._tfengine),n._tfengine}const U=df();function D2(n,e){const t={a:n,b:e};return U.runKernel(Hu,t)}function F2(){return typeof navigator<"u"&&navigator!=null}function pf(n){if(n||F2()){if(n||(n=navigator),n.product==="ReactNative")return!0;const e=n.userAgent||n.vendor||(typeof window<"u"?window.opera:"");if(!e){const t=n;return t.userAgentData&&t.userAgentData.mobile}return/(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino/i.test(e)||/1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test(e.substr(0,4))}return!1}function ff(){return typeof window<"u"&&window.document!=null||typeof WorkerGlobalScope<"u"}const It=j();It.registerFlag("DEBUG",()=>!1,n=>{n&&console.warn("Debugging mode is ON. The output of every math call will be downloaded to CPU and checked for NaNs. This significantly impacts performance.")});It.registerFlag("IS_BROWSER",()=>ff());It.registerFlag("IS_NODE",()=>typeof process<"u"&&typeof process.versions<"u"&&typeof process.versions.node<"u");It.registerFlag("IS_CHROME",()=>typeof navigator<"u"&&navigator!=null&&navigator.userAgent!=null&&/Chrome/.test(navigator.userAgent)&&/Google Inc/.test(navigator.vendor));It.registerFlag("IS_SAFARI",()=>typeof navigator<"u"&&navigator!=null&&navigator.userAgent!=null&&/Safari/.test(navigator.userAgent)&&/Apple/.test(navigator.vendor));It.registerFlag("PROD",()=>!1);It.registerFlag("TENSORLIKE_CHECK_SHAPE_CONSISTENCY",()=>It.getBool("DEBUG"));It.registerFlag("DEPRECATION_WARNINGS_ENABLED",()=>!0);It.registerFlag("IS_TEST",()=>!1);It.registerFlag("CHECK_COMPUTATION_FOR_ERRORS",()=>It.getBool("DEBUG"));It.registerFlag("WRAP_TO_IMAGEBITMAP",()=>!1);It.registerFlag("CANVAS2D_WILL_READ_FREQUENTLY_FOR_GPU",()=>!1);It.registerFlag("USE_SETTIMEOUTCUSTOM",()=>!1);function br(n,e){let t=n;if(on(n))return e==="string"?[]:[n.length];if(uf(n)){const s=n.channels||"RGBA";return[n.height,n.width*s.length]}else if(cf(n))return[n.buffer.size/(e==null?4:Aa(e))];if(!Array.isArray(n))return[];const r=[];for(;Array.isArray(t)||on(t)&&e!=="string";)r.push(t.length),t=t[0];return Array.isArray(n)&&j().getBool("TENSORLIKE_CHECK_SHAPE_CONSISTENCY")&&mf(n,r,[]),r}function mf(n,e,t){if(t=t||[],!Array.isArray(n)&&!on(n)){_(e.length===0,()=>`Element arr[${t.join("][")}] is a primitive, but should be an array/TypedArray of ${e[0]} elements`);return}_(e.length>0,()=>`Element arr[${t.join("][")}] should be a primitive, but is an array of ${n.length} elements`),_(n.length===e[0],()=>`Element arr[${t.join("][")}] should have ${e[0]} elements, but has ${n.length} elements`);const r=e.slice(1);for(let s=0;s<n.length;++s)mf(n[s],r,t.concat(s))}function Wc(n,e,t,r){if(n!=="string_or_numeric"){if(n==null)throw new Error("Expected dtype cannot be null.");if(n!=="numeric"&&n!==e||n==="numeric"&&e==="string")throw new Error(`Argument '${t}' passed to '${r}' must be ${n} tensor, but got ${e} tensor`)}}function E(n,e,t,r="numeric"){if(n instanceof af())return Wc(r,n.dtype,e,t),n;let s=Ao(n);if(s!=="string"&&["bool","int32","float32"].indexOf(r)>=0&&(s=r),Wc(r,s,e,t),n==null||!on(n)&&!Array.isArray(n)&&typeof n!="number"&&typeof n!="boolean"&&typeof n!="string"){const u=n==null?"null":n.constructor.name;throw new Error(`Argument '${e}' passed to '${t}' must be a Tensor or TensorLike, but got '${u}'`)}const o=br(n,s);!on(n)&&!Array.isArray(n)&&(n=[n]);const i=s!=="string"?Za(n,s):jr(n,[],!0);return U.makeTensor(i,o,s)}function Fa(n,e,t,r="numeric"){if(!Array.isArray(n))throw new Error(`Argument ${e} passed to ${t} must be a \`Tensor[]\` or \`TensorLike[]\``);return n.map((o,a)=>E(o,`${e}[${a}]`,t,r))}const gf="__op";function L(n){const e=Object.keys(n);if(e.length!==1)throw new Error(`Please provide an object with a single key (operation name) mapping to a function. Got an object with ${e.length} keys.`);let t=e[0];const r=n[t];t.endsWith("_")&&(t=t.substring(0,t.length-1)),t=t+gf;const s=(...o)=>{U.startScope(t);try{const a=r(...o);return Gr(a)&&console.error("Cannot return a Promise inside of tidy."),U.endScope(a),a}catch(a){throw U.endScope(null),a}};return Object.defineProperty(s,"name",{value:t,configurable:!0}),s}function P2(n,e){const t=E(n,"real","complex"),r=E(e,"imag","complex");Ht(t.shape,r.shape,`real and imag shapes, ${t.shape} and ${r.shape}, must match in call to tf.complex().`);const s={real:t,imag:r};return U.runKernel(Ah,s)}const mr=L({complex_:P2});function vr(n,e,t,r){if(r==null)r=Ao(n);else if(r==="complex64")throw new Error("Cannot construct a complex64 tensor directly. Please use tf.complex(real, imag).");if(cf(n)||uf(n)){if(r!=="float32"&&r!=="int32")throw new Error(`Creating tensor from GPU data only supports 'float32'|'int32' dtype, while the dtype is ${r}.`);return U.backend.createTensorFromGPUData(n,e||t,r)}if(!on(n)&&!Array.isArray(n)&&typeof n!="number"&&typeof n!="boolean"&&typeof n!="string")throw new Error("values passed to tensor(values) must be a number/boolean/string or an array of numbers/booleans/strings, or a TypedArray");if(e!=null){Kt(e);const s=ne(e),o=ne(t);_(s===o,()=>`Based on the provided shape, [${e}], the tensor should have ${s} values but has ${o}`);for(let a=0;a<t.length;++a){const i=t[a],u=a===t.length-1?i!==ne(e.slice(a)):!0;_(t[a]===e[a]||!u,()=>`Error creating a new Tensor. Inferred shape (${t}) does not match the provided shape (${e}). `)}}return!on(n)&&!Array.isArray(n)&&(n=[n]),e=e||t,n=r!=="string"?Za(n,r):jr(n,[],!0),U.makeTensor(n,e,r)}function Rn(n,e,t){const r=br(n,t);return vr(n,e,r,t)}const Hr={float32:4,float16:2,int32:4,uint16:2,uint8:1,bool:1,complex64:8};class wn{static join(e){return new wn(e).slice()}constructor(e){if(this.shards=[],this.previousShardIndex=0,e==null||(e instanceof Array||(e=[e]),e=e.map(r=>on(r)?r.buffer:r),e.length===0))return;this.bufferUniformSize=e[0].byteLength;let t=0;for(let r=0;r<e.length;r++){const s=e[r];r!==e.length-1&&s.byteLength!==this.bufferUniformSize&&(this.bufferUniformSize=void 0);const o=t+s.byteLength;this.shards.push({buffer:s,start:t,end:o}),t=o}this.shards.length===0&&(this.byteLength=0),this.byteLength=this.shards[this.shards.length-1].end}slice(e=0,t=this.byteLength){if(this.shards.length===0)return new ArrayBuffer(0);if(e=isNaN(Number(e))?0:e,t=isNaN(Number(t))?0:t,e=Math.max(0,e),t=Math.min(this.byteLength,t),t<=e)return new ArrayBuffer(0);const r=this.findShardForByte(e);if(r===-1)throw new Error(`Could not find start shard for byte ${e}`);const s=t-e,o=new ArrayBuffer(s),a=new Uint8Array(o);let i=0;for(let u=r;u<this.shards.length;u++){const c=this.shards[u],h=e+i-c.start,d=i,f=Math.min(t,c.end)-c.start,b=new Uint8Array(c.buffer,h,f-h);if(a.set(b,d),i+=b.length,t<c.end)break}return o}findShardForByte(e){if(this.shards.length===0||e<0||e>=this.byteLength)return-1;if(this.bufferUniformSize!=null)return this.previousShardIndex=Math.floor(e/this.bufferUniformSize),this.previousShardIndex;function t(s){return e<s.start?-1:e>=s.end?1:0}if(t(this.shards[this.previousShardIndex])===0)return this.previousShardIndex;const r=L2(this.shards,t);return r===-1?-1:(this.previousShardIndex=r,this.previousShardIndex)}}function L2(n,e){let t=0,r=n.length;for(;t<=r;){const s=Math.floor((r-t)/2)+t,o=e(n[s]);if(o===0)return s;o<0?r=s:t=s+1}return-1}function sr(){return U}function we(n,e){return U.tidy(n,e)}function Xe(n){lf(n).forEach(t=>t.dispose())}function In(n){return U.keep(n)}function B2(){return U.ready()}function V2(){return U.backendName}function M2(n,e,t=1){return U.registerBackend(n,e,t)}function U2(){return U.backend}const gr=4;async function W2(n,e){const t=[],r=[],s=Array.isArray(n)?n.map(a=>a.name):Object.keys(n);for(let a=0;a<s.length;++a){const i=s[a],u=Array.isArray(n)?n[a].tensor:n[i];if(u.dtype!=="float32"&&u.dtype!=="int32"&&u.dtype!=="bool"&&u.dtype!=="string"&&u.dtype!=="complex64")throw new Error(`Unsupported dtype in weight '${i}': ${u.dtype}`);const c={name:i,shape:u.shape,dtype:u.dtype};if(u.dtype==="string"){const l=new Promise(async h=>{const d=await u.bytes(),p=d.reduce((y,x)=>y+x.length,0)+gr*d.length,f=new Uint8Array(p);let b=0;for(let y=0;y<d.length;y++){const x=d[y],C=new Uint8Array(new Uint32Array([x.length]).buffer);f.set(C,b),b+=gr,f.set(x,b),b+=x.length}h(f)});r.push(l)}else r.push(u.data());e!=null&&(c.group=e),t.push(c)}const o=await Promise.all(r);return{data:j2(o),specs:t}}function yf(n,e){const t=new wn(n),r={};let s=0;for(const o of e){const a=z2(o,(i,u)=>t.slice(s+i,s+u));r[o.name]=xf(o,t.slice(s,s+a)),s+=a}return r}function z2(n,e){const t=ne(n.shape);let r;if("quantization"in n){const s=n.quantization;r=Hr[s.dtype]}else if(n.dtype==="string"){let s=0;for(let o=0;o<t;o++)s+=gr+new Uint32Array(e(s,s+gr))[0];return s}else r=Hr[n.dtype];return t*r}async function G2(n,e){const t=ne(n.shape);let r;if("quantization"in n){const s=n.quantization;r=Hr[s.dtype]}else if(n.dtype==="string"){let s=0;for(let o=0;o<t;o++)s+=gr+new Uint32Array(await e(s,s+gr))[0];return s}else r=Hr[n.dtype];return t*r}function xf(n,e){const t=n.name,r=n.dtype,s=n.shape,o=ne(s);let a,i=0;if("quantization"in n){const u=n.quantization;if(u.dtype==="uint8"||u.dtype==="uint16"){if(!("min"in u&&"scale"in u))throw new Error(`Weight ${n.name} with quantization ${u.dtype} doesn't have corresponding metadata min and scale.`)}else if(u.dtype==="float16"){if(r!=="float32")throw new Error(`Weight ${n.name} is quantized with ${u.dtype} which only supports weights of type float32 not ${r}.`)}else throw new Error(`Weight ${n.name} has unknown quantization dtype ${u.dtype}. Supported quantization dtypes are: 'uint8', 'uint16', and 'float16'.`);const c=Hr[u.dtype],l=u.dtype==="uint8"?new Uint8Array(e):new Uint16Array(e);if(r==="float32")if(u.dtype==="uint8"||u.dtype==="uint16"){a=new Float32Array(l.length);for(let h=0;h<l.length;h++){const d=l[h];a[h]=d*u.scale+u.min}}else if(u.dtype==="float16")a=Z2()(l);else throw new Error(`Unsupported quantization type ${u.dtype} for weight type float32.`);else if(r==="int32"){if(u.dtype!=="uint8"&&u.dtype!=="uint16")throw new Error(`Unsupported quantization type ${u.dtype} for weight type int32.`);a=new Int32Array(l.length);for(let h=0;h<l.length;h++){const d=l[h];a[h]=Math.round(d*u.scale+u.min)}}else throw new Error(`Unsupported dtype in weight '${t}': ${r}`);i+=o*c}else if(r==="string"){const u=ne(n.shape);a=[];for(let c=0;c<u;c++){const l=new Uint32Array(e.slice(i,i+gr))[0];i+=gr;const h=new Uint8Array(e.slice(i,i+l));a.push(h),i+=l}}else{const u=Hr[r];if(r==="float32")a=new Float32Array(e);else if(r==="int32")a=new Int32Array(e);else if(r==="bool")a=new Uint8Array(e);else if(r==="complex64"){a=new Float32Array(e);const c=new Float32Array(a.length/2),l=new Float32Array(a.length/2);for(let f=0;f<c.length;f++)c[f]=a[f*2],l[f]=a[f*2+1];const h=Rn(c,s,"float32"),d=Rn(l,s,"float32"),p=mr(h,d);return h.dispose(),d.dispose(),p}else throw new Error(`Unsupported dtype in weight '${t}': ${r}`);i+=o*u}return Rn(a,s,r)}async function zc(n,e,t){let r=new Uint8Array(e);for(;r.byteLength<t;){const{done:s,value:o}=await n.read();if(s&&o==null){const i=t-r.byteLength;throw new Error(`Reader is done but ${i} bytes are still expected`)}const a=new Uint8Array(r.length+o.byteLength);a.set(r,0),a.set(new Uint8Array(o),r.length),r=a}return r.buffer}async function bf(n,e){const t={},r=n.getReader();let s=new ArrayBuffer(0);for(const o of e){const a=await G2(o,async(c,l)=>(s=await zc(r,s,l),s.slice(c,l)));s=await zc(r,s,a);const i=s.slice(0,a);s=s.slice(a);const u=xf(o,i);if(t[o.name]=u,V2()==="webgpu"){const c=U2();"uploadToGPU"in c&&ne(u.shape)>=j().get("WEBGPU_CPU_HANDOFF_SIZE_THRESHOLD")&&c.uploadToGPU(u.dataId)}}return t}function j2(n){if(n===null)throw new Error(`Invalid input value: ${JSON.stringify(n)}`);let e=0;const t=[];n.forEach(o=>{if(e+=o.byteLength,t.push(o.byteLength===o.buffer.byteLength?o:new o.constructor(o)),!(o instanceof Float32Array||o instanceof Int32Array||o instanceof Uint8Array))throw new Error(`Unsupported TypedArray subtype: ${o.constructor.name}`)});const r=new Uint8Array(e);let s=0;return t.forEach(o=>{r.set(new Uint8Array(o.buffer),s),s+=o.byteLength}),r.buffer}const Qu=typeof Buffer<"u"&&(typeof Blob>"u"||typeof atob>"u"||typeof btoa>"u");function Gc(n){return Qu?Buffer.byteLength(n,"utf8"):new Blob([n]).size}function H2(n){if(Qu)return Buffer.from(n).toString("base64");const e=new Uint8Array(n);let t="";for(let r=0,s=e.length;r<s;r++)t+=String.fromCharCode(e[r]);return btoa(t)}function K2(n){if(Qu){const r=Buffer.from(n,"base64");return r.buffer.slice(r.byteOffset,r.byteOffset+r.byteLength)}const e=atob(n),t=new Uint8Array(e.length);for(let r=0;r<e.length;++r)t.set([e.charCodeAt(r)],r);return t.buffer}function X2(n){return wn.join(n)}function jc(n){for(n=n.trim();n.endsWith("/");)n=n.slice(0,n.length-1);const t=n.split("/");return t[t.length-1]}function vf(n,e){const t={modelTopology:n.modelTopology,format:n.format,generatedBy:n.generatedBy,convertedBy:n.convertedBy,weightsManifest:e};return n.signature!=null&&(t.signature=n.signature),n.userDefinedMetadata!=null&&(t.userDefinedMetadata=n.userDefinedMetadata),n.modelInitializer!=null&&(t.modelInitializer=n.modelInitializer),n.initializerSignature!=null&&(t.initializerSignature=n.initializerSignature),n.trainingConfig!=null&&(t.trainingConfig=n.trainingConfig),t}function wf(n,e,t){const r={modelTopology:n.modelTopology,format:n.format,generatedBy:n.generatedBy,convertedBy:n.convertedBy};if(n.trainingConfig!=null&&(r.trainingConfig=n.trainingConfig),n.weightsManifest!=null){if(!e)throw new Error("modelJSON has weightsManifest but weightSpecs is null");if(!t)throw new Error("modelJSON has weightsManifest but weightData is null");r.weightSpecs=e,r.weightData=t}return n.signature!=null&&(r.signature=n.signature),n.userDefinedMetadata!=null&&(r.userDefinedMetadata=n.userDefinedMetadata),n.modelInitializer!=null&&(r.modelInitializer=n.modelInitializer),n.initializerSignature!=null&&(r.initializerSignature=n.initializerSignature),r}async function Zu(n,e){let t,r;return n.weightsManifest!=null&&([t,r]=await e(n.weightsManifest)),wf(n,t,r)}function Oo(n){if(n.modelTopology instanceof ArrayBuffer)throw new Error("Expected JSON model topology, received ArrayBuffer.");return{dateSaved:new Date,modelTopologyType:"JSON",modelTopologyBytes:n.modelTopology==null?0:Gc(JSON.stringify(n.modelTopology)),weightSpecsBytes:n.weightSpecs==null?0:Gc(JSON.stringify(n.weightSpecs)),weightDataBytes:n.weightData==null?0:new wn(n.weightData).byteLength}}function fu(n){const e=[];for(const t of n)e.push(...t.weights);return e}function q2(){const n=t=>{let r=t<<13,s=0;for(;(r&8388608)===0;)s-=8388608,r<<=1;return r&=-8388609,s+=947912704,r|s},e=new Uint32Array(2048);e[0]=0;for(let t=1;t<1024;t++)e[t]=n(t);for(let t=1024;t<2048;t++)e[t]=939524096+(t-1024<<13);return e}function Y2(){const n=new Uint32Array(64);n[0]=0,n[31]=1199570944,n[32]=2147483648,n[63]=3347054592;for(let e=1;e<31;e++)n[e]=e<<23;for(let e=33;e<63;e++)n[e]=2147483648+(e-32<<23);return n}function Q2(){const n=new Uint32Array(64);for(let e=0;e<64;e++)n[e]=1024;return n[0]=n[32]=0,n}function Z2(){const n=q2(),e=Y2(),t=Q2();return r=>{const s=new ArrayBuffer(4*r.length),o=new Uint32Array(s);for(let a=0;a<r.length;a++){const i=r[a],u=n[t[i>>10]+(i&1023)]+e[i>>10];o[a]=u}return new Float32Array(s)}}class Ke{constructor(){this.saveRouters=[],this.loadRouters=[]}static getInstance(){return Ke.instance==null&&(Ke.instance=new Ke),Ke.instance}static registerSaveRouter(e){Ke.getInstance().saveRouters.push(e)}static registerLoadRouter(e){Ke.getInstance().loadRouters.push(e)}static getSaveHandlers(e){return Ke.getHandlers(e,"save")}static getLoadHandlers(e,t){return Ke.getHandlers(e,"load",t)}static getHandlers(e,t,r){const s=[];return(t==="load"?Ke.getInstance().loadRouters:Ke.getInstance().saveRouters).forEach(a=>{const i=a(e,r);i!==null&&s.push(i)}),s}}const J2=n=>Ke.registerSaveRouter(n),e0=n=>Ke.registerLoadRouter(n),t0=n=>Ke.getSaveHandlers(n),n0=(n,e)=>Ke.getLoadHandlers(n,e);const mu="tensorflowjs",gu=1,Mr="models_store",ir="model_info_store";function $f(){if(!j().getBool("IS_BROWSER"))throw new Error("Failed to obtain IndexedDB factory because the current environmentis not a web browser.");const n=typeof window>"u"?self:window,e=n.indexedDB||n.mozIndexedDB||n.webkitIndexedDB||n.msIndexedDB||n.shimIndexedDB;if(e==null)throw new Error("The current browser does not appear to support IndexedDB.");return e}function yu(n){const e=n.result;e.createObjectStore(Mr,{keyPath:"modelPath"}),e.createObjectStore(ir,{keyPath:"modelPath"})}class Kr{constructor(e){if(this.indexedDB=$f(),e==null||!e)throw new Error("For IndexedDB, modelPath must not be null, undefined or empty.");this.modelPath=e}async save(e){if(e.modelTopology instanceof ArrayBuffer)throw new Error("BrowserLocalStorage.save() does not support saving model topology in binary formats yet.");return this.databaseAction(this.modelPath,e)}async load(){return this.databaseAction(this.modelPath)}databaseAction(e,t){return new Promise((r,s)=>{const o=this.indexedDB.open(mu,gu);o.onupgradeneeded=()=>yu(o),o.onsuccess=()=>{const a=o.result;if(t==null){const i=a.transaction(Mr,"readonly"),c=i.objectStore(Mr).get(this.modelPath);c.onsuccess=()=>{if(c.result==null)return a.close(),s(new Error(`Cannot find model with path '${this.modelPath}' in IndexedDB.`));r(c.result.modelArtifacts)},c.onerror=l=>(a.close(),s(c.error)),i.oncomplete=()=>a.close()}else{t.weightData=wn.join(t.weightData);const i=Oo(t),u=a.transaction(ir,"readwrite");let c=u.objectStore(ir),l;try{l=c.put({modelPath:this.modelPath,modelArtifactsInfo:i})}catch(d){return s(d)}let h;l.onsuccess=()=>{h=a.transaction(Mr,"readwrite");const d=h.objectStore(Mr);let p;try{p=d.put({modelPath:this.modelPath,modelArtifacts:t,modelArtifactsInfo:i})}catch(f){return s(f)}p.onsuccess=()=>r({modelArtifactsInfo:i}),p.onerror=f=>{c=u.objectStore(ir);const b=c.delete(this.modelPath);b.onsuccess=()=>(a.close(),s(p.error)),b.onerror=y=>(a.close(),s(p.error))}},l.onerror=d=>(a.close(),s(l.error)),u.oncomplete=()=>{h==null?a.close():h.oncomplete=()=>a.close()}}},o.onerror=a=>s(o.error)})}}Kr.URL_SCHEME="indexeddb://";const Sf=n=>j().getBool("IS_BROWSER")&&!Array.isArray(n)&&n.startsWith(Kr.URL_SCHEME)?r0(n.slice(Kr.URL_SCHEME.length)):null;Ke.registerSaveRouter(Sf);Ke.registerLoadRouter(Sf);function r0(n){return new Kr(n)}function s0(n){return n.startsWith(Kr.URL_SCHEME)?n.slice(Kr.URL_SCHEME.length):n}class o0{constructor(){this.indexedDB=$f()}async listModels(){return new Promise((e,t)=>{const r=this.indexedDB.open(mu,gu);r.onupgradeneeded=()=>yu(r),r.onsuccess=()=>{const s=r.result,o=s.transaction(ir,"readonly"),i=o.objectStore(ir).getAll();i.onsuccess=()=>{const u={};for(const c of i.result)u[c.modelPath]=c.modelArtifactsInfo;e(u)},i.onerror=u=>(s.close(),t(i.error)),o.oncomplete=()=>s.close()},r.onerror=s=>t(r.error)})}async removeModel(e){return e=s0(e),new Promise((t,r)=>{const s=this.indexedDB.open(mu,gu);s.onupgradeneeded=()=>yu(s),s.onsuccess=()=>{const o=s.result,a=o.transaction(ir,"readwrite"),i=a.objectStore(ir),u=i.get(e);let c;u.onsuccess=()=>{if(u.result==null)return o.close(),r(new Error(`Cannot find model with path '${e}' in IndexedDB.`));{const l=i.delete(e),h=()=>{c=o.transaction(Mr,"readwrite");const p=c.objectStore(Mr).delete(e);p.onsuccess=()=>t(u.result.modelArtifactsInfo),p.onerror=f=>r(u.error)};l.onsuccess=h,l.onerror=d=>(h(),o.close(),r(u.error))}},u.onerror=l=>(o.close(),r(u.error)),a.oncomplete=()=>{c==null?o.close():c.oncomplete=()=>o.close()}},s.onerror=o=>r(s.error)})}}const Vn="/",vs="tensorflowjs_models",Cf="info",a0="model_topology",i0="weight_specs",u0="weight_data",c0="model_metadata";function Tf(n){return{info:[vs,n,Cf].join(Vn),topology:[vs,n,a0].join(Vn),weightSpecs:[vs,n,i0].join(Vn),weightData:[vs,n,u0].join(Vn),modelMetadata:[vs,n,c0].join(Vn)}}function Nf(n){for(const e of Object.values(n))window.localStorage.removeItem(e)}function l0(n){const e=n.split(Vn);if(e.length<3)throw new Error(`Invalid key format: ${n}`);return e.slice(1,e.length-1).join(Vn)}function h0(n){return n.startsWith(Xr.URL_SCHEME)?n.slice(Xr.URL_SCHEME.length):n}class Xr{constructor(e){if(!j().getBool("IS_BROWSER")||typeof window>"u"||typeof window.localStorage>"u")throw new Error("The current environment does not support local storage.");if(this.LS=window.localStorage,e==null||!e)throw new Error("For local storage, modelPath must not be null, undefined or empty.");this.modelPath=e,this.keys=Tf(this.modelPath)}async save(e){if(e.modelTopology instanceof ArrayBuffer)throw new Error("BrowserLocalStorage.save() does not support saving model topology in binary formats yet.");{const t=JSON.stringify(e.modelTopology),r=JSON.stringify(e.weightSpecs),s=Oo(e),o=wn.join(e.weightData);try{this.LS.setItem(this.keys.info,JSON.stringify(s)),this.LS.setItem(this.keys.topology,t),this.LS.setItem(this.keys.weightSpecs,r),this.LS.setItem(this.keys.weightData,H2(o));const a={format:e.format,generatedBy:e.generatedBy,convertedBy:e.convertedBy,signature:e.signature!=null?e.signature:void 0,userDefinedMetadata:e.userDefinedMetadata!=null?e.userDefinedMetadata:void 0,modelInitializer:e.modelInitializer!=null?e.modelInitializer:void 0,initializerSignature:e.initializerSignature!=null?e.initializerSignature:void 0,trainingConfig:e.trainingConfig!=null?e.trainingConfig:void 0};return this.LS.setItem(this.keys.modelMetadata,JSON.stringify(a)),{modelArtifactsInfo:s}}catch{throw Nf(this.keys),new Error(`Failed to save model '${this.modelPath}' to local storage: size quota being exceeded is a possible cause of this failure: modelTopologyBytes=${s.modelTopologyBytes}, weightSpecsBytes=${s.weightSpecsBytes}, weightDataBytes=${s.weightDataBytes}.`)}}}async load(){const e=JSON.parse(this.LS.getItem(this.keys.info));if(e==null)throw new Error(`In local storage, there is no model with name '${this.modelPath}'`);if(e.modelTopologyType!=="JSON")throw new Error("BrowserLocalStorage does not support loading non-JSON model topology yet.");const t={},r=JSON.parse(this.LS.getItem(this.keys.topology));if(r==null)throw new Error(`In local storage, the topology of model '${this.modelPath}' is missing.`);t.modelTopology=r;const s=JSON.parse(this.LS.getItem(this.keys.weightSpecs));if(s==null)throw new Error(`In local storage, the weight specs of model '${this.modelPath}' are missing.`);t.weightSpecs=s;const o=this.LS.getItem(this.keys.modelMetadata);if(o!=null){const i=JSON.parse(o);t.format=i.format,t.generatedBy=i.generatedBy,t.convertedBy=i.convertedBy,i.signature!=null&&(t.signature=i.signature),i.userDefinedMetadata!=null&&(t.userDefinedMetadata=i.userDefinedMetadata),i.modelInitializer!=null&&(t.modelInitializer=i.modelInitializer),i.initializerSignature!=null&&(t.initializerSignature=i.initializerSignature),i.trainingConfig!=null&&(t.trainingConfig=i.trainingConfig)}const a=this.LS.getItem(this.keys.weightData);if(a==null)throw new Error(`In local storage, the binary weight values of model '${this.modelPath}' are missing.`);return t.weightData=K2(a),t}}Xr.URL_SCHEME="localstorage://";const Ef=n=>j().getBool("IS_BROWSER")&&!Array.isArray(n)&&n.startsWith(Xr.URL_SCHEME)?d0(n.slice(Xr.URL_SCHEME.length)):null;Ke.registerSaveRouter(Ef);Ke.registerLoadRouter(Ef);function d0(n){return new Xr(n)}class p0{constructor(){_(j().getBool("IS_BROWSER"),()=>"Current environment is not a web browser"),_(typeof window>"u"||typeof window.localStorage<"u",()=>"Current browser does not appear to support localStorage"),this.LS=window.localStorage}async listModels(){const e={},t=vs+Vn,r=Vn+Cf;for(let s=0;s<this.LS.length;++s){const o=this.LS.key(s);if(o.startsWith(t)&&o.endsWith(r)){const a=l0(o);e[a]=JSON.parse(this.LS.getItem(o))}}return e}async removeModel(e){e=h0(e);const t=Tf(e);if(this.LS.getItem(t.info)==null)throw new Error(`Cannot find model at path '${e}'`);const r=JSON.parse(this.LS.getItem(t.info));return Nf(t),r}}const Ss="://";class vt{constructor(){this.managers={}}static getInstance(){return vt.instance==null&&(vt.instance=new vt),vt.instance}static registerManager(e,t){_(e!=null,()=>"scheme must not be undefined or null."),e.endsWith(Ss)&&(e=e.slice(0,e.indexOf(Ss))),_(e.length>0,()=>"scheme must not be an empty string.");const r=vt.getInstance();_(r.managers[e]==null,()=>`A model store manager is already registered for scheme '${e}'.`),r.managers[e]=t}static getManager(e){const t=vt.getInstance().managers[e];if(t==null)throw new Error(`Cannot find model manager for scheme '${e}'`);return t}static getSchemes(){return Object.keys(vt.getInstance().managers)}}function wa(n){if(n.indexOf(Ss)===-1)throw new Error(`The url string provided does not contain a scheme. Supported schemes are: ${vt.getSchemes().join(",")}`);return{scheme:n.split(Ss)[0],path:n.split(Ss)[1]}}async function If(n,e,t=!1){_(n!==e,()=>`Old path and new path are the same: '${n}'`);const r=Ke.getLoadHandlers(n);_(r.length>0,()=>`Copying failed because no load handler is found for source URL ${n}.`),_(r.length<2,()=>`Copying failed because more than one (${r.length}) load handlers for source URL ${n}.`);const s=r[0],o=Ke.getSaveHandlers(e);_(o.length>0,()=>`Copying failed because no save handler is found for destination URL ${e}.`),_(o.length<2,()=>`Copying failed because more than one (${r.length}) save handlers for destination URL ${e}.`);const a=o[0],i=wa(n).scheme,u=wa(n).path,c=i===wa(n).scheme,l=await s.load();t&&c&&await vt.getManager(i).removeModel(u);const h=await a.save(l);return t&&!c&&await vt.getManager(i).removeModel(u),h.modelArtifactsInfo}async function f0(){const n=vt.getSchemes(),e={};for(const t of n){const r=await vt.getManager(t).listModels();for(const s in r){const o=t+Ss+s;e[o]=r[s]}}return e}async function m0(n){const e=wa(n);return vt.getManager(e.scheme).removeModel(e.path)}async function g0(n,e){return If(n,e,!1)}async function y0(n,e){return If(n,e,!0)}class x0{constructor(){this.messageName="setTimeoutCustom",this.functionRefs=[],this.handledMessageCount=0,this.hasEventListener=!1}fetch(e,t){return fetch(e,t)}now(){return performance.now()}encode(e,t){if(t!=="utf-8"&&t!=="utf8")throw new Error(`Browser's encoder only supports utf-8, but got ${t}`);return this.textEncoder==null&&(this.textEncoder=new TextEncoder),this.textEncoder.encode(e)}decode(e,t){return new TextDecoder(t).decode(e)}setTimeoutCustom(e,t){if(typeof window>"u"||!j().getBool("USE_SETTIMEOUTCUSTOM")){setTimeout(e,t);return}this.functionRefs.push(e),setTimeout(()=>{window.postMessage({name:this.messageName,index:this.functionRefs.length-1},"*")},t),this.hasEventListener||(this.hasEventListener=!0,window.addEventListener("message",r=>{if(r.source===window&&r.data.name===this.messageName){r.stopPropagation();const s=this.functionRefs[r.data.index];s(),this.handledMessageCount++,this.handledMessageCount===this.functionRefs.length&&(this.functionRefs=[],this.handledMessageCount=0)}},!0))}isTypedArray(e){return ef(e)}}if(j().get("IS_BROWSER")){j().setPlatform("browser",new x0);try{vt.registerManager(Xr.URL_SCHEME,new p0)}catch{}try{vt.registerManager(Kr.URL_SCHEME,new o0)}catch{}}const b0={importFetch:()=>require("node-fetch")};let _i;class v0{constructor(){this.util=require("util"),this.textEncoder=new this.util.TextEncoder}fetch(e,t){return j().global.fetch!=null?j().global.fetch(e,t):(_i==null&&(_i=b0.importFetch()),_i(e,t))}now(){const e=process.hrtime();return e[0]*1e3+e[1]/1e6}encode(e,t){if(t!=="utf-8"&&t!=="utf8")throw new Error(`Node built-in encoder only supports utf-8, but got ${t}`);return this.textEncoder.encode(e)}decode(e,t){return e.length===0?"":new this.util.TextDecoder(t).decode(e)}isTypedArray(e){return this.util.types.isFloat32Array(e)||this.util.types.isInt32Array(e)||this.util.types.isUint8Array(e)||this.util.types.isUint8ClampedArray(e)}}j().get("IS_NODE")&&!j().get("IS_BROWSER")&&j().setPlatform("node",new v0);function Ye(n,e="float32",t){return e=e||"float32",Kt(n),new Is(n,e,t)}function w0(n,e){const t=E(n,"x","cast");if(!zg(e))throw new Error(`Failed to cast to unknown dtype ${e}`);if(e==="string"&&t.dtype!=="string"||e!=="string"&&t.dtype==="string")throw new Error("Only strings can be casted to strings");const r={x:t},s={dtype:e};return U.runKernel(Ku,r,s)}const He=L({cast_:w0});function $0(n){const t={x:E(n,"x","clone","string_or_numeric")};return U.runKernel(Xu,t)}const lr=L({clone_:$0});function kf(n,e=!1){console.log(n.toString(e))}df();const S0={buffer:Ye,cast:He,clone:lr,print:kf};k2(S0);function C0(n,e){let t=E(n,"a","add"),r=E(e,"b","add");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel(Hu,s)}const me=L({add_:C0});function T0(n,e){let t=E(n,"a","floorDiv"),r=E(e,"b","floorDiv");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel(ld,s)}const Rf=L({floorDiv_:T0});function N0(n,e){let t=E(n,"a","div"),r=E(e,"b","div");if([t,r]=Je(t,r),t.dtype==="int32"&&r.dtype==="int32")return Rf(t,r);const s={a:t,b:r},o={};return U.runKernel(Zh,s,o)}const ke=L({div_:N0});function E0(n,e){let t=E(n,"a","mul"),r=E(e,"b","mul");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel(Wd,s)}const oe=L({mul_:E0});function I0(n){const e=E(n,"x","abs");if(e.dtype==="complex64"){const t={x:e};return U.runKernel(Oh,t)}else{const t={x:e};return U.runKernel(lh,t)}}const zt=L({abs_:I0});function k0(n){const t={x:E(n,"x","acos")};return U.runKernel(hh,t)}const R0=L({acos_:k0});function _0(n){const t={x:E(n,"x","acosh")};return U.runKernel(dh,t)}const A0=L({acosh_:_0});function O0(n){_(Array.isArray(n),()=>"The argument passed to tf.addN() must be a list of tensors"),_(n.length>=1,()=>`Must pass at least one tensor to tf.addN(), but got ${n.length}`);const e=n.map((s,o)=>E(s,`tensors${o}`,"addN")),t=e[0];e.forEach(s=>{if(s.dtype!==t.dtype)throw new Error("All tensors passed to tf.addN() must have the same dtype")}),e.forEach(s=>{if(!qe(s.shape,t.shape))throw new Error("All tensors passed to tf.addN() must have the same shape")});const r=e;return U.runKernel(ph,r)}const D0=L({addN_:O0});function F0(n,e=null,t=!1){const s={x:E(n,"x","all","bool")},o={axis:e,keepDims:t};return U.runKernel(fh,s,o)}const P0=L({all_:F0});function L0(n,e=null,t=!1){const s={x:E(n,"x","any","bool")},o={axis:e,keepDims:t};return U.runKernel(mh,s,o)}const B0=L({any_:L0});function V0(n,e=0){const r={x:E(n,"x","argMax")},s={axis:e};return U.runKernel(gh,r,s)}const M0=L({argMax_:V0});function U0(n,e=0){const r={x:E(n,"x","argMin")},s={axis:e};return U.runKernel(yh,r,s)}const W0=L({argMin_:U0});function z0(n){const t={x:E(n,"x","asin")};return U.runKernel(xh,t)}const G0=L({asin_:z0});function j0(n){const t={x:E(n,"x","asinh")};return U.runKernel(bh,t)}const H0=L({asinh_:j0});function K0(n){const t={x:E(n,"x","atan")};return U.runKernel(vh,t)}const X0=L({atan_:K0});function q0(n,e){let t=E(n,"a","atan2"),r=E(e,"b","atan2");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel($h,s)}const Y0=L({atan2_:q0});function Q0(n){const t={x:E(n,"x","atanh")};return U.runKernel(wh,t)}const Z0=L({atanh_:Q0});function _f(n,e,t,r,s="NHWC",o){const a=n[3],i=[...e,a],u=Fs(s);return Xt(n,i,t,o,r,null,null,u)}function ns(n,e,t,r,s,o,a="channelsLast"){const[i,u]=vo(e);let c;if(a==="channelsLast")c=[i,u,n[3],n[3]];else if(a==="channelsFirst")c=[i,u,n[1],n[1]];else throw new Error(`Unknown dataFormat ${a}`);return Xt(n,c,t,r,s,o,!1,a)}function Do(n,e,t,r,s,o,a="NDHWC"){const[i,u,c]=xu(e);let l,h;if(a==="NDHWC")h="channelsLast",l=[i,u,c,n[4],n[4]];else if(a==="NCDHW")h="channelsFirst",l=[i,u,c,n[1],n[1]];else throw new Error(`Unknown dataFormat ${a}`);return Fo(n,l,t,r,s,!1,h,o)}function Xt(n,e,t,r,s,o,a=!1,i="channelsLast"){let[u,c,l,h]=[-1,-1,-1,-1];if(i==="channelsLast")[u,c,l,h]=n;else if(i==="channelsFirst")[u,h,c,l]=n;else throw new Error(`Unknown dataFormat ${i}`);const[d,p,,f]=e,[b,y]=vo(t),[x,C]=vo(r),I=Cs(d,x),k=Cs(p,C),{padInfo:P,outHeight:W,outWidth:H}=t3(s,c,l,b,y,I,k,o,i),G=a?f*h:f;let B;return i==="channelsFirst"?B=[u,G,W,H]:i==="channelsLast"&&(B=[u,W,H,G]),{batchSize:u,dataFormat:i,inHeight:c,inWidth:l,inChannels:h,outHeight:W,outWidth:H,outChannels:G,padInfo:P,strideHeight:b,strideWidth:y,filterHeight:d,filterWidth:p,effectiveFilterHeight:I,effectiveFilterWidth:k,dilationHeight:x,dilationWidth:C,inShape:n,outShape:B,filterShape:e}}function Fo(n,e,t,r,s,o=!1,a="channelsLast",i){let[u,c,l,h,d]=[-1,-1,-1,-1,-1];if(a==="channelsLast")[u,c,l,h,d]=n;else if(a==="channelsFirst")[u,d,c,l,h]=n;else throw new Error(`Unknown dataFormat ${a}`);const[p,f,b,,y]=e,[x,C,I]=xu(t),[k,P,W]=xu(r),H=Cs(p,k),G=Cs(f,P),B=Cs(b,W),{padInfo:V,outDepth:R,outHeight:q,outWidth:te}=n3(s,c,l,h,x,C,I,H,G,B,i),he=o?y*d:y;let de;return a==="channelsFirst"?de=[u,he,R,q,te]:a==="channelsLast"&&(de=[u,R,q,te,he]),{batchSize:u,dataFormat:a,inDepth:c,inHeight:l,inWidth:h,inChannels:d,outDepth:R,outHeight:q,outWidth:te,outChannels:he,padInfo:V,strideDepth:x,strideHeight:C,strideWidth:I,filterDepth:p,filterHeight:f,filterWidth:b,effectiveFilterDepth:H,effectiveFilterHeight:G,effectiveFilterWidth:B,dilationDepth:k,dilationHeight:P,dilationWidth:W,inShape:n,outShape:de,filterShape:e}}function J0(n,e,t,r,s){r==null&&(r=Ju(n,e,t));const o=n[0],a=n[1],i=wo((o-e+2*r)/t+1,s),u=wo((a-e+2*r)/t+1,s);return[i,u]}function e3(n,e,t,r,s,o){s==null&&(s=Ju(n,e[0],r[0]));const a=[0,0,0,t];for(let i=0;i<3;i++)n[i]+2*s>=e[i]&&(a[i]=wo((n[i]-e[i]+2*s)/r[i]+1,o));return a}function Ju(n,e,t,r=1){const s=Cs(e,r);return Math.floor((n[0]*(t-1)-t+s)/2)}function vo(n){return typeof n=="number"?[n,n,n]:n.length===2?[n[0],n[1],1]:n}function xu(n){return typeof n=="number"?[n,n,n]:n}function Cs(n,e){return e<=1?n:n+(n-1)*(e-1)}function t3(n,e,t,r,s,o,a,i,u){let c,l,h;if(typeof n=="number"){c={top:n,bottom:n,left:n,right:n,type:n===0?"VALID":"NUMBER"};const p=J0([e,t],o,r,n,i);l=p[0],h=p[1]}else if(n==="same"){l=Math.ceil(e/r),h=Math.ceil(t/s);const d=Math.max(0,(l-1)*r+o-e),p=Math.max(0,(h-1)*s+a-t),f=Math.floor(d/2),b=d-f,y=Math.floor(p/2),x=p-y;c={top:f,bottom:b,left:y,right:x,type:"SAME"}}else if(n==="valid")c={top:0,bottom:0,left:0,right:0,type:"VALID"},l=Math.ceil((e-o+1)/r),h=Math.ceil((t-a+1)/s);else if(typeof n=="object"){const d=u==="channelsLast"?n[1][0]:n[2][0],p=u==="channelsLast"?n[1][1]:n[2][1],f=u==="channelsLast"?n[2][0]:n[3][0],b=u==="channelsLast"?n[2][1]:n[3][1];c={top:d,bottom:p,left:f,right:b,type:d===0&&p===0&&f===0&&b===0?"VALID":"EXPLICIT"},l=wo((e-o+d+p)/r+1,i),h=wo((t-a+f+b)/s+1,i)}else throw Error(`Unknown padding parameter: ${n}`);return{padInfo:c,outHeight:l,outWidth:h}}function n3(n,e,t,r,s,o,a,i,u,c,l){let h,d,p,f;if(n==="valid"&&(n=0),typeof n=="number"){h={top:n,bottom:n,left:n,right:n,front:n,back:n,type:n===0?"VALID":"NUMBER"};const y=e3([e,t,r,1],[i,u,c],1,[s,o,a],n,l);d=y[0],p=y[1],f=y[2]}else if(n==="same"){d=Math.ceil(e/s),p=Math.ceil(t/o),f=Math.ceil(r/a);const b=(d-1)*s+i-e,y=(p-1)*o+u-t,x=(f-1)*a+c-r,C=Math.floor(b/2),I=b-C,k=Math.floor(y/2),P=y-k,W=Math.floor(x/2),H=x-W;h={top:k,bottom:P,left:W,right:H,front:C,back:I,type:"SAME"}}else throw Error(`Unknown padding parameter: ${n}`);return{padInfo:h,outDepth:d,outHeight:p,outWidth:f}}function wo(n,e){if(!e)return Math.trunc(n);switch(e){case"round":return Math.round(n);case"ceil":return Math.ceil(n);case"floor":return Math.floor(n);default:throw new Error(`Unknown roundingMode ${e}`)}}function $o(n){const[e,t,r]=vo(n);return e===1&&t===1&&r===1}function Bt(n,e){return $o(n)||$o(e)}function qr(n){return vo(n).every(e=>e>0)}function Fs(n){if(n==="NHWC")return"channelsLast";if(n==="NCHW")return"channelsFirst";throw new Error(`Unknown dataFormat ${n}`)}function an(n,e,t){if(t!=null){if(typeof e=="string")throw Error(`Error in ${n}: pad must be an integer when using dimRoundingMode ${t} but got pad ${e}.`);if(typeof e=="number")_(Ns(e),()=>`Error in ${n}: pad must be an integer when using dimRoundingMode ${t} but got pad ${e}.`);else if(typeof e=="object")e.forEach(r=>{r.forEach(s=>{_(Ns(s),()=>`Error in ${n}: pad must be an integer when using dimRoundingMode ${t} but got pad ${s}.`)})});else throw Error(`Error in ${n}: Unknown padding parameter: ${e}`)}}function r3(n,e){const r={x:E(n,"x","reshape","string_or_numeric")},s={shape:e};return U.runKernel(up,r,s)}const Z=L({reshape_:r3});function s3(n,e,t,r,s){const o=E(n,"x","avgPool","float32"),a=1;_(Bt(t,a),()=>`Error in avgPool: Either strides or dilations must be 1. Got strides ${t} and dilations '${a}'`);let i=o,u=!1;o.rank===3&&(u=!0,i=Z(o,[1,o.shape[0],o.shape[1],o.shape[2]])),_(i.rank===4,()=>`Error in avgPool: x must be rank 4 but got rank ${i.rank}.`),an("avgPool",r,s);const c={x:i},l={filterSize:e,strides:t,pad:r,dimRoundingMode:s};let h=U.runKernel(Sh,c,l);return h=He(h,o.dtype),u?Z(h,[h.shape[1],h.shape[2],h.shape[3]]):h}const Af=L({avgPool_:s3});function o3(n,e,t,r,s,o="NDHWC"){const a=E(n,"x","avgPool3d","float32");let i=a,u=!1;a.rank===4&&(u=!0,i=Z(a,[1,a.shape[0],a.shape[1],a.shape[2],a.shape[3]])),_(i.rank===5,()=>`Error in avgPool3d: x must be rank 5 but got rank ${i.rank}.`),_(o==="NDHWC",()=>`Error in avgPool3d: Only NDHWC is currently supported, but got dataFormat of ${o}`),_(typeof t=="number"&&t>0||Array.isArray(t)&&t[0]>0&&t[1]>0&&t[2]>0,()=>`Error in avgPool3d: Stride must be > 0, but got '${t}'`),an("avgPool3d",r,s);const c={x:i},l={filterSize:e,strides:t,pad:r,dimRoundingMode:s,dataFormat:o};let h=U.runKernel(Ch,c,l);return h=He(h,i.dtype),u?Z(h,[h.shape[1],h.shape[2],h.shape[3],h.shape[4]]):h}const a3=L({avgPool3d_:o3});function i3(n,e=0){_(n.length>=1,()=>"Pass at least one tensor to concat");const t=Fa(n,"tensors","concat","string_or_numeric");if(t[0].dtype==="complex64"&&t.forEach(o=>{if(o.dtype!=="complex64")throw new Error(`Cannot concatenate complex64 tensors with a tensor
+          with dtype ${o.dtype}. `)}),t.length===1)return lr(t[0]);const r=t,s={axis:e};return U.runKernel(Dh,r,s)}const pt=L({concat_:i3});function u3(n,e,t=!1,r=!1){let s=E(n,"a","matMul"),o=E(e,"b","matMul");[s,o]=Je(s,o);const a={a:s,b:o},i={transposeA:t,transposeB:r};return U.runKernel(Th,a,i)}const Be=L({matMul_:u3});function c3(n){const t={x:E(n,"x","sigmoid","float32")};return U.runKernel(Cp,t)}const zr=L({sigmoid_:c3});function l3(n,e,t){const r=E(n,"x","slice","string_or_numeric");if(r.rank===0)throw new Error("Slicing scalar is not possible");const s={x:r},o={begin:e,size:t};return U.runKernel(vp,s,o)}const Ce=L({slice_:l3});function h3(n){const t={x:E(n,"x","tanh","float32")};return U.runKernel(Gp,t)}const bu=L({tanh_:h3});function d3(n,e,t,r,s,o){const a=E(n,"forgetBias","basicLSTMCell"),i=E(e,"lstmKernel","basicLSTMCell"),u=E(t,"lstmBias","basicLSTMCell"),c=E(r,"data","basicLSTMCell"),l=E(s,"c","basicLSTMCell"),h=E(o,"h","basicLSTMCell"),d=pt([c,h],1),p=Be(d,i),f=me(p,u),b=f.shape[0],y=f.shape[1]/4,x=[b,y],C=Ce(f,[0,0],x),I=Ce(f,[0,y],x),k=Ce(f,[0,y*2],x),P=Ce(f,[0,y*3],x),W=me(oe(zr(C),bu(I)),oe(l,zr(me(a,k)))),H=oe(bu(W),zr(P));return[W,H]}const p3=L({basicLSTMCell_:d3});function f3(n,e,t){const r=E(n,"x","batchToSpaceND"),s=e.reduce((i,u)=>i*u);_(r.rank>=1+e.length,()=>`input rank is ${r.rank} but should be > than blockShape.length ${e.length}`),_(t.length===e.length,()=>`crops.length is ${t.length} but should be equal to blockShape.length  ${e.length}`),_(r.shape[0]%s===0,()=>`input tensor batch is ${r.shape[0]} but is not divisible by the product of the elements of blockShape ${e.join(" * ")} === ${s}`);const o={x:r},a={blockShape:e,crops:t};return U.runKernel(Nh,o,a)}const Of=L({batchToSpaceND_:f3});function m3(n){let e;return n.rank===0||n.rank===1?e=Z(n,[1,1,1,n.size]):n.rank===2?e=Z(n,[1,1,n.shape[0],n.shape[1]]):n.rank===3?e=Z(n,[1,n.shape[0],n.shape[1],n.shape[2]]):e=n,e}function g3(n,e,t,r,s,o){o==null&&(o=.001);const a=E(n,"x","batchNorm"),i=E(e,"mean","batchNorm"),u=E(t,"variance","batchNorm");let c;s!=null&&(c=E(s,"scale","batchNorm"));let l;r!=null&&(l=E(r,"offset","batchNorm")),_(i.rank===u.rank,()=>"Batch normalization gradient requires mean and variance to have equal ranks."),_(l==null||i.rank===l.rank,()=>"Batch normalization gradient requires mean and offset to have equal ranks."),_(c==null||i.rank===c.rank,()=>"Batch normalization gradient requires mean and scale to have equal ranks.");const d={x:m3(a),scale:c,offset:l,mean:i,variance:u},p={varianceEpsilon:o},f=U.runKernel(hd,d,p);return Z(f,a.shape)}const Ja=L({batchNorm_:g3});function y3(n,e,t,r,s,o){const a=E(n,"x","batchNorm"),i=E(e,"mean","batchNorm"),u=E(t,"variance","batchNorm");let c;s!=null&&(c=E(s,"scale","batchNorm"));let l;return r!=null&&(l=E(r,"offset","batchNorm")),_(a.rank===2,()=>`Error in batchNorm2D: x must be rank 2 but got rank ${a.rank}.`),_(i.rank===2||i.rank===1,()=>`Error in batchNorm2D: mean must be rank 2 or rank 1 but got rank ${i.rank}.`),_(u.rank===2||u.rank===1,()=>`Error in batchNorm2D: variance must be rank 2 or rank 1 but got rank ${u.rank}.`),c!=null&&_(c.rank===2||c.rank===1,()=>`Error in batchNorm2D: scale must be rank 2 or rank 1 but got rank ${c.rank}.`),l!=null&&_(l.rank===2||l.rank===1,()=>`Error in batchNorm2D: offset must be rank 2 or rank 1 but got rank ${l.rank}.`),Ja(a,i,u,l,c,o)}const x3=L({batchNorm2d_:y3});function b3(n,e,t,r,s,o){const a=E(n,"x","batchNorm"),i=E(e,"mean","batchNorm"),u=E(t,"variance","batchNorm");let c;s!=null&&(c=E(s,"scale","batchNorm"));let l;return r!=null&&(l=E(r,"offset","batchNorm")),_(a.rank===3,()=>`Error in batchNorm3D: x must be rank 3 but got rank ${a.rank}.`),_(i.rank===3||i.rank===1,()=>`Error in batchNorm3D: mean must be rank 3 or rank 1 but got rank ${i.rank}.`),_(u.rank===3||u.rank===1,()=>`Error in batchNorm3D: variance must be rank 3 or rank 1 but got rank ${u.rank}.`),c!=null&&_(c.rank===3||c.rank===1,()=>`Error in batchNorm3D: scale must be rank 3 or rank 1 but got rank ${c.rank}.`),l!=null&&_(l.rank===3||l.rank===1,()=>`Error in batchNorm3D: offset must be rank 3 or rank 1 but got rank ${l.rank}.`),Ja(a,i,u,l,c,o)}const v3=L({batchNorm3d_:b3});function w3(n,e,t,r,s,o){const a=E(n,"x","batchNorm"),i=E(e,"mean","batchNorm"),u=E(t,"variance","batchNorm");let c;s!=null&&(c=E(s,"scale","batchNorm"));let l;return r!=null&&(l=E(r,"offset","batchNorm")),_(a.rank===4,()=>`Error in batchNorm4D: x must be rank 4 but got rank ${a.rank}.`),_(i.rank===4||i.rank===1,()=>`Error in batchNorm4D: mean must be rank 4 or rank 1 but got rank ${i.rank}.`),_(u.rank===4||u.rank===1,()=>`Error in batchNorm4D: variance must be rank 4 or rank 1 but got rank ${u.rank}.`),c!=null&&_(c.rank===4||c.rank===1,()=>`Error in batchNorm4D: scale must be rank 4 or rank 1 but got rank ${c.rank}.`),l!=null&&_(l.rank===4||l.rank===1,()=>`Error in batchNorm4D: offset must be rank 4 or rank 1 but got rank ${l.rank}.`),Ja(a,i,u,l,c,o)}const $3=L({batchNorm4d_:w3});function S3(n,e,t){const r=E(n,"x","bincount"),s=E(e,"weights","bincount");_(r.dtype==="int32",()=>`Error in bincount: input dtype must be int32, but got ${r.dtype}`),_(t>=0,()=>`size must be non-negative, but got ${t}.`),_(s.size===r.size||s.size===0,()=>`Error in bincount: weights must have the same size as input or0-length, but got input shape: ${r.shape}, weights shape: ${s.shape}.`);const o={x:r,weights:s},a={size:t};return U.runKernel(Eh,o,a)}const Df=L({bincount_:S3});function C3(n,e){const t=E(n,"x","bitwiseAnd"),r=E(e,"y","bitwiseAnd");if(!qe(t.shape,r.shape))throw new Error(`BitwiseAnd: Tensors must have the same shape. x: ${t.shape}, y: ${r.shape}`);if(t.dtype!=="int32"||r.dtype!=="int32")throw new Error(`BitwiseAnd: Only supports 'int32' values in tensor, found type of x: ${t.dtype} and type of y: ${r.dtype}`);const s={a:t,b:r};return U.runKernel(Ih,s)}const T3=L({bitwiseAnd_:C3});function N3(n,e){const t=E(n,"s0","broadcastArgs","int32"),r=E(e,"s1","broadcastArgs","int32");if(t.rank!==1)throw new Error(`broadcastArgs(): first input must be a vector (rank=1). Has rank ${t.rank}`);if(r.rank!==1)throw new Error(`broadcastArgs(): second input must be a vector (rank=1). Has rank ${r.rank}`);const s={s0:t,s1:r};return U.runKernel(kh,s)}const E3=L({broadcastArgs_:N3});function I3(n,e){let t=E(n,"broadcastTo","x");const r=t.shape;if(Kt(e),e.length<t.rank)throw new Error(`broadcastTo(): shape.length=${e.length} < input.rank=${t.rank}.`);if(e.length>t.rank){const c=t.shape.slice();for(;c.length<e.length;)c.unshift(1);t=Z(t,c)}const s=t.shape,o=Array.from(e);for(let c=e.length-1;c>=0;c--)if(s[c]===e[c])o[c]=1;else if(t.shape[c]!==1)throw new Error(`broadcastTo(): [${r}] cannot be broadcast to [${e}].`);if(o.map((c,l)=>c>1?l:-1).filter(c=>c>=0).length===0)return lr(t);const i={x:t},u={reps:o};return U.runKernel(qu,i,u)}const xo=L({broadcastTo_:I3});function k3(n){const t={x:E(n,"x","ceil","float32")};return U.runKernel(Rh,t)}const R3=L({ceil_:k3});function Po(n,e,t){Kt(n),t=t||Ao(e);const r={shape:n,value:e,dtype:t};return U.runKernel(id,{},r)}function _3(n,e,t){const r=E(n,"x","clipByValue");if(_(e<=t,()=>`Error in clip: min (${e}) must be less than or equal to max (${t}).`),e===t)return Po(r.shape,e,r.dtype);const s={x:r},o={clipValueMin:e,clipValueMax:t};return U.runKernel(_h,s,o)}const Ff=L({clipByValue_:_3});function A3(n){return pt(n,0)}const O3=L({concat1d_:A3});function D3(n,e){return pt(n,e)}const F3=L({concat2d_:D3});function P3(n,e){return pt(n,e)}const L3=L({concat3d_:P3});function B3(n,e){return pt(n,e)}const V3=L({concat4d_:B3});function M3(n,e,t,r,s="NHWC",o=[1,1],a){const i=E(n,"x","conv2d","float32"),u=E(e,"filter","conv2d","float32");let c=i,l=!1;i.rank===3&&(l=!0,c=Z(i,[1,i.shape[0],i.shape[1],i.shape[2]])),_(c.rank===4,()=>`Error in conv2d: input must be rank 4, but got rank ${c.rank}.`),_(u.rank===4,()=>`Error in conv2d: filter must be rank 4, but got rank ${u.rank}.`),an("conv2d",r,a);const h=s==="NHWC"?c.shape[3]:c.shape[1];_(h===u.shape[2],()=>`Error in conv2d: depth of input (${h}) must match input depth for filter ${u.shape[2]}.`),_(Bt(t,o),()=>`Error in conv2D: Either strides or dilations must be 1. Got strides ${t} and dilations '${o}'`),_(qr(o),()=>"Error in conv2D: Dilated rates should be larger than 0."),_(qr(t),()=>"Error in conv2D: Strides should be larger than 0.");const d={x:c,filter:u},p={strides:t,pad:r,dataFormat:s,dilations:o,dimRoundingMode:a},f=U.runKernel(Fh,d,p);return l?Z(f,[f.shape[1],f.shape[2],f.shape[3]]):f}const ei=L({conv2d_:M3});function U3(n,e,t,r,s="NWC",o=1,a){const i=E(n,"x","conv1d"),u=E(e,"filter","conv1d");let c=i,l=!1;i.rank===2&&(l=!0,c=Z(i,[1,i.shape[0],i.shape[1]])),_(c.rank===3,()=>`Error in conv1d: input must be rank 3, but got rank ${c.rank}.`),_(u.rank===3,()=>`Error in conv1d: filter must be rank 3, but got rank ${u.rank}.`),an("conv1d",r,a),_(c.shape[2]===u.shape[1],()=>`Error in conv1d: depth of input (${c.shape[2]}) must match input depth for filter ${u.shape[1]}.`),_(Bt(t,o),()=>`Error in conv1D: Either stride or dilation must be 1. Got stride ${t} and dilation '${o}'`),_(qr(o),()=>"Error in conv1D: Dilated rates should be larger than 0."),_(qr(t),()=>"Error in conv1D: Stride should be larger than 0."),_(s==="NWC",()=>`Error in conv1d: got dataFormat of ${s} but only NWC is currently supported.`);const h=Z(u,[1,u.shape[0],u.shape[1],u.shape[2]]),d=Z(c,[c.shape[0],1,c.shape[1],c.shape[2]]),y=ei(d,h,[1,t],r,"NHWC",[1,o],a);return l?Z(y,[y.shape[2],y.shape[3]]):Z(y,[y.shape[0],y.shape[2],y.shape[3]])}const W3=L({conv1d_:U3});function z3(n,e,t,r,s,o="NHWC",a){_(n.length===e.rank,()=>`Length of inShape (${n.length}) and rank of dy (${e.rank}) must match`);let i=n,u=e,c=!1;e.rank===3&&(c=!0,u=Z(e,[1,e.shape[0],e.shape[1],e.shape[2]]),i=[1,n[0],n[1],n[2]]),_(i.length===4,()=>`Error in conv2dDerInput: inShape must be length 4, but got length ${i.length}.`),_(u.rank===4,()=>`Error in conv2dDerInput: dy must be rank 4, but got rank ${u.rank}`),_(t.rank===4,()=>`Error in conv2dDerInput: filter must be rank 4, but got rank ${t.rank}`);const l=o==="NHWC"?i[3]:i[1],h=o==="NHWC"?u.shape[3]:u.shape[1];_(l===t.shape[2],()=>`Error in conv2dDerInput: depth of input (${l}) must match input depth for filter ${t.shape[2]}.`),_(h===t.shape[3],()=>`Error in conv2dDerInput: depth of output (${h}) must match output depth for filter ${t.shape[3]}.`),an("conv2dDerInput",s,a);const d={dy:u,filter:t},p={strides:r,pad:s,dataFormat:o,dimRoundingMode:a,inputShape:i},f=U.runKernel(Lh,d,p);return c?Z(f,[f.shape[1],f.shape[2],f.shape[3]]):f}const Pf=L({conv2DBackpropInput_:z3});function G3(n,e,t,r,s,o){const a=E(n,"x","conv2dTranspose"),i=E(e,"filter","conv2dTranspose");return Pf(t,a,i,r,s,"NHWC",o)}const j3=L({conv2dTranspose_:G3});function H3(n,e,t,r,s="NDHWC",o=[1,1,1]){const a=E(n,"x","conv3d"),i=E(e,"filter","conv3d");let u=a,c=!1;a.rank===4&&(c=!0,u=Z(a,[1,a.shape[0],a.shape[1],a.shape[2],a.shape[3]])),_(u.rank===5,()=>`Error in conv3d: input must be rank 5, but got rank ${u.rank}.`),_(i.rank===5,()=>`Error in conv3d: filter must be rank 5, but got rank ${i.rank}.`),_(u.shape[4]===i.shape[3],()=>`Error in conv3d: depth of input (${u.shape[4]}) must match input depth for filter ${i.shape[3]}.`),_(Bt(t,o),()=>`Error in conv3D: Either strides or dilations must be 1. Got strides ${t} and dilations '${o}'`),_(s==="NDHWC",()=>`Error in conv3d: got dataFormat of ${s} but only NDHWC is currently supported.`),_(qr(o),()=>"Error in conv3D: Dilated rates should be larger than 0."),_(qr(t),()=>"Error in conv3D: Strides should be larger than 0.");const l={x:u,filter:i},h={strides:t,pad:r,dataFormat:s,dilations:o},d=U.runKernel(Bh,l,h);return c?Z(d,[d.shape[1],d.shape[2],d.shape[3],d.shape[4]]):d}const K3=L({conv3d_:H3});function X3(n,e,t,r,s){_(n.length===e.rank,()=>`Length of inShape (${n.length}) and rank of dy (${e.rank}) must match`);let o=n,a=e,i=!1;e.rank===4&&(i=!0,a=Z(e,[1,e.shape[0],e.shape[1],e.shape[2],e.shape[3]]),o=[1,n[0],n[1],n[2],n[3]]);const u=o[4],c=a.shape[4];_(o.length===5,()=>`Error in conv3dDerInput: inShape must be length 5, but got length ${o.length}.`),_(a.rank===5,()=>`Error in conv3dDerInput: dy must be rank 5, but got rank ${a.rank}`),_(t.rank===5,()=>`Error in conv3dDerInput: filter must be rank 5, but got rank ${t.rank}`),_(u===t.shape[3],()=>`Error in conv3dDerInput: depth of input (${u}) must match input depth for filter ${t.shape[3]}.`),_(c===t.shape[4],()=>`Error in conv3dDerInput: depth of output (${c}) must match output depth for filter ${t.shape[4]}.`);const l={dy:a,filter:t},h={pad:s,strides:r,inputShape:o},d=U.runKernel(Vh,l,h);return i?Z(d,[d.shape[1],d.shape[2],d.shape[3],d.shape[4]]):d}const q3=L({conv3DBackpropInput_:X3});function Y3(n,e,t,r,s){const o=E(n,"x","conv3dTranspose"),a=E(e,"filter","conv3dTranspose");return q3(t,o,a,r,s)}const Q3=L({conv3dTranspose_:Y3});function Z3(n){const t={x:E(n,"x","cos","float32")};return U.runKernel(Mh,t)}const J3=L({cos_:Z3});function ey(n){const t={x:E(n,"x","cosh","float32")};return U.runKernel(Uh,t)}const ty=L({cosh_:ey});function ny(n,e=0,t=!1,r=!1){const o={x:E(n,"x","cumprod")},a={axis:e,exclusive:t,reverse:r};return U.runKernel(Wh,o,a)}const ry=L({cumprod_:ny});function sy(n,e=0,t=!1,r=!1){const o={x:E(n,"x","cumsum")},a={axis:e,exclusive:t,reverse:r};return U.runKernel(zh,o,a)}const oy=L({cumsum_:sy});function ay(n,e,t,r=!1){const s=E(n,"x","denseBincount"),o=E(e,"weights","denseBincount");_(s.dtype==="int32",()=>`Error in denseBincount: input dtype must be int32, but got ${s.dtype}`),_(s.rank<=2,()=>`Error in denseBincount: input must be at most rank 2, but got rank ${s.rank}.`),_(t>=0,()=>`size must be non-negative, but got ${t}.`),_(o.size===s.size||o.size===0,()=>`Error in denseBincount: weights must have the same shape as x or 0-length, but got x shape: ${s.shape}, weights shape: ${o.shape}.`);const a={x:s,weights:o},i={size:t,binaryOutput:r};return U.runKernel(jh,a,i)}const iy=L({denseBincount_:ay});function uy(n,e,t="NHWC"){const r=E(n,"x","depthToSpace","float32"),s=t==="NHWC"?r.shape[1]:r.shape[2],o=t==="NHWC"?r.shape[2]:r.shape[3],a=t==="NHWC"?r.shape[3]:r.shape[1];_(e>1,()=>`blockSize should be > 1 for depthToSpace, but was: ${e}`),_(s*e>=0,()=>`Negative dimension size caused by overflow when multiplying
+    ${s} and ${e}  for depthToSpace with input shape
+    ${r.shape}`),_(o*e>=0,()=>`Negative dimension size caused by overflow when multiplying
+    ${o} and ${e} for depthToSpace with input shape
+        ${r.shape}`),_(a%(e*e)===0,()=>`Dimension size must be evenly divisible by ${e*e} but is ${a} for depthToSpace with input shape ${r.shape}`);const i={x:r},u={blockSize:e,dataFormat:t};return U.runKernel(Hh,i,u)}const cy=L({depthToSpace_:uy});function ly(n,e,t,r,s="NHWC",o=[1,1],a){const i=E(n,"x","depthwiseConv2d","float32"),u=E(e,"filter","depthwiseConv2d","float32");let c=i,l=!1;i.rank===3&&(l=!0,c=Z(i,[1,i.shape[0],i.shape[1],i.shape[2]])),_(c.rank===4,()=>`Error in depthwiseConv2d: input must be rank 4, but got rank ${c.rank}.`),_(u.rank===4,()=>`Error in depthwiseConv2d: filter must be rank 4, but got rank ${u.rank}.`);const h=s==="NHWC"?c.shape[3]:c.shape[1];_(h===u.shape[2],()=>`Error in depthwiseConv2d: number of input channels (${h}) must match the inChannels dimension in filter ${u.shape[2]}.`),an("depthwiseConv2d",r,a);const d={x:c,filter:u},p={strides:t,pad:r,dataFormat:s,dilations:o,dimRoundingMode:a},f=U.runKernel(Kh,d,p);return l?Z(f,[f.shape[1],f.shape[2],f.shape[3]]):f}const ec=L({depthwiseConv2d_:ly});function hy(n){const t={x:E(n,"x","diag")};return U.runKernel(Yh,t)}const dy=L({diag_:hy});function py(n,e,t,r,s=[1,1],o="NHWC"){const a=E(n,"x","dilation2d"),i=E(e,"filter","dilation2d");_(a.rank===3||a.rank===4,()=>`Error in dilation2d: input must be rank 3 or 4, but got rank ${a.rank}.`),_(i.rank===3,()=>`Error in dilation2d: filter must be rank 3, but got rank ${i.rank}.`),_(o==="NHWC",()=>`Error in dilation2d: Only NHWC is currently supported, but got dataFormat of ${o}`);let u=a,c=!1;a.rank===3&&(u=Z(a,[1,a.shape[0],a.shape[1],a.shape[2]]),c=!0),_(u.shape[3]===i.shape[2],()=>`Error in dilation2d:  input and filter must have the same depth: ${u.shape[3]} vs ${i.shape[2]}`);const l={x:u,filter:i},h={strides:t,pad:r,dilations:s},d=U.runKernel(Qh,l,h);return c?Z(d,[d.shape[1],d.shape[2],d.shape[3]]):d}const fy=L({dilation2d_:py});function Pa(n,e){const t=n.length,r=[];for(let s=0;s<t;s++){const o=t-1-s,a=n[o]||1;(e[e.length-1-s]||1)>1&&a===1&&r.unshift(o)}return r}function Lf(n,e){const t=[];for(let r=0;r<e.length;r++){const s=n[n.length-r-1],o=e.length-r-1,a=e[o];(s==null||s===1&&a>1)&&t.unshift(o)}return t}function Fe(n,e){const t=Math.max(n.length,e.length),r=new Array(t);for(let s=0;s<t;s++){let o=n[n.length-s-1];o==null&&(o=1);let a=e[e.length-s-1];if(a==null&&(a=1),o===1)r[t-s-1]=a;else if(a===1)r[t-s-1]=o;else if(o!==a){const i=`Operands could not be broadcast together with shapes ${n} and ${e}.`;throw Error(i)}else r[t-s-1]=o}return r}function my(n,e){let t=E(n,"a","equal","string_or_numeric"),r=E(e,"b","equal","string_or_numeric");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(nd,s)}const Bf=L({equal_:my});function gy(n,e,t){const r=E(e,"a","where"),s=E(t,"b","where"),o=E(n,"condition","where","bool"),a=Fe(Fe(o.shape,r.shape),s.shape),i=xo(o,a),u=xo(r,a),c=xo(s,a),l={condition:i,t:u,e:c};return U.runKernel(xp,l)}const hr=L({where_:gy});function yy(n){const t={x:E(n,"x","zerosLike")};return U.runKernel(Yp,t)}const jt=L({zerosLike_:yy});function xy(n,e){let t=E(n,"a","div"),r=E(e,"b","div");[t,r]=Je(t,r);const s=ke(t,r),o=jt(s),a=Bf(r,o);return hr(a,o,s)}const by=L({divNoNan_:xy});function vy(n,e){const t=E(n,"t1","dot"),r=E(e,"t2","dot");_((t.rank===1||t.rank===2)&&(r.rank===1||r.rank===2),()=>`Error in dot: inputs must all be rank 1 or 2, but got ranks ${t.rank} and ${r.rank}.`);const s=t.rank===1?t.size:t.shape[1],o=r.rank===1?r.size:r.shape[0];if(_(s===o,()=>`Error in dot: inner dimensions of inputs must match, but got ${s} and ${o}.`),t.rank===1&&r.rank===1){const a=Z(t,[1,-1]),i=Z(r,[-1,1]),u=Be(a,i);return Z(u,[])}else if(t.rank===1&&r.rank===2){const a=Z(t,[1,-1]),i=Z(r,[r.shape[0],r.shape[1]]),u=Be(a,i);return Z(u,[u.size])}else if(t.rank===2&&r.rank===1){const a=Z(r,[-1,1]),i=Be(t,a);return Z(i,[i.size])}else{const a=Z(r,[r.shape[0],r.shape[1]]);return Be(t,a)}}const wy=L({dot_:vy});function $y(n,...e){const t=e.map((s,o)=>E(s,`tensors${o}`,"einsum")),r={equation:n};return U.runKernel(Jh,t,r)}const ws=L({einsum_:$y});function Sy(n){const t={x:E(n,"x","elu","float32")};return U.runKernel(ed,t)}const Vf=L({elu_:Sy});function Cy(n,e){const t=E(n,"x","ensureShape","string_or_numeric");if(!Mg(t.shape,e))throw new Error(`EnsureShape: Shape of tensor ${t.shape} is not compatible with expected shape ${e}`);return n}const Ty=L({ensureShape_:Cy});function Ny(n){let e=E(n,"x","erf");_(e.dtype==="int32"||e.dtype==="float32",()=>"Input dtype must be `int32` or `float32`."),e.dtype==="int32"&&(e=He(e,"float32"));const t={x:e};return U.runKernel(td,t)}const Ey=L({erf_:Ny});function tc(n,e){for(let t=0;t<n.length;++t)if(n[n.length-t-1]!==e-1-t)return!1;return!0}function Mf(n,e,t){const r=n.length+e.length,s=[];let o=0,a=0;for(let i=0;i<r;i++)t.indexOf(i)===-1?s.push(n[o++]):s.push(e[a++]);return s}function On(n,e){const t=[],r=n.length;for(let o=0;o<r;o++)e.indexOf(o)===-1&&t.push(n[o]);const s=e.map(o=>n[o]);return[t,s]}function qt(n,e){const t=e.map(r=>1);return Mf(n,t,e)}function $n(n,e,t){_(tc(e,t),()=>`${n} supports only inner-most axes for now. Got axes ${e} and rank-${t} input.`)}function un(n,e){if(tc(n,e))return null;const t=[];for(let r=0;r<e;++r)n.indexOf(r)===-1&&t.push(r);return n.forEach(r=>t.push(r)),t}function nc(n){return n.map((e,t)=>[t,e]).sort((e,t)=>e[1]-t[1]).map(e=>e[0])}function cn(n,e){const t=[];for(let r=e-n;r<e;++r)t.push(r);return t}function Iy(n,e=null,t=!1){const s={x:E(n,"x","max")},o={reductionIndices:e,keepDims:t};return U.runKernel(_d,s,o)}const Ts=L({max_:Iy});function ky(n,e=null,t=!1){const s={x:E(n,"x","min")},o={axis:e,keepDims:t};return U.runKernel(Ld,s,o)}const vu=L({min_:ky});function Ry(n,e){let t=E(n,"base","pow"),r=E(e,"exp","pow");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel(Zd,s)}const So=L({pow_:Ry});function Re(n,e){if((on(n)&&e!=="string"||Array.isArray(n))&&e!=="complex64")throw new Error("Error creating a new Scalar: value must be a primitive (number|boolean|string)");if(e==="string"&&on(n)&&!(n instanceof Uint8Array))throw new Error("When making a scalar from encoded string, the value must be `Uint8Array`.");return vr(n,[],[],e)}function _y(n){const t={x:E(n,"x","sqrt","float32")};return U.runKernel(Np,t)}const Wn=L({sqrt_:_y});function Ay(n){const e=E(n,"x","square"),t={};return U.runKernel("Square",{x:e},t)}const xn=L({square_:Ay});function Oy(n,e=null,t=!1){let r=E(n,"x","sum");r.dtype==="bool"&&(r=He(r,"int32"));const s={x:r},o={axis:e,keepDims:t};return U.runKernel(Ep,s,o)}const je=L({sum_:Oy});function Dy(n,e="euclidean",t=null,r=!1){n=E(n,"x","norm");const s=Uf(n,e,t);let o=s.shape;if(r){const a=ut(t,n.shape);o=qt(s.shape,a)}return Z(s,o)}function Uf(n,e,t=null){if(n.rank===0)return zt(n);if(n.rank!==1&&t===null)return Uf(Z(n,[-1]),e,t);if(n.rank===1||typeof t=="number"||Array.isArray(t)&&t.length===1){if(e===1)return je(zt(n),t);if(e===1/0)return Ts(zt(n),t);if(e===-1/0)return vu(zt(n),t);if(e==="euclidean"||e===2)return Wn(je(So(zt(n),Re(2,"int32")),t));throw new Error(`Error in norm: invalid ord value: ${e}`)}if(Array.isArray(t)&&t.length===2){if(e===1)return Ts(je(zt(n),t[0]),t[1]-1);if(e===1/0)return Ts(je(zt(n),t[1]),t[0]);if(e===-1/0)return vu(je(zt(n),t[1]),t[0]);if(e==="fro"||e==="euclidean")return Wn(je(xn(n),t));throw new Error(`Error in norm: invalid ord value: ${e}`)}throw new Error(`Error in norm: invalid axis: ${t}`)}const ti=L({norm_:Dy});function Fy(n,e=null,t=!1){return ti(n,"euclidean",e,t)}const Py=L({euclideanNorm_:Fy});function Ly(n){const t={x:E(n,"x","exp")};return U.runKernel(rd,t)}const zn=L({exp_:Ly});function By(n,e=0){const t=E(n,"x","expandDims","string_or_numeric");_(e<=t.rank,()=>"Axis must be <= rank of the tensor");const r={input:t},s={dim:e};return U.runKernel(sd,r,s)}const rn=L({expandDims_:By});function Vy(n){const t={x:E(n,"x","expm1")};return U.runKernel(od,t)}const My=L({expm1_:Vy});function Uy(n,e){const t=E(n,"x","tile","string_or_numeric");_(t.rank===e.length,()=>`Error in transpose: rank of input ${t.rank} must match length of reps ${e}.`);const r={x:t},s={reps:e};return U.runKernel(qu,r,s)}const bo=L({tile_:Uy});function Wy(n,e,t,r="float32"){e==null&&(e=n);const s=Ye([n,e],r),o=n<=e?n:e;for(let i=0;i<o;++i)s.set(1,i,i);const a=Z(s.toTensor(),[n,e]);if(t==null)return a;if(t.length===1)return bo(rn(a,0),[t[0],1,1]);if(t.length===2)return bo(rn(rn(a,0),0),[t[0],t[1],1,1]);if(t.length===3)return bo(rn(rn(rn(a,0),0),0),[t[0],t[1],t[2],1,1]);throw new Error(`eye() currently supports only 1D and 2D batchShapes, but received ${t.length}D.`)}const Wf=L({eye_:Wy});function zy(n){const t={x:E(n,"x","floor","float32")};return U.runKernel(cd,t)}const zf=L({floor_:zy});function Gy(n,e,t=0,r=0){const s=E(n,"x","gather"),o=E(e,"indices","gather","int32"),a={x:s,indices:o},i={axis:t,batchDims:r};return U.runKernel(dd,a,i)}const Gf=L({gather_:Gy});function jy(n,e){let t=E(n,"a","greater","string_or_numeric"),r=E(e,"b","greater","string_or_numeric");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(fd,s)}const ni=L({greater_:jy});function Hy(n,e){let t=E(n,"a","greaterEqual","string_or_numeric"),r=E(e,"b","greaterEqual","string_or_numeric");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(md,s)}const jf=L({greaterEqual_:Hy});function Ky(n){const t={input:E(n,"input","imag")};return U.runKernel(yd,t)}const ri=L({imag_:Ky});function Xy(n){const t={x:E(n,"x","isFinite")};return U.runKernel(xd,t)}const qy=L({isFinite_:Xy});function Yy(n){const t={x:E(n,"x","isInf")};return U.runKernel(bd,t)}const Qy=L({isInf_:Yy});function Zy(n){const t={x:E(n,"x","isNaN")};return U.runKernel(vd,t)}const Jy=L({isNaN_:Zy});function e4(n,e=.2){const r={x:E(n,"x","leakyRelu")},s={alpha:e};return U.runKernel(wd,r,s)}const Hf=L({leakyRelu_:e4});function t4(n,e){let t=E(n,"a","less","string_or_numeric"),r=E(e,"b","less","string_or_numeric");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel($d,s)}const wu=L({less_:t4});function n4(n,e){let t=E(n,"a","lessEqual","string_or_numeric"),r=E(e,"b","lessEqual","string_or_numeric");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(Sd,s)}const rc=L({lessEqual_:n4});function r4(n,e,t){if(t<=0)throw new Error("The number of values should be positive.");const r={start:n,stop:e,num:t};return U.runKernel(Cd,{},r)}function s4(n,e=5,t=1,r=1,s=.5){const o=E(n,"x","localResponseNormalization");_(o.rank===4||o.rank===3,()=>`Error in localResponseNormalization: x must be rank 3 or 4 but got
+               rank ${o.rank}.`),_(Ns(e),()=>`Error in localResponseNormalization: depthRadius must be an integer but got depthRadius ${e}.`);let a=o,i=!1;o.rank===3&&(i=!0,a=Z(o,[1,o.shape[0],o.shape[1],o.shape[2]]));const u={x:a},c={depthRadius:e,bias:t,alpha:r,beta:s},l=U.runKernel(Rd,u,c);return i?Z(l,[l.shape[1],l.shape[2],l.shape[3]]):l}const o4=L({localResponseNormalization_:s4});function a4(n){const t={x:E(n,"x","log","float32")};return U.runKernel(Td,t)}const Co=L({log_:a4});function i4(n){const t={x:E(n,"x","log1p")};return U.runKernel(Nd,t)}const Kf=L({log1p_:i4});function u4(n,e){_(eu(n),()=>"The f passed in variableGrads(f) must be a function"),_(e==null||Array.isArray(e)&&e.every(c=>c instanceof Da),()=>"The varList passed in variableGrads(f, varList) must be an array of variables");const t=e!=null;if(!t){e=[];for(const c in U.registeredVariables)e.push(U.registeredVariables[c])}const r=t?e.filter(c=>!c.trainable):null,s=e.length;e=e.filter(c=>c.trainable),_(e.length>0,()=>`variableGrads() expects at least one of the input variables to be trainable, but none of the ${s} variables is trainable.`);const o=!0,{value:a,grads:i}=U.gradients(n,e,null,o);_(i.some(c=>c!=null),()=>"Cannot find a connection between any variable and the result of the loss function y=f(x). Please make sure the operations that use variables are inside the function f passed to minimize()."),_(a.rank===0,()=>`The f passed in variableGrads(f) must return a scalar, but it returned a rank-${a.rank} tensor`);const u={};return e.forEach((c,l)=>{i[l]!=null&&(u[c.name]=i[l])}),r?.forEach(c=>u[c.name]=null),{value:a,grads:u}}function Gn(n){return U.customGrad(n)}function c4(n){const t={x:E(n,"x","neg")};return U.runKernel(zd,t)}const _n=L({neg_:c4});function l4(n){const t={x:E(n,"x","softplus")};return U.runKernel(Tp,t)}const Xf=L({softplus_:l4});function h4(n){const e=E(n,"x","logSigmoid");return Gn(r=>({value:_n(Xf(_n(r))),gradFunc:a=>oe(a,zr(_n(r)))}))(e)}const d4=L({logSigmoid_:h4});function p4(n,e){let t=E(n,"a","sub"),r=E(e,"b","sub");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel(Wp,s)}const Te=L({sub_:p4});function f4(n,e=-1){const t=E(n,"logits","logSoftmax");if(e===-1&&(e=t.rank-1),e!==t.rank-1)throw Error(`Log Softmax along a non-last dimension is not yet supported. Logits was rank ${t.rank} and axis was ${e}`);return Gn((s,o)=>{const i=Ts(s,e,!0),u=Te(s,i),c=Te(He(u,"float32"),Co(je(zn(u),e,!0)));return o([c]),{value:c,gradFunc:(h,d)=>{const[p]=d,f=!0,b=zn(p);return Te(h,oe(je(h,e,f),b))}}})(t)}const m4=L({logSoftmax_:f4});function g4(n,e=null,t=!1){const r=E(n,"x","logSumExp"),s=ut(e,r.shape),o=Ts(r,s,!0),a=Te(r,o),i=zn(a),u=je(i,s),c=Co(u),l=me(Z(o,c.shape),c);if(t){const h=qt(l.shape,s);return Z(l,h)}return l}const qf=L({logSumExp_:g4});function y4(n,e){const t=E(n,"a","logicalAnd","bool"),r=E(e,"b","logicalAnd","bool");Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(Ed,s)}const La=L({logicalAnd_:y4});function x4(n){const t={x:E(n,"x","logicalNot","bool")};return U.runKernel(Id,t)}const Yf=L({logicalNot_:x4});function b4(n,e){const t=E(n,"a","logicalOr","bool"),r=E(e,"b","logicalOr","bool");Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(kd,s)}const Qf=L({logicalOr_:b4});function v4(n,e){const t=E(n,"a","logicalXor","bool"),r=E(e,"b","logicalXor","bool");return Fe(t.shape,r.shape),La(Qf(n,e),Yf(La(n,e)))}const w4=L({logicalXor_:v4});const ua=2147483648;function $4(n,e,t="left"){const r=E(n,"sortedSequence","searchSorted"),s=E(e,"values","searchSorted"),o=r.shape[r.shape.length-1],a=s.shape[s.shape.length-1],i=Z(r,[-1,o]),u=Z(s,[-1,a]);if(i.rank<2)throw new Error("Sorted input argument must be at least 2-dimensional");if(i.shape[0]!==u.shape[0])throw new Error("Leading dimension of 'sortedSequence' and 'values' must match.");if(ne(u.shape)>=ua)throw new Error(`values tensor size must less than ${ua}`);if(i.shape[1]>=ua)throw new Error(`trailing dim_size must less than ${ua} for int32 output type, was ${i.shape[1]}`);const c={sortedSequence:i,values:u},l={side:t};return U.runKernel(yp,c,l)}const sc=L({searchSorted_:$4});function S4(n,e){return sc(n,e,"left")}function C4(n,e,t,r,s){const o=E(n,"x","maxPool"),a=1;let i=o,u=!1;o.rank===3&&(u=!0,i=Z(o,[1,o.shape[0],o.shape[1],o.shape[2]])),_(i.rank===4,()=>`Error in maxPool: input must be rank 4 but got rank ${i.rank}.`),_(Bt(t,a),()=>`Error in maxPool: Either strides or dilations must be 1. Got strides ${t} and dilations '${a}'`),an("maxPool",r,s);const c={x:i},l={filterSize:e,strides:t,pad:r,dimRoundingMode:s},h=U.runKernel(Od,c,l);return u?Z(h,[h.shape[1],h.shape[2],h.shape[3]]):h}const Zf=L({maxPool_:C4});function T4(n,e=[1,1,1],t,r,s,o="NDHWC"){const a=E(n,"x","maxPool3d");let i=a,u=!1;a.rank===4&&(u=!0,i=Z(a,[1,a.shape[0],a.shape[1],a.shape[2],a.shape[3]])),_(i.rank===5,()=>`Error in maxPool3d: x must be rank 5 but got rank ${i.rank}.`),_(o==="NDHWC",()=>`Error in maxPool3d: Only NDHWC is currently supported, but got dataFormat of ${o}`),an("maxPool3d",r,s);const c={x:i},l={filterSize:e,strides:t,pad:r,dimRoundingMode:s,dataFormat:o},h=U.runKernel(Dd,c,l);return u?Z(h,[h.shape[1],h.shape[2],h.shape[3],h.shape[4]]):h}const N4=L({maxPool3d_:T4});function E4(n,e,t,r,s=!1){const a={x:E(n,"x","maxPoolWithArgmax")},i={filterSize:e,strides:t,pad:r,includeBatchInIndex:s},u=U.runKernel(Fd,a,i);return{result:u[0],indexes:u[1]}}const I4=L({maxPoolWithArgmax_:E4});function k4(n,e){let t=E(n,"a","maximum"),r=E(e,"b","maximum");[t,r]=Je(t,r),t.dtype==="bool"&&(t=He(t,"int32"),r=He(r,"int32")),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(Ad,s)}const Jf=L({maximum_:k4});function R4(n,e=null,t=!1){const s={x:E(n,"x","mean")},o={axis:e,keepDims:t};return U.runKernel(Pd,s,o)}const Ba=L({mean_:R4});function Yr(n,e="float32"){if(Kt(n),e==="complex64"){const r=Yr(n,"float32"),s=Yr(n,"float32");return mr(r,s)}const t=fr(ne(n),e);return U.makeTensor(t,n,e)}function Ur(n,e="float32"){if(Kt(n),e==="complex64"){const r=Ur(n,"float32"),s=Yr(n,"float32");return mr(r,s)}const t=ih(ne(n),e);return U.makeTensor(t,n,e)}function _4(n,e,{indexing:t="xy"}={}){if(t!=="xy"&&t!=="ij")throw new TypeError(`${t} is not a valid third argument to meshgrid`);if(n===void 0)return[];let r=E(n,"x","meshgrid",n instanceof Ze?n.dtype:"float32");if(e===void 0)return[r];let s=E(e,"y","meshgrid",e instanceof Ze?e.dtype:"float32");const o=ne(r.shape),a=ne(s.shape);return t==="xy"?(r=Z(r,[1,-1]),s=Z(s,[-1,1]),[Be(Ur([a,1],r.dtype),r),Be(s,Ur([1,o],s.dtype))]):(r=Z(r,[-1,1]),s=Z(s,[1,-1]),[Be(r,Ur([1,a],r.dtype)),Be(Ur([o,1],s.dtype),s)])}function A4(n,e){let t=E(n,"a","minimum"),r=E(e,"b","minimum");[t,r]=Je(t,r),t.dtype==="bool"&&(t=He(t,"int32"),r=He(r,"int32")),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(Bd,s)}const Va=L({minimum_:A4});function O4(n,e,t){_(t==="reflect"||t==="symmetric",()=>`Invalid mode. Mode must be either reflect or symmetric. Got ${t}.`);const r=E(n,"x","mirrorPad");if(r.rank===0)throw new Error("mirrorPad(scalar) is not defined. Pass non-scalar to mirrorPad");_(e.length===r.rank,()=>`Padding doesn't match input. Must be ${r.rank}. Got ${e.length}.`);const s=t==="reflect"?1:0;for(let i=0;i<r.rank;i++)_(e[i].length===2,()=>"Invalid number of paddings. Must be length of 2 each."),_(e[i][0]>=0&&e[i][0]<=r.shape[i]-s&&e[i][1]>=0&&e[i][1]<=r.shape[i]-s,()=>`Padding in dimension ${i} cannot be greater than or equal to ${r.shape[i]-s} or less than 0 for input of shape ${r.shape}`);const o={paddings:e,mode:t},a={x:r};return U.runKernel(Vd,a,o)}const D4=L({mirrorPad_:O4});function F4(n,e){let t=E(n,"a","mod"),r=E(e,"b","mod");[t,r]=Je(t,r);const s={a:t,b:r};return U.runKernel(Md,s)}const P4=L({mod_:F4});function L4(n,e=null,t=!1){n=E(n,"x","moments");const r=ut(e,n.shape),s=Ba(n,r,t);let o=s.shape;t||(o=qt(s.shape,r));const a=xn(Te(He(n,"float32"),Z(s,o))),i=Ba(a,r,t);return{mean:s,variance:i}}const B4=L({moments_:L4});function V4(n,e,t,r){const s=E(e,"data","multiRNNCell"),o=Fa(t,"c","multiRNNCell"),a=Fa(r,"h","multiRNNCell");let i=s;const u=[];for(let h=0;h<n.length;h++){const d=n[h](i,o[h],a[h]);u.push(d[0]),u.push(d[1]),i=d[1]}const c=[],l=[];for(let h=0;h<u.length;h+=2)c.push(u[h]),l.push(u[h+1]);return[c,l]}const M4=L({multiRNNCell_:V4});function U4(n,e,t,r=!1){const s=E(n,"logits","multinomial"),o=s.size,a=s.rank;if(o<2)throw new Error(`Error in multinomial: you need at least 2 outcomes, but got ${o}.`);if(a>2)throw new Error(`Rank of probabilities must be 1 or 2, but is ${a}`);t=t||Math.random();const u={logits:a===1?Z(s,[1,-1]):s},c={numSamples:e,seed:t,normalized:r},l=U.runKernel(Ud,u,c);return a===1?Z(l,[l.size]):l}const W4=L({multinomial_:U4});function z4(n,e){let t=E(n,"a","notEqual","string_or_numeric"),r=E(e,"b","notEqual","string_or_numeric");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r};return U.runKernel(Gd,s)}const em=L({notEqual_:z4});function G4(n,e,t=1,r=0,s="int32"){if(e<2)throw new Error(`Error in oneHot: depth must be >=2, but it is ${e}`);const a={indices:E(n,"indices","oneHot","int32")},i={dtype:s,depth:e,onValue:t,offValue:r};return U.runKernel(qd,a,i)}const j4=L({oneHot_:G4});function H4(n){const t={x:E(n,"x","onesLike")};return U.runKernel(Xd,t)}const K4=L({onesLike_:H4});function X4(n,e){const t=E(n,"v1","outerProduct"),r=E(e,"v2","outerProduct");_(t.rank===1&&r.rank===1,()=>`Error in outerProduct: inputs must be rank 1, but got ranks ${t.rank} and ${r.rank}.`);const s=Z(t,[-1,1]),o=Z(r,[1,-1]);return Be(s,o)}const q4=L({outerProduct_:X4});function Y4(n,e,t=0){const r=E(n,"x","pad");if(r.rank===0)throw new Error("pad(scalar) is not defined. Pass non-scalar to pad");const s={paddings:e,constantValue:t},o={x:r};return U.runKernel(Qd,o,s)}const Lo=L({pad_:Y4});function Q4(n,e,t=0){return _(e.length===2,()=>"Invalid number of paddings. Must be length of 2."),Lo(n,[e],t)}const Z4=L({pad1d_:Q4});function J4(n,e,t=0){return _(e.length===2&&e[0].length===2&&e[1].length===2,()=>"Invalid number of paddings. Must be length of 2 each."),Lo(n,e,t)}const ex=L({pad2d_:J4});function tx(n,e,t=0){return _(e.length===3&&e[0].length===2&&e[1].length===2&&e[2].length===2,()=>"Invalid number of paddings. Must be length of 2 each."),Lo(n,e,t)}const nx=L({pad3d_:tx});function rx(n,e,t=0){return _(e.length===4&&e[0].length===2&&e[1].length===2&&e[2].length===2&&e[3].length===2,()=>"Invalid number of paddings. Must be length of 2 each."),Lo(n,e,t)}const sx=L({pad4d_:rx});function ox(n,e,t){const r=E(n,"x","spaceToBatchND");_(r.rank>=1+e.length,()=>`input rank ${r.rank} should be > than [blockShape] ${e.length}`),_(t.length===e.length,()=>`paddings.shape[0] ${t.length} must be equal to [blockShape] ${e.length}`),_(r.shape.reduce((a,i,u)=>u>0&&u<=e.length?a&&(i+t[u-1][0]+t[u-1][1])%e[u-1]===0:a,!0),()=>`input spatial dimensions ${r.shape.slice(1)} with paddings ${t.toString()} must be divisible by blockShapes ${e.toString()}`);const s={x:r},o={blockShape:e,paddings:t};return U.runKernel(Ip,s,o)}const tm=L({spaceToBatchND_:ox});function ax(n,e,t,r,s,o,a){s==null&&(s=[1,1]),o==null&&(o=1),r===0&&(r="valid");const i=E(n,"x","maxPool");let u=i,c=!1;i.rank===3&&(c=!0,u=Z(i,[1,i.shape[0],i.shape[1],i.shape[2]])),_(Bt(o,s),()=>`Error in pool: Either strides or dilations must be 1. Got strides ${o} and dilations '${s}'`);const l=ns(u.shape,e,o,s,r),h=[l.dilationHeight,l.dilationWidth];let d;r==="same"?d=ux([l.filterHeight,l.filterWidth],h):d=[[0,0],[0,0]];const p=h[0]===1&&h[1]===1,[f,b]=ix([l.inHeight,l.inWidth],h,d),y=p?r:"valid",x=p?u:tm(u,h,f),I=(t==="avg"?()=>Af(x,e,o,y,a):()=>Zf(x,e,o,y,a))(),k=p?I:Of(I,h,b);return c?Z(k,[k.shape[1],k.shape[2],k.shape[3]]):k}function ix(n,e,t){const r=t.map(l=>l[0]),s=t.map(l=>l[1]),o=n.concat(r,s),a=e.map((l,h)=>(l-o[h]%l)%l),i=s.map((l,h)=>l+a[h]),u=e.map((l,h)=>[r[h],i[h]]),c=e.map((l,h)=>[0,a[h]]);return[u,c]}function ux(n,e){const r=n.map((a,i)=>a+(a-1)*(e[i]-1)).map(a=>a-1),s=r.map(a=>Math.floor(a/2)),o=r.map((a,i)=>a-s[i]);return r.map((a,i)=>[s[i],o[i]])}const cx=L({pool_:ax});function lx(n,e){const t=E(n,"x","prelu"),r=E(e,"alpha","prelu"),s={x:t,alpha:r};return U.runKernel(Jd,s)}const nm=L({prelu_:lx});function hx(n,e=null,t=!1){let r=E(n,"x","prod");r.dtype==="bool"&&(r=He(r,"int32"));const s={x:r},o={axis:e,keepDims:t};return U.runKernel(ep,s,o)}const dx=L({prod_:hx});function px(n,e,t,r){const s=n.map((l,h)=>E(l,`tensors${h}`,"raggedGather","int32")),o=E(e,"paramsDenseValues","raggedGather"),a=E(t,"indices","raggedGather","int32"),i={paramsNestedSplits:s,paramsDenseValues:o,indices:a},u={outputRaggedRank:r},c=U.runKernel(tp,i,u);return{outputNestedSplits:c.slice(0,c.length-1),outputDenseValues:c[c.length-1]}}const fx=L({raggedGather_:px});function mx(n,e,t){const r=E(n,"starts","raggedRange"),s=E(e,"limits","raggedRange",r.dtype),o=E(t,"deltas","raggedRange",r.dtype),a={starts:r,limits:s,deltas:o},i=U.runKernel(np,a);return{rtNestedSplits:i[0],rtDenseValues:i[1]}}const gx=L({raggedRange_:mx});function yx(n,e,t,r,s){const o=E(n,"shape","raggedTensorToTensor","int32"),a=E(e,"values","raggedTensorToTensor"),i=E(t,"defaultValue","raggedTensorToTensor",a.dtype),u=r.map((h,d)=>E(h,`tensors${d}`,"raggedTensorToTensor","int32")),c={shape:o,values:a,defaultValue:i,rowPartitionTensors:u},l={rowPartitionTypes:s};return U.runKernel(rp,c,l)}const xx=L({raggedTensorToTensor_:yx});function bx(n,e,t){Kt(n);const r=ne(n);let s=null;if(t==null||t==="float32")s=new Float32Array(r);else if(t==="int32")s=new Int32Array(r);else if(t==="bool")s=new Uint8Array(r);else throw new Error(`Unknown data type ${t}`);for(let o=0;o<r;o++)s[o]=e();return U.makeTensor(s,n,t)}const vx=L({rand_:bx});var $a={exports:{}},wx=$a.exports,Hc;function $x(){return Hc||(Hc=1,(function(n){(function(e,t,r){function s(u){var c=this,l=i();c.next=function(){var h=2091639*c.s0+c.c*23283064365386963e-26;return c.s0=c.s1,c.s1=c.s2,c.s2=h-(c.c=h|0)},c.c=1,c.s0=l(" "),c.s1=l(" "),c.s2=l(" "),c.s0-=l(u),c.s0<0&&(c.s0+=1),c.s1-=l(u),c.s1<0&&(c.s1+=1),c.s2-=l(u),c.s2<0&&(c.s2+=1),l=null}function o(u,c){return c.c=u.c,c.s0=u.s0,c.s1=u.s1,c.s2=u.s2,c}function a(u,c){var l=new s(u),h=c&&c.state,d=l.next;return d.int32=function(){return l.next()*4294967296|0},d.double=function(){return d()+(d()*2097152|0)*11102230246251565e-32},d.quick=d,h&&(typeof h=="object"&&o(h,l),d.state=function(){return o(l,{})}),d}function i(){var u=4022871197,c=function(l){l=String(l);for(var h=0;h<l.length;h++){u+=l.charCodeAt(h);var d=.02519603282416938*u;u=d>>>0,d-=u,d*=u,u=d>>>0,d-=u,u+=d*4294967296}return(u>>>0)*23283064365386963e-26};return c}t&&t.exports?t.exports=a:this.alea=a})(wx,n)})($a)),$a.exports}var Sa={exports:{}},Sx=Sa.exports,Kc;function Cx(){return Kc||(Kc=1,(function(n){(function(e,t,r){function s(i){var u=this,c="";u.x=0,u.y=0,u.z=0,u.w=0,u.next=function(){var h=u.x^u.x<<11;return u.x=u.y,u.y=u.z,u.z=u.w,u.w^=u.w>>>19^h^h>>>8},i===(i|0)?u.x=i:c+=i;for(var l=0;l<c.length+64;l++)u.x^=c.charCodeAt(l)|0,u.next()}function o(i,u){return u.x=i.x,u.y=i.y,u.z=i.z,u.w=i.w,u}function a(i,u){var c=new s(i),l=u&&u.state,h=function(){return(c.next()>>>0)/4294967296};return h.double=function(){do var d=c.next()>>>11,p=(c.next()>>>0)/4294967296,f=(d+p)/(1<<21);while(f===0);return f},h.int32=c.next,h.quick=h,l&&(typeof l=="object"&&o(l,c),h.state=function(){return o(c,{})}),h}t&&t.exports?t.exports=a:this.xor128=a})(Sx,n)})(Sa)),Sa.exports}var Ca={exports:{}},Tx=Ca.exports,Xc;function Nx(){return Xc||(Xc=1,(function(n){(function(e,t,r){function s(i){var u=this,c="";u.next=function(){var h=u.x^u.x>>>2;return u.x=u.y,u.y=u.z,u.z=u.w,u.w=u.v,(u.d=u.d+362437|0)+(u.v=u.v^u.v<<4^(h^h<<1))|0},u.x=0,u.y=0,u.z=0,u.w=0,u.v=0,i===(i|0)?u.x=i:c+=i;for(var l=0;l<c.length+64;l++)u.x^=c.charCodeAt(l)|0,l==c.length&&(u.d=u.x<<10^u.x>>>4),u.next()}function o(i,u){return u.x=i.x,u.y=i.y,u.z=i.z,u.w=i.w,u.v=i.v,u.d=i.d,u}function a(i,u){var c=new s(i),l=u&&u.state,h=function(){return(c.next()>>>0)/4294967296};return h.double=function(){do var d=c.next()>>>11,p=(c.next()>>>0)/4294967296,f=(d+p)/(1<<21);while(f===0);return f},h.int32=c.next,h.quick=h,l&&(typeof l=="object"&&o(l,c),h.state=function(){return o(c,{})}),h}t&&t.exports?t.exports=a:this.xorwow=a})(Tx,n)})(Ca)),Ca.exports}var Ta={exports:{}},Ex=Ta.exports,qc;function Ix(){return qc||(qc=1,(function(n){(function(e,t,r){function s(i){var u=this;u.next=function(){var l=u.x,h=u.i,d,p;return d=l[h],d^=d>>>7,p=d^d<<24,d=l[h+1&7],p^=d^d>>>10,d=l[h+3&7],p^=d^d>>>3,d=l[h+4&7],p^=d^d<<7,d=l[h+7&7],d=d^d<<13,p^=d^d<<9,l[h]=p,u.i=h+1&7,p};function c(l,h){var d,p=[];if(h===(h|0))p[0]=h;else for(h=""+h,d=0;d<h.length;++d)p[d&7]=p[d&7]<<15^h.charCodeAt(d)+p[d+1&7]<<13;for(;p.length<8;)p.push(0);for(d=0;d<8&&p[d]===0;++d);for(d==8?p[7]=-1:p[d],l.x=p,l.i=0,d=256;d>0;--d)l.next()}c(u,i)}function o(i,u){return u.x=i.x.slice(),u.i=i.i,u}function a(i,u){i==null&&(i=+new Date);var c=new s(i),l=u&&u.state,h=function(){return(c.next()>>>0)/4294967296};return h.double=function(){do var d=c.next()>>>11,p=(c.next()>>>0)/4294967296,f=(d+p)/(1<<21);while(f===0);return f},h.int32=c.next,h.quick=h,l&&(l.x&&o(l,c),h.state=function(){return o(c,{})}),h}t&&t.exports?t.exports=a:this.xorshift7=a})(Ex,n)})(Ta)),Ta.exports}var Na={exports:{}},kx=Na.exports,Yc;function Rx(){return Yc||(Yc=1,(function(n){(function(e,t,r){function s(i){var u=this;u.next=function(){var l=u.w,h=u.X,d=u.i,p,f;return u.w=l=l+1640531527|0,f=h[d+34&127],p=h[d=d+1&127],f^=f<<13,p^=p<<17,f^=f>>>15,p^=p>>>12,f=h[d]=f^p,u.i=d,f+(l^l>>>16)|0};function c(l,h){var d,p,f,b,y,x=[],C=128;for(h===(h|0)?(p=h,h=null):(h=h+"\0",p=0,C=Math.max(C,h.length)),f=0,b=-32;b<C;++b)h&&(p^=h.charCodeAt((b+32)%h.length)),b===0&&(y=p),p^=p<<10,p^=p>>>15,p^=p<<4,p^=p>>>13,b>=0&&(y=y+1640531527|0,d=x[b&127]^=p+y,f=d==0?f+1:0);for(f>=128&&(x[(h&&h.length||0)&127]=-1),f=127,b=512;b>0;--b)p=x[f+34&127],d=x[f=f+1&127],p^=p<<13,d^=d<<17,p^=p>>>15,d^=d>>>12,x[f]=p^d;l.w=y,l.X=x,l.i=f}c(u,i)}function o(i,u){return u.i=i.i,u.w=i.w,u.X=i.X.slice(),u}function a(i,u){i==null&&(i=+new Date);var c=new s(i),l=u&&u.state,h=function(){return(c.next()>>>0)/4294967296};return h.double=function(){do var d=c.next()>>>11,p=(c.next()>>>0)/4294967296,f=(d+p)/(1<<21);while(f===0);return f},h.int32=c.next,h.quick=h,l&&(l.X&&o(l,c),h.state=function(){return o(c,{})}),h}t&&t.exports?t.exports=a:this.xor4096=a})(kx,n)})(Na)),Na.exports}var Ea={exports:{}},_x=Ea.exports,Qc;function Ax(){return Qc||(Qc=1,(function(n){(function(e,t,r){function s(i){var u=this,c="";u.next=function(){var h=u.b,d=u.c,p=u.d,f=u.a;return h=h<<25^h>>>7^d,d=d-p|0,p=p<<24^p>>>8^f,f=f-h|0,u.b=h=h<<20^h>>>12^d,u.c=d=d-p|0,u.d=p<<16^d>>>16^f,u.a=f-h|0},u.a=0,u.b=0,u.c=-1640531527,u.d=1367130551,i===Math.floor(i)?(u.a=i/4294967296|0,u.b=i|0):c+=i;for(var l=0;l<c.length+20;l++)u.b^=c.charCodeAt(l)|0,u.next()}function o(i,u){return u.a=i.a,u.b=i.b,u.c=i.c,u.d=i.d,u}function a(i,u){var c=new s(i),l=u&&u.state,h=function(){return(c.next()>>>0)/4294967296};return h.double=function(){do var d=c.next()>>>11,p=(c.next()>>>0)/4294967296,f=(d+p)/(1<<21);while(f===0);return f},h.int32=c.next,h.quick=h,l&&(typeof l=="object"&&o(l,c),h.state=function(){return o(c,{})}),h}t&&t.exports?t.exports=a:this.tychei=a})(_x,n)})(Ea)),Ea.exports}var Ia={exports:{}};const Ox={},Dx=Object.freeze(Object.defineProperty({__proto__:null,default:Ox},Symbol.toStringTag,{value:"Module"})),Fx=kg(Dx);var Px=Ia.exports,Zc;function Lx(){return Zc||(Zc=1,(function(n){(function(e,t,r){var s=256,o=6,a=52,i="random",u=r.pow(s,o),c=r.pow(2,a),l=c*2,h=s-1,d;function p(k,P,W){var H=[];P=P==!0?{entropy:!0}:P||{};var G=x(y(P.entropy?[k,I(t)]:k??C(),3),H),B=new f(H),V=function(){for(var R=B.g(o),q=u,te=0;R<c;)R=(R+te)*s,q*=s,te=B.g(1);for(;R>=l;)R/=2,q/=2,te>>>=1;return(R+te)/q};return V.int32=function(){return B.g(4)|0},V.quick=function(){return B.g(4)/4294967296},V.double=V,x(I(B.S),t),(P.pass||W||function(R,q,te,he){return he&&(he.S&&b(he,B),R.state=function(){return b(B,{})}),te?(r[i]=R,q):R})(V,G,"global"in P?P.global:this==r,P.state)}function f(k){var P,W=k.length,H=this,G=0,B=H.i=H.j=0,V=H.S=[];for(W||(k=[W++]);G<s;)V[G]=G++;for(G=0;G<s;G++)V[G]=V[B=h&B+k[G%W]+(P=V[G])],V[B]=P;(H.g=function(R){for(var q,te=0,he=H.i,de=H.j,ge=H.S;R--;)q=ge[he=h&he+1],te=te*s+ge[h&(ge[he]=ge[de=h&de+q])+(ge[de]=q)];return H.i=he,H.j=de,te})(s)}function b(k,P){return P.i=k.i,P.j=k.j,P.S=k.S.slice(),P}function y(k,P){var W=[],H=typeof k,G;if(P&&H=="object")for(G in k)try{W.push(y(k[G],P-1))}catch{}return W.length?W:H=="string"?k:k+"\0"}function x(k,P){for(var W=k+"",H,G=0;G<W.length;)P[h&G]=h&(H^=P[h&G]*19)+W.charCodeAt(G++);return I(P)}function C(){try{var k;return d&&(k=d.randomBytes)?k=k(s):(k=new Uint8Array(s),(e.crypto||e.msCrypto).getRandomValues(k)),I(k)}catch{var P=e.navigator,W=P&&P.plugins;return[+new Date,e,W,e.screen,I(t)]}}function I(k){return String.fromCharCode.apply(0,k)}if(x(r.random(),t),n.exports){n.exports=p;try{d=Fx}catch{}}else r["seed"+i]=p})(typeof self<"u"?self:Px,[],Math)})(Ia)),Ia.exports}var Ai,Jc;function Bx(){if(Jc)return Ai;Jc=1;var n=$x(),e=Cx(),t=Nx(),r=Ix(),s=Rx(),o=Ax(),a=Lx();return a.alea=n,a.xor128=e,a.xorwow=t,a.xorshift7=r,a.xor4096=s,a.tychei=o,Ai=a,Ai}var oc=Bx();class ac{constructor(e,t,r,s,o){this.mean=e,this.stdDev=t,this.dtype=r,this.nextVal=NaN,this.truncated=s,this.truncated&&(this.upper=this.mean+this.stdDev*2,this.lower=this.mean-this.stdDev*2);const a=o||Math.random();this.random=oc.alea(a.toString())}nextValue(){if(!isNaN(this.nextVal)){const s=this.nextVal;return this.nextVal=NaN,s}let e,t,r=!1;for(;!r;){let s,o,a;do s=2*this.random()-1,o=2*this.random()-1,a=s*s+o*o;while(a>=1||a===0);const i=Math.sqrt(-2*Math.log(a)/a);e=this.mean+this.stdDev*s*i,t=this.mean+this.stdDev*o*i,(!this.truncated||this.isValidTruncated(e))&&(r=!0)}return(!this.truncated||this.isValidTruncated(t))&&(this.nextVal=this.convertValue(t)),this.convertValue(e)}convertValue(e){return this.dtype==null||this.dtype==="float32"?e:Math.round(e)}isValidTruncated(e){return e<=this.upper&&e>=this.lower}}class Vx{constructor(e,t,r,s){this.alpha=e,this.beta=1/t,this.dtype=r;const o=s||Math.random();this.randu=oc.alea(o.toString()),this.randn=new ac(0,1,r,!1,this.randu()),e<1?this.d=e+2/3:this.d=e-1/3,this.c=1/Math.sqrt(9*this.d)}nextValue(){let e,t,r,s,o,a;for(;;){do s=this.randn.nextValue(),a=1+this.c*s;while(a<=0);if(a*=a*a,e=s*s,t=1-.331*e*e,r=.5*e+this.d*(1-a+Math.log(a)),o=this.randu(),o<t||Math.log(o)<r)break}return a=1/this.beta*this.d*a,this.alpha<1&&(a*=Math.pow(this.randu(),1/this.alpha)),this.convertValue(a)}convertValue(e){return this.dtype==="float32"?e:Math.round(e)}}class Mx{constructor(e=0,t=1,r,s){if(this.canReturnFloat=()=>this.dtype==null||this.dtype==="float32",this.min=e,this.range=t-e,this.dtype=r,s==null&&(s=Math.random()),typeof s=="number"&&(s=s.toString()),!this.canReturnFloat()&&this.range<=1)throw new Error(`The difference between ${e} - ${t} <= 1 and dtype is not float`);this.random=oc.alea(s)}convertValue(e){return this.canReturnFloat()?e:Math.round(e)}nextValue(){return this.convertValue(this.min+this.range*this.random())}}function Ux(n,e,t=1,r="float32",s){if(Kt(n),t==null&&(t=1),r==null&&(r="float32"),r!=="float32"&&r!=="int32")throw new Error(`Unsupported data type ${r}`);const o=new Vx(e,t,r,s),a=Ye(n,r);for(let i=0;i<a.values.length;i++)a.values[i]=o.nextValue();return a.toTensor()}const Wx=L({randomGamma_:Ux});function zx(n,e=0,t=1,r,s){if(Kt(n),r!=null&&r==="bool")throw new Error(`Unsupported data type ${r}`);const o=new ac(e,t,r,!1,s),a=Ye(n,r);for(let i=0;i<a.values.length;i++)a.values[i]=o.nextValue();return a.toTensor()}const rm=L({randomNormal_:zx});function Gx(n,e,t){if(e!=null&&e==="bool")throw new Error(`Unsupported data type ${e}`);return rm(n,0,1,e,t)}const jx=L({randomStandardNormal_:Gx});function Hx(n,e=0,t=1,r="float32",s){Kt(n);const o=Ye(n,r),a=new Mx(e,t,null,s);for(let i=0;i<o.values.length;i++)o.values[i]=a.nextValue();return o.toTensor()}const ic=L({randomUniform_:Hx});function Kx(n,e,t,r){return ic(n,e,t,"int32",r)}const Xx=L({randomUniformInt_:Kx});function To(n,e,t=1,r="float32"){if(t===0)throw new Error("Cannot have a step of zero");const s={start:n,stop:e,step:t,dtype:r};return U.runKernel(sp,{},s)}function qx(n){const t={input:E(n,"input","real")};return U.runKernel(op,t)}const No=L({real_:qx});function Yx(n){const t={x:E(n,"x","reciprocal")};return U.runKernel(ap,t)}const Qx=L({reciprocal_:Yx});function Zx(n){const t={x:E(n,"x","relu")};return U.runKernel(ip,t)}const si=L({relu_:Zx});function Jx(n){const t={x:E(n,"x","relu6")};return U.runKernel(hp,t)}const sm=L({relu6_:Jx});function eb(n,e){const r={x:E(n,"x","reverse")},s={dims:e};return U.runKernel(dp,r,s)}const Qr=L({reverse_:eb});function tb(n){const e=E(n,"x","reverse");return _(e.rank===1,()=>`Error in reverse1D: x must be rank 1 but got rank ${e.rank}.`),Qr(e,0)}const nb=L({reverse1d_:tb});function rb(n,e){const t=E(n,"x","reverse");return _(t.rank===2,()=>`Error in reverse2D: x must be rank 2 but got rank ${t.rank}.`),Qr(t,e)}const sb=L({reverse2d_:rb});function ob(n,e){const t=E(n,"x","reverse");return _(t.rank===3,()=>`Error in reverse3D: x must be rank 3 but got rank ${t.rank}.`),Qr(t,e)}const ab=L({reverse3d_:ob});function ib(n,e){const t=E(n,"x","reverse");return _(t.rank===4,()=>`Error in reverse4D: x must be rank 4 but got rank ${t.rank}.`),Qr(t,e)}const ub=L({reverse4d_:ib});function cb(n){const t={x:E(n,"x","round")};return U.runKernel(pp,t)}const om=L({round_:cb});function lb(n){const t={x:E(n,"x","rsqrt","float32")};return U.runKernel(fp,t)}const hb=L({rsqrt_:lb});function db(n){const t={x:E(n,"x","selu")};return U.runKernel(bp,t)}const pb=L({selu_:db});function fb(n,e,t,r,s,o=[1,1],a="NHWC"){const i=E(n,"x","separableConv2d"),u=E(e,"depthwiseFilter","separableConv2d"),c=E(t,"pointwiseFilter","separableConv2d");let l=i,h=!1;if(i.rank===3&&(h=!0,l=Z(i,[1,i.shape[0],i.shape[1],i.shape[2]])),a==="NCHW")throw new Error("separableConv2d currently does not support dataFormat NCHW; only NHWC is supported");_(l.rank===4,()=>`Error in separableConv2d: input must be rank 4, but got rank ${l.rank}.`),_(u.rank===4,()=>`Error in separableConv2d: depthwise filter must be rank 4, but got rank ${u.rank}.`),_(c.rank===4,()=>`Error in separableConv2d: pointwise filter must be rank 4, but got rank ${u.rank}.`),_(c.shape[0]===1,()=>`Error in separableConv2d: the first dimension of pointwise filter  must be 1, but got ${c.shape[0]}.`),_(c.shape[1]===1,()=>`Error in separableConv2d: the second dimension of pointwise filter must be 1, but got ${c.shape[1]}.`);const d=u.shape[2],p=u.shape[3];_(c.shape[2]===d*p,()=>`Error in separableConv2d: the third dimension of pointwise filter must be ${d*p}, but got ${c.shape[2]}.`);const f=ec(l,u,r,s,a,o),y=ei(f,c,1,"valid",a);return h?Z(y,[y.shape[1],y.shape[2],y.shape[3]]):y}const mb=L({separableConv2d_:fb});async function gb(n,e){const t=E(n,"x","setdiff1d"),r=E(e,"y","setdiff1d");_(t.dtype===r.dtype,()=>`x and y should have the same dtype, but got x (${t.dtype}) and y (${r.dtype}).`),_(t.rank===1,()=>`x should be 1D tensor, but got x (${t.shape}).`),_(r.rank===1,()=>`y should be 1D tensor, but got y (${r.shape}).`);const s=await t.data(),o=await r.data(),a=new Set(o);let i=0;for(let l=0;l<s.length;l++)a.has(s[l])||i++;const u=new Is([i],t.dtype),c=new Is([i],"int32");for(let l=0,h=0;l<s.length;l++)a.has(s[l])||(u.values[h]=s[l],c.values[h]=l,h++);return[u.toTensor(),c.toTensor()]}const yb=gb;function xb(n){const t={x:E(n,"x","sign")};return U.runKernel(Sp,t)}const bb=L({sign_:xb});function vb(n){const t={x:E(n,"x","sin","float32")};return U.runKernel(wp,t)}const wb=L({sin_:vb});function $b(n){const t={x:E(n,"x","sinh")};return U.runKernel($p,t)}const Sb=L({sinh_:$b});function Cb(n,e,t){const r=E(n,"x","slice1d");return _(r.rank===1,()=>`slice1d expects a rank-1 tensor, but got a rank-${r.rank} tensor`),Ce(r,[e],[t])}const Tb=L({slice1d_:Cb});function Nb(n,e,t){const r=E(n,"x","slice2d");return _(r.rank===2,()=>`slice2d expects a rank-2 tensor, but got a rank-${r.rank} tensor`),Ce(r,e,t)}const Eb=L({slice2d_:Nb});function Ib(n,e,t){const r=E(n,"x","slice3d");return _(r.rank===3,()=>`slice3d expects a rank-3 tensor, but got a rank-${r.rank} tensor`),Ce(r,e,t)}const kb=L({slice3d_:Ib});function Rb(n,e,t){const r=E(n,"x","slice4d");return _(r.rank===4,()=>`slice4d expects a rank-4 tensor, but got a rank-${r.rank} tensor`),Ce(r,e,t)}const _b=L({slice4d_:Rb});function Ab(n,e=-1){const t=E(n,"logits","softmax","float32");if(e===-1&&(e=t.rank-1),e!==t.rank-1)throw Error(`Softmax along a non-last dimension is not yet supported. Logits was rank ${t.rank} and dim was ${e}`);const r={logits:t},s={dim:e};return U.runKernel(Rp,r,s)}const Ob=L({softmax_:Ab});function Db(n){_(n.dtype==="complex64",()=>`The dtype for tf.spectral.fft() must be complex64 but got ${n.dtype}.`);const e={input:n};return U.runKernel(ad,e)}const uc=L({fft_:Db});function Fb(n){_(n.dtype==="complex64",()=>`The dtype for tf.spectral.ifft() must be complex64 but got ${n.dtype}.`);const e={input:n};return U.runKernel(gd,e)}const Ma=L({ifft_:Fb});function Pb(n){const e=n.shape[n.shape.length-1],t=n.size/e;let r;if(e<=2){const s=Z(n,[t,e]);r=Ma(s)}else{const s=[t,2*(e-1)],o=Z(No(n),[t,e]),a=Z(ri(n),[t,e]),i=Qr(Ce(o,[0,1],[t,e-2]),1),u=oe(Qr(Ce(a,[0,1],[t,e-2]),1),Re(-1)),c=pt([o,i],1),l=pt([a,u],1),h=Z(mr(c,l),[s[0],s[1]]);r=Ma(h)}if(r=No(r),n.rank===3&&n.shape[0]!==0){const s=r,o=n.shape[0];r=Z(r,[o,r.shape[0]/o,r.shape[1]]),s.dispose()}return r}const am=L({irfft_:Pb});function Lb(n,e,t=0){const s={x:E(n,"x","split")},o={numOrSizeSplits:e,axis:t};return U.runKernel(kp,s,o)}const Eo=L({split_:Lb});function Bb(n,e){_(n.dtype==="float32",()=>`The dtype for rfft() must be real value but got ${n.dtype}`);let t=n.shape[n.shape.length-1];const r=n.size/t;let s;if(e!=null&&e<t){const f=n.shape.map(y=>0),b=n.shape.map(y=>y);b[n.shape.length-1]=e,s=Ce(n,f,b),t=e}else if(e!=null&&e>t){const f=n.shape.map(b=>b);f[n.shape.length-1]=e-t,s=pt([n,Yr(f)],n.shape.length-1),t=e}else s=n;const o=jt(s),a=Z(mr(s,o),[r,t]),i=uc(a),u=Math.floor(t/2)+1,c=No(i),l=ri(i),h=Eo(c,[u,t-u],c.shape.length-1),d=Eo(l,[u,t-u],l.shape.length-1),p=s.shape.slice();return p[s.shape.length-1]=u,Z(mr(h[0],d[0]),p)}const cc=L({rfft_:Bb});function Vb(n,e){let t=E(n,"a","squaredDifference"),r=E(e,"b","squaredDifference");[t,r]=Je(t,r),Fe(t.shape,r.shape);const s={a:t,b:r},o={};return U.runKernel(Pp,s,o)}const im=L({squaredDifference_:Vb});function Mb(n,e){const t=E(n,"x","squeeze","string_or_numeric");return Z(t,xr(t.shape,e).newShape)}const st=L({squeeze_:Mb});function Ub(n,e=0){const t=Fa(n,"tensors","stack","string_or_numeric");_(t.length>=1,()=>"Pass at least one tensor to tf.stack"),t.length>0&&_(e<=t[0].rank,()=>"Axis must be <= rank of the tensor");const r=t,s={axis:e};return U.runKernel(Yd,r,s)}const jn=L({stack_:Ub});function Wb(n,e=0){const r={x:E(n,"x","step")},s={alpha:e};return U.runKernel(Qp,r,s)}const um=L({step_:Wb});function zb(n,e,t,r,s=0,o=0,a=0,i=0,u=0){const l={x:E(n,"x","stridedSlice","string_or_numeric")},h={begin:e,end:t,strides:r,beginMask:s,endMask:o,ellipsisMask:a,newAxisMask:i,shrinkAxisMask:u};return U.runKernel(Bp,l,h)}const Gb=L({stridedSlice_:zb});function jb(n){const t={x:E(n,"x","tan","float32")};return U.runKernel(zp,t)}const Hb=L({tan_:jb});function xt(n,e){Os(n);const t=br(n,e);if(t.length!==1)throw new Error("tensor1d() requires values to be a flat/TypedArray");return vr(n,null,t,e)}function dr(n,e,t){if(Os(n),e!=null&&e.length!==2)throw new Error("tensor2d() requires shape to have two numbers");const r=br(n,t);if(r.length!==2&&r.length!==1)throw new Error("tensor2d() requires values to be number[][] or flat/TypedArray");if(r.length===1&&e==null)throw new Error("tensor2d() requires shape to be provided when `values` are a flat/TypedArray");return vr(n,e,r,t)}function cm(n,e,t){if(Os(n),e!=null&&e.length!==3)throw new Error("tensor3d() requires shape to have three numbers");const r=br(n,t);if(r.length!==3&&r.length!==1)throw new Error("tensor3d() requires values to be number[][][] or flat/TypedArray");if(r.length===1&&e==null)throw new Error("tensor3d() requires shape to be provided when `values` are a flat array");return vr(n,e,r,t)}function Kb(n,e,t){if(Os(n),e!=null&&e.length!==4)throw new Error("tensor4d() requires shape to have four numbers");const r=br(n,t);if(r.length!==4&&r.length!==1)throw new Error("tensor4d() requires values to be number[][][][] or flat/TypedArray");if(r.length===1&&e==null)throw new Error("tensor4d() requires shape to be provided when `values` are a flat array");return vr(n,e,r,t)}function Xb(n,e,t){if(Os(n),e!=null&&e.length!==5)throw new Error("tensor5d() requires shape to have five numbers");const r=br(n,t);if(r.length!==5&&r.length!==1)throw new Error("tensor5d() requires values to be number[][][][][] or flat/TypedArray");if(r.length===1&&e==null)throw new Error("tensor5d() requires shape to be provided when `values` are a flat array");return vr(n,e,r,t)}function qb(n,e,t){if(Os(n),e!=null&&e.length!==6)throw new Error("tensor6d() requires shape to have six numbers");const r=br(n,t);if(r.length!==6&&r.length!==1)throw new Error("tensor6d() requires values to be number[][][][][][] or flat/TypedArray");if(r.length===1&&e==null)throw new Error("tensor6d() requires shape to be provided when `values` are a flat array");return e=e||r,vr(n,e,r,t)}function lm(n,e,t){const r=e.rank>1?e.shape[e.rank-1]:1,s=e.rank>1?e.rank-1:1,o=`Must have updates.shape = indices.shape[:batchDim] + shape[sliceDim:], got updates.shape: ${t.shape}, indices.shape: ${e.shape}, shape: ${n}, sliceDim: ${r}, and batchDim: ${s}.`;if(t.rank<s)throw new Error(o+` update.rank < ${s}. `);if(n.length<r+(t.rank-s))throw new Error(o+` Output shape length < ${r+(t.rank-s)}`);if(t.rank!==s+n.length-r)throw new Error(o+` update.rank != ${s+n.length-r}`);for(let a=0;a<s;++a)if(t.shape[a]!==e.shape[a])throw new Error(o+` updates.shape[${a}] (${t.shape[a]}) != indices.shape[${a}] (${e.shape[a]}).`);for(let a=0;a<t.rank-s;++a)if(t.shape[a+s]!==n[a+r])throw new Error(o+` updates.shape[${a+s}] (${t.shape[a+s]}) != shape[${a+s}] (${n[a+s]})`)}function lc(n,e,t){if(e.rank<1)throw new Error(`tf.scatterND() expects the indices to be rank 1 or higher, but the rank was ${e.rank}.`);if(n.rank<1)throw new Error(`tf.scatterND() expects the updates to be rank 1 or higher, but the rank was ${n.rank}.`);if(e.dtype!=="int32")throw new Error(`The dtype of 'indices' should be int32, but got dtype: ${e.dtype}`);if(t.length<1)throw new Error(`Output rank must be greater or equal to 1, but got shape: ${t}`);if(t.length===0){if(e.size===0)throw new Error(`Indices specified for empty output. indices shape: ${e.shape}`);if(n.size===0)throw new Error(`Updates specified for empty output. updates shape: ${n.shape}`)}lm(t,e,n)}function oi(n,e,t){const r=e.shape.length,s=r>1?e.shape[r-1]:1,o=t.length;let a=1;for(let h=s;h<o;++h)a*=t[h];const i=s<1?1:s,u=ne(e.shape)/i,c=[...dt(t.slice(0,s)),1],l=ne(t);return{sliceRank:s,numUpdates:u,sliceSize:a,strides:c,outputSize:l}}function Yb(n,e,t){const r=E(n,"tensor","tensorScatterupdate"),s=E(e,"indices","tensorScatterupdate","int32"),o=E(t,"updates","tensorScatterupdate");if(lc(o,s,r.shape),r.dtype!==o.dtype)throw new Error(`tensor and updates must have the same dtype, instead they are ${r.dtype} and ${o.dtype}.`);const a={tensor:r,indices:s,updates:o},i={};return U.runKernel(gp,a,i)}const Qb=L({tensorScatterUpdate_:Yb});function Zb(n,e=1,t=!0){const r=E(n,"x","topk");if(r.rank===0)throw new Error("topk() expects the input to be of rank 1 or higher");const s=r.shape[r.shape.length-1];if(e<0)throw new Error(`'k' passed to topk() must be >= 0 but got ${e}`);if(e>s)throw new Error(`'k' passed to topk() must be <= the last dimension (${s}) but got ${e}`);const o={x:r},a={k:e,sorted:t},[i,u]=U.runKernel(jp,o,a);return{values:i,indices:u}}const Jb=L({topk_:Zb});function ev(n,e=0,t=1,r,s){if(Kt(n),r!=null&&r==="bool")throw new Error("Unsupported data type $ { dtype }");const o=new ac(e,t,r,!0,s),a=Ye(n,r);for(let i=0;i<a.values.length;i++)a.values[i]=o.nextValue();return a.toTensor()}const tv=L({truncatedNormal_:ev});function nv(n,e=0){const t=E(n,"x","unique","string_or_numeric");_(t.rank>0,()=>"The input tensor must be at least 1D");const r={x:t},s={axis:e},[o,a]=U.runKernel(Kp,r,s);return{values:o,indices:a}}const rv=L({unique_:nv});function sv(n,e,t){const r=E(n,"x","unsortedSegmentSum"),s=E(e,"segmentIds","unsortedSegmentSum","int32");_(Ns(t),()=>"numSegments must be of dtype int");const o={x:r,segmentIds:s},a={numSegments:t};return U.runKernel(qp,o,a)}const ov=L({unsortedSegmentSum_:sv});function av(n,e=0){const t=E(n,"x","unstack","string_or_numeric");_(e>=-t.shape.length&&e<t.shape.length,()=>`Axis = ${e} is not in [-${t.shape.length}, ${t.shape.length})`);const r={value:t},s={axis:e};return U.runKernel(Xp,r,s)}const rs=L({unstack_:av});function iv(n,e){return sc(n,e,"right")}function uv(n,e=!0,t,r){return U.makeVariable(n,e,t,r)}function hm(n,e){const t=[];for(let o=0;o<e.length;o++)e[o]&&t.push(o);const r=Ye(n,"int32"),s=Ye([t.length,n.length],"int32");for(let o=0;o<t.length;o++){const a=r.indexToLoc(t[o]),i=o*n.length;s.values.set(a,i)}return s.toTensor()}async function cv(n){const e=E(n,"condition","whereAsync","bool"),t=await e.data(),r=hm(e.shape,t);return n!==e&&e.dispose(),r}const dm=cv;async function lv(n,e,t){const r=E(n,"tensor","boolMask"),s=E(e,"mask","boolMask","bool"),o=t??0,a=s.rank,i=r.shape;_(a>0,()=>"mask cannot be scalar"),Ht(i.slice(o,o+a),s.shape,"mask's shape must match the first K dimensions of tensor's shape,");let u=1;for(let b=o;b<o+a;b++)u*=i[b];const c=i.slice(0,o).concat([u],i.slice(o+a)),l=Z(r,c),h=Z(s,[-1]),d=await dm(h),p=st(d,[1]),f=Gf(l,p,o);return n!==r&&r.dispose(),e!==s&&s.dispose(),p.dispose(),l.dispose(),h.dispose(),d.dispose(),f}const hv=lv;function dv(n,e,t){const r=E(n,"x","transpose");if(e==null&&(e=r.shape.map((a,i)=>i).reverse()),_(r.rank===e.length,()=>`Error in transpose: rank of input ${r.rank} must match length of perm ${e}.`),e.forEach(a=>{_(a>=0&&a<r.rank,()=>`All entries in 'perm' must be between 0 and ${r.rank-1} but got ${e}`)}),r.rank<=1)return r.clone();const s={x:r},o={perm:e};return r.dtype==="complex64"?we(()=>{let a=No(r),i=ri(r);return a=U.runKernel(ba,{x:a},o),i=U.runKernel(ba,{x:i},o),t&&(i=_n(i)),mr(a,i)}):U.runKernel(ba,s,o)}const $u=L({transpose_:dv});function pv(n,e,t,r,s=!0){const o=E(n,"v","movingAverage"),a=E(e,"x","movingAverage"),i=E(t,"decay","movingAverage");_2(o,a),_(qe(o.shape,a.shape),()=>"Shape mismatch in v and x");const u=Re(1),c=Te(u,i);let l=oe(Te(a,o),c);if(s){_(r!=null,()=>"When using zeroDebias: true, step is required.");const h=E(r,"step","movingAverage");l=ke(l,Te(u,So(i,h)))}return me(o,l)}const fv=L({movingAverage_:pv});function mv(n,e,t){Kt(t);const r=E(n,"indices","scatterND","int32"),s=E(e,"updates","scatterND");lc(s,r,t);const o={indices:r,updates:s},a={shape:t};return U.runKernel(mp,o,a)}const gv=L({scatterND_:mv});function yv(n,e,t,r){if(n.dtype!=="int32")throw new Error(`tf.sparseToDense() expects the indices to be int32 type, but the dtype was ${n.dtype}.`);if(n.rank>2)throw new Error(`sparseIndices should be a scalar, vector, or matrix, but got shape ${n.shape}.`);const s=n.rank>0?n.shape[0]:1,o=n.rank>1?n.shape[1]:1;if(t.length!==o)throw new Error(`outputShape has incorrect number of elements:, ${t.length}, should be: ${o}.`);const a=e.size;if(!(e.rank===0||e.rank===1&&a===s))throw new Error(`sparseValues has incorrect shape ${e.shape}, should be [] or [${s}]`);if(e.dtype!==r.dtype)throw new Error("sparseValues.dtype must match defaultValues.dtype")}function xv(n,e,t,r=0){Kt(t);const s=E(n,"sparseIndices","sparseToDense","int32"),o=E(e,"sparseValues","sparseToDense","string_or_numeric"),a=E(r,"defaultValue","sparseToDense",o.dtype);yv(s,o,t,a);const i={sparseIndices:s,sparseValues:o,defaultValue:a},u={outputShape:t};return U.runKernel(Fp,i,u)}const bv=L({sparseToDense_:xv});function vv(n,e){const t=E(e,"indices","gatherND","int32"),s={params:E(n,"x","gatherND","string_or_numeric"),indices:t};return U.runKernel(pd,s)}const wv=L({gatherND_:vv});function $v(n,e){if(e==null)return n.shape.slice();if(qe(n.shape,e))return e;if(n.shape.length===e.length){const t=[];for(let r=0;r<n.shape.length;r++)e[r]==null&&n.shape[r]!=null?t.push(n.shape[r]):t.push(e[r]);return t}return e}function Sv(n,e,t,r){const s=E(n,"x","dropout");if(_(s.dtype==="float32",()=>`x has to be a floating point tensor since it's going to be scaled, but got a ${s.dtype} tensor instead.`),_(e>=0&&e<1,()=>`rate must be a float in the range [0, 1), but got ${e}.`),e===0)return n instanceof Ze?s.clone():s;const o=$v(s,t),a=1-e,i=ke(zf(me(ic(o,0,1,"float32",r),a)),a);return oe(s,i)}const Cv=L({dropout_:Sv});function pm(n){return Math.floor(Math.pow(2,Math.ceil(Math.log(n)/Math.log(2))))}function hc(n,e,t){const r=1-n%2,s=new Float32Array(n);for(let o=0;o<n;++o){const a=2*Math.PI*o/(n+r-1);s[o]=e-t*Math.cos(a)}return xt(s,"float32")}async function Tv(n,e,t=1){const r=E(n,"predictions","inTopK"),s=E(e,"targets","inTopK");_(r.rank>1,()=>`inTopK() expects the predictions to be of rank 2 or higher, but got ${r.rank}`),_(r.rank-1===s.rank,()=>`predictions rank should be 1 larger than targets rank, but got predictions rank ${r.rank} and targets rank ${s.rank}`),Ht(r.shape.slice(0,r.shape.length-1),s.shape,"predictions's shape should be align with the targets' shape, except the last dimension.");const o=r.shape[r.shape.length-1];_(t>0&&t<=o,()=>`'k' passed to inTopK() must be > 0 && <= the predictions last dimension (${o}), but got ${t}`);const a=await r.data(),i=await s.data(),[u,c]=[a.length/o,o],l=pr("bool",u);for(let h=0;h<u;h++){const d=h*c,p=a.subarray(d,d+c),f=[];for(let b=0;b<p.length;b++)f.push({value:p[b],index:b});f.sort((b,y)=>y.value-b.value),l[h]=0;for(let b=0;b<t;b++)if(f[b].index===i[h]){l[h]=1;break}}return n!==r&&r.dispose(),e!==s&&s.dispose(),Rn(l,s.shape,"bool")}const Nv=Tv;function Ev(n,e,t,r,s,o="NHWC",a){let i=n;n.rank===3&&(i=Z(n,[1,n.shape[0],n.shape[1],n.shape[2]]));let u=e;u.rank===3&&(u=Z(e,[1,e.shape[0],e.shape[1],e.shape[2]])),_(i.rank===4,()=>`Error in conv2dDerFilter: input must be rank 4, but got shape ${i.shape}.`),_(u.rank===4,()=>`Error in conv2dDerFilter: dy must be rank 4, but got shape ${u.shape}.`),_(t.length===4,()=>`Error in conv2dDerFilter: filterShape must be length 4, but got ${t}.`);const c=o==="NHWC"?i.shape[3]:i.shape[1],l=o==="NHWC"?u.shape[3]:u.shape[1];_(c===t[2],()=>`Error in conv2dDerFilter: depth of input ${c}) must match input depth in filter (${t[2]}.`),_(l===t[3],()=>`Error in conv2dDerFilter: depth of dy (${l}) must match output depth for filter (${t[3]}).`),an("conv2dDerFilter",s,a);const h={x:i,dy:u},d={strides:r,pad:s,dataFormat:o,dimRoundingMode:a,filterShape:t};return U.runKernel(Ph,h,d)}const Iv=L({conv2DBackpropFilter_:Ev});function ai(n,e,t){if(t==null||t==="linear")return n;if(t==="relu")return oe(n,um(e));throw new Error(`Cannot compute gradient for fused activation ${t}.`)}function ii(n,e){let t=e;const r=Lf(n.shape,e.shape);return r.length>0&&(t=je(t,r)),Z(t,n.shape)}function ui(n,e,t,r){if(e==="linear")return n;if(e==="relu")return si(n);if(e==="elu")return Vf(n);if(e==="relu6")return sm(n);if(e==="prelu")return nm(n,t);if(e==="leakyrelu")return Hf(n,r);if(e==="sigmoid")return zr(n);throw new Error(`Unknown fused activation ${e}.`)}const ci=(n,e)=>!(n>0)||e==="linear";function kv({x:n,filter:e,strides:t,pad:r,dataFormat:s="NHWC",dilations:o=[1,1],dimRoundingMode:a,bias:i,activation:u="linear",preluActivationWeights:c,leakyreluAlpha:l}){if(u=u||"linear",ci(U.state.gradientDepth,u)===!1){_(s==="NHWC",()=>`Error in fused conv2d: got dataFormat of ${s} but only NHWC is currently supported for the case of gradient depth is 0 and the activation is not linear.`);let W=ei(n,e,t,r,s,o,a);return i!=null&&(W=me(W,i)),ui(W,u,c,l)}const h=E(n,"x","conv2d","float32"),d=E(e,"filter","conv2d","float32");let p=h,f=!1;h.rank===3&&(f=!0,p=Z(h,[1,h.shape[0],h.shape[1],h.shape[2]])),_(p.rank===4,()=>`Error in fused conv2d: input must be rank 4, but got rank ${p.rank}.`),_(d.rank===4,()=>`Error in fused conv2d: filter must be rank 4, but got rank ${d.rank}.`),an("fused conv2d",r,a);const b=s==="NHWC"?p.shape[3]:p.shape[1];_(d.shape[2]===b,()=>`Error in conv2d: depth of input (${b}) must match input depth for filter ${d.shape[2]}.`),_(Bt(t,o),()=>`Error in conv2D: Either strides or dilations must be 1. Got strides ${t} and dilations '${o}'`);const y=Xt(p.shape,d.shape,t,o,r,a);let x;i!=null&&(x=E(i,"bias","fused conv2d"),[x]=Je(x,h),s==="NHWC"?Fe(y.outShape,x.shape):(_(x.shape.length<=1,()=>`Error in fused conv2d: only supports scalar or 1-D Tensor bias for NCHW format but got the bias of rank-${x.shape.length}.`),_(x.shape.length===0||x.shape[0]===y.outChannels||x.shape[0]===1,()=>`Error in fused conv2d: bias shape (${x.shape}) is not compatible with the number of output channels (${y.outChannels})`)));let C;if(c!=null){const W=c.shape;if(_(W.length<=1||W.length===3,()=>`Error in fused conv2d: only supports scalar, 1-D Tensor or 3-D Tensor PReLU activation weights but got a tensor of rank-${W.length}.`),W.length===1)_(W[0]===1||W[0]===y.outChannels,()=>`Error in fused conv2d: PReLU activation weights (${W}) is not compatible with the number of output channels (${y.outChannels}).`);else if(W.length===3)try{Fe(W,y.outShape)}catch{const G=`Error in fused conv2d: PReLU activation weights (${W}) is not compatible with the output shape of the conv2d (${y.outShape}).`;throw Error(G)}C=E(c,"prelu weights","fused conv2d")}const I=(W,H)=>{_(s==="NHWC",()=>`Error in gradient of fused conv2D: got dataFormat of ${s} but only NHWC is currently supported.`);const[G,B,V,R]=H,q=ai(W,V,u);_($o(o),()=>`Error in gradient of fused conv2D: dilation rates greater than 1 are not yet supported in gradients. Got dilations '${o}'`);const te=Pf(B.shape,q,G,t,r),he=Iv(B,q,G.shape,t,r),de=[te,he];if(R!=null){const ge=ii(R,q);de.push(ge)}return de},k={x:p,filter:d,bias:x,preluActivationWeights:C},P={strides:t,pad:r,dataFormat:s,dilations:o,dimRoundingMode:a,activation:u,leakyreluAlpha:l};return i==null?Gn((H,G,B)=>{let V=U.runKernel(au,k,P);return B([G,H,V]),f&&(V=Z(V,[V.shape[1],V.shape[2],V.shape[3]])),{value:V,gradFunc:I}})(p,d):Gn((H,G,B,V)=>{let R=U.runKernel(au,k,P);return V([G,H,R,B]),f&&(R=Z(R,[R.shape[1],R.shape[2],R.shape[3]])),{value:R,gradFunc:I}})(p,d,x)}const Rv=L({fusedConv2d_:kv});function _v(n,e,t,r,s,o=[1,1],a){let i=n;n.rank===3&&(i=Z(n,[1,n.shape[0],n.shape[1],n.shape[2]]));let u=e;u.rank===3&&(u=Z(e,[1,e.shape[0],e.shape[1],e.shape[2]]));const c={x:i,dy:u},l={strides:r,pad:s,dimRoundingMode:a,dilations:o,filterShape:t};return U.runKernel(Xh,c,l)}const Av=L({depthwiseConv2dNativeBackpropFilter_:_v});function Ov(n,e,t,r,s,o=[1,1],a){let i=e,u=!1;e.rank===3&&(u=!0,i=Z(e,[1,e.shape[0],e.shape[1],e.shape[2]]));const c={dy:i,filter:t},l={strides:r,pad:s,dimRoundingMode:a,dilations:o,inputShape:n},h=U.runKernel(qh,c,l);return u?Z(h,[h.shape[1],h.shape[2],h.shape[3]]):h}const Dv=L({depthwiseConv2dNativeBackpropInput_:Ov});function Fv({x:n,filter:e,strides:t,pad:r,dataFormat:s="NHWC",dilations:o=[1,1],dimRoundingMode:a,bias:i,activation:u="linear",preluActivationWeights:c,leakyreluAlpha:l}){if(ci(U.state.gradientDepth,u)===!1){let P=ec(n,e,t,r,s,o,a);return i!=null&&(P=me(P,i)),ui(P,u,c,l)}const h=E(n,"x","depthwiseConv2d","float32"),d=E(e,"filter","depthwiseConv2d","float32");let p=h,f=!1;h.rank===3&&(f=!0,p=Z(h,[1,h.shape[0],h.shape[1],h.shape[2]])),_(p.rank===4,()=>`Error in fused depthwiseConv2d: input must be rank 4, but got rank ${p.rank}.`),_(d.rank===4,()=>`Error in fused depthwiseConv2d: filter must be rank 4, but got rank ${d.rank}.`),_(p.shape[3]===d.shape[2],()=>`Error in fused depthwiseConv2d: number of input channels (${p.shape[3]}) must match the inChannels dimension in filter ${d.shape[2]}.`),o==null&&(o=[1,1]),_(Bt(t,o),()=>`Error in fused depthwiseConv2d: Either strides or dilations must be 1. Got strides ${t} and dilations '${o}'`),an("fused depthwiseConv2d",r,a);const b=Xt(p.shape,d.shape,t,o,r,a,!0);let y;i!=null&&(y=E(i,"bias","fused conv2d"),[y]=Je(y,h),Fe(b.outShape,y.shape));let x;c!=null&&(x=E(c,"prelu weights","fused depthwiseConv2d"));const C=(P,W)=>{_($o(o),()=>`Error in gradient of fused depthwiseConv2d: dilation rates greater than 1 are not yet supported. Got dilations '${o}'`);const[H,G,B,V]=W,R=ai(P,B,u),q=Dv(G.shape,R,H,t,r,o,a),te=Av(G,R,H.shape,t,r,o,a);if(V!=null){const he=ii(y,R);return[q,te,he]}return[q,te]},I={x:p,filter:d,bias:y,preluActivationWeights:x},k={strides:t,pad:r,dataFormat:s,dilations:o,dimRoundingMode:a,activation:u,leakyreluAlpha:l};return i==null?Gn((W,H,G)=>{let B=U.runKernel(iu,I,k);return G([H,W,B]),f&&(B=Z(B,[B.shape[1],B.shape[2],B.shape[3]])),{value:B,gradFunc:C}})(p,d):Gn((W,H,G,B)=>{let V=U.runKernel(iu,I,k);return B([H,W,V,G]),f&&(V=Z(V,[V.shape[1],V.shape[2],V.shape[3]])),{value:V,gradFunc:C}})(p,d,y)}const Pv=L({fusedDepthwiseConv2d_:Fv});function Lv({a:n,b:e,transposeA:t=!1,transposeB:r=!1,bias:s,activation:o="linear",preluActivationWeights:a,leakyreluAlpha:i=.2}){if(ci(U.state.gradientDepth,o)===!1){let R=Be(n,e,t,r);return s!=null&&(R=me(R,s)),ui(R,o,a,i)}let u=E(n,"a","fused matMul"),c=E(e,"b","fused matMul");[u,c]=Je(u,c);const l=t?u.shape[u.rank-2]:u.shape[u.rank-1],h=r?c.shape[c.rank-1]:c.shape[c.rank-2],d=t?u.shape[u.rank-1]:u.shape[u.rank-2],p=r?c.shape[c.rank-2]:c.shape[c.rank-1],f=u.shape.slice(0,-2),b=c.shape.slice(0,-2),y=ne(f),x=ne(b);_(l===h,()=>`Error in fused matMul: inner shapes (${l}) and (${h}) of Tensors with shapes ${u.shape} and ${c.shape} and transposeA=${t} and transposeB=${r} must match.`);const I=Fe(u.shape.slice(0,-2),c.shape.slice(0,-2)).concat([d,p]),k=t?Z(u,[y,l,d]):Z(u,[y,d,l]),P=r?Z(c,[x,p,h]):Z(c,[x,h,p]);let W;s!=null&&(W=E(s,"bias","fused matMul"),[W]=Je(W,u),Fe(I,W.shape));let H;a!=null&&(H=E(a,"prelu weights","fused matMul"));const G=(R,q)=>{const[te,he,de,ge]=q,be=ai(Z(R,de.shape),de,o);let $e,Ie;if(!t&&!r?($e=Be(be,he,!1,!0),Ie=Be(te,be,!0,!1)):!t&&r?($e=Be(be,he,!1,!1),Ie=Be(be,te,!0,!1)):t&&!r?($e=Be(he,be,!1,!0),Ie=Be(te,be,!1,!1)):($e=Be(he,be,!0,!0),Ie=Be(be,te,!0,!0)),s!=null){const _e=ii(ge,be);return[$e,Ie,_e]}else return[$e,Ie]},B={a:k,b:P,bias:W,preluActivationWeights:H},V={transposeA:t,transposeB:r,activation:o,leakyreluAlpha:i};return s==null?Gn((q,te,he)=>{const de=U.runKernel(ou,B,V);return he([q,te,de]),{value:Z(de,I),gradFunc:G}})(k,P):Gn((q,te,he,de)=>{const ge=U.runKernel(ou,B,V);return de([q,te,ge,he]),{value:Z(ge,I),gradFunc:G}})(k,P,W)}const Bv=L({fusedMatMul_:Lv});const Vv=Object.freeze(Object.defineProperty({__proto__:null,conv2d:Rv,depthwiseConv2d:Pv,matMul:Bv},Symbol.toStringTag,{value:"Module"}));function Mv(n){return hc(n,.54,.46)}const Uv=L({hammingWindow_:Mv});function Wv(n){return hc(n,.5,.5)}const fm=L({hannWindow_:Wv});function zv(n,e,t,r=!1,s=0){let o=0;const a=[];for(;o+e<=n.size;)a.push(Ce(n,o,e)),o+=t;if(r)for(;o<n.size;){const i=o+e-n.size,u=pt([Ce(n,o,e-i),Po([i],s)]);a.push(u),o+=t}return a.length===0?dr([],[0,e]):Z(pt(a),[a.length,e])}const mm=L({frame_:zv});function Gv(n,e,t,r,s=fm){r==null&&(r=pm(e));const o=mm(n,e,t),a=oe(o,s(e));return cc(a,r)}const jv=L({stft_:Gv});function Hv(n,e,t,r,s="bilinear",o=0){const a=E(n,"image","cropAndResize"),i=E(e,"boxes","cropAndResize","float32"),u=E(t,"boxInd","cropAndResize","int32"),c=i.shape[0];_(a.rank===4,()=>`Error in cropAndResize: image must be rank 4,but got rank ${a.rank}.`),_(i.rank===2&&i.shape[1]===4,()=>`Error in cropAndResize: boxes must be have size [${c},4] but had shape ${i.shape}.`),_(u.rank===1&&u.shape[0]===c,()=>`Error in cropAndResize: boxInd must be have size [${c}] but had shape ${i.shape}.`),_(r.length===2,()=>`Error in cropAndResize: cropSize must be of length 2, but got length ${r.length}.`),_(r[0]>=1&&r[1]>=1,()=>`cropSize must be atleast [1,1], but was ${r}`),_(s==="bilinear"||s==="nearest",()=>`method must be bilinear or nearest, but was ${s}`);const l={image:a,boxes:i,boxInd:u},h={method:s,extrapolationValue:o,cropSize:r};return U.runKernel(Gh,l,h)}const Kv=L({cropAndResize_:Hv});function Xv(n){const e=E(n,"image","flipLeftRight","float32");_(e.rank===4,()=>`Error in flipLeftRight: image must be rank 4,but got rank ${e.rank}.`);const t={image:e};return U.runKernel(ud,t,{})}const qv=L({flipLeftRight_:Xv});function Yv(n){const e=E(n,"image","grayscaleToRGB"),t=e.rank-1,r=e.shape[t];_(e.rank>=2,()=>`Error in grayscaleToRGB: images must be at least rank 2, but got rank ${e.rank}.`),_(r===1,()=>`Error in grayscaleToRGB: last dimension of a grayscale image should be size 1, but got size ${r}.`);const s=new Array(e.rank);return s.fill(1,0,t),s[t]=3,bo(e,s)}const Qv=L({grayscaleToRGB_:Yv});function Zv(n){const e=E(n,"image","RGBToGrayscale"),t=e.rank-1,r=e.shape[t];_(e.rank>=2,()=>`Error in RGBToGrayscale: images must be at least rank 2, but got rank ${e.rank}.`),_(r===3,()=>`Error in RGBToGrayscale: last dimension of an RGB image should be size 3, but got size ${r}.`);const s=e.dtype,o=He(e,"float32"),a=xt([.2989,.587,.114]);let i;switch(e.rank){case 2:i=ws("ij,j->i",o,a);break;case 3:i=ws("ijk,k->ij",o,a);break;case 4:i=ws("ijkl,l->ijk",o,a);break;case 5:i=ws("ijklm,m->ijkl",o,a);break;case 6:i=ws("ijklmn,n->ijklm",o,a);break;default:throw new Error("Not a valid tensor rank.")}return i=rn(i,-1),He(i,s)}const Jv=L({rgbToGrayscale_:Zv});function ew(n,e,t=0,r=.5){const s=E(n,"image","rotateWithOffset","float32");_(s.rank===4,()=>`Error in rotateWithOffset: image must be rank 4,but got rank ${s.rank}.`);const o={image:s},a={radians:e,fillValue:t,center:r};return U.runKernel(Zp,o,a)}const tw=L({rotateWithOffset_:ew});function Ps(n,e,t,r,s,o){r==null&&(r=.5),s==null&&(s=Number.NEGATIVE_INFINITY),o==null&&(o=0);const a=n.shape[0];return t=Math.min(t,a),_(0<=r&&r<=1,()=>`iouThreshold must be in [0, 1], but was '${r}'`),_(n.rank===2,()=>`boxes must be a 2D tensor, but was of rank '${n.rank}'`),_(n.shape[1]===4,()=>`boxes must have 4 columns, but 2nd dimension was ${n.shape[1]}`),_(e.rank===1,()=>"scores must be a 1D tensor"),_(e.shape[0]===a,()=>`scores has incompatible shape with boxes. Expected ${a}, but was ${e.shape[0]}`),_(0<=o&&o<=1,()=>`softNmsSigma must be in [0, 1], but was '${o}'`),{maxOutputSize:t,iouThreshold:r,scoreThreshold:s,softNmsSigma:o}}function nw(n,e,t,r=.5,s=Number.NEGATIVE_INFINITY){const o=E(n,"boxes","nonMaxSuppression","float32"),a=E(e,"scores","nonMaxSuppression","float32"),i=Ps(o,a,t,r,s);t=i.maxOutputSize,r=i.iouThreshold,s=i.scoreThreshold;const u={maxOutputSize:t,iouThreshold:r,scoreThreshold:s};return U.runKernel(jd,{boxes:o,scores:a},u)}const rw=L({nonMaxSuppression_:nw});function sw(n,e,t){const r=ow(n,e,t),s=r<0?-(r+1):r;n.splice(s,0,e)}function ow(n,e,t){return iw(n,e,t||aw)}function aw(n,e){return n>e?1:n<e?-1:0}function iw(n,e,t){let r=0,s=n.length,o=0,a=!1;for(;r<s;){o=r+(s-r>>>1);const i=t(e,n[o]);i>0?r=o+1:(s=o,a=!i)}return a?r:-r-1}function gm(n,e,t,r,s){return dc(n,e,t,r,s,0)}function ym(n,e,t,r,s,o){return dc(n,e,t,r,s,0,!1,o,!0)}function xm(n,e,t,r,s,o){return dc(n,e,t,r,s,o,!0)}function dc(n,e,t,r,s,o,a=!1,i=!1,u=!1){const c=[];for(let y=0;y<e.length;y++)e[y]>s&&c.push({score:e[y],boxIndex:y,suppressBeginIndex:0});c.sort(el);const l=o>0?-.5/o:0,h=[],d=[];for(;h.length<t&&c.length>0;){const y=c.pop(),{score:x,boxIndex:C,suppressBeginIndex:I}=y;if(x<s)break;let k=!1;for(let P=h.length-1;P>=I;--P){const W=uw(n,C,h[P]);if(W>=r){k=!0;break}if(y.score=y.score*cw(r,l,W),y.score<=s)break}y.suppressBeginIndex=h.length,k||(y.score===x?(h.push(C),d.push(y.score)):y.score>s&&sw(c,y,el))}const p=h.length,f=t-p;i&&f>0&&(h.push(...new Array(f).fill(0)),d.push(...new Array(f).fill(0)));const b={selectedIndices:h};return a&&(b.selectedScores=d),u&&(b.validOutputs=p),b}function uw(n,e,t){const r=n.subarray(e*4,e*4+4),s=n.subarray(t*4,t*4+4),o=Math.min(r[0],r[2]),a=Math.min(r[1],r[3]),i=Math.max(r[0],r[2]),u=Math.max(r[1],r[3]),c=Math.min(s[0],s[2]),l=Math.min(s[1],s[3]),h=Math.max(s[0],s[2]),d=Math.max(s[1],s[3]),p=(i-o)*(u-a),f=(h-c)*(d-l);if(p<=0||f<=0)return 0;const b=Math.max(o,c),y=Math.max(a,l),x=Math.min(i,h),C=Math.min(u,d),I=Math.max(x-b,0)*Math.max(C-y,0);return I/(p+f-I)}function cw(n,e,t){const r=Math.exp(e*t*t);return t<=n?r:0}function el(n,e){return n.score-e.score||n.score===e.score&&e.boxIndex-n.boxIndex}async function lw(n,e,t,r=.5,s=Number.NEGATIVE_INFINITY){const o=E(n,"boxes","nonMaxSuppressionAsync"),a=E(e,"scores","nonMaxSuppressionAsync"),i=Ps(o,a,t,r,s);t=i.maxOutputSize,r=i.iouThreshold,s=i.scoreThreshold;const u=await Promise.all([o.data(),a.data()]),c=u[0],l=u[1],{selectedIndices:h}=gm(c,l,t,r,s);return o!==n&&o.dispose(),a!==e&&a.dispose(),xt(h,"int32")}const hw=lw;function dw(n,e,t,r=.5,s=Number.NEGATIVE_INFINITY,o=0){const a=E(n,"boxes","nonMaxSuppression"),i=E(e,"scores","nonMaxSuppression"),u=Ps(a,i,t,r,s,o);t=u.maxOutputSize,r=u.iouThreshold,s=u.scoreThreshold,o=u.softNmsSigma;const c={boxes:a,scores:i},l={maxOutputSize:t,iouThreshold:r,scoreThreshold:s,softNmsSigma:o},h=U.runKernel(Kd,c,l);return{selectedIndices:h[0],selectedScores:h[1]}}const pw=L({nonMaxSuppressionWithScore_:dw});async function fw(n,e,t,r=.5,s=Number.NEGATIVE_INFINITY,o=0){const a=E(n,"boxes","nonMaxSuppressionAsync"),i=E(e,"scores","nonMaxSuppressionAsync"),u=Ps(a,i,t,r,s,o);t=u.maxOutputSize,r=u.iouThreshold,s=u.scoreThreshold,o=u.softNmsSigma;const c=await Promise.all([a.data(),i.data()]),l=c[0],h=c[1],{selectedIndices:d,selectedScores:p}=xm(l,h,t,r,s,o);return a!==n&&a.dispose(),i!==e&&i.dispose(),{selectedIndices:xt(d,"int32"),selectedScores:xt(p)}}const mw=fw;function gw(n,e,t,r=.5,s=Number.NEGATIVE_INFINITY,o=!1){const a=E(n,"boxes","nonMaxSuppression"),i=E(e,"scores","nonMaxSuppression"),u=Ps(a,i,t,r,s,null),c=u.maxOutputSize,l=u.iouThreshold,h=u.scoreThreshold,d={boxes:a,scores:i},p={maxOutputSize:c,iouThreshold:l,scoreThreshold:h,padToMaxOutputSize:o},f=U.runKernel(Hd,d,p);return{selectedIndices:f[0],validOutputs:f[1]}}const yw=L({nonMaxSuppressionPadded_:gw});async function xw(n,e,t,r=.5,s=Number.NEGATIVE_INFINITY,o=!1){const a=E(n,"boxes","nonMaxSuppressionAsync"),i=E(e,"scores","nonMaxSuppressionAsync"),u=Ps(a,i,t,r,s,null),c=u.maxOutputSize,l=u.iouThreshold,h=u.scoreThreshold,[d,p]=await Promise.all([a.data(),i.data()]),{selectedIndices:f,validOutputs:b}=ym(d,p,c,l,h,o);return a!==n&&a.dispose(),i!==e&&i.dispose(),{selectedIndices:xt(f,"int32"),validOutputs:Re(b,"int32")}}const bw=xw;function vw(n,e,t=!1,r=!1){const s=E(n,"images","resizeBilinear");_(s.rank===3||s.rank===4,()=>`Error in resizeBilinear: x must be rank 3 or 4, but got rank ${s.rank}.`),_(e.length===2,()=>`Error in resizeBilinear: new shape must 2D, but got shape ${e}.`),_(r===!1||t===!1,()=>"Error in resizeBilinear: If halfPixelCenters is true, alignCorners must be false.");let o=s,a=!1;s.rank===3&&(a=!0,o=Z(s,[1,s.shape[0],s.shape[1],s.shape[2]]));const i={images:o},u={alignCorners:t,halfPixelCenters:r,size:e},c=U.runKernel(lp,i,u);return a?Z(c,[c.shape[1],c.shape[2],c.shape[3]]):c}const ww=L({resizeBilinear_:vw});function $w(n,e,t=!1,r=!1){const s=E(n,"images","resizeNearestNeighbor");_(s.rank===3||s.rank===4,()=>`Error in resizeNearestNeighbor: x must be rank 3 or 4, but got rank ${s.rank}.`),_(e.length===2,()=>`Error in resizeNearestNeighbor: new shape must 2D, but got shape ${e}.`),_(s.dtype==="float32"||s.dtype==="int32",()=>"`images` must have `int32` or `float32` as dtype"),_(r===!1||t===!1,()=>"Error in resizeNearestNeighbor: If halfPixelCenters is true, alignCorners must be false.");let o=s,a=!1;s.rank===3&&(a=!0,o=Z(s,[1,s.shape[0],s.shape[1],s.shape[2]]));const i={images:o},u={alignCorners:t,halfPixelCenters:r,size:e},c=U.runKernel(cp,i,u);return a?Z(c,[c.shape[1],c.shape[2],c.shape[3]]):c}const Sw=L({resizeNearestNeighbor_:$w});function Cw(n,e="binary",t=!1,r=.5){const s=E(n,"image","threshold"),o=.2989,a=.587,i=.114,u=s.shape[0]*s.shape[1];let c=oe(xt([r]),255),l,h,d,p;if(_(s.rank===3,()=>`Error in threshold: image must be rank 3,but got rank ${s.rank}.`),_(s.shape[2]===3||s.shape[2]===1,()=>`Error in threshold: image color channel must be equal to 3 or 1but got ${s.shape[2]}.`),_(s.dtype==="int32"||s.dtype==="float32",()=>`Error in dtype: image dtype must be int32 or float32,but got dtype ${s.dtype}.`),_(e==="otsu"||e==="binary",()=>`Method must be binary or otsu, but was ${e}`),s.shape[2]===3){[l,h,d]=Eo(s,[1,1,1],-1);const y=oe(l,o),x=oe(h,a),C=oe(d,i);p=me(me(y,x),C)}else p=n;if(e==="otsu"){const y=Df(He(om(p),"int32"),Rn([]),256);c=Tw(y,u)}const f=t?rc(p,c):ni(p,c);return He(oe(f,255),"int32")}function Tw(n,e){let t=xt([-1]),r=xt([0]),s=xt([0]),o,a,i,u,c,l;for(let h=0;h<n.size-1;h++){o=Ce(n,0,h+1),a=Ce(n,h+1),c=ke(je(o),e),l=ke(je(a),e);const d=je(oe(o,To(0,o.size)));i=ke(d,je(o));const p=Po(a.shape,o.size),f=me(To(0,a.size),p),b=oe(a,f);u=ke(je(b),je(a));const y=Te(i,u),x=Te(i,u),C=oe(c,l);s=oe(oe(C,y),x);const I=ni(s,r);r=hr(I,s,r),t=hr(I,xt([h]),t)}return t}const Nw=L({threshold_:Cw});function Ew(n,e,t="nearest",r="constant",s=0,o){const a=E(n,"image","transform","float32"),i=E(e,"transforms","transform","float32");_(a.rank===4,()=>`Error in transform: image must be rank 4,but got rank ${a.rank}.`),_(i.rank===2&&(i.shape[0]===a.shape[0]||i.shape[0]===1)&&i.shape[1]===8,()=>"Error in transform: Input transform should be batch x 8 or 1 x 8"),_(o==null||o.length===2,()=>`Error in transform: outputShape must be [height, width] or null, but got ${o}.`);const u={image:a,transforms:i},c={interpolation:t,fillMode:r,fillValue:s,outputShape:o};return U.runKernel(Hp,u,c)}const Iw=L({transform_:Ew});function kw(n,e,t){const r=E(n,"a","bandPart");_(r.rank>=2,()=>`bandPart(): Rank must be at least 2, got ${r.rank}.`);const s=r.shape,[o,a]=r.shape.slice(-2);let i,u;typeof e=="number"?(_(e%1===0,()=>`bandPart(): numLower must be an integer, got ${e}.`),_(e<=o,()=>`bandPart(): numLower (${e}) must not be greater than the number of rows (${o}).`),i=E(e<0?o:e,"numLower","bandPart")):(_(e.dtype==="int32",()=>"bandPart(): numLower's dtype must be an int32."),i=hr(wu(e,0),o,Va(e,o))),typeof t=="number"?(_(t%1===0,()=>`bandPart(): numUpper must be an integer, got ${t}.`),_(t<=a,()=>`bandPart(): numUpper (${t}) must not be greater than the number of columns (${a}).`),u=E(t<0?a:t,"numUpper","bandPart")):(_(t.dtype==="int32",()=>"bandPart(): numUpper's dtype must be an int32."),u=hr(wu(t,0),a,Va(t,a)));const c=Z(To(0,o,1,"int32"),[-1,1]),l=To(0,a,1,"int32"),h=Te(c,l),d=La(rc(h,i),jf(h,_n(u))),p=Yr([o,a],r.dtype);return Z(jn(rs(Z(r,[-1,o,a])).map(f=>hr(d,f,p))),s)}const Rw=L({bandPart_:kw});function _w(n){let e;if(Array.isArray(n)){e=!1,_(n!=null&&n.length>0,()=>"Gram-Schmidt process: input must not be null, undefined, or empty");const s=n[0].shape[0];for(let o=1;o<n.length;++o)_(n[o].shape[0]===s,()=>`Gram-Schmidt: Non-unique lengths found in the input vectors: (${n[o].shape[0]} vs. ${s})`)}else e=!0,n=Eo(n,n.shape[0],0).map(s=>st(s,[0]));_(n.length<=n[0].shape[0],()=>`Gram-Schmidt: Number of vectors (${n.length}) exceeds number of dimensions (${n[0].shape[0]}).`);const t=[],r=n;for(let s=0;s<n.length;++s)t.push(U.tidy(()=>{let o=r[s];if(s>0)for(let a=0;a<s;++a){const i=oe(je(oe(t[a],o)),t[a]);o=Te(o,i)}return ke(o,ti(o,"euclidean"))}));return e?jn(t,0):t}const Aw=L({gramSchmidt_:_w});function Ow(n,e=!1){if(_(n.rank>=2,()=>`qr() requires input tensor to have a rank >= 2, but got rank ${n.rank}`),n.rank===2)return tl(n,e);{const t=n.shape.slice(0,n.shape.length-2).reduce((u,c)=>u*c),r=rs(Z(n,[t,n.shape[n.shape.length-2],n.shape[n.shape.length-1]]),0),s=[],o=[];r.forEach(u=>{const[c,l]=tl(u,e);s.push(c),o.push(l)});const a=Z(jn(s,0),n.shape),i=Z(jn(o,0),n.shape);return[a,i]}}function tl(n,e=!1){return U.tidy(()=>{_(n.shape.length===2,()=>`qr2d() requires a 2D Tensor, but got a ${n.shape.length}D Tensor.`);const t=n.shape[0],r=n.shape[1];let s=Wf(t),o=lr(n);const a=dr([[1]],[1,1]);let i=lr(a);const u=t>=r?r:t;for(let c=0;c<u;++c){const l=o,h=i,d=s;[i,o,s]=U.tidy(()=>{const p=Ce(o,[c,c],[t-c,1]),f=ti(p),b=Ce(o,[c,c],[1,1]),y=hr(ni(b,0),dr([[-1]]),dr([[1]])),x=Te(b,oe(y,f)),C=ke(p,x);C.shape[0]===1?i=lr(a):i=pt([a,Ce(C,[1,0],[C.shape[0]-1,C.shape[1]])],0);const I=_n(ke(Be(y,x),f)),k=Ce(o,[c,0],[t-c,r]),P=oe(I,i),W=$u(i);if(c===0)o=Te(k,Be(P,Be(W,k)));else{const B=Te(k,Be(P,Be(W,k)));o=pt([Ce(o,[0,0],[c,r]),B],0)}const H=$u(P),G=Ce(s,[0,c],[t,s.shape[1]-c]);if(c===0)s=Te(G,Be(Be(G,i),H));else{const B=Te(G,Be(Be(G,i),H));s=pt([Ce(s,[0,0],[t,c]),B],1)}return[i,o,s]}),Xe([l,h,d])}return!e&&t>r&&(s=Ce(s,[0,0],[t,r]),o=Ce(o,[0,0],[r,r])),[s,o]})}const Dw=L({qr_:Ow});var Et;(function(n){n[n.NONE=0]="NONE",n[n.MEAN=1]="MEAN",n[n.SUM=2]="SUM",n[n.SUM_BY_NONZERO_WEIGHTS=3]="SUM_BY_NONZERO_WEIGHTS"})(Et||(Et={}));function Fw(n,e,t=Et.SUM_BY_NONZERO_WEIGHTS){const r=E(n,"losses","computeWeightedLoss");let s=null;e!=null&&(s=E(e,"weights","computeWeightedLoss"));const o=s==null?r:oe(r,s);if(t===Et.NONE)return o;if(t===Et.SUM)return je(o);if(t===Et.MEAN){if(s==null)return Ba(o);{const a=r.size/s.size,i=ke(je(o),je(s));return a>1?ke(i,Re(a)):i}}if(t===Et.SUM_BY_NONZERO_WEIGHTS){if(s==null)return ke(je(o),Re(r.size));{const a=oe(s,Ur(r.shape)),i=He(je(em(a,Re(0))),"float32");return ke(je(o),i)}}throw Error(`Unknown reduction: ${t}`)}const Xn=L({computeWeightedLoss_:Fw});function Pw(n,e,t,r=Et.SUM_BY_NONZERO_WEIGHTS){const s=E(n,"labels","absoluteDifference"),o=E(e,"predictions","absoluteDifference");let a=null;t!=null&&(a=E(t,"weights","absoluteDifference")),Ht(s.shape,o.shape,"Error in absoluteDifference: ");const i=zt(Te(s,o));return Xn(i,a,r)}const Lw=L({absoluteDifference_:Pw});function Bw(n,e,t,r,s=Et.SUM_BY_NONZERO_WEIGHTS){const o=E(n,"labels","cosineDistance"),a=E(e,"predictions","cosineDistance");let i=null;r!=null&&(i=E(r,"weights","cosineDistance")),Ht(o.shape,a.shape,"Error in cosineDistance: ");const u=Re(1),c=Te(u,je(oe(o,a),t,!0));return Xn(c,i,s)}const Vw=L({cosineDistance_:Bw});function Mw(n,e,t,r=Et.SUM_BY_NONZERO_WEIGHTS){let s=E(n,"labels","hingeLoss");const o=E(e,"predictions","hingeLoss");let a=null;t!=null&&(a=E(t,"weights","hingeLoss")),Ht(s.shape,o.shape,"Error in hingeLoss: ");const i=Re(1);s=Te(oe(Re(2),s),i);const u=si(Te(i,oe(s,o)));return Xn(u,a,r)}const Uw=L({hingeLoss_:Mw});function Ww(n,e,t,r=1,s=Et.SUM_BY_NONZERO_WEIGHTS){const o=E(n,"labels","huberLoss"),a=E(e,"predictions","huberLoss");let i=null;t!=null&&(i=E(t,"weights","huberLoss")),Ht(o.shape,a.shape,"Error in huberLoss: ");const u=Re(r),c=zt(Te(a,o)),l=Va(c,u),h=Te(c,l),d=me(oe(Re(.5),xn(l)),oe(u,h));return Xn(d,i,s)}const zw=L({huberLoss_:Ww});function Gw(n,e,t,r=1e-7,s=Et.SUM_BY_NONZERO_WEIGHTS){const o=E(n,"labels","logLoss"),a=E(e,"predictions","logLoss");let i=null;t!=null&&(i=E(t,"weights","logLoss")),Ht(o.shape,a.shape,"Error in logLoss: ");const u=Re(1),c=Re(r),l=_n(oe(o,Co(me(a,c)))),h=oe(Te(u,o),Co(me(Te(u,a),c))),d=Te(l,h);return Xn(d,i,s)}const jw=L({logLoss_:Gw});function Hw(n,e,t,r=Et.SUM_BY_NONZERO_WEIGHTS){const s=E(n,"labels","meanSquaredError"),o=E(e,"predictions","meanSquaredError");let a=null;t!=null&&(a=E(t,"weights","meanSquaredError")),Ht(s.shape,o.shape,"Error in meanSquaredError: ");const i=im(s,o);return Xn(i,a,r)}const Kw=L({meanSquaredError_:Hw});function Xw(n,e){const t=E(n,"labels","sigmoidCrossEntropyWithLogits"),r=E(e,"logits","sigmoidCrossEntropyWithLogits");Ht(t.shape,r.shape,"Error in sigmoidCrossEntropyWithLogits: ");const s=si(r),o=oe(r,t),a=Kf(zn(_n(zt(r))));return me(Te(s,o),a)}function qw(n,e,t,r=0,s=Et.SUM_BY_NONZERO_WEIGHTS){let o=E(n,"multiClassLabels","sigmoidCrossEntropy");const a=E(e,"logits","sigmoidCrossEntropy");let i=null;if(t!=null&&(i=E(t,"weights","sigmoidCrossEntropy")),Ht(o.shape,a.shape,"Error in sigmoidCrossEntropy: "),r>0){const c=Re(r),l=Re(1),h=Re(.5);o=me(oe(o,Te(l,c)),oe(h,c))}const u=Xw(o,a);return Xn(u,i,s)}const Yw=L({sigmoidCrossEntropy_:qw});function Qw(n,e,t=-1){if(t===-1&&(t=e.rank-1),t!==e.rank-1)throw Error(`Softmax cross entropy along a non-last dimension is not yet supported. Labels / logits was rank ${e.rank} and dim was ${t}`);return Gn((s,o,a)=>{const u=qf(o,[t],!0),c=Te(He(o,"float32"),u);a([s,c]);const l=_n(oe(c,s));return{value:je(l,[t]),gradFunc:(p,f)=>{const[b,y]=f,x=qt(p.shape,[t]);return[oe(Z(p,x),Te(He(b,"float32"),zn(y))),oe(Z(p,x),Te(zn(y),He(b,"float32")))]}}})(n,e)}function Zw(n,e,t,r=0,s=Et.SUM_BY_NONZERO_WEIGHTS){let o=E(n,"onehotLabels","softmaxCrossEntropy");const a=E(e,"logits","softmaxCrossEntropy");let i=null;if(t!=null&&(i=E(t,"weights","softmaxCrossEntropy")),Ht(o.shape,a.shape,"Error in softmaxCrossEntropy: "),r>0){const c=Re(r),l=Re(1),h=Re(o.shape[1]);o=me(oe(o,Te(l,c)),ke(c,h))}const u=Qw(o,a);return Xn(u,i,s)}const Jw=L({softmaxCrossEntropy_:Zw});function e$(n,e,t,r){const s=E(n,"indices","sparseFillEmptyRows","int32"),o=E(e,"values","sparseFillEmptyRows"),a=E(t,"denseShape","sparseFillEmptyRows","int32"),i=E(r,"defaultValue","sparseFillEmptyRows",o.dtype);if(s.rank!==2)throw new Error(`Indices should be Tensor2D but received shape
+        ${s.shape}`);if(o.rank!==1)throw new Error(`Values should be Tensor1D but received shape ${o.shape}`);if(a.rank!==1)throw new Error(`Dense shape should be Tensor1D but received shape ${a.shape}`);if(i.rank!==0)throw new Error(`Default value should be a scalar but received shape ${i.shape}`);const u={indices:s,values:o,denseShape:a,defaultValue:i},c=U.runKernel(_p,u);return{outputIndices:c[0],outputValues:c[1],emptyRowIndicator:c[2],reverseIndexMap:c[3]}}const t$=L({sparseFillEmptyRows_:e$});function n$(n,e,t){const r=E(n,"inputIndices","sparseReshape","int32"),s=E(e,"inputShape","sparseReshape","int32"),o=E(t,"newShape","sparseReshape","int32");if(r.rank!==2)throw new Error(`Input indices should be Tensor2D but received shape
+        ${r.shape}`);if(s.rank!==1)throw new Error(`Input shape should be Tensor1D but received shape ${s.shape}`);if(o.rank!==1)throw new Error(`New shape should be Tensor1D but received shape ${o.shape}`);const a={inputIndices:r,inputShape:s,newShape:o},i=U.runKernel(Ap,a);return{outputIndices:i[0],outputShape:i[1]}}const r$=L({sparseReshape_:n$});function s$(n,e,t){const r=E(n,"data","sparseSegmentMean"),s=E(e,"indices","sparseSegmentMean","int32"),o=E(t,"segmentIds","sparseSegmentMean","int32");if(r.rank<1)throw new Error("Data should be at least 1 dimensional but received scalar");if(s.rank!==1)throw new Error(`Indices should be Tensor1D but received shape
+          ${s.shape}`);if(o.rank!==1)throw new Error(`Segment ids should be Tensor1D but received shape
+          ${o.shape}`);const a={data:r,indices:s,segmentIds:o};return U.runKernel(Op,a)}const o$=L({sparseSegmentMean_:s$});function a$(n,e,t){const r=E(n,"data","sparseSegmentSum"),s=E(e,"indices","sparseSegmentSum","int32"),o=E(t,"segmentIds","sparseSegmentSum","int32");if(r.rank<1)throw new Error("Data should be at least 1 dimensional but received scalar");if(s.rank!==1)throw new Error(`Indices should be Tensor1D but received shape
+         ${s.shape}`);if(o.rank!==1)throw new Error(`Segment ids should be Tensor1D but received shape
+         ${o.shape}`);const a={data:r,indices:s,segmentIds:o};return U.runKernel(Dp,a)}const i$=L({sparseSegmentSum_:a$});function u$(n,e,t,r,s,o,a,i){const u=E(n,"data","stringNGrams","string");if(u.dtype!=="string")throw new Error("Data must be of datatype string");if(u.shape.length!==1)throw new Error(`Data must be a vector, saw: ${u.shape}`);const c=E(e,"dataSplits","stringNGrams");if(c.dtype!=="int32")throw new Error("Data splits must be of datatype int32");const l={separator:t,nGramWidths:r,leftPad:s,rightPad:o,padWidth:a,preserveShortSequences:i},h={data:u,dataSplits:c},d=U.runKernel(Vp,h,l);return{nGrams:d[0],nGramsSplits:d[1]}}const c$=L({stringNGrams_:u$});function l$(n,e,t=!0){const r=E(n,"input","stringSplit","string"),s=E(e,"delimiter","stringSplit","string");if(r.rank!==1)throw new Error(`Input should be Tensor1D but received shape ${r.shape}`);if(s.rank!==0)throw new Error(`Delimiter should be a scalar but received shape ${s.shape}`);const o={skipEmpty:t},a={input:r,delimiter:s},i=U.runKernel(Mp,a,o);return{indices:i[0],values:i[1],shape:i[2]}}const h$=L({stringSplit_:l$});function d$(n,e){const t=E(n,"input","stringToHashBucketFast","string"),r={numBuckets:e};if(e<=0)throw new Error("Number of buckets must be at least 1");const s={input:t};return U.runKernel(Up,s,r)}const p$=L({stringToHashBucketFast_:d$});function f$(n,e,t,r=!0){const s=E(n,"input","staticRegexReplace","string"),o={pattern:e,rewrite:t,replaceGlobal:r};return U.runKernel(Lp,{x:s},o)}const m$=L({staticRegexReplace_:f$});const g$={fft:uc,ifft:Ma,rfft:cc,irfft:am},y$={hammingWindow:Uv,hannWindow:fm,frame:mm,stft:jv},Ls={flipLeftRight:qv,grayscaleToRGB:Qv,resizeNearestNeighbor:Sw,resizeBilinear:ww,rgbToGrayscale:Jv,rotateWithOffset:tw,cropAndResize:Kv,nonMaxSuppression:rw,nonMaxSuppressionAsync:hw,nonMaxSuppressionWithScore:pw,nonMaxSuppressionWithScoreAsync:mw,nonMaxSuppressionPadded:yw,nonMaxSuppressionPaddedAsync:bw,threshold:Nw,transform:Iw},x$={bandPart:Rw,gramSchmidt:Aw,qr:Dw},b$={absoluteDifference:Lw,computeWeightedLoss:Xn,cosineDistance:Vw,hingeLoss:Uw,huberLoss:zw,logLoss:jw,meanSquaredError:Kw,sigmoidCrossEntropy:Yw,softmaxCrossEntropy:Jw},v$={sparseFillEmptyRows:t$,sparseReshape:r$,sparseSegmentMean:o$,sparseSegmentSum:i$},w$={stringNGrams:c$,stringSplit:h$,stringToHashBucketFast:p$,staticRegexReplace:m$};const $$=new Map,S$=new Map;class C${getClassName(){return this.constructor.className}static fromConfig(e,t){return new e(t)}}class Lr{constructor(){this.classNameMap={}}static getMap(){return Lr.instance==null&&(Lr.instance=new Lr),Lr.instance}static register(e){Lr.getMap().classNameMap[e.className]=[e,e.fromConfig]}}function T$(n,e,t){_(n.className!=null,()=>"Class being registered does not have the static className property defined."),_(typeof n.className=="string",()=>"className is required to be a string, but got type "+typeof n.className),_(n.className.length>0,()=>"Class being registered has an empty-string as its className, which is disallowed."),typeof e>"u"&&(e="Custom"),typeof t>"u"&&(t=n.className);const r=t,s=e+">"+r;return Lr.register(n),$$.set(s,n),S$.set(n,s),n}class ss extends C${minimize(e,t=!1,r){const{value:s,grads:o}=this.computeGradients(e,r);if(r!=null){const a=r.map(i=>({name:i.name,tensor:o[i.name]}));this.applyGradients(a)}else this.applyGradients(o);return Xe(o),t?s:(s.dispose(),null)}get iterations(){return this.iterations_==null&&(this.iterations_=0),this.iterations_}incrementIterations(){this.iterations_=this.iterations+1}computeGradients(e,t){return u4(e,t)}dispose(){this.iterations_!=null&&Xe(this.iterations_)}async saveIterations(){return this.iterations_==null&&(this.iterations_=0),{name:"iter",tensor:Re(this.iterations_,"int32")}}async getWeights(){throw new Error("getWeights() is not implemented for this optimizer yet.")}async setWeights(e){throw new Error(`setWeights() is not implemented for this optimizer class ${this.getClassName()}`)}async extractIterations(e){return this.iterations_=(await e[0].tensor.data())[0],e.slice(1)}}Object.defineProperty(ss,Symbol.hasInstance,{value:n=>n.minimize!=null&&n.computeGradients!=null&&n.applyGradients!=null});class N$ extends ss{static get className(){return"Adadelta"}constructor(e,t,r=null){super(),this.learningRate=e,this.rho=t,this.epsilon=r,this.accumulatedGrads=[],this.accumulatedUpdates=[],r==null&&(this.epsilon=U.backend.epsilon())}applyGradients(e){(Array.isArray(e)?e.map(r=>r.name):Object.keys(e)).forEach((r,s)=>{const o=U.registeredVariables[r],a=!1;this.accumulatedGrads[s]==null&&(this.accumulatedGrads[s]={originalName:`${r}/accum_grad`,variable:we(()=>jt(o).variable(a))}),this.accumulatedUpdates[s]==null&&(this.accumulatedUpdates[s]={originalName:`${r}/accum_var`,variable:we(()=>jt(o).variable(a))});const i=Array.isArray(e)?e[s].tensor:e[r];if(i==null)return;const u=this.accumulatedGrads[s].variable,c=this.accumulatedUpdates[s].variable;we(()=>{const l=me(oe(u,this.rho),oe(xn(i),1-this.rho)),h=oe(ke(Wn(me(c,this.epsilon)),Wn(me(u,this.epsilon))),i),d=me(oe(c,this.rho),oe(xn(h),1-this.rho));u.assign(l),c.assign(d);const p=me(oe(h,-this.learningRate),o);o.assign(p)})}),this.incrementIterations()}dispose(){this.accumulatedUpdates!=null&&(Xe(this.accumulatedGrads.map(e=>e.variable)),Xe(this.accumulatedUpdates.map(e=>e.variable)))}async getWeights(){const e=[...this.accumulatedGrads,...this.accumulatedUpdates];return[await this.saveIterations()].concat(e.map(t=>({name:t.originalName,tensor:t.variable})))}async setWeights(e){e=await this.extractIterations(e);const t=e.length/2,r=!1;this.accumulatedGrads=e.slice(0,t).map(s=>({originalName:s.name,variable:s.tensor.variable(r)})),this.accumulatedUpdates=e.slice(t,t*2).map(s=>({originalName:s.name,variable:s.tensor.variable(r)}))}getConfig(){return{learningRate:this.learningRate,rho:this.rho,epsilon:this.epsilon}}static fromConfig(e,t){return new e(t.learningRate,t.rho,t.epsilon)}}class E$ extends ss{static get className(){return"Adagrad"}constructor(e,t=.1){super(),this.learningRate=e,this.initialAccumulatorValue=t,this.accumulatedGrads=[]}applyGradients(e){(Array.isArray(e)?e.map(r=>r.name):Object.keys(e)).forEach((r,s)=>{const o=U.registeredVariables[r];this.accumulatedGrads[s]==null&&(this.accumulatedGrads[s]={originalName:`${r}/accumulator`,variable:we(()=>Po(o.shape,this.initialAccumulatorValue).variable(!1))});const a=Array.isArray(e)?e[s].tensor:e[r];if(a==null)return;const i=this.accumulatedGrads[s].variable;we(()=>{const u=me(i,xn(a));i.assign(u);const c=me(oe(ke(a,Wn(me(u,U.backend.epsilon()))),-this.learningRate),o);o.assign(c)})}),this.incrementIterations()}dispose(){this.accumulatedGrads!=null&&Xe(this.accumulatedGrads.map(e=>e.variable))}async getWeights(){return[await this.saveIterations()].concat(this.accumulatedGrads.map(e=>({name:e.originalName,tensor:e.variable})))}async setWeights(e){e=await this.extractIterations(e);const t=!1;this.accumulatedGrads=e.map(r=>({originalName:r.name,variable:r.tensor.variable(t)}))}getConfig(){return{learningRate:this.learningRate,initialAccumulatorValue:this.initialAccumulatorValue}}static fromConfig(e,t){return new e(t.learningRate,t.initialAccumulatorValue)}}class I$ extends ss{static get className(){return"Adam"}constructor(e,t,r,s=null){super(),this.learningRate=e,this.beta1=t,this.beta2=r,this.epsilon=s,this.accumulatedFirstMoment=[],this.accumulatedSecondMoment=[],we(()=>{this.accBeta1=Re(t).variable(),this.accBeta2=Re(r).variable()}),s==null&&(this.epsilon=U.backend.epsilon())}applyGradients(e){const t=Array.isArray(e)?e.map(r=>r.name):Object.keys(e);we(()=>{const r=Te(1,this.accBeta1),s=Te(1,this.accBeta2);t.forEach((o,a)=>{const i=U.registeredVariables[o],u=!1;this.accumulatedFirstMoment[a]==null&&(this.accumulatedFirstMoment[a]={originalName:`${o}/m`,variable:we(()=>jt(i).variable(u))}),this.accumulatedSecondMoment[a]==null&&(this.accumulatedSecondMoment[a]={originalName:`${o}/v`,variable:we(()=>jt(i).variable(u))});const c=Array.isArray(e)?e[a].tensor:e[o];if(c==null)return;const l=this.accumulatedFirstMoment[a].variable,h=this.accumulatedSecondMoment[a].variable,d=me(oe(l,this.beta1),oe(c,1-this.beta1)),p=me(oe(h,this.beta2),oe(xn(c),1-this.beta2)),f=ke(d,r),b=ke(p,s);l.assign(d),h.assign(p);const y=me(oe(ke(f,me(Wn(b),this.epsilon)),-this.learningRate),i);i.assign(y)}),this.accBeta1.assign(oe(this.accBeta1,this.beta1)),this.accBeta2.assign(oe(this.accBeta2,this.beta2))}),this.incrementIterations()}dispose(){this.accBeta1.dispose(),this.accBeta2.dispose(),this.accumulatedFirstMoment!=null&&Xe(this.accumulatedFirstMoment.map(e=>e.variable)),this.accumulatedSecondMoment!=null&&Xe(this.accumulatedSecondMoment.map(e=>e.variable))}async getWeights(){const e=[...this.accumulatedFirstMoment,...this.accumulatedSecondMoment];return[await this.saveIterations()].concat(e.map(t=>({name:t.originalName,tensor:t.variable})))}async setWeights(e){e=await this.extractIterations(e),we(()=>{this.accBeta1.assign(So(this.beta1,this.iterations_+1)),this.accBeta2.assign(So(this.beta2,this.iterations_+1))});const t=e.length/2,r=!1;this.accumulatedFirstMoment=e.slice(0,t).map(s=>({originalName:s.name,variable:s.tensor.variable(r)})),this.accumulatedSecondMoment=e.slice(t,t*2).map(s=>({originalName:s.name,variable:s.tensor.variable(r)}))}getConfig(){return{learningRate:this.learningRate,beta1:this.beta1,beta2:this.beta2,epsilon:this.epsilon}}static fromConfig(e,t){return new e(t.learningRate,t.beta1,t.beta2,t.epsilon)}}class k$ extends ss{static get className(){return"Adamax"}constructor(e,t,r,s=null,o=0){super(),this.learningRate=e,this.beta1=t,this.beta2=r,this.epsilon=s,this.decay=o,this.accumulatedFirstMoment=[],this.accumulatedWeightedInfNorm=[],we(()=>{this.iteration=Re(0).variable(),this.accBeta1=Re(t).variable()}),s==null&&(this.epsilon=U.backend.epsilon())}applyGradients(e){const t=Array.isArray(e)?e.map(r=>r.name):Object.keys(e);we(()=>{const r=Te(1,this.accBeta1),s=ke(-this.learningRate,me(oe(this.iteration,this.decay),1));t.forEach((o,a)=>{const i=U.registeredVariables[o],u=!1;this.accumulatedFirstMoment[a]==null&&(this.accumulatedFirstMoment[a]={originalName:`${o}/m`,variable:jt(i).variable(u)}),this.accumulatedWeightedInfNorm[a]==null&&(this.accumulatedWeightedInfNorm[a]={originalName:`${o}/v`,variable:jt(i).variable(u)});const c=Array.isArray(e)?e[a].tensor:e[o];if(c==null)return;const l=this.accumulatedFirstMoment[a].variable,h=this.accumulatedWeightedInfNorm[a].variable,d=me(oe(l,this.beta1),oe(c,1-this.beta1)),p=oe(h,this.beta2),f=zt(c),b=Jf(p,f);l.assign(d),h.assign(b);const y=me(oe(ke(s,r),ke(d,me(b,this.epsilon))),i);i.assign(y)}),this.iteration.assign(me(this.iteration,1)),this.accBeta1.assign(oe(this.accBeta1,this.beta1))}),this.incrementIterations()}dispose(){this.accBeta1.dispose(),this.iteration.dispose(),this.accumulatedFirstMoment!=null&&Xe(this.accumulatedFirstMoment.map(e=>e.variable)),this.accumulatedWeightedInfNorm!=null&&Xe(this.accumulatedWeightedInfNorm.map(e=>e.variable))}async getWeights(){throw new Error("getWeights() is not implemented for Adamax yet.")}async setWeights(e){throw new Error("setWeights() is not implemented for Adamax yet.")}getConfig(){return{learningRate:this.learningRate,beta1:this.beta1,beta2:this.beta2,epsilon:this.epsilon,decay:this.decay}}static fromConfig(e,t){return new e(t.learningRate,t.beta1,t.beta2,t.epsilon,t.decay)}}class bm extends ss{static get className(){return"SGD"}constructor(e){super(),this.learningRate=e,this.setLearningRate(e)}applyGradients(e){(Array.isArray(e)?e.map(r=>r.name):Object.keys(e)).forEach((r,s)=>{const o=Array.isArray(e)?e[s].tensor:e[r];if(o==null)return;const a=U.registeredVariables[r];we(()=>{const i=me(oe(this.c,o),a);a.assign(i)})}),this.incrementIterations()}setLearningRate(e){this.learningRate=e,this.c!=null&&this.c.dispose(),this.c=In(Re(-e))}dispose(){this.c.dispose()}async getWeights(){return[await this.saveIterations()]}async setWeights(e){if(e=await this.extractIterations(e),e.length!==0)throw new Error("SGD optimizer does not have settable weights.")}getConfig(){return{learningRate:this.learningRate}}static fromConfig(e,t){return new e(t.learningRate)}}class R$ extends bm{static get className(){return"Momentum"}constructor(e,t,r=!1){super(e),this.learningRate=e,this.momentum=t,this.useNesterov=r,this.accumulations=[],this.m=Re(this.momentum)}applyGradients(e){(Array.isArray(e)?e.map(r=>r.name):Object.keys(e)).forEach((r,s)=>{const o=U.registeredVariables[r];this.accumulations[s]==null&&(this.accumulations[s]={originalName:`${r}/momentum`,variable:we(()=>jt(o).variable(!1))});const a=this.accumulations[s].variable,i=Array.isArray(e)?e[s].tensor:e[r];i!=null&&we(()=>{let u;const c=me(oe(this.m,a),i);this.useNesterov?u=me(oe(this.c,me(i,oe(c,this.m))),o):u=me(oe(this.c,c),o),a.assign(c),o.assign(u)})}),this.incrementIterations()}dispose(){this.m.dispose(),this.accumulations!=null&&Xe(this.accumulations.map(e=>e.variable))}setMomentum(e){this.momentum=e}async getWeights(){return[await this.saveIterations()].concat(this.accumulations.map(e=>({name:e.originalName,tensor:e.variable})))}async setWeights(e){e=await this.extractIterations(e);const t=!1;this.accumulations=e.map(r=>({originalName:r.name,variable:r.tensor.variable(t)}))}getConfig(){return{learningRate:this.learningRate,momentum:this.momentum,useNesterov:this.useNesterov}}static fromConfig(e,t){return new e(t.learningRate,t.momentum,t.useNesterov)}}class _$ extends ss{static get className(){return"RMSProp"}constructor(e,t=.9,r=0,s=null,o=!1){if(super(),this.learningRate=e,this.decay=t,this.momentum=r,this.epsilon=s,this.accumulatedMeanSquares=[],this.accumulatedMoments=[],this.accumulatedMeanGrads=[],this.centered=o,s==null&&(this.epsilon=U.backend.epsilon()),e==null)throw new Error("learningRate for RMSPropOptimizer must be defined.")}applyGradients(e){(Array.isArray(e)?e.map(r=>r.name):Object.keys(e)).forEach((r,s)=>{const o=U.registeredVariables[r],a=!1;this.accumulatedMeanSquares[s]==null&&(this.accumulatedMeanSquares[s]={originalName:`${r}/rms`,variable:we(()=>jt(o).variable(a))}),this.accumulatedMoments[s]==null&&(this.accumulatedMoments[s]={originalName:`${r}/momentum`,variable:we(()=>jt(o).variable(a))}),this.accumulatedMeanGrads[s]==null&&this.centered&&(this.accumulatedMeanGrads[s]={originalName:`${r}/mg`,variable:we(()=>jt(o).variable(a))});const i=Array.isArray(e)?e[s].tensor:e[r];if(i==null)return;const u=this.accumulatedMeanSquares[s].variable,c=this.accumulatedMoments[s].variable;we(()=>{const l=me(oe(u,this.decay),oe(xn(i),1-this.decay));if(this.centered){const h=this.accumulatedMeanGrads[s].variable,d=me(oe(h,this.decay),oe(i,1-this.decay)),p=ke(oe(i,this.learningRate),Wn(Te(l,me(xn(d),this.epsilon)))),f=me(oe(c,this.momentum),p);u.assign(l),h.assign(d),c.assign(f);const b=Te(o,f);o.assign(b)}else{const h=me(oe(u,this.decay),oe(xn(i),1-this.decay)),d=me(oe(c,this.momentum),ke(oe(i,this.learningRate),Wn(me(h,this.epsilon))));u.assign(h),c.assign(d);const p=Te(o,d);o.assign(p)}})}),this.incrementIterations()}dispose(){this.accumulatedMeanSquares!=null&&Xe(this.accumulatedMeanSquares.map(e=>e.variable)),this.accumulatedMeanGrads!=null&&this.centered&&Xe(this.accumulatedMeanGrads.map(e=>e.variable)),this.accumulatedMoments!=null&&Xe(this.accumulatedMoments.map(e=>e.variable))}async getWeights(){const e=[...this.accumulatedMeanSquares,...this.accumulatedMoments];return this.centered&&e.push(...this.accumulatedMeanGrads),[await this.saveIterations()].concat(e.map(t=>({name:t.originalName,tensor:t.variable})))}async setWeights(e){e=await this.extractIterations(e);const t=this.centered?e.length/3:e.length/2,r=!1;this.accumulatedMeanSquares=e.slice(0,t).map(s=>({originalName:s.name,variable:s.tensor.variable(r)})),this.accumulatedMoments=e.slice(t,t*2).map(s=>({originalName:s.name,variable:s.tensor.variable(r)})),this.centered&&(this.accumulatedMeanGrads=e.slice(t*2,t*3).map(s=>({originalName:s.name,variable:s.tensor.variable(r)})))}getConfig(){return{learningRate:this.learningRate,decay:this.decay,momentum:this.momentum,epsilon:this.epsilon,centered:this.centered}}static fromConfig(e,t){return new e(t.learningRate,t.decay,t.momentum,t.epsilon,t.centered)}}const A$=[N$,E$,I$,k$,R$,_$,bm];function O$(){for(const n of A$)T$(n)}const D$="model",F$=".json",P$=".weights.bin";function nl(n){return new Promise(e=>setTimeout(e)).then(n)}class Zr{constructor(e){if(!j().getBool("IS_BROWSER"))throw new Error("browserDownloads() cannot proceed because the current environment is not a browser.");e.startsWith(Zr.URL_SCHEME)&&(e=e.slice(Zr.URL_SCHEME.length)),(e==null||e.length===0)&&(e=D$),this.modelJsonFileName=e+F$,this.weightDataFileName=e+P$}async save(e){if(typeof document>"u")throw new Error("Browser downloads are not supported in this environment since `document` is not present");const t=wn.join(e.weightData),r=window.URL.createObjectURL(new Blob([t],{type:"application/octet-stream"}));if(e.modelTopology instanceof ArrayBuffer)throw new Error("BrowserDownloads.save() does not support saving model topology in binary formats yet.");{const s=[{paths:["./"+this.weightDataFileName],weights:e.weightSpecs}],o=vf(e,s),a=window.URL.createObjectURL(new Blob([JSON.stringify(o)],{type:"application/json"})),i=this.modelJsonAnchor==null?document.createElement("a"):this.modelJsonAnchor;if(i.download=this.modelJsonFileName,i.href=a,await nl(()=>i.dispatchEvent(new MouseEvent("click"))),e.weightData!=null){const u=this.weightDataAnchor==null?document.createElement("a"):this.weightDataAnchor;u.download=this.weightDataFileName,u.href=r,await nl(()=>u.dispatchEvent(new MouseEvent("click")))}return{modelArtifactsInfo:Oo(e)}}}}Zr.URL_SCHEME="downloads://";class L${constructor(e){if(e==null||e.length<1)throw new Error(`When calling browserFiles, at least 1 file is required, but received ${e}`);this.jsonFile=e[0],this.weightsFiles=e.slice(1)}async load(){return new Promise((e,t)=>{const r=new FileReader;r.onload=s=>{const o=JSON.parse(s.target.result),a=o.modelTopology;if(a==null){t(new Error(`modelTopology field is missing from file ${this.jsonFile.name}`));return}if(o.weightsManifest==null){t(new Error(`weightManifest field is missing from file ${this.jsonFile.name}`));return}if(this.weightsFiles.length===0){e({modelTopology:a});return}const u=Zu(o,c=>this.loadWeights(c));e(u)},r.onerror=s=>t(`Failed to read model topology and weights manifest JSON from file '${this.jsonFile.name}'. BrowserFiles supports loading Keras-style tf.Model artifacts only.`),r.readAsText(this.jsonFile)})}loadWeights(e){const t=[],r=[];for(const a of e)t.push(...a.weights),r.push(...a.paths);const s=this.checkManifestAndWeightFiles(e),o=r.map(a=>this.loadWeightsFile(a,s[a]));return Promise.all(o).then(a=>[t,a])}loadWeightsFile(e,t){return new Promise((r,s)=>{const o=new FileReader;o.onload=a=>{const i=a.target.result;r(i)},o.onerror=a=>s(`Failed to weights data from file of path '${e}'.`),o.readAsArrayBuffer(t)})}checkManifestAndWeightFiles(e){const t=[],r=this.weightsFiles.map(o=>jc(o.name)),s={};for(const o of e)o.paths.forEach(a=>{const i=jc(a);if(t.indexOf(i)!==-1)throw new Error(`Duplicate file basename found in weights manifest: '${i}'`);if(t.push(i),r.indexOf(i)===-1)throw new Error(`Weight file with basename '${i}' is not provided.`);s[a]=this.weightsFiles[r.indexOf(i)]});if(t.length!==this.weightsFiles.length)throw new Error(`Mismatch in the number of files in weights manifest (${t.length}) and the number of weight files provided (${this.weightsFiles.length}).`);return s}}const B$=n=>j().getBool("IS_BROWSER")&&!Array.isArray(n)&&n.startsWith(Zr.URL_SCHEME)?V$(n.slice(Zr.URL_SCHEME.length)):null;Ke.registerSaveRouter(B$);function V$(n="model"){return new Zr(n)}function M$(n){return new L$(n)}function rl(n,e,t,r){a(n),t=t??0,r=r??1,i(t,r);let s=0;const o=u=>(u.then(c=>{const l=t+ ++s/n.length*(r-t);return e(l),c}),u);function a(u){_(u!=null&&Array.isArray(u)&&u.length>0,()=>"promises must be a none empty array")}function i(u,c){_(u>=0&&u<=1,()=>`Progress fraction must be in range [0, 1], but got startFraction ${u}`),_(c>=0&&c<=1,()=>`Progress fraction must be in range [0, 1], but got endFraction ${c}`),_(c>=u,()=>`startFraction must be no more than endFraction, but got startFraction ${u} and endFraction ${c}`)}return Promise.all(n.map(o))}async function vm(n,e){e==null&&(e={});const t=e.fetchFunc==null?j().platform.fetch:e.fetchFunc,r=n.map(h=>t(h,e.requestInit,{isBinary:!0})),i=(e.onProgress==null?await Promise.all(r):await rl(r,e.onProgress,0,.5)).map(h=>h.arrayBuffer());return e.onProgress==null?await Promise.all(i):await rl(i,e.onProgress,.5,1)}function U$(n,e){var t;const r=e.fetchFunc==null?j().platform.fetch:e.fetchFunc;let s=0,o;return(t=e.onProgress)===null||t===void 0||t.call(e,0),new ReadableStream({pull:async a=>{for(var i;s<n.length;){o||(o=(await r(n[s],e.requestInit,{isBinary:!0})).body.getReader());const{done:u,value:c}=await o.read();if(u){s++,o=void 0,(i=e.onProgress)===null||i===void 0||i.call(e,s/n.length);continue}a.enqueue(c);return}a.close()}})}async function W$(n,e="",t,r){return wm(a=>vm(a,{requestInit:r}))(n,e,t)}function wm(n){return async(e,t="",r)=>{const s=e.map(()=>!1),o={},a=r!=null?r.map(()=>!1):[],i=[];if(e.forEach((p,f)=>{let b=0;p.weights.forEach(y=>{const x="quantization"in y?y.quantization.dtype:y.dtype,C=Hr[x]*ne(y.shape),I=()=>{s[f]=!0,o[f]==null&&(o[f]=[]),o[f].push({manifestEntry:y,groupOffset:b,sizeBytes:C})};r!=null?r.forEach((k,P)=>{k===y.name&&(I(),a[P]=!0)}):I(),i.push(y.name),b+=C})}),!a.every(p=>p)){const p=r.filter((f,b)=>!a[b]);throw new Error(`Could not find weights in manifest with names: ${p.join(", ")}. 
+Manifest JSON has weights with names: ${i.join(", ")}.`)}const u=s.reduce((p,f,b)=>(f&&p.push(b),p),[]),c=[];u.forEach(p=>{e[p].paths.forEach(f=>{const b=t+(t.endsWith("/")?"":"/")+f;c.push(b)})});const l=await n(c),h={};let d=0;return u.forEach(p=>{const f=e[p].paths.length,b=new wn(l.slice(d,d+f));o[p].forEach(x=>{const C=b.slice(x.groupOffset,x.groupOffset+x.sizeBytes),I=yf(C,[x.manifestEntry]);for(const k in I)h[k]=I[k]}),d+=f}),h}}const z$="application/octet-stream",G$="application/json";class pc{constructor(e,t){if(this.DEFAULT_METHOD="POST",t==null&&(t={}),this.weightPathPrefix=t.weightPathPrefix,this.weightUrlConverter=t.weightUrlConverter,t.fetchFunc!=null?(_(typeof t.fetchFunc=="function",()=>"Must pass a function that matches the signature of `fetch` (see https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)"),this.fetch=t.fetchFunc):this.fetch=j().platform.fetch,_(e!=null&&e.length>0,()=>"URL path for http must not be null, undefined or empty."),Array.isArray(e)&&_(e.length===2,()=>`URL paths for http must have a length of 2, (actual length is ${e.length}).`),this.path=e,t.requestInit!=null&&t.requestInit.body!=null)throw new Error("requestInit is expected to have no pre-existing body, but has one.");this.requestInit=t.requestInit||{},this.loadOptions=t}async save(e){if(e.modelTopology instanceof ArrayBuffer)throw new Error("BrowserHTTPRequest.save() does not support saving model topology in binary formats yet.");const t=Object.assign({method:this.DEFAULT_METHOD},this.requestInit);t.body=new FormData;const r=[{paths:["./model.weights.bin"],weights:e.weightSpecs}],s=vf(e,r);if(t.body.append("model.json",new Blob([JSON.stringify(s)],{type:G$}),"model.json"),e.weightData!=null){const a=wn.join(e.weightData);t.body.append("model.weights.bin",new Blob([a],{type:z$}),"model.weights.bin")}const o=await this.fetch(this.path,t);if(o.ok)return{modelArtifactsInfo:Oo(e),responses:[o]};throw new Error(`BrowserHTTPRequest.save() failed due to HTTP response status ${o.status}.`)}async loadModelJSON(){const e=await this.fetch(this.path,this.requestInit);if(!e.ok)throw new Error(`Request to ${this.path} failed with status code ${e.status}. Please verify this URL points to the model JSON of the model to load.`);let t;try{t=await e.json()}catch{let a=`Failed to parse model JSON of response from ${this.path}.`;throw this.path.endsWith(".pb")?a+=" Your path contains a .pb file extension. Support for .pb models have been removed in TensorFlow.js 1.0 in favor of .json models. You can re-convert your Python TensorFlow model using the TensorFlow.js 1.0 conversion scripts or you can convert your.pb models with the 'pb2json'NPM script in the tensorflow/tfjs-converter repository.":a+=" Please make sure the server is serving valid JSON for this request.",new Error(a)}const r=t.modelTopology,s=t.weightsManifest;if(r==null&&s==null)throw new Error(`The JSON from HTTP path ${this.path} contains neither model topology or manifest for weights.`);return t}async load(){if(this.loadOptions.streamWeights)return this.loadStream();const e=await this.loadModelJSON();return Zu(e,t=>this.loadWeights(t))}async loadStream(){const e=await this.loadModelJSON(),t=await this.getWeightUrls(e.weightsManifest),r=fu(e.weightsManifest),s=()=>U$(t,this.loadOptions);return Object.assign(Object.assign({},e),{weightSpecs:r,getWeightStream:s})}async getWeightUrls(e){const t=Array.isArray(this.path)?this.path[1]:this.path,[r,s]=j$(t),o=this.weightPathPrefix||r,a=[],i=[];for(const u of e)for(const c of u.paths)this.weightUrlConverter!=null?i.push(this.weightUrlConverter(c)):a.push(o+c+s);return this.weightUrlConverter&&a.push(...await Promise.all(i)),a}async loadWeights(e){const t=await this.getWeightUrls(e),r=fu(e),s=await vm(t,this.loadOptions);return[r,s]}}pc.URL_SCHEME_REGEX=/^https?:\/\//;function j$(n){const e=n.lastIndexOf("/"),t=n.lastIndexOf("?"),r=n.substring(0,e),s=t>e?n.substring(t):"";return[r+"/",s]}function Su(n){return n.match(pc.URL_SCHEME_REGEX)!=null}const $m=(n,e)=>{if(typeof fetch>"u"&&(e==null||e.fetchFunc==null))return null;{let t=!0;if(Array.isArray(n)?t=n.every(r=>Su(r)):t=Su(n),t)return fc(n,e)}return null};Ke.registerSaveRouter($m);Ke.registerLoadRouter($m);function fc(n,e){return new pc(n,e)}function H$(n,e){return fc(n,e)}class Oi{constructor(e){this.modelArtifacts=e}load(){return this.modelArtifacts}}class Sm{constructor(e){this.saveHandler=e}save(e){return this.saveHandler(e)}}class K${constructor(e){e.load&&(this.load=()=>Promise.resolve(e.load())),e.save&&(this.save=t=>Promise.resolve(e.save(t)))}}function X$(n,e,t,r){const s=arguments;return new K$(Cm(...s))}function Cm(n,e,t,r){return arguments.length===1?n.modelTopology!=null||n.weightSpecs!=null?new Oi(n):(console.warn("Please call tf.io.fromMemory() with only one argument. The argument should be of type ModelArtifacts. The multi-argument signature of tf.io.fromMemory() has been deprecated and will be removed in a future release."),new Oi({modelTopology:n})):(console.warn("Please call tf.io.fromMemory() with only one argument. The argument should be of type ModelArtifacts. The multi-argument signature of tf.io.fromMemory() has been deprecated and will be removed in a future release."),new Oi({modelTopology:n,weightSpecs:e,weightData:t,trainingConfig:r}))}function q$(n){return new Sm(n)}function Y$(n){return new Sm(n)}const Tm=Object.freeze(Object.defineProperty({__proto__:null,CompositeArrayBuffer:wn,browserFiles:M$,browserHTTPRequest:H$,concatenateArrayBuffers:X2,copyModel:g0,decodeWeights:yf,decodeWeightsStream:bf,encodeWeights:W2,fromMemory:X$,fromMemorySync:Cm,getLoadHandlers:n0,getModelArtifactsForJSON:Zu,getModelArtifactsForJSONSync:wf,getModelArtifactsInfoForJSON:Oo,getSaveHandlers:t0,getWeightSpecs:fu,http:fc,isHTTPScheme:Su,listModels:f0,loadWeights:W$,moveModel:y0,registerLoadRouter:e0,registerSaveRouter:J2,removeModel:m0,weightsLoaderFactory:wm,withSaveHandler:q$,withSaveHandlerSync:Y$},Symbol.toStringTag,{value:"Module"}));let Ar;function Q$(n,e=3){if(e>4)throw new Error("Cannot construct Tensor with more than 4 channels from pixels.");if(n==null)throw new Error("pixels passed to tf.browser.fromPixels() can not be null");let t=!1,r=!1,s=!1,o=!1,a=!1,i=!1;if(n.data instanceof Uint8Array)t=!0;else if(typeof ImageData<"u"&&n instanceof ImageData)r=!0;else if(typeof HTMLVideoElement<"u"&&n instanceof HTMLVideoElement)s=!0;else if(typeof HTMLImageElement<"u"&&n instanceof HTMLImageElement)o=!0;else if(n.getContext!=null)a=!0;else if(typeof ImageBitmap<"u"&&n instanceof ImageBitmap)i=!0;else throw new Error(`pixels passed to tf.browser.fromPixels() must be either an HTMLVideoElement, HTMLImageElement, HTMLCanvasElement, ImageData in browser, or OffscreenCanvas, ImageData in webworker or {data: Uint32Array, width: number, height: number}, but was ${n.constructor.name}`);if(uu(su,U.backendName)!=null){const f={pixels:n},b={numChannels:e};return U.runKernel(su,f,b)}const[c,l]=s?[n.videoWidth,n.videoHeight]:[n.width,n.height];let h;if(a)h=n.getContext("2d").getImageData(0,0,c,l).data;else if(r||t)h=n.data;else if(o||s||i){if(Ar==null)if(typeof document>"u")if(typeof OffscreenCanvas<"u"&&typeof OffscreenCanvasRenderingContext2D<"u")Ar=new OffscreenCanvas(1,1).getContext("2d");else throw new Error("Cannot parse input in current context. Reason: OffscreenCanvas Context2D rendering is not supported.");else Ar=document.createElement("canvas").getContext("2d",{willReadFrequently:!0});Ar.canvas.width=c,Ar.canvas.height=l,Ar.drawImage(n,0,0,c,l),h=Ar.getImageData(0,0,c,l).data}let d;if(e===4)d=new Int32Array(h);else{const f=c*l;d=new Int32Array(f*e);for(let b=0;b<f;b++)for(let y=0;y<e;++y)d[b*e+y]=h[b*4+y]}return cm(d,[l,c,e],"int32")}function Z$(n){if(n.rank!==2&&n.rank!==3)throw new Error(`toPixels only supports rank 2 or 3 tensors, got rank ${n.rank}.`);const e=n.rank===2?1:n.shape[2];if(e>4||e===2)throw new Error(`toPixels only supports depth of size 1, 3 or 4 but got ${e}`);if(n.dtype!=="float32"&&n.dtype!=="int32")throw new Error(`Unsupported type for toPixels: ${n.dtype}. Please use float32 or int32 tensors.`)}async function Nm(n,e){let t=E(n,"img","toPixels");if(!(n instanceof Ze)){const c=t;t=He(c,"int32"),c.dispose()}Z$(t);const[r,s]=t.shape.slice(0,2),o=t.rank===2?1:t.shape[2],a=await t.data(),i=t.dtype==="float32"?255:1,u=new Uint8ClampedArray(s*r*4);for(let c=0;c<r*s;++c){const l=[0,0,0,255];for(let d=0;d<o;d++){const p=a[c*o+d];if(t.dtype==="float32"){if(p<0||p>1)throw new Error(`Tensor values for a float32 Tensor must be in the range [0 - 1] but encountered ${p}.`)}else if(t.dtype==="int32"&&(p<0||p>255))throw new Error(`Tensor values for a int32 Tensor must be in the range [0 - 255] but encountered ${p}.`);o===1?(l[0]=p*i,l[1]=p*i,l[2]=p*i):l[d]=p*i}const h=c*4;u[h+0]=Math.round(l[0]),u[h+1]=Math.round(l[1]),u[h+2]=Math.round(l[2]),u[h+3]=Math.round(l[3])}return t!==n&&t.dispose(),u}const Em=L({fromPixels_:Q$});function Im(n,e){const t=n.shape.length,r=e.shape.length;if(t<1)throw new Error(`tf.gatherND() expects the input to be rank 1 or higher, but the rank was ${t}.`);if(r<1)throw new Error(`tf.gatherND() expects the indices to be rank 1 or higher, but the rank was ${r}.`);if(e.dtype!=="int32")throw new Error(`tf.gatherND() expects the indices to be int32 type, but the dtype was ${e.dtype}.`);if(e.shape[r-1]>t)throw new Error(`index innermost dimension length must be <= tensor rank; saw: ${e.shape[r-1]} vs. ${t}`);if(ne(n.shape)===0)throw new Error(`Requested more than 0 entries, but input is empty. Input shape: ${n.shape}.`);const s=e.shape,o=s[s.length-1];let a=1;for(let h=0;h<s.length-1;++h)a*=s[h];const i=n.shape,u=s.slice();u.pop();let c=1;for(let h=o;h<t;++h)c*=i[h],u.push(i[h]);const l=[...dt(n.shape).map(h=>h/c),1].slice(0,o);return[u,a,c,l]}const Cu=-2,J$=-1;function km(n,e,t){const r=n.shape.length;_(r===e.length,()=>`Error in slice${r}D: Length of begin ${e} must match the rank of the array (${r}).`),_(r===t.length,()=>`Error in slice${r}D: Length of size ${t} must match the rank of the array (${r}).`);for(let s=0;s<r;++s)_(e[s]+t[s]<=n.shape[s],()=>`Error in slice${r}D: begin[${s}] + size[${s}] (${e[s]+t[s]}) would overflow input.shape[${s}] (${n.shape[s]})`)}function eS(n){const e=[];let t=0;for(;n>0;)n&1&&e.push(t),n/=2,t++;return e}function Rm(n,e,t){const r=[];for(let s=0;s<n.length;s++)r[s]=Math.ceil((e[s]-n[s])/t[s]);return r}function _m(n,e,t,r){const s=[...n];for(let o=s.length;o<r.length;o++)s.push(1);for(let o=0;o<t;o++)o===0?s[e]=1:(s.splice(e,0,1),s.pop());return s}function Am(n,e,t){return t<=n?t:t-(e-1)}function Om(n,e){const t=[];for(let r=0;r<n;r++)t.push(e+r);return t}function tS(n,e,t,r,s,o,a,i,u){const c=n.length;let l=new Array(c),h=new Array(c),d=new Array(c);if(e.length&&t>0){const p=e[0],f=t+1;l=Dm(a,p,f,r,n),h=Fm(i,p,f,s,n),d=_m(o,p,f,n)}else for(let p=0;p<c;p++)l[p]=Lm(a,r,o,n,p,u),h[p]=Bm(i,s,o,n,p,u),d[p]=Pm(o,p,u);return{begin:l,end:h,strides:d}}function Dm(n,e,t,r,s){const o=[...s],a=Om(t,e);for(let i=0;i<o.length;i++)if(a.indexOf(i)>-1)o[i]=0;else{const u=Am(e,t,i);let c=r[u];n&1<<u&&(c=0),o[i]=c}return o}function Fm(n,e,t,r,s){const o=[...s],a=Om(t,e);for(let i=0;i<o.length;i++)if(a.indexOf(i)>-1)o[i]=Number.MAX_SAFE_INTEGER;else{const u=Am(e,t,i);let c=r[u];n&1<<u&&(c=Number.MAX_SAFE_INTEGER),o[i]=c}for(let i=0;i<o.length;i++){const u=s[i];o[i]<0&&(o[i]+=u),o[i]=_a(0,o[i],s[i])}return o}function Pm(n,e,t){let r=n[e];return(t&1<<e||r==null)&&(r=1),r}function Lm(n,e,t,r,s,o){let a=e[s];const i=t[s]||1;(n&1<<s||o&1<<s||a==null)&&(i>0?a=Number.MIN_SAFE_INTEGER:a=Number.MAX_SAFE_INTEGER);const u=r[s];return a<0&&(a+=u),a=_a(0,a,u-1),a}function Bm(n,e,t,r,s,o){let a=e[s];const i=t[s]||1;(n&1<<s||o&1<<s||a==null)&&(i>0?a=Number.MAX_SAFE_INTEGER:a=Number.MIN_SAFE_INTEGER);const u=r[s];return a<0&&(a+=u),i>0?a=_a(0,a,u):a=_a(-1,a,u-1),a}function mc(n,e,t){let r=t.length;for(let s=0;s<t.length;s++)if(t[s]>1){r=s;break}for(let s=r+1;s<t.length;s++)if(e[s]>0||t[s]!==n[s])return!1;return!0}function gc(n,e){let t=n.length>0?n[n.length-1]:1;for(let r=0;r<n.length-1;r++)t+=n[r]*e[r];return t}function Vm(n,e,t){let r;const s=n.shape.length;typeof e=="number"?r=[e,...new Array(s-1).fill(0)]:e.length<s?r=e.concat(new Array(s-e.length).fill(0)):r=e.slice(),r.forEach(a=>{_(a!==-1,()=>"slice() does not support negative begin indexing.")});let o;return t==null?o=new Array(s).fill(-1):typeof t=="number"?o=[t,...new Array(s-1).fill(-1)]:t.length<s?o=t.concat(new Array(s-t.length).fill(-1)):o=t,o=o.map((a,i)=>a>=0?a:(_(a===-1,()=>`Negative size values should be exactly -1 but got ${a} for the slice() size at index ${i}.`),n.shape[i]-r[i])),[r,o]}function Mm(n,e,t,r,s,o,a,i,u){let c;if(r==null?(c=new Array(e.length),c.fill(1)):c=r,a!=null&&(a&a-1)!==0)throw new Error("Multiple ellipses in slice is not allowed.");let l=!1;const h={dims:c.length,numAddAxisAfterEllipsis:0,begin:e.slice(),end:t.slice(),strides:c.slice(),beginMask:s,endMask:o,ellipsisMask:a,newAxisMask:i,shrinkAxisMask:u};for(let I=0;I<h.dims;I++)l&&(1<<I&i)!==0&&h.numAddAxisAfterEllipsis++,1<<I&a&&(l=!0);l||(h.ellipsisMask|=1<<h.dims,h.dims++);const d={dims:n.length,beginMask:0,endMask:0,beginValid:!1,endValid:!1};nS(h,d);let p=!0,f=!0,b=!0;const y=[],x=[];for(let I=0;I<n.length;++I){if(d.strides[I]===0)throw Error(`strides[${I}] must be non-zero`);const k=!!(d.shrinkAxisMask&1<<I),P=n[I];if(P===-1){y.push(k?1:-1);continue}const W=[d.beginMask&1<<I,d.endMask&1<<I],H=[d.strides[I]>0?0:-1,d.strides[I]>0?P:P-1];if(k&&d.strides[I]<=0)throw Error("only stride 1 allowed on non-range indexing.");b=b&&d.strides[I]===1;const G=!!(d.beginMask&1<<I&&d.endMask&1<<I);if(d.beginValid&&d.endValid){if(k){const q=d.begin[I]<0?P+d.begin[I]:d.begin[I];if(d.begin[I]=q,d.end[I]=d.begin[I]+1,q<0||q>=P)throw Error(`slice index ${d.begin[I]} of dimension ${I} out of bounds.`)}else d.begin[I]=sl(d.begin[I],0,d.strides[I],P,W,H),d.end[I]=sl(d.end[I],1,d.strides[I],P,W,H);const R=d.strides[I]===1&&d.begin[I]===0&&d.end[I]===P;p=p&&R,f=f&&(I===0&&d.strides[I]===1||R)}else p=p&&d.strides[I]===1&&G,f=f&&(I===0&&d.strides[I]===1||G);let B,V=!1;if(d.beginValid&&d.endValid?(B=d.end[I]-d.begin[I],V=!0):k?(B=1,V=!0):G&&P>=0&&(d.strides[I]<0?B=-P:B=P,V=!0),V){let R;B===0||B<0!=d.strides[I]<0?R=0:R=Math.trunc(B/d.strides[I])+(B%d.strides[I]!==0?1:0),y.push(R)}else y.push(-1)}for(let I=0;I<d.finalShapeGatherIndices.length;++I){const k=d.finalShapeGatherIndices[I];k>=0?x.push(y[k]):k===Cu&&x.push(1)}return{finalShapeSparse:x.filter((I,k)=>d.finalShapeGatherIndices[k]!==Cu),finalShape:x,isIdentity:p,sliceDim0:f,isSimpleSlice:b,begin:d.begin,end:d.end,strides:d.strides}}function nS(n,e){e.beginMask=0,e.endMask=0,e.shrinkAxisMask=0;let t=0;e.beginValid=n.begin!=null,e.endValid=n.end!=null,e.begin=new Array(e.dims),e.end=new Array(e.dims),e.strides=new Array(e.dims),e.finalShapeGatherIndices=[],e.finalShapeGatherIndicesSparse=[],e.inputShapeGatherIndicesSparse=new Array(e.dims);for(let r=0;r<n.dims;r++)if(1<<r&n.ellipsisMask){const s=Math.min(e.dims-(n.dims-r)+1+n.numAddAxisAfterEllipsis,e.dims);for(;t<s;t++)e.begin[t]=0,e.end[t]=0,e.strides[t]=1,e.beginMask|=1<<t,e.endMask|=1<<t,e.finalShapeGatherIndices.push(t),e.finalShapeGatherIndicesSparse.push(-1),e.inputShapeGatherIndicesSparse[t]=r}else if(1<<r&n.newAxisMask)e.finalShapeGatherIndices.push(Cu),e.finalShapeGatherIndicesSparse.push(-1);else{if(t===e.begin.length)throw Error(`Index out of range using input dim ${t}; input has only ${e.dims} dims, ${e.begin.length}.`);n.begin!=null&&(e.begin[t]=n.begin[r]),n.end!=null&&(e.end[t]=n.end[r]),e.strides[t]=n.strides[r],n.beginMask&1<<r&&(e.beginMask|=1<<t),n.endMask&1<<r&&(e.endMask|=1<<t),n.shrinkAxisMask&1<<r?(e.finalShapeGatherIndices.push(J$),e.finalShapeGatherIndicesSparse.push(-1),e.shrinkAxisMask|=1<<t):(e.finalShapeGatherIndices.push(t),e.finalShapeGatherIndicesSparse.push(r)),e.inputShapeGatherIndicesSparse[t]=r,t++}}function sl(n,e,t,r,s,o){if(s[e])return t>0?o[e]:o[e+1&1];{const a=n<0?r+n:n;return a<o[0]?o[0]:a>o[1]?o[1]:a}}const rS=Object.freeze(Object.defineProperty({__proto__:null,assertParamsValid:km,computeFlatOffset:gc,computeOutShape:Rm,getNormalizedAxes:tS,isSliceContinous:mc,maskToAxes:eS,parseSliceParams:Vm,sliceInfo:Mm,startForAxis:Lm,startIndicesWithElidedDims:Dm,stopForAxis:Bm,stopIndicesWithElidedDims:Fm,stridesForAxis:Pm,stridesWithElidedDims:_m},Symbol.toStringTag,{value:"Module"}));const sS=typeof requestAnimationFrame<"u"?requestAnimationFrame:typeof setImmediate<"u"?setImmediate:n=>n();function oS(){return new Promise(n=>sS(()=>n()))}function Um(n,e){const t=n[0].length;n.forEach((s,o)=>{_(s.length===t,()=>`Error in concat${t}D: rank of tensors[${o}] must be the same as the rank of the rest (${t})`)}),_(e>=0&&e<t,()=>`Error in concat${t}D: axis must be between 0 and ${t-1}.`);const r=n[0];n.forEach((s,o)=>{for(let a=0;a<t;a++)_(a===e||s[a]===r[a],()=>`Error in concat${t}D: Shape of tensors[${o}] (${s}) does not match the shape of the rest (${r}) along the non-concatenated axis ${o}.`)})}function Jr(n,e){const t=n[0].slice();for(let r=1;r<n.length;r++)t[e]+=n[r][e];return t}var gn;(function(n){n[n.FIRST_DIM_SIZE=0]="FIRST_DIM_SIZE",n[n.VALUE_ROWIDS=1]="VALUE_ROWIDS",n[n.ROW_LENGTHS=2]="ROW_LENGTHS",n[n.ROW_SPLITS=3]="ROW_SPLITS",n[n.ROW_LIMITS=4]="ROW_LIMITS",n[n.ROW_STARTS=5]="ROW_STARTS"})(gn||(gn={}));function Wm(n,e,t){let r=new Array;if(t==null&&e==null)return r;if(e==null)for(;r.length<n+t.length;)r.push(-1);else r=e.slice();if(t==null)return r;if(n+t.length!==r.length)throw new Error(`rt input.shape and shape=${e} are incompatible: rt input.rank = ${n+t.length}, but shape.rank = ${r.length}`);for(let s=1;s<t.length;++s){const o=t[s],a=r[r.length-t.length+s],i=r[a];if(o>=0)if(i>=0){if(i!==o)throw new Error(`rt input.shape and shape=${e} are incompatible: rt input.shape[${s+n}] = ${o} but shape[${s+n}] = ${i}`)}else r[a]=o}return r}function zm(n){const e={FIRST_DIM_SIZE:gn.FIRST_DIM_SIZE,VALUE_ROWIDS:gn.VALUE_ROWIDS,ROW_LENGTHS:gn.ROW_LENGTHS,ROW_SPLITS:gn.ROW_SPLITS,ROW_LIMITS:gn.ROW_LIMITS,ROW_STARTS:gn.ROW_STARTS},t=[];for(const r of n)if(r in e)t.push(e[r]);else break;return t}function Gm(n){return n.length===0?0:n[0]===gn.FIRST_DIM_SIZE?n.length-1:n.length}function jm(n,e){if(n==null||e==null)return;const t=n.length,r=e.length;if(t>=r)throw new Error(`defaultValue.shape=${n} and ragged tensor flatValues.shape=${e}, are incompatible: defaultValue.rank = ${t} must be less than ragged tensor input flatValues.rank = ${r})`);for(let s=0;s<Math.min(t,r-1);++s){const o=n[s],a=e[s+1];if(o>=0&&a>=0&&o!==1&&o!==a)throw new Error(`defaultValue.shape=${n}, and ragged tensor input flatValues.shape=${e} are incompatible: defaultValue.shape[${s-n.length}] = ${o} but ragged tensor input.flatValues.shape[${s-n.length}] = ${a}`)}}const yc=30;function li(n){return n<=yc?n:tu(n,Math.floor(Math.sqrt(n)))}function Hm(n,e,t){const r=t*(typeof n=="number"?n:n[0]),s=e*(typeof n=="number"?n:n[1]);return[r,s]}function xc(n,e,t,r=!0){let s=[];if(r)s=s.concat(e.slice(0)),s.push(n[0]/t),s=s.concat(n.slice(1));else{s=s.concat(n[0]);const o=e.length;for(let a=0;a<o;++a)s=s.concat([n[a+1]/e[a],e[a]]);s=s.concat(n.slice(o+1))}return s}function bc(n,e,t=!0){const r=[];if(t){r.push(e);for(let s=e+1;s<n;++s)s<=2*e?(r.push(s),r.push(s-(e+1))):r.push(s)}else{const s=[],o=[];for(let a=1;a<n;++a)a>=e*2+1||a%2===1?o.push(a):s.push(a);r.push(...s),r.push(0),r.push(...o)}return r}function vc(n,e,t,r=!0){const s=[];r?s.push(n[0]/t):s.push(n[0]*t);for(let o=1;o<n.length;++o)o<=e.length?r?s.push(e[o-1]*n[o]):s.push(n[o]/e[o-1]):s.push(n[o]);return s}function Km(n,e){const t=[0];for(let r=0;r<e;++r)t.push(n[r][0]);return t}function Xm(n,e,t){const r=n.slice(0,1);for(let s=0;s<t;++s)r.push(n[s+1]-e[s][0]-e[s][1]);return r}const qm=1.7580993408473768,Ym=1.0507009873554805;const Qm=.3275911,Zm=.254829592,Jm=-.284496736,e1=1.421413741,t1=-1.453152027,n1=1.061405429;function Tu(n,e){if(n.length!==e.length)throw new Error(`Cannot merge real and imag arrays of different lengths. real:${n.length}, imag: ${e.length}.`);const t=new Float32Array(n.length*2);for(let r=0;r<t.length;r+=2)t[r]=n[r/2],t[r+1]=e[r/2];return t}function aS(n){const e=new Float32Array(n.length/2),t=new Float32Array(n.length/2);for(let r=0;r<n.length;r+=2)e[r/2]=n[r],t[r/2]=n[r+1];return{real:e,imag:t}}function iS(n){const e=Math.ceil(n.length/4),t=new Float32Array(e),r=new Float32Array(e);for(let s=0;s<n.length;s+=4)t[Math.floor(s/4)]=n[s],r[Math.floor(s/4)]=n[s+1];return{real:t,imag:r}}function uS(n){const e=Math.floor(n.length/4),t=new Float32Array(e),r=new Float32Array(e);for(let s=2;s<n.length;s+=4)t[Math.floor(s/4)]=n[s],r[Math.floor(s/4)]=n[s+1];return{real:t,imag:r}}function cS(n,e){const t=n[e*2],r=n[e*2+1];return{real:t,imag:r}}function lS(n,e,t,r){n[r*2]=e,n[r*2+1]=t}function hS(n,e){const t=new Float32Array(n/2),r=new Float32Array(n/2);for(let s=0;s<Math.ceil(n/2);s++){const o=(e?2:-2)*Math.PI*(s/n);t[s]=Math.cos(o),r[s]=Math.sin(o)}return{real:t,imag:r}}function dS(n,e,t){const r=(t?2:-2)*Math.PI*(n/e),s=Math.cos(r),o=Math.sin(r);return{real:s,imag:o}}const Di="->",pS=/->/g,ol=",",al="...";function r1(n,e){n=n.replace(/\s/g,"");const t=(n.length-n.replace(pS,"").length)/Di.length;if(t<1)throw new Error("Equations without an arrow are not supported.");if(t>1)throw new Error(`Equation must contain exactly one arrow ("${Di}").`);const[r,s]=n.split(Di);_(r.indexOf(al)===-1,()=>`The ellipsis notation ("${al}") is not supported yet.`);const o=r.split(ol),a=o.length;if(e!==a)throw new Error(`Expected ${a} input tensors, received ${e}`);if(a>2)throw new Error("Support for more than 2 input tensors is not implemented yet.");const i=[];for(let d=0;d<s.length;++d){const p=s[d];if(!o.some(f=>f.indexOf(p)!==-1))throw new Error(`Output subscripts contain the label ${p} not present in the input subscripts.`);i.indexOf(p)===-1&&i.push(p)}for(let d=0;d<r.length;++d){const p=r[d];i.indexOf(p)===-1&&p!==ol&&i.push(p)}const u=new Array(o.length);for(let d=0;d<a;++d){if(new Set(o[d].split("")).size!==o[d].length)throw new Error(`Found duplicate axes in input component ${o[d]}. Support for duplicate axes in input is not implemented yet.`);u[d]=[];for(let p=0;p<o[d].length;++p)u[d].push(i.indexOf(o[d][p]))}const c=i.length,l=s.length,h=[];for(let d=l;d<c;++d)h.push(d);return{allDims:i,summedDims:h,idDims:u}}function s1(n,e){let t=new Array(n);t.fill(-1);for(let s=0;s<e.length;++s)t[e[s]]=s;const r=[];for(let s=0;s<n;++s)t[s]===-1&&r.push(s);return t=t.filter(s=>s!==-1),{permutationIndices:t,expandDims:r}}function o1(n,e,t){const r=new Array(n);for(let s=0;s<t.length;++s){const o=t[s].shape;for(let a=0;a<e[s].length;++a)r[e[s][a]]===void 0?r[e[s][a]]=o[a]:_(r[e[s][a]]===o[a],()=>`Expected dimension ${r[e[s][a]]} at axis ${a} of input shaped ${JSON.stringify(o)}, but got dimension ${o[a]}`)}}function a1(n,e){const t=n,r=[];let s=0;n.length===0&&t.push(-1),s=n.length+1;for(let a=0;a<s;++a)r.push([]);const o=[];for(let a=0;a<t.length;++a){const i=t[a],u=fS(e,i);for(const c of u)o.indexOf(c)===-1&&(r[a].push(c),o.push(c))}return{path:t,steps:r}}function i1(n){return n.every((e,t)=>e===t)}function fS(n,e){const t=[];for(let r=0;r<n.length;++r)(n[r].length===0||n[r].indexOf(e)!==-1||e===-1)&&t.push(r);return t}function u1(n,e,t=0){let r=[];if(typeof e=="number")_(n.shape[t]%e===0,()=>"Number of splits must evenly divide the axis."),r=new Array(e).fill(n.shape[t]/e);else{const s=e.reduce((a,i)=>(i===-1&&(a+=1),a),0);_(s<=1,()=>"There should be only one negative value in split array.");const o=e.indexOf(-1);if(o!==-1){const a=e.reduce((i,u)=>u>0?i+u:i);e[o]=n.shape[t]-a}_(n.shape[t]===e.reduce((a,i)=>a+i),()=>"The sum of sizes must match the size of the axis dimension."),r=e}return r}function c1(n){return`Received SparseTensor with denseShape[0] = 0 but
+  indices.shape[0] = ${n}`}function l1(n,e){return`indices(${n}, 0) is invalid: ${e} < 0`}function h1(n,e,t){return`indices(${n}, 0) is invalid: ${e} >= ${t}`}function d1(n,e){return`only one output dimension may be -1, not both ${n} and ${e}`}function p1(n,e){return`size ${n} must be non-negative, not ${e}`}function f1(){return"reshape cannot infer the missing input size for an empty tensor unless all specified input sizes are non-zero"}function m1(n,e){const t=ne(n),r=ne(e);return`Input to reshape is a SparseTensor with ${t}
+  dense values, but the requested shape requires a multiple of ${r}. inputShape=${n} outputShape= ${e}`}function g1(n,e){const t=ne(n),r=ne(e);return`Input to reshape is a tensor with ${t} dense values, but the requested shape has ${r}. inputShape=${n} outputShape=${e}`}function Nu(){return"segment ids must be >= 0"}function y1(){return"segment ids are not increasing"}function x1(n,e){return`Segment id ${n} out of range [0, ${e}), possibly because segmentIds input is not sorted.`}function b1(n,e,t){return`Bad: indices[${n}] == ${e} out of range [0, ${t})`}function v1(n,e){let t=!1,r;for(n<=yc?(r=n,t=!0):r=tu(n,Math.floor(Math.sqrt(n)));!t;)r>e||r===n?t=!0:r=tu(n,r+1);return r}function w1(n,e,t){const r=[],s=n.length;for(let o=0;o<s;o++)o!==e?r.push(n[o]):r.push(t);return r}function $1(n,e,t,r){const s=e.shape.length,o=n.shape.length;if(r!==0&&(r<-s||r>s))throw new Error(`Expect batchDims in the range of [-${s}, ${s}], but got ${r}`);if(r<0&&(r+=s),r>o)throw new Error(`batchDims (${r}) must be less than rank(x) (
+    ${o}).`);if(t<r)throw new Error(`batchDims (${r}) must be less than or equal to axis (${t}).`);for(let h=0;h<r;++h)if(n.shape[h]!==e.shape[h])throw new Error(`x.shape[${h}]: ${n.shape[h]} should be equal to indices.shape[${h}]: ${e.shape[h]}.`);const a=n.shape[t],i=[];let u=1,c=1,l=1;for(let h=0;h<r;++h)i.push(n.shape[h]),u*=n.shape[h];for(let h=r;h<t;h++)i.push(n.shape[h]),c*=n.shape[h];for(let h=r;h<s;h++)i.push(e.shape[h]);for(let h=t+1;h<o;h++)i.push(n.shape[h]),l*=n.shape[h];return{batchSize:u,sliceSize:l,outerSize:c,dimSize:a,outputShape:i}}const mS=Object.freeze(Object.defineProperty({__proto__:null,collectGatherOpShapeInfo:$1,computeOutShape:w1,segOpComputeOptimalWindowSize:v1},Symbol.toStringTag,{value:"Module"}));function Rs(n){try{return n.map(e=>Es(e))}catch(e){throw new Error(`Failed to decode encoded string bytes into utf-8, error: ${e}`)}}function S1(n){return n.map(e=>Wr(e))}const gS=Object.freeze(Object.defineProperty({__proto__:null,ERF_A1:Zm,ERF_A2:Jm,ERF_A3:e1,ERF_A4:t1,ERF_A5:n1,ERF_P:Qm,PARALLELIZE_THRESHOLD:yc,get RowPartitionType(){return gn},SELU_SCALE:Ym,SELU_SCALEALPHA:qm,applyActivation:ui,assertAndGetBroadcastShape:Fe,assertAxesAreInnerMostDims:$n,assertParamsConsistent:Um,assignToTypedArray:lS,axesAreInnerMostDims:tc,calculateShapes:oi,checkEinsumDimSizes:o1,checkPadOnDimRoundingMode:an,combineLocations:Mf,combineRaggedTensorToTensorShapes:Wm,complexWithEvenIndex:iS,complexWithOddIndex:uS,computeConv2DInfo:Xt,computeConv3DInfo:Fo,computeDefaultPad:Ju,computeDilation2DInfo:_f,computeOptimalWindowSize:li,computeOutAndReduceShapes:On,computeOutShape:Jr,computePool2DInfo:ns,computePool3DInfo:Do,convertConv2DDataFormat:Fs,decodeEinsumEquation:r1,eitherStridesOrDilationsAreOne:Bt,expandShapeToKeepDim:qt,exponent:dS,exponents:hS,fromStringArrayToUint8:S1,fromUint8ToStringArray:Rs,getAxesPermutation:un,getBroadcastDims:Pa,getComplexWithIndex:cS,getEinsumComputePath:a1,getEinsumPermutation:s1,getFusedBiasGradient:ii,getFusedDyActivation:ai,getImageCenter:Hm,getInnerMostAxes:cn,getPermuted:bc,getRaggedRank:Gm,getReductionAxes:Lf,getReshaped:xc,getReshapedPermuted:vc,getRowPartitionTypesHelper:zm,getSliceBeginCoords:Km,getSliceSize:Xm,getSparseFillEmptyRowsIndicesDenseShapeMismatch:c1,getSparseFillEmptyRowsNegativeIndexErrorMessage:l1,getSparseFillEmptyRowsOutOfRangeIndexErrorMessage:h1,getSparseReshapeEmptyTensorZeroOutputDimErrorMessage:f1,getSparseReshapeInputOutputMismatchErrorMessage:g1,getSparseReshapeInputOutputMultipleErrorMessage:m1,getSparseReshapeMultipleNegativeOneOutputDimErrorMessage:d1,getSparseReshapeNegativeOutputDimErrorMessage:p1,getSparseSegmentReductionIndicesOutOfRangeErrorMessage:b1,getSparseSegmentReductionNegativeSegmentIdsErrorMessage:Nu,getSparseSegmentReductionNonIncreasingSegmentIdsErrorMessage:y1,getSparseSegmentReductionSegmentIdOutOfRangeErrorMessage:x1,getUndoAxesPermutation:nc,isIdentityPermutation:i1,log:l2,mergeRealAndImagArrays:Tu,prepareAndValidate:Im,prepareSplitSize:u1,segment_util:mS,shouldFuse:ci,slice_util:rS,splitRealAndImagArrays:aS,stridesOrDilationsArePositive:qr,tupleValuesAreOne:$o,upcastType:An,validateDefaultValueShape:jm,validateInput:lc,validateUpdateShape:lm,warn:yn},Symbol.toStringTag,{value:"Module"}));O$();const Br={},ca={alpha:!1,antialias:!1,premultipliedAlpha:!1,preserveDrawingBuffer:!1,depth:!1,stencil:!1,failIfMajorPerformanceCaveat:!0};function yS(n,e){Br[n]=e}function vn(n,e){if(!(n in Br)||e!=null){const r=bS(n,e);if(r!==null)Br[n]=r;else return console.log("Could not get context for WebGL version",n),null}const t=Br[n];return t==null||t.isContextLost()?(delete Br[n],vn(n)):(t.disable(t.DEPTH_TEST),t.disable(t.STENCIL_TEST),t.disable(t.BLEND),t.disable(t.DITHER),t.disable(t.POLYGON_OFFSET_FILL),t.disable(t.SAMPLE_COVERAGE),t.enable(t.SCISSOR_TEST),t.enable(t.CULL_FACE),t.cullFace(t.BACK),Br[n])}function xS(n){if(!j().getBool("IS_SAFARI")&&typeof OffscreenCanvas<"u"&&n===2)return new OffscreenCanvas(300,150);if(typeof document<"u")return document.createElement("canvas");throw new Error("Cannot create a canvas in this context")}function bS(n,e){if(n!==1&&n!==2)throw new Error("Cannot get WebGL rendering context, WebGL is disabled.");const t=e??xS(n);return t.addEventListener("webglcontextlost",r=>{r.preventDefault(),delete Br[n]},!1),j().getBool("SOFTWARE_WEBGL_ENABLED")&&(ca.failIfMajorPerformanceCaveat=!1),n===1?t.getContext("webgl",ca)||t.getContext("experimental-webgl",ca):t.getContext("webgl2",ca)}var Io;(function(n){n[n.DENSE=0]="DENSE",n[n.SHARED_BATCH=1]="SHARED_BATCH"})(Io||(Io={}));var Gt;(function(n){n[n.RENDER=0]="RENDER",n[n.UPLOAD=1]="UPLOAD",n[n.PIXELS=2]="PIXELS",n[n.DOWNLOAD=3]="DOWNLOAD"})(Gt||(Gt={}));var lt;(function(n){n[n.UNPACKED_FLOAT16=0]="UNPACKED_FLOAT16",n[n.UNPACKED_FLOAT32=1]="UNPACKED_FLOAT32",n[n.PACKED_4X1_UNSIGNED_BYTE=2]="PACKED_4X1_UNSIGNED_BYTE",n[n.PACKED_2X2_FLOAT32=3]="PACKED_2X2_FLOAT32",n[n.PACKED_2X2_FLOAT16=4]="PACKED_2X2_FLOAT16"})(lt||(lt={}));function Bo(n,e){return[e,n]}function vS(n,e){return n*e}function la(n){const e=ne(n),t=Math.ceil(e/4);return Ji(t)}function Bs(n,e){return[Math.max(1,Math.ceil(e/2)),Math.max(1,Math.ceil(n/2))]}function wS(n,e){const[t,r]=Bs(n,e);return t*r*4}function wc(n,e){const t=n;let r,s,o,a,i,u,c,l,h,d;return j().getNumber("WEBGL_VERSION")===2?(r=t.R32F,s=t.R16F,o=t.RGBA16F,a=t.RGBA32F,i=t.RED,c=4,l=1,h=t.HALF_FLOAT,d=t.FLOAT,u=t.RGBA8):(r=n.RGBA,s=n.RGBA,o=n.RGBA,a=t.RGBA,i=n.RGBA,c=4,l=4,h=e!=null?e.HALF_FLOAT_OES:null,d=n.FLOAT,u=n.RGBA),{internalFormatFloat:r,internalFormatHalfFloat:s,internalFormatPackedHalfFloat:o,internalFormatPackedFloat:a,textureFormatFloat:i,downloadTextureFormat:u,downloadUnpackNumChannels:c,defaultNumChannels:l,textureTypeHalfFloat:h,textureTypeFloat:d}}function ce(n,e){const t=e();return j().getBool("DEBUG")&&$S(n),t}function $S(n){const e=n.getError();if(e!==n.NO_ERROR)throw new Error("WebGL Error: "+NS(n,e))}const SS=596e-10,CS=65504;function TS(n){return!!(j().getBool("WEBGL_RENDER_FLOAT32_ENABLED")||n===0||SS<Math.abs(n)&&Math.abs(n)<CS)}function NS(n,e){switch(e){case n.NO_ERROR:return"NO_ERROR";case n.INVALID_ENUM:return"INVALID_ENUM";case n.INVALID_VALUE:return"INVALID_VALUE";case n.INVALID_OPERATION:return"INVALID_OPERATION";case n.INVALID_FRAMEBUFFER_OPERATION:return"INVALID_FRAMEBUFFER_OPERATION";case n.OUT_OF_MEMORY:return"OUT_OF_MEMORY";case n.CONTEXT_LOST_WEBGL:return"CONTEXT_LOST_WEBGL";default:return`Unknown error code ${e}`}}function ha(n,e){return qn(n,()=>n.getExtension(e),'Extension "'+e+'" not supported on this browser.')}function ES(n,e){const t=qn(n,()=>n.createShader(n.VERTEX_SHADER),"Unable to create vertex WebGLShader.");if(ce(n,()=>n.shaderSource(t,e)),ce(n,()=>n.compileShader(t)),n.getShaderParameter(t,n.COMPILE_STATUS)===!1)throw console.log(n.getShaderInfoLog(t)),new Error("Failed to compile vertex shader.");return t}function IS(n,e){const t=qn(n,()=>n.createShader(n.FRAGMENT_SHADER),"Unable to create fragment WebGLShader.");if(ce(n,()=>n.shaderSource(t,e)),ce(n,()=>n.compileShader(t)),j().get("ENGINE_COMPILE_ONLY"))return t;if(n.getShaderParameter(t,n.COMPILE_STATUS)===!1)throw C1(e,n.getShaderInfoLog(t)),new Error("Failed to compile fragment shader.");return t}const kS=/ERROR: [0-9]+:([0-9]+):/g;function C1(n,e){const t=kS.exec(e);if(t==null){console.log(`Couldn't parse line number in error: ${e}`),console.log(n);return}const r=+t[1],s=n.split(`
+`),o=s.length.toString().length+2,a=s.map((h,d)=>$s((d+1).toString(),o)+h);let i=0;for(let h=0;h<a.length;h++)i=Math.max(a[h].length,i);const u=a.slice(0,r-1),c=a.slice(r-1,r),l=a.slice(r);console.log(u.join(`
+`)),console.log(e.split(`
+`)[0]),console.log(`%c ${$s(c[0],i)}`,"border:1px solid red; background-color:#e3d2d2; color:#a61717"),console.log(l.join(`
+`))}function RS(n){return qn(n,()=>n.createProgram(),"Unable to create WebGLProgram.")}function _S(n,e){if(ce(n,()=>n.linkProgram(e)),!j().get("ENGINE_COMPILE_ONLY")&&n.getProgramParameter(e,n.LINK_STATUS)===!1)throw console.log(n.getProgramInfoLog(e)),new Error("Failed to link vertex and fragment shaders.")}function Fi(n,e){if(ce(n,()=>n.validateProgram(e)),n.getProgramParameter(e,n.VALIDATE_STATUS)===!1)throw console.log(n.getProgramInfoLog(e)),new Error("Shader program validation failed.")}function AS(n,e){const t=qn(n,()=>n.createBuffer(),"Unable to create WebGLBuffer");return ce(n,()=>n.bindBuffer(n.ARRAY_BUFFER,t)),ce(n,()=>n.bufferData(n.ARRAY_BUFFER,e,n.STATIC_DRAW)),t}function OS(n,e){const t=qn(n,()=>n.createBuffer(),"Unable to create WebGLBuffer");return ce(n,()=>n.bindBuffer(n.ELEMENT_ARRAY_BUFFER,t)),ce(n,()=>n.bufferData(n.ELEMENT_ARRAY_BUFFER,e,n.STATIC_DRAW)),t}function DS(n){return qn(n,()=>n.createTexture(),"Unable to create WebGLTexture.")}function FS(n,e){const t=j().getNumber("WEBGL_MAX_TEXTURE_SIZE");if(n<=0||e<=0){const r=`[${n}x${e}]`;throw new Error("Requested texture size "+r+" is invalid.")}if(n>t||e>t){const r=`[${n}x${e}]`,s=`[${t}x${t}]`;throw new Error("Requested texture size "+r+" greater than WebGL maximum on this browser / GPU "+s+".")}}function PS(n){return qn(n,()=>n.createFramebuffer(),"Unable to create WebGLFramebuffer.")}function il(n,e,t,r,s,o,a){const i=n.getAttribLocation(e,t);return i===-1?!1:(ce(n,()=>n.bindBuffer(n.ARRAY_BUFFER,r)),ce(n,()=>n.vertexAttribPointer(i,s,n.FLOAT,!1,o,a)),ce(n,()=>n.enableVertexAttribArray(i)),!0)}function LS(n,e,t){WS(n,t),ce(n,()=>n.activeTexture(n.TEXTURE0+t)),ce(n,()=>n.bindTexture(n.TEXTURE_2D,e))}function BS(n,e,t){return qn(n,()=>n.getUniformLocation(e,t),'uniform "'+t+'" not present in program.')}function VS(n,e,t){return n.getUniformLocation(e,t)}function MS(n,e,t,r){ce(n,()=>LS(n,e,r)),ce(n,()=>n.uniform1i(t,r))}function Pi(n,e,t){ce(n,()=>n.bindFramebuffer(n.FRAMEBUFFER,t)),ce(n,()=>n.framebufferTexture2D(n.FRAMEBUFFER,n.COLOR_ATTACHMENT0,n.TEXTURE_2D,e,0))}function ul(n,e){ce(n,()=>n.bindFramebuffer(n.FRAMEBUFFER,e)),ce(n,()=>n.framebufferTexture2D(n.FRAMEBUFFER,n.COLOR_ATTACHMENT0,n.TEXTURE_2D,null,0))}function da(n){const e=n.checkFramebufferStatus(n.FRAMEBUFFER);if(e!==n.FRAMEBUFFER_COMPLETE)throw new Error("Error binding framebuffer: "+US(n,e))}function US(n,e){switch(e){case n.FRAMEBUFFER_INCOMPLETE_ATTACHMENT:return"FRAMEBUFFER_INCOMPLETE_ATTACHMENT";case n.FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:return"FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT";case n.FRAMEBUFFER_INCOMPLETE_DIMENSIONS:return"FRAMEBUFFER_INCOMPLETE_DIMENSIONS";case n.FRAMEBUFFER_UNSUPPORTED:return"FRAMEBUFFER_UNSUPPORTED";default:return`unknown error ${e}`}}function qn(n,e,t){const r=ce(n,()=>e());if(r==null)throw new Error(t);return r}function WS(n,e){const t=n.MAX_COMBINED_TEXTURE_IMAGE_UNITS-1,r=e+n.TEXTURE0;if(r<n.TEXTURE0||r>t){const s=`[gl.TEXTURE0, gl.TEXTURE${t}]`;throw new Error(`textureUnit must be in ${s}.`)}}function _s(n,e=2){return ne(n.slice(0,n.length-e))}function As(n){if(n.length===0)throw Error("Cannot get rows and columns of an empty shape array.");return[n.length>1?n[n.length-2]:1,n[n.length-1]]}function pa(n){let e=[1,1,1];return n.length===0||n.length===1&&n[0]===1||(e=[_s(n),...As(n)]),e}function zS(n,e=!1){let t=j().getNumber("WEBGL_MAX_TEXTURE_SIZE"),r=j().getNumber("WEBGL_MAX_SIZE_FOR_NARROW_TEXTURE");r===1/0&&j().getBool("WEBGL_AUTO_SQUARIFY_NARROW_TEXTURE_SHAPE")&&(r=t/2),e&&(t=t*2,r=r*2,n=n.map((i,u)=>u>=n.length-2?zu(n[u]):n[u]),n.length===1&&(n=[2,n[0]])),n.length!==2&&(n=xr(n).newShape);let s=ne(n),o=null;n.length<=1&&s<=t?o=[1,s]:n.length===2&&n[0]<=t&&n[1]<=t?o=n:n.length===3&&n[0]*n[1]<=t&&n[2]<=t?o=[n[0]*n[1],n[2]]:n.length===3&&n[0]<=t&&n[1]*n[2]<=t?o=[n[0],n[1]*n[2]]:n.length===4&&n[0]*n[1]*n[2]<=t&&n[3]<=t?o=[n[0]*n[1]*n[2],n[3]]:n.length===4&&n[0]<=t&&n[1]*n[2]*n[3]<=t&&(o=[n[0],n[1]*n[2]*n[3]]);const a=o!=null&&Math.max(...o)>r&&Math.min(...o)<=(e?2:1)&&Math.min(...o)>0;if(o==null||a)if(e){const i=_s(n);let u=2,c=2;n.length&&([u,c]=As(n)),s=i*(u/2)*(c/2),o=Ji(s).map(l=>l*2)}else o=Ji(s);return o}function fa(n){return n%2===0}function Ua(n,e){if(n=n.slice(-2),e=e.slice(-2),qe(n,e)||!n.length||!e.length||n[0]===0||n[1]===0||e[0]===0||e[1]===0)return!0;if(n.length!==e.length){const t=n[n.length-1],r=e[e.length-1];if(t===r||fa(t)&&fa(r)&&(n[0]===1||e[0]===1))return!0}return n[1]===e[1]&&fa(n[0])&&fa(e[0])}let Li,Bi;function GS(n){if(Li==null){const e=vn(n);Li=e.getParameter(e.MAX_TEXTURE_SIZE)}return Li}function jS(n){if(Bi==null){const e=vn(n);Bi=e.getParameter(e.MAX_TEXTURE_IMAGE_UNITS)}return Math.min(16,Bi)}function HS(n){if(n===0)return 0;let e;const t=vn(n);return sn(t,"EXT_disjoint_timer_query_webgl2")&&n===2?e=2:sn(t,"EXT_disjoint_timer_query")?e=1:e=0,e}function sn(n,e){return n.getExtension(e)!=null}function cl(n){try{if(vn(n)!=null)return!0}catch(e){return console.log("Error when getting WebGL context: ",e),!1}return!1}function KS(n){if(n===0)return!1;const e=vn(n);if(n===1){if(!sn(e,"OES_texture_float"))return!1}else if(!sn(e,"EXT_color_buffer_float"))return!1;return Eu(e)}function XS(n){if(n===0)return!1;const e=vn(n);if(n===1){if(!sn(e,"OES_texture_float")||!sn(e,"WEBGL_color_buffer_float"))return!1}else{if(sn(e,"EXT_color_buffer_float"))return Eu(e);const r="EXT_color_buffer_half_float";if(sn(e,r)){const s=e.getExtension(r);return qS(e,s)}return!1}return Eu(e)}function Eu(n){const e=wc(n),t=n.createTexture();n.bindTexture(n.TEXTURE_2D,t),n.texImage2D(n.TEXTURE_2D,0,e.internalFormatFloat,1,1,0,e.textureFormatFloat,e.textureTypeFloat,null);const o=n.createFramebuffer();n.bindFramebuffer(n.FRAMEBUFFER,o),n.framebufferTexture2D(n.FRAMEBUFFER,n.COLOR_ATTACHMENT0,n.TEXTURE_2D,t,0);const a=n.checkFramebufferStatus(n.FRAMEBUFFER)===n.FRAMEBUFFER_COMPLETE;return n.bindTexture(n.TEXTURE_2D,null),n.bindFramebuffer(n.FRAMEBUFFER,null),n.deleteTexture(t),n.deleteFramebuffer(o),a}function qS(n,e){const t=wc(n,e),r=n.createTexture();n.bindTexture(n.TEXTURE_2D,r),n.texImage2D(n.TEXTURE_2D,0,t.internalFormatHalfFloat,1,1,0,t.textureFormatFloat,t.textureTypeHalfFloat,null);const a=n.createFramebuffer();n.bindFramebuffer(n.FRAMEBUFFER,a),n.framebufferTexture2D(n.FRAMEBUFFER,n.COLOR_ATTACHMENT0,n.TEXTURE_2D,r,0);const i=n.checkFramebufferStatus(n.FRAMEBUFFER)===n.FRAMEBUFFER_COMPLETE;return n.bindTexture(n.TEXTURE_2D,null),n.bindFramebuffer(n.FRAMEBUFFER,null),n.deleteTexture(r),n.deleteFramebuffer(a),i}function YS(n){return n!==2?!1:vn(n).fenceSync!=null}function Vo(n,e){Array.isArray(n)||(n=[n]),n.forEach(t=>{t!=null&&_(t.dtype!=="complex64",()=>`${e} does not support complex64 tensors in the WebGL backend.`)})}const pe=j();pe.registerFlag("HAS_WEBGL",()=>pe.getNumber("WEBGL_VERSION")>0);pe.registerFlag("WEBGL_VERSION",()=>cl(2)?2:cl(1)?1:0);pe.registerFlag("WEBGL_CHECK_NUMERICAL_PROBLEMS",()=>!1);pe.registerFlag("WEBGL_BUFFER_SUPPORTED",()=>pe.get("WEBGL_VERSION")===2);pe.registerFlag("WEBGL_CPU_FORWARD",()=>!0);pe.registerFlag("WEBGL_FORCE_F16_TEXTURES",()=>!1);pe.registerFlag("WEBGL_PACK",()=>pe.getBool("HAS_WEBGL"));pe.registerFlag("WEBGL_PACK_NORMALIZATION",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_CLIP",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_DEPTHWISECONV",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_BINARY_OPERATIONS",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_UNARY_OPERATIONS",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_ARRAY_OPERATIONS",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_IMAGE_OPERATIONS",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_REDUCE",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_LAZILY_UNPACK",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_CONV_IM2COL",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_PACK_CONV2DTRANSPOSE",()=>pe.getBool("WEBGL_PACK"));pe.registerFlag("WEBGL_MAX_TEXTURE_SIZE",()=>GS(pe.getNumber("WEBGL_VERSION")));pe.registerFlag("WEBGL_MAX_TEXTURES_IN_SHADER",()=>jS(pe.getNumber("WEBGL_VERSION")));pe.registerFlag("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION",()=>{const n=pe.getNumber("WEBGL_VERSION");return n===0?0:HS(n)});pe.registerFlag("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE",()=>pe.getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION")>0&&!pf());pe.registerFlag("WEBGL_RENDER_FLOAT32_CAPABLE",()=>KS(pe.getNumber("WEBGL_VERSION")));pe.registerFlag("WEBGL_RENDER_FLOAT32_ENABLED",()=>pe.getBool("WEBGL_FORCE_F16_TEXTURES")?!1:pe.getBool("WEBGL_RENDER_FLOAT32_CAPABLE"));pe.registerFlag("WEBGL_DOWNLOAD_FLOAT_ENABLED",()=>XS(pe.getNumber("WEBGL_VERSION")));pe.registerFlag("WEBGL_FENCE_API_ENABLED",()=>YS(pe.getNumber("WEBGL_VERSION")));pe.registerFlag("WEBGL_SIZE_UPLOAD_UNIFORM",()=>pe.getBool("WEBGL_RENDER_FLOAT32_ENABLED")?4:0);pe.registerFlag("WEBGL_DELETE_TEXTURE_THRESHOLD",()=>-1,n=>{if(typeof n!="number")throw new Error(`WEBGL_DELETE_TEXTURE_THRESHOLD must be a number but got ${n}.`);if(n<0&&n!==-1)throw new Error(`WEBGL_DELETE_TEXTURE_THRESHOLD must be -1 (indicating never delete) or at least 0, but got ${n}.`)});pe.registerFlag("WEBGL_FLUSH_THRESHOLD",()=>pf()?1:-1,n=>{if(typeof n!="number")throw new Error(`WEBGL_FLUSH_THRESHOLD must be a number but got ${n}.`);if(n<0&&n!==-1)throw new Error(`WEBGL_FLUSH_THRESHOLD must be -1 (indicating never manual flush) or at least 0, but got ${n}.`)});pe.registerFlag("CPU_HANDOFF_SIZE_THRESHOLD",()=>128);pe.registerFlag("WEBGL_USE_SHAPES_UNIFORMS",()=>!1);pe.registerFlag("TOPK_LAST_DIM_CPU_HANDOFF_SIZE_THRESHOLD",()=>1e5);pe.registerFlag("TOPK_K_CPU_HANDOFF_THRESHOLD",()=>128);pe.registerFlag("WEBGL_EXP_CONV",()=>!1);pe.registerFlag("SOFTWARE_WEBGL_ENABLED",()=>pe.getBool("IS_TEST"));pe.registerFlag("WEBGL_MAX_SIZE_FOR_NARROW_TEXTURE",()=>1/0);pe.registerFlag("WEBGL_AUTO_SQUARIFY_NARROW_TEXTURE_SHAPE",()=>!1);pe.registerFlag("WEBGL2_ISNAN_CUSTOM",()=>!1);pe.registerFlag("ENGINE_COMPILE_ONLY",()=>!1);function Ct(){let n,e,t,r,s,o,a,i,u,c;return j().getNumber("WEBGL_VERSION")===2?(n="#version 300 es",e="in",t="out",r="in",s="texture",o="outputColor",a="out vec4 outputColor;",i=j().getBool("WEBGL2_ISNAN_CUSTOM")?`
+      bool isnan_custom(float val) {
+        uint floatToUint = floatBitsToUint(val);
+        return (floatToUint & 0x7fffffffu) > 0x7f800000u;
+      }
+
+      bvec4 isnan_custom(vec4 val) {
+        return bvec4(isnan_custom(val.x),
+          isnan_custom(val.y), isnan_custom(val.z), isnan_custom(val.w));
+      }
+
+      #define isnan(value) isnan_custom(value)
+    `:"",u="",c=`
+      #define round(value) newRound(value)
+      int newRound(float value) {
+        return int(floor(value + 0.5));
+      }
+
+      ivec4 newRound(vec4 value) {
+        return ivec4(floor(value + vec4(0.5)));
+      }
+    `):(n="",e="attribute",t="varying",r="varying",s="texture2D",o="gl_FragColor",a="",i=`
+      #define isnan(value) isnan_custom(value)
+      bool isnan_custom(float val) {
+        return (val > 0. || val < 1. || val == 0.) ? false : true;
+      }
+      bvec4 isnan_custom(vec4 val) {
+        return bvec4(isnan(val.x), isnan(val.y), isnan(val.z), isnan(val.w));
+      }
+    `,u=`
+      uniform float INFINITY;
+
+      bool isinf(float val) {
+        return abs(val) == INFINITY;
+      }
+      bvec4 isinf(vec4 val) {
+        return equal(abs(val), vec4(INFINITY));
+      }
+    `,c=`
+      int round(float value) {
+        return int(floor(value + 0.5));
+      }
+
+      ivec4 round(vec4 value) {
+        return ivec4(floor(value + vec4(0.5)));
+      }
+    `),{version:n,attribute:e,varyingVs:t,varyingFs:r,texture2D:s,output:o,defineOutput:a,defineSpecialNaN:i,defineSpecialInf:u,defineRound:c}}function os(n,e,t="index"){const r=dt(e);return r.map((s,o)=>{const a=`int ${n[o]} = ${t} / ${s}`,i=o===r.length-1?`int ${n[o+1]} = ${t} - ${n[o]} * ${s}`:`index -= ${n[o]} * ${s}`;return`${a}; ${i};`}).join("")}function hi(n,e,t="index"){const r=dt(e);return r.map((s,o)=>{const a=`int ${n[o]} = ${t} / outShapeStrides[${o}]`,i=o===r.length-1?`int ${n[o+1]} = ${t} - ${n[o]} * outShapeStrides[${o}]`:`index -= ${n[o]} * outShapeStrides[${o}]`;return`${a}; ${i};`}).join("")}function QS(n,e){const t=n.length,r=n.map(o=>`${e}[${o}]`),s=new Array(t-1);s[t-2]=r[t-1];for(let o=t-3;o>=0;--o)s[o]=`(${s[o+1]} * ${r[o+1]})`;return s}function ZS(n,e,t="index"){const r=n.map((o,a)=>a),s=QS(r,e);return s.map((o,a)=>{const i=`int ${n[a]} = ${t} / ${s[a]}`,u=a===s.length-1?`int ${n[a+1]} = ${t} - ${n[a]} * ${s[a]}`:`index -= ${n[a]} * ${s[a]}`;return`${i}; ${u};`}).join("")}function $c(n){const e=dt(n).map(t=>t.toString());return`
+  int getFlatIndex(ivec3 coords) {
+    return coords.x * ${e[0]} + coords.y * ${e[1]} + coords.z;
+  }
+`}function Sc(){return`
+  int getFlatIndex(ivec3 coords) {
+    return coords.x * outShapeStrides[0] + coords.y * outShapeStrides[1] + coords.z;
+  }
+`}const T1=`
+  const float FLOAT_MAX = 1.70141184e38;
+  const float FLOAT_MIN = 1.17549435e-38;
+
+  lowp vec4 encode_float(highp float v) {
+    if (isnan(v)) {
+      return vec4(255, 255, 255, 255);
+    }
+
+    highp float av = abs(v);
+
+    if(av < FLOAT_MIN) {
+      return vec4(0.0, 0.0, 0.0, 0.0);
+    } else if(v > FLOAT_MAX) {
+      return vec4(0.0, 0.0, 128.0, 127.0) / 255.0;
+    } else if(v < -FLOAT_MAX) {
+      return vec4(0.0, 0.0,  128.0, 255.0) / 255.0;
+    }
+
+    highp vec4 c = vec4(0,0,0,0);
+
+    highp float e = floor(log2(av));
+    highp float m = exp2(fract(log2(av))) - 1.0;
+
+    c[2] = floor(128.0 * m);
+    m -= c[2] / 128.0;
+    c[1] = floor(32768.0 * m);
+    m -= c[1] / 32768.0;
+    c[0] = floor(8388608.0 * m);
+
+    highp float ebias = e + 127.0;
+    c[3] = floor(ebias / 2.0);
+    ebias -= c[3] * 2.0;
+    c[2] += floor(ebias) * 128.0;
+
+    c[3] += 128.0 * step(0.0, -v);
+
+    return c / 255.0;
+  }
+`;const{getBroadcastDims:N1}=gS;function JS(n,e,t){const r=[];if(n.forEach(p=>{const f=ne(p.shapeInfo.logicalShape);if(p.shapeInfo.isUniform?r.push(`uniform float ${p.name}${f>1?`[${f}]`:""};`):(r.push(`uniform sampler2D ${p.name};`),r.push(`uniform int offset${p.name};`)),t.enableShapeUniforms){const{uniformShape:b}=Cc(t.packedInputs,p.shapeInfo.logicalShape,p.shapeInfo.texShape);switch(b.length){case 1:r.push(`uniform int ${p.name}Shape;`);break;case 2:r.push(`uniform ivec2 ${p.name}Shape;`);break;case 3:r.push(`uniform ivec3 ${p.name}Shape;`);break;case 4:r.push(`uniform ivec4 ${p.name}Shape;`);break}r.push(`uniform ivec2 ${p.name}TexShape;`)}}),t.enableShapeUniforms){switch(e.logicalShape.length){case 1:r.push("uniform int outShape;");break;case 2:r.push("uniform ivec2 outShape;"),r.push("uniform int outShapeStrides;");break;case 3:r.push("uniform ivec3 outShape;"),r.push("uniform ivec2 outShapeStrides;");break;case 4:r.push("uniform ivec4 outShape;"),r.push("uniform ivec3 outShapeStrides;");break}r.push("uniform ivec2 outTexShape;")}t.customUniforms&&t.customUniforms.forEach(p=>{r.push(`uniform ${p.type} ${p.name}${p.arrayIndex?`[${p.arrayIndex}]`:""};`)});const s=r.join(`
+`),o=n.map(p=>eC(p,e,t.packedInputs,t.enableShapeUniforms)).join(`
+`),a=e.texShape,i=Ct(),u=rC(i);let c,l,h=aC(i);return e.isPacked?(c=tC(e.logicalShape,a,t.enableShapeUniforms),l=oC(i)):(c=nC(e.logicalShape,a,t.enableShapeUniforms),l=sC(i)),t.packedInputs&&(h+=lC),[h,u,l,s,c,o,t.userCode].join(`
+`)}function Vs(n,e=!1){const t=n.shapeInfo.logicalShape;switch(t.length){case 0:return $C(n,e);case 1:return CC(n,e);case 2:return NC(n,e);case 3:return IC(n,e);case 4:return RC(n,e);case 5:return _C(n);case 6:return AC(n);default:throw new Error(`${t.length}-D input sampling is not yet supported`)}}function E1(n,e){switch(n.shapeInfo.logicalShape.length){case 0:return wC(n);case 1:return SC(n,e);case 2:return TC(n,e);case 3:return EC(n,e);default:return kC(n,e)}}function eC(n,e,t=!1,r){let s="";t?s+=E1(n,r):s+=Vs(n,r);const o=n.shapeInfo.logicalShape,a=e.logicalShape;return o.length<=a.length&&(t?s+=OC(n,e):s+=DC(n,e)),s}function tC(n,e,t){switch(n.length){case 0:return I1();case 1:return hC(n,e,t);case 2:return bC(n,e,t);case 3:return pC(n,e,t);default:return mC(n,e,t)}}function nC(n,e,t){switch(n.length){case 0:return I1();case 1:return dC(n,e,t);case 2:return vC(n,e,t);case 3:return fC(n,e,t);case 4:return gC(n,e,t);case 5:return yC(n,e);case 6:return xC(n,e);default:throw new Error(`${n.length}-D output sampling is not yet supported`)}}function rC(n){return`
+    float sampleTexture(sampler2D textureSampler, vec2 uv) {
+      return ${n.texture2D}(textureSampler, uv).r;
+    }
+  `}function sC(n){return`
+    void setOutput(float val) {
+      ${n.output} = vec4(val, 0, 0, 0);
+    }
+  `}function oC(n){return`
+    void setOutput(vec4 val) {
+      ${n.output} = val;
+    }
+  `}function aC(n){return`${n.version}
+    precision highp float;
+    precision highp int;
+    precision highp sampler2D;
+    ${n.varyingFs} vec2 resultUV;
+    ${n.defineOutput}
+    const vec2 halfCR = vec2(0.5, 0.5);
+
+    struct ivec5
+    {
+      int x;
+      int y;
+      int z;
+      int w;
+      int u;
+    };
+
+    struct ivec6
+    {
+      int x;
+      int y;
+      int z;
+      int w;
+      int u;
+      int v;
+    };
+
+    uniform float NAN;
+    ${n.defineSpecialNaN}
+    ${n.defineSpecialInf}
+    ${n.defineRound}
+
+    int imod(int x, int y) {
+      return x - y * (x / y);
+    }
+
+    int idiv(int a, int b, float sign) {
+      int res = a / b;
+      int mod = imod(a, b);
+      if (sign < 0. && mod != 0) {
+        res -= 1;
+      }
+      return res;
+    }
+
+    //Based on the work of Dave Hoskins
+    //https://www.shadertoy.com/view/4djSRW
+    #define HASHSCALE1 443.8975
+    float random(float seed){
+      vec2 p = resultUV * seed;
+      vec3 p3  = fract(vec3(p.xyx) * HASHSCALE1);
+      p3 += dot(p3, p3.yzx + 19.19);
+      return fract((p3.x + p3.y) * p3.z);
+    }
+
+    ${iC}
+    ${uC}
+    ${cC}
+  `}const iC=`
+vec2 uvFromFlat(int texNumR, int texNumC, int index) {
+  int texR = index / texNumC;
+  int texC = index - texR * texNumC;
+  return (vec2(texC, texR) + halfCR) / vec2(texNumC, texNumR);
+}
+vec2 packedUVfrom1D(int texNumR, int texNumC, int index) {
+  int texelIndex = index / 2;
+  int texR = texelIndex / texNumC;
+  int texC = texelIndex - texR * texNumC;
+  return (vec2(texC, texR) + halfCR) / vec2(texNumC, texNumR);
+}
+`,uC=`
+vec2 packedUVfrom2D(int texelsInLogicalRow, int texNumR,
+  int texNumC, int row, int col) {
+  int texelIndex = (row / 2) * texelsInLogicalRow + (col / 2);
+  int texR = texelIndex / texNumC;
+  int texC = texelIndex - texR * texNumC;
+  return (vec2(texC, texR) + halfCR) / vec2(texNumC, texNumR);
+}
+`,cC=`
+vec2 packedUVfrom3D(int texNumR, int texNumC,
+    int texelsInBatch, int texelsInLogicalRow, int b,
+    int row, int col) {
+  int index = b * texelsInBatch + (row / 2) * texelsInLogicalRow + (col / 2);
+  int texR = index / texNumC;
+  int texC = index - texR * texNumC;
+  return (vec2(texC, texR) + halfCR) / vec2(texNumC, texNumR);
+}
+`,lC=`
+  float getChannel(vec4 frag, vec2 innerDims) {
+    vec2 modCoord = mod(innerDims, 2.);
+    return modCoord.x == 0. ?
+      (modCoord.y == 0. ? frag.r : frag.g) :
+      (modCoord.y == 0. ? frag.b : frag.a);
+  }
+  float getChannel(vec4 frag, int dim) {
+    float modCoord = mod(float(dim), 2.);
+    return modCoord == 0. ? frag.r : frag.g;
+  }
+`;function I1(){return`
+    int getOutputCoords() {
+      return 0;
+    }
+  `}function hC(n,e,t){const r=[Math.ceil(e[0]/2),Math.ceil(e[1]/2)];return r[0]===1?t?`
+      int getOutputCoords() {
+        return 2 * int(resultUV.x * ceil(float(outTexShape[1]) / 2.0));
+      }
+    `:`
+      int getOutputCoords() {
+        return 2 * int(resultUV.x * ${r[1]}.0);
+      }
+    `:r[1]===1?t?`
+      int getOutputCoords() {
+        return 2 * int(resultUV.y * ceil(float(outTexShape[0]) / 2.0));
+      }
+    `:`
+      int getOutputCoords() {
+        return 2 * int(resultUV.y * ${r[0]}.0);
+      }
+    `:t?`
+    int getOutputCoords() {
+      ivec2 packedTexShape = ivec2(ceil(float(outTexShape[0]) / 2.0), ceil(float(outTexShape[1]) / 2.0));
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(packedTexShape[0], packedTexShape[1]));
+      return 2 * (resTexRC.x * packedTexShape[1] + resTexRC.y);
+    }
+  `:`
+    int getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${r[0]}, ${r[1]}));
+      return 2 * (resTexRC.x * ${r[1]} + resTexRC.y);
+    }
+  `}function dC(n,e,t){return e[0]===1?t?`
+      int getOutputCoords() {
+        return int(resultUV.x * float(outTexShape[1]));
+      }
+    `:`
+      int getOutputCoords() {
+        return int(resultUV.x * ${e[1]}.0);
+      }
+    `:e[1]===1?t?`
+      int getOutputCoords() {
+        return int(resultUV.y * float(outTexShape[0]));
+      }
+    `:`
+      int getOutputCoords() {
+        return int(resultUV.y * ${e[0]}.0);
+      }
+    `:t?`
+    int getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(outTexShape[0], outTexShape[1]));
+      return resTexRC.x * outTexShape[1] + resTexRC.y;
+    }
+  `:`
+    int getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${e[0]}, ${e[1]}));
+      return resTexRC.x * ${e[1]} + resTexRC.y;
+    }
+  `}function pC(n,e,t){if(t)return`
+    ivec3 getOutputCoords() {
+      ivec2 packedTexShape = ivec2(ceil(float(outTexShape[0]) / 2.0), ceil(float(outTexShape[1]) / 2.0));
+      int texelsInLogicalRow = int(ceil(float(outShape[2]) / 2.0));
+      int texelsInBatch = texelsInLogicalRow * int(ceil(float(outShape[1]) / 2.0));
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(packedTexShape[0], packedTexShape[1]));
+      int index = resTexRC.x * packedTexShape[1] + resTexRC.y;
+
+      int b = index / texelsInBatch;
+      index -= b * texelsInBatch;
+
+      int r = 2 * (index / texelsInLogicalRow);
+      int c = imod(index, texelsInLogicalRow) * 2;
+
+      return ivec3(b, r, c);
+    }
+  `;const r=[Math.ceil(e[0]/2),Math.ceil(e[1]/2)],s=Math.ceil(n[2]/2),o=s*Math.ceil(n[1]/2);return`
+    ivec3 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${r[0]}, ${r[1]}));
+      int index = resTexRC.x * ${r[1]} + resTexRC.y;
+
+      int b = index / ${o};
+      index -= b * ${o};
+
+      int r = 2 * (index / ${s});
+      int c = imod(index, ${s}) * 2;
+
+      return ivec3(b, r, c);
+    }
+  `}function fC(n,e,t){if(t)return`
+  ivec3 getOutputCoords() {
+    ivec2 resTexRC = ivec2(resultUV.yx *
+                           vec2(outTexShape[0], outTexShape[1]));
+    int index = resTexRC.x * outTexShape[1] + resTexRC.y;
+    ${hi(["r","c","d"],n)}
+    return ivec3(r, c, d);
+  }
+`;const r=os(["r","c","d"],n);return`
+    ivec3 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${e[0]}, ${e[1]}));
+      int index = resTexRC.x * ${e[1]} + resTexRC.y;
+      ${r}
+      return ivec3(r, c, d);
+    }
+  `}function mC(n,e,t){if(t)return`
+    ivec4 getOutputCoords() {
+      ivec2 packedTexShape = ivec2(ceil(float(outTexShape[0]) / 2.0), ceil(float(outTexShape[1]) / 2.0));
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(packedTexShape[0], packedTexShape[1]));
+      int index = resTexRC.x * packedTexShape[1] + resTexRC.y;
+
+      int texelsInLogicalRow = int(ceil(float(outShape[3]) / 2.0));
+      int texelsInBatch = texelsInLogicalRow * int(ceil(float(outShape[2]) / 2.0));
+      int texelsInBatchN = texelsInBatch * outShape[1];
+
+      int b2 = index / texelsInBatchN;
+      index -= b2 * texelsInBatchN;
+
+      int b = index / texelsInBatch;
+      index -= b * texelsInBatch;
+
+      int r = 2 * (index / texelsInLogicalRow);
+      int c = imod(index, texelsInLogicalRow) * 2;
+
+      return ivec4(b2, b, r, c);
+    }
+  `;const r=[Math.ceil(e[0]/2),Math.ceil(e[1]/2)],s=Math.ceil(n[n.length-1]/2),o=s*Math.ceil(n[n.length-2]/2);let a=o,i="",u="b, r, c";for(let c=2;c<n.length-1;c++)a*=n[n.length-c-1],i=`
+      int b${c} = index / ${a};
+      index -= b${c} * ${a};
+    `+i,u=`b${c}, `+u;return`
+    ivec${n.length} getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${r[0]}, ${r[1]}));
+      int index = resTexRC.x * ${r[1]} + resTexRC.y;
+
+      ${i}
+
+      int b = index / ${o};
+      index -= b * ${o};
+
+      int r = 2 * (index / ${s});
+      int c = imod(index, ${s}) * 2;
+
+      return ivec${n.length}(${u});
+    }
+  `}function gC(n,e,t){if(t)return`
+    ivec4 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+        vec2(outTexShape[0], outTexShape[1]));
+      int index = resTexRC.x * outTexShape[1] + resTexRC.y;
+      ${hi(["r","c","d","d2"],n)}
+      return ivec4(r, c, d, d2);
+    }
+  `;const r=os(["r","c","d","d2"],n);return`
+    ivec4 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+        vec2(${e[0]}, ${e[1]}));
+      int index = resTexRC.x * ${e[1]} + resTexRC.y;
+      ${r}
+      return ivec4(r, c, d, d2);
+    }
+  `}function yC(n,e){const t=os(["r","c","d","d2","d3"],n);return`
+    ivec5 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx * vec2(${e[0]},
+                             ${e[1]}));
+
+      int index = resTexRC.x * ${e[1]} + resTexRC.y;
+
+      ${t}
+
+      ivec5 outShape = ivec5(r, c, d, d2, d3);
+      return outShape;
+    }
+  `}function xC(n,e){const t=os(["r","c","d","d2","d3","d4"],n);return`
+    ivec6 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+        vec2(${e[0]}, ${e[1]}));
+      int index = resTexRC.x * ${e[1]} + resTexRC.y;
+
+      ${t}
+
+      ivec6 result = ivec6(r, c, d, d2, d3, d4);
+      return result;
+    }
+  `}function bC(n,e,t){const r=[Math.ceil(e[0]/2),Math.ceil(e[1]/2)];if(qe(n,e))return t?`
+      ivec2 getOutputCoords() {
+        ivec2 packedTexShape = ivec2(ceil(float(outTexShape[0]) / 2.0), ceil(float(outTexShape[1]) / 2.0));
+        return 2 * ivec2(resultUV.yx * vec2(packedTexShape[0], packedTexShape[1]));
+      }
+    `:`
+      ivec2 getOutputCoords() {
+        return 2 * ivec2(resultUV.yx * vec2(${r[0]}, ${r[1]}));
+      }
+    `;const s=Math.ceil(n[1]/2);return t?`
+    ivec2 getOutputCoords() {
+      ivec2 packedTexShape = ivec2(ceil(float(outTexShape[0]) / 2.0), ceil(float(outTexShape[1]) / 2.0));
+      int texelsInLogicalRow = int(ceil(float(outShape[1]) / 2.0));
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(packedTexShape[0], packedTexShape[1]));
+
+      int index = resTexRC.x * packedTexShape[1] + resTexRC.y;
+      int r = 2 * (index / texelsInLogicalRow);
+      int c = imod(index, texelsInLogicalRow) * 2;
+
+      return ivec2(r, c);
+    }
+  `:`
+    ivec2 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${r[0]}, ${r[1]}));
+
+      int index = resTexRC.x * ${r[1]} + resTexRC.y;
+      int r = 2 * (index / ${s});
+      int c = imod(index, ${s}) * 2;
+
+      return ivec2(r, c);
+    }
+  `}function vC(n,e,t){return qe(n,e)?t?`
+      ivec2 getOutputCoords() {
+        return ivec2(resultUV.yx * vec2(outTexShape[0], outTexShape[1]));
+      }
+    `:`
+      ivec2 getOutputCoords() {
+        return ivec2(resultUV.yx * vec2(${e[0]}, ${e[1]}));
+      }
+    `:n[1]===1?t?`
+      ivec2 getOutputCoords() {
+        ivec2 resTexRC = ivec2(resultUV.yx *
+                               vec2(outTexShape[0], outTexShape[1]));
+        int index = resTexRC.x * outTexShape[1] + resTexRC.y;
+        return ivec2(index, 0);
+      }
+    `:`
+      ivec2 getOutputCoords() {
+        ivec2 resTexRC = ivec2(resultUV.yx *
+                               vec2(${e[0]}, ${e[1]}));
+        int index = resTexRC.x * ${e[1]} + resTexRC.y;
+        return ivec2(index, 0);
+      }
+    `:n[0]===1?t?`
+      ivec2 getOutputCoords() {
+        ivec2 resTexRC = ivec2(resultUV.yx *
+                               vec2(outTexShape[0], outTexShape[1]));
+        int index = resTexRC.x * outTexShape[1] + resTexRC.y;
+        return ivec2(0, index);
+      }
+    `:`
+      ivec2 getOutputCoords() {
+        ivec2 resTexRC = ivec2(resultUV.yx *
+                               vec2(${e[0]}, ${e[1]}));
+        int index = resTexRC.x * ${e[1]} + resTexRC.y;
+        return ivec2(0, index);
+      }
+    `:t?`
+    ivec2 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(outTexShape[0], outTexShape[1]));
+      int index = resTexRC.x * outTexShape[1] + resTexRC.y;
+      int r = index / outShape[1];
+      int c = index - r * outShape[1];
+      return ivec2(r, c);
+    }
+  `:`
+    ivec2 getOutputCoords() {
+      ivec2 resTexRC = ivec2(resultUV.yx *
+                             vec2(${e[0]}, ${e[1]}));
+      int index = resTexRC.x * ${e[1]} + resTexRC.y;
+      int r = index / ${n[1]};
+      int c = index - r * ${n[1]};
+      return ivec2(r, c);
+    }
+  `}function as(n){return`offset${n}`}function wC(n){const e=n.name,t="get"+e.charAt(0).toUpperCase()+e.slice(1),r=Ct();return`
+    vec4 ${t}() {
+      return ${r.texture2D}(${e}, halfCR);
+    }
+  `}function $C(n,e){const t=n.name,r="get"+t.charAt(0).toUpperCase()+t.slice(1);if(n.shapeInfo.isUniform)return`float ${r}() {return ${t};}`;const[s,o]=n.shapeInfo.texShape;if(s===1&&o===1)return`
+      float ${r}() {
+        return sampleTexture(${t}, halfCR);
+      }
+    `;const a=as(t);if(e)return`
+    float ${r}() {
+      vec2 uv = uvFromFlat(${t}TexShape[0], ${t}TexShape[1], ${a});
+      return sampleTexture(${t}, uv);
+    }
+  `;const[i,u]=n.shapeInfo.texShape;return`
+    float ${r}() {
+      vec2 uv = uvFromFlat(${i}, ${u}, ${a});
+      return sampleTexture(${t}, uv);
+    }
+  `}function SC(n,e){const t=n.name,r="get"+t.charAt(0).toUpperCase()+t.slice(1),s=n.shapeInfo.texShape,o=Ct();if(e)return`
+    vec4 ${r}(int index) {
+      ivec2 packedTexShape = ivec2(ceil(float(${t}TexShape[0]) / 2.0), ceil(float(${t}TexShape[1]) / 2.0));
+      vec2 uv = packedUVfrom1D(
+        packedTexShape[0], packedTexShape[1], index);
+      return ${o.texture2D}(${t}, uv);
+    }
+  `;const a=[Math.ceil(s[0]/2),Math.ceil(s[1]/2)];return`
+    vec4 ${r}(int index) {
+      vec2 uv = packedUVfrom1D(
+        ${a[0]}, ${a[1]}, index);
+      return ${o.texture2D}(${t}, uv);
+    }
+  `}function CC(n,e){const t=n.name,r="get"+t.charAt(0).toUpperCase()+t.slice(1);if(n.shapeInfo.isUniform)return`
+      float ${r}(int index) {
+        ${Ms(n)}
+      }
+    `;const s=n.shapeInfo.texShape,o=s[0],a=s[1];if(a===1&&o===1)return`
+      float ${r}(int index) {
+        return sampleTexture(${t}, halfCR);
+      }
+    `;const i=as(t);return a===1?e?`
+      float ${r}(int index) {
+        vec2 uv = vec2(0.5, (float(index + ${i}) + 0.5) / float(${t}TexShape[0]));
+        return sampleTexture(${t}, uv);
+      }
+    `:`
+      float ${r}(int index) {
+        vec2 uv = vec2(0.5, (float(index + ${i}) + 0.5) / ${o}.0);
+        return sampleTexture(${t}, uv);
+      }
+    `:o===1?e?`
+      float ${r}(int index) {
+        vec2 uv = vec2((float(index + ${i}) + 0.5) / float(${t}TexShape[1]), 0.5);
+        return sampleTexture(${t}, uv);
+      }
+    `:`
+      float ${r}(int index) {
+        vec2 uv = vec2((float(index + ${i}) + 0.5) / ${a}.0, 0.5);
+        return sampleTexture(${t}, uv);
+      }
+    `:e?`
+    float ${r}(int index) {
+      vec2 uv = uvFromFlat(${t}TexShape[0], ${t}TexShape[1], index + ${i});
+      return sampleTexture(${t}, uv);
+    }
+  `:`
+    float ${r}(int index) {
+      vec2 uv = uvFromFlat(${o}, ${a}, index + ${i});
+      return sampleTexture(${t}, uv);
+    }
+  `}function TC(n,e){const t=n.shapeInfo.logicalShape,r=n.name,s="get"+r.charAt(0).toUpperCase()+r.slice(1),o=n.shapeInfo.texShape,a=o[0],i=o[1],u=Ct();if(o!=null&&qe(t,o))return e?`
+      vec4 ${s}(int row, int col) {
+        vec2 uv = (vec2(col, row) + halfCR) / vec2(${r}TexShape[1], ${r}TexShape[0]);
+
+        return ${u.texture2D}(${r}, uv);
+      }
+    `:`
+      vec4 ${s}(int row, int col) {
+        vec2 uv = (vec2(col, row) + halfCR) / vec2(${i}.0, ${a}.0);
+
+        return ${u.texture2D}(${r}, uv);
+      }
+    `;if(e)return`
+    vec4 ${s}(int row, int col) {
+      ivec2 packedTexShape = ivec2(ceil(float(${r}TexShape[0]) / 2.0), ceil(float(${r}TexShape[1]) / 2.0));
+      int valuesPerRow = int(ceil(float(${r}Shape[1]) / 2.0));
+      vec2 uv = packedUVfrom2D(valuesPerRow, packedTexShape[0], packedTexShape[1], row, col);
+      return ${u.texture2D}(${r}, uv);
+    }
+  `;const c=[Math.ceil(o[0]/2),Math.ceil(o[1]/2)],l=Math.ceil(t[1]/2);return`
+    vec4 ${s}(int row, int col) {
+      vec2 uv = packedUVfrom2D(${l}, ${c[0]}, ${c[1]}, row, col);
+      return ${u.texture2D}(${r}, uv);
+    }
+  `}function NC(n,e){const t=n.shapeInfo.logicalShape,r=n.name,s="get"+r.charAt(0).toUpperCase()+r.slice(1),o=n.shapeInfo.texShape;if(o!=null&&qe(t,o)){if(e)return`
+      float ${s}(int row, int col) {
+        vec2 uv = (vec2(col, row) + halfCR) / vec2(${r}TexShape[1], ${r}TexShape[0]);
+        return sampleTexture(${r}, uv);
+      }
+    `;const d=o[0],p=o[1];return`
+    float ${s}(int row, int col) {
+      vec2 uv = (vec2(col, row) + halfCR) / vec2(${p}.0, ${d}.0);
+      return sampleTexture(${r}, uv);
+    }
+  `}const{newShape:a,keptDims:i}=xr(t),u=a;if(u.length<t.length){const d=Us(n,u),p=["row","col"];return`
+      ${Vs(d,e)}
+      float ${s}(int row, int col) {
+        return ${s}(${Ws(p,i)});
+      }
+    `}if(n.shapeInfo.isUniform)return`
+      float ${s}(int row, int col) {
+        int index = round(dot(vec2(row, col), vec2(${t[1]}, 1)));
+        ${Ms(n)}
+      }
+    `;const c=o[0],l=o[1],h=as(r);return l===1?e?`
+      float ${s}(int row, int col) {
+        float index = dot(vec3(row, col, ${h}), vec3(${r}Shape[1], 1, 1));
+        vec2 uv = vec2(0.5, (index + 0.5) / float(${r}TexShape[0]));
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+    float ${s}(int row, int col) {
+      float index = dot(vec3(row, col, ${h}), vec3(${t[1]}, 1, 1));
+      vec2 uv = vec2(0.5, (index + 0.5) / ${c}.0);
+      return sampleTexture(${r}, uv);
+    }
+  `:c===1?e?`
+      float ${s}(int row, int col) {
+        float index = dot(vec3(row, col, ${h}), vec3(${r}Shape[1], 1, 1));
+        vec2 uv = vec2((index + 0.5) / float(${r}TexShape[1]), 0.5);
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+    float ${s}(int row, int col) {
+      float index = dot(vec3(row, col, ${h}), vec3(${t[1]}, 1, 1));
+      vec2 uv = vec2((index + 0.5) / ${l}.0, 0.5);
+      return sampleTexture(${r}, uv);
+    }
+  `:e?`
+      float ${s}(int row, int col) {
+        // Explicitly use integer operations as dot() only works on floats.
+        int index = row * ${r}Shape[1] + col + ${h};
+        vec2 uv = uvFromFlat(${r}TexShape[0], ${r}TexShape[1], index);
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+  float ${s}(int row, int col) {
+    // Explicitly use integer operations as dot() only works on floats.
+    int index = row * ${t[1]} + col + ${h};
+    vec2 uv = uvFromFlat(${c}, ${l}, index);
+    return sampleTexture(${r}, uv);
+  }
+`}function EC(n,e){const t=n.shapeInfo.logicalShape,r=n.name,s="get"+r.charAt(0).toUpperCase()+r.slice(1),o=n.shapeInfo.texShape,a=[Math.ceil(o[0]/2),Math.ceil(o[1]/2)];if(t[0]===1){const d=t.slice(1),p=[1,2],f=Us(n,d),b=["b","row","col"];return`
+        ${E1(f,e)}
+        vec4 ${s}(int b, int row, int col) {
+          return ${s}(${Ws(b,p)});
+        }
+      `}const i=Ct();if(e)return`
+    vec4 ${s}(int b, int row, int col) {
+      ivec2 packedTexShape = ivec2(ceil(float(${r}TexShape[0]) / 2.0), ceil(float(${r}TexShape[1]) / 2.0));
+      int valuesPerRow = int(ceil(float(${r}Shape[2]) / 2.0));
+      int texelsInBatch = valuesPerRow * int(ceil(float(${r}Shape[1]) / 2.0));
+      vec2 uv = packedUVfrom3D(
+        packedTexShape[0], packedTexShape[1], texelsInBatch, valuesPerRow, b, row, col);
+      return ${i.texture2D}(${r}, uv);
+    }
+  `;const u=a[0],c=a[1],l=Math.ceil(t[2]/2),h=l*Math.ceil(t[1]/2);return`
+    vec4 ${s}(int b, int row, int col) {
+      vec2 uv = packedUVfrom3D(
+        ${u}, ${c}, ${h}, ${l}, b, row, col);
+      return ${i.texture2D}(${r}, uv);
+    }
+  `}function IC(n,e){const t=n.shapeInfo.logicalShape,r=n.name,s="get"+r.charAt(0).toUpperCase()+r.slice(1),o=t[1]*t[2],a=t[2],{newShape:i,keptDims:u}=xr(t),c=i;if(c.length<t.length){const b=Us(n,c),y=["row","col","depth"];return`
+        ${Vs(b,e)}
+        float ${s}(int row, int col, int depth) {
+          return ${s}(${Ws(y,u)});
+        }
+      `}if(n.shapeInfo.isUniform)return`
+      float ${s}(int row, int col, int depth) {
+        int index = round(dot(vec3(row, col, depth),
+                          vec3(${o}, ${a}, 1)));
+        ${Ms(n)}
+      }
+    `;const l=n.shapeInfo.texShape,h=l[0],d=l[1],p=n.shapeInfo.flatOffset;if(d===o&&p==null)return e?`
+      float ${s}(int row, int col, int depth) {
+        int stride1 = ${r}Shape[2];
+        float texR = float(row);
+        float texC = dot(vec2(col, depth), vec2(stride1, 1));
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                   vec2(${r}TexShape[1], ${r}TexShape[0]);
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+        float ${s}(int row, int col, int depth) {
+          float texR = float(row);
+          float texC = dot(vec2(col, depth), vec2(${a}, 1));
+          vec2 uv = (vec2(texC, texR) + halfCR) /
+                     vec2(${d}.0, ${h}.0);
+          return sampleTexture(${r}, uv);
+        }
+      `;if(d===a&&p==null)return e?`
+      float ${s}(int row, int col, int depth) {
+        float texR = dot(vec2(row, col), vec2(${r}Shape[1], 1));
+        float texC = float(depth);
+        vec2 uv = (vec2(texC, texR) + halfCR) / vec2(${r}TexShape[1], ${r}TexShape[0]);
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+    float ${s}(int row, int col, int depth) {
+      float texR = dot(vec2(row, col), vec2(${t[1]}, 1));
+      float texC = float(depth);
+      vec2 uv = (vec2(texC, texR) + halfCR) / vec2(${d}.0, ${h}.0);
+      return sampleTexture(${r}, uv);
+    }
+  `;const f=as(r);return e?`
+    float ${s}(int row, int col, int depth) {
+      // Explicitly use integer operations as dot() only works on floats.
+      int stride0 = ${r}Shape[1] * ${r}Shape[2];
+      int stride1 = ${r}Shape[2];
+      int index = row * stride0 + col * stride1 + depth + ${f};
+      vec2 uv = uvFromFlat(${r}TexShape[0], ${r}TexShape[1], index);
+      return sampleTexture(${r}, uv);
+    }
+    `:`
+      float ${s}(int row, int col, int depth) {
+        // Explicitly use integer operations as dot() only works on floats.
+        int index = row * ${o} + col * ${a} + depth + ${f};
+        vec2 uv = uvFromFlat(${h}, ${d}, index);
+        return sampleTexture(${r}, uv);
+      }
+  `}function kC(n,e){const t=n.name,r="get"+t.charAt(0).toUpperCase()+t.slice(1),s=Ct();if(e)return`
+    vec4 ${r}(int b2, int b, int row, int col) {
+      int valuesPerRow = int(ceil(float(${t}Shape[3]) / 2.0));
+      int texelsInBatch = valuesPerRow * int(ceil(float(${t}Shape[2]) / 2.0));
+      int index = b * texelsInBatch + (row / 2) * valuesPerRow + (col / 2);
+      texelsInBatch *= ${t}Shape[1];
+      index = b2 * texelsInBatch + index;
+      ivec2 packedTexShape = ivec2(ceil(float(${t}TexShape[0]) / 2.0), ceil(float(${t}TexShape[1]) / 2.0));
+      int texR = index / packedTexShape[1];
+      int texC = index - texR * packedTexShape[1];
+      vec2 uv = (vec2(texC, texR) + halfCR) / vec2(packedTexShape[1], packedTexShape[0]); return ${s.texture2D}(${t}, uv);
+    }
+  `;const o=n.shapeInfo.logicalShape,a=o.length,i=n.shapeInfo.texShape,u=[Math.ceil(i[0]/2),Math.ceil(i[1]/2)],c=u[0],l=u[1],h=Math.ceil(o[a-1]/2);let d=h*Math.ceil(o[a-2]/2),p="int b, int row, int col",f=`b * ${d} + (row / 2) * ${h} + (col / 2)`;for(let b=2;b<a-1;b++)p=`int b${b}, `+p,d*=o[a-b-1],f=`b${b} * ${d} + `+f;return`
+    vec4 ${r}(${p}) {
+      int index = ${f};
+      int texR = index / ${l};
+      int texC = index - texR * ${l};
+      vec2 uv = (vec2(texC, texR) + halfCR) / vec2(${l}, ${c});
+      return ${s.texture2D}(${t}, uv);
+    }
+  `}function RC(n,e){const t=n.shapeInfo.logicalShape,r=n.name,s="get"+r.charAt(0).toUpperCase()+r.slice(1),o=t[3],a=t[2]*o,i=t[1]*a,{newShape:u,keptDims:c}=xr(t);if(u.length<t.length){const C=Us(n,u),I=["row","col","depth","depth2"];return`
+      ${Vs(C,e)}
+      float ${s}(int row, int col, int depth, int depth2) {
+        return ${s}(${Ws(I,c)});
+      }
+    `}if(n.shapeInfo.isUniform)return`
+      float ${s}(int row, int col, int depth, int depth2) {
+        int index = round(dot(vec4(row, col, depth, depth2),
+                          vec4(${i}, ${a}, ${o}, 1)));
+        ${Ms(n)}
+      }
+    `;const l=n.shapeInfo.flatOffset,h=n.shapeInfo.texShape,d=h[0],p=h[1],f=`int stride2 = ${r}Shape[3];`,b=`int stride1 = ${r}Shape[2] * stride2;`,y=`int stride0 = ${r}Shape[1] * stride1;`;if(p===i&&l==null)return e?`
+      float ${s}(int row, int col, int depth, int depth2) {
+        ${f}
+        ${b}
+        float texR = float(row);
+        float texC =
+            dot(vec3(col, depth, depth2),
+                vec3(stride1, stride2, 1));
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                   vec2(${r}TexShape[1], ${r}TexShape[0]);
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+      float ${s}(int row, int col, int depth, int depth2) {
+        float texR = float(row);
+        float texC =
+            dot(vec3(col, depth, depth2),
+                vec3(${a}, ${o}, 1));
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                   vec2(${p}.0, ${d}.0);
+        return sampleTexture(${r}, uv);
+      }
+    `;if(p===o&&l==null)return e?`
+      float ${s}(int row, int col, int depth, int depth2) {
+        float texR = dot(vec3(row, col, depth),
+                         vec3(${r}Shape[1] * ${r}Shape[2], ${r}Shape[2], 1));
+        float texC = float(depth2);
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                  vec2(${r}TexShape[1], ${r}TexShape[0]);
+        return sampleTexture(${r}, uv);
+      }
+    `:`
+      float ${s}(int row, int col, int depth, int depth2) {
+        float texR = dot(vec3(row, col, depth),
+                         vec3(${t[1]*t[2]}, ${t[2]}, 1));
+        float texC = float(depth2);
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                  vec2(${p}.0, ${d}.0);
+        return sampleTexture(${r}, uv);
+      }
+    `;const x=as(r);return e?`
+    float ${s}(int row, int col, int depth, int depth2) {
+      // Explicitly use integer operations as dot() only works on floats.
+      ${f}
+      ${b}
+      ${y}
+      int index = row * stride0 + col * stride1 +
+          depth * stride2 + depth2;
+      vec2 uv = uvFromFlat(${r}TexShape[0], ${r}TexShape[1], index + ${x});
+      return sampleTexture(${r}, uv);
+    }
+  `:`
+    float ${s}(int row, int col, int depth, int depth2) {
+      // Explicitly use integer operations as dot() only works on floats.
+      int index = row * ${i} + col * ${a} +
+          depth * ${o} + depth2;
+      vec2 uv = uvFromFlat(${d}, ${p}, index + ${x});
+      return sampleTexture(${r}, uv);
+    }
+  `}function _C(n){const e=n.shapeInfo.logicalShape,t=n.name,r="get"+t.charAt(0).toUpperCase()+t.slice(1),s=e[4],o=e[3]*s,a=e[2]*o,i=e[1]*a,{newShape:u,keptDims:c}=xr(e);if(u.length<e.length){const b=Us(n,u),y=["row","col","depth","depth2","depth3"];return`
+      ${Vs(b)}
+      float ${r}(int row, int col, int depth, int depth2, int depth3) {
+        return ${r}(${Ws(y,c)});
+      }
+    `}if(n.shapeInfo.isUniform)return`
+      float ${r}(int row, int col, int depth, int depth2, int depth3) {
+        float index = dot(
+          vec4(row, col, depth, depth2),
+          vec4(${i}, ${a}, ${o}, ${s})) +
+          depth3;
+        ${Ms(n)}
+      }
+    `;const l=n.shapeInfo.flatOffset,h=n.shapeInfo.texShape,d=h[0],p=h[1];if(p===i&&l==null)return`
+      float ${r}(int row, int col, int depth, int depth2, int depth3) {
+        int texR = row;
+        float texC = dot(vec4(col, depth, depth2, depth3),
+                         vec4(${a}, ${o}, ${s}, 1));
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                   vec2(${p}.0, ${d}.0);
+        return sampleTexture(${t}, uv);
+      }
+    `;if(p===s&&l==null)return`
+      float ${r}(int row, int col, int depth, int depth2, int depth3) {
+        float texR = dot(
+          vec4(row, col, depth, depth2),
+          vec4(${e[1]*e[2]*e[3]},
+               ${e[2]*e[3]}, ${e[3]}, 1));
+        int texC = depth3;
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                  vec2(${p}.0, ${d}.0);
+        return sampleTexture(${t}, uv);
+      }
+    `;const f=as(t);return`
+    float ${r}(int row, int col, int depth, int depth2, int depth3) {
+      // Explicitly use integer operations as dot() only works on floats.
+      int index = row * ${i} + col * ${a} + depth * ${o} +
+          depth2 * ${s} + depth3 + ${f};
+      vec2 uv = uvFromFlat(${d}, ${p}, index);
+      return sampleTexture(${t}, uv);
+    }
+  `}function AC(n){const e=n.shapeInfo.logicalShape,t=n.name,r="get"+t.charAt(0).toUpperCase()+t.slice(1),{newShape:s,keptDims:o}=xr(e);if(s.length<e.length){const y=Us(n,s),x=["row","col","depth","depth2","depth3","depth4"];return`
+      ${Vs(y)}
+      float ${r}(int row, int col, int depth,
+                    int depth2, int depth3, int depth4) {
+        return ${r}(${Ws(x,o)});
+      }
+    `}const a=e[5],i=e[4]*a,u=e[3]*i,c=e[2]*u,l=e[1]*c;if(n.shapeInfo.isUniform)return`
+      float ${r}(int row, int col, int depth,
+                  int depth2, int depth3, int depth4) {
+        int index = round(dot(
+          vec4(row, col, depth, depth2),
+          vec4(${l}, ${c}, ${u}, ${i})) +
+          dot(
+            vec2(depth3, depth4),
+            vec2(${a}, 1)));
+        ${Ms(n)}
+      }
+    `;const h=n.shapeInfo.flatOffset,d=n.shapeInfo.texShape,p=d[0],f=d[1];if(f===l&&h==null)return`
+      float ${r}(int row, int col, int depth,
+                    int depth2, int depth3, int depth4) {
+        int texR = row;
+        float texC = dot(vec4(col, depth, depth2, depth3),
+          vec4(${c}, ${u}, ${i}, ${a})) +
+               float(depth4);
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                   vec2(${f}.0, ${p}.0);
+        return sampleTexture(${t}, uv);
+      }
+    `;if(f===a&&h==null)return`
+      float ${r}(int row, int col, int depth,
+                    int depth2, int depth3, int depth4) {
+        float texR = dot(vec4(row, col, depth, depth2),
+          vec4(${e[1]*e[2]*e[3]*e[4]},
+               ${e[2]*e[3]*e[4]},
+               ${e[3]*e[4]},
+               ${e[4]})) + float(depth3);
+        int texC = depth4;
+        vec2 uv = (vec2(texC, texR) + halfCR) /
+                  vec2(${f}.0, ${p}.0);
+        return sampleTexture(${t}, uv);
+      }
+    `;const b=as(t);return`
+    float ${r}(int row, int col, int depth,
+                  int depth2, int depth3, int depth4) {
+      // Explicitly use integer operations as dot() only works on floats.
+      int index = row * ${l} + col * ${c} + depth * ${u} +
+          depth2 * ${i} + depth3 * ${a} + depth4 + ${b};
+      vec2 uv = uvFromFlat(${p}, ${f}, index);
+      return sampleTexture(${t}, uv);
+    }
+  `}function Ms(n){const e=n.name,t=ne(n.shapeInfo.logicalShape);return t<2?`return ${e};`:`
+    for (int i = 0; i < ${t}; i++) {
+      if (i == index) {
+        return ${e}[i];
+      }
+    }
+  `}function OC(n,e){const t=n.name,r=t.charAt(0).toUpperCase()+t.slice(1),s="get"+r+"AtOutCoords",o=n.shapeInfo.logicalShape.length,a=e.logicalShape.length,i=N1(n.shapeInfo.logicalShape,e.logicalShape),u=Ve(a),c=a-o;let l;const h=["x","y","z","w","u","v"];o===0?l="":a<2&&i.length>=1?l="coords = 0;":l=i.map(C=>`coords.${h[C+c]} = 0;`).join(`
+`);let d="";a<2&&o>0?d="coords":d=n.shapeInfo.logicalShape.map((C,I)=>`coords.${h[I+c]}`).join(", ");let p="return outputValue;";const b=ne(n.shapeInfo.logicalShape)===1,x=ne(e.logicalShape)===1;if(o===1&&!b&&!x)p=`
+      return vec4(outputValue.xy, outputValue.xy);
+    `;else if(b&&!x)a===1?p=`
+        return vec4(outputValue.x, outputValue.x, 0., 0.);
+      `:p=`
+        return vec4(outputValue.x);
+      `;else if(i.length){const C=o-2,I=o-1;i.indexOf(C)>-1&&i.indexOf(I)>-1?p="return vec4(outputValue.x);":i.indexOf(C)>-1?p="return vec4(outputValue.x, outputValue.y, outputValue.x, outputValue.y);":i.indexOf(I)>-1&&(p="return vec4(outputValue.xx, outputValue.zz);")}return`
+    vec4 ${s}() {
+      ${u} coords = getOutputCoords();
+      ${l}
+      vec4 outputValue = get${r}(${d});
+      ${p}
+    }
+  `}function DC(n,e){const t=n.name,r=t.charAt(0).toUpperCase()+t.slice(1),s="get"+r+"AtOutCoords",o=e.texShape,a=n.shapeInfo.texShape,i=n.shapeInfo.logicalShape.length,u=e.logicalShape.length;if(!n.shapeInfo.isUniform&&i===u&&n.shapeInfo.flatOffset==null&&qe(a,o))return`
+      float ${s}() {
+        return sampleTexture(${t}, resultUV);
+      }
+    `;const c=Ve(u),l=N1(n.shapeInfo.logicalShape,e.logicalShape),h=u-i;let d;const p=["x","y","z","w","u","v"];i===0?d="":u<2&&l.length>=1?d="coords = 0;":d=l.map(b=>`coords.${p[b+h]} = 0;`).join(`
+`);let f="";return u<2&&i>0?f="coords":f=n.shapeInfo.logicalShape.map((b,y)=>`coords.${p[y+h]}`).join(", "),`
+    float ${s}() {
+      ${c} coords = getOutputCoords();
+      ${d}
+      return get${r}(${f});
+    }
+  `}function Ve(n){if(n<=1)return"int";if(n===2)return"ivec2";if(n===3)return"ivec3";if(n===4)return"ivec4";if(n===5)return"ivec5";if(n===6)return"ivec6";throw Error(`GPU for rank ${n} is not yet supported`)}function Cc(n,e,t){const{newShape:r,keptDims:s}=xr(e),o=e.length,a=n&&o===3&&e[0]===1,i=a?e.slice(1):r,u=!n&&o>1&&!qe(e,t)&&r.length<o||a;return{useSqueezeShape:u,uniformShape:u?i:e,keptDims:s}}function Us(n,e){const t=JSON.parse(JSON.stringify(n));return t.shapeInfo.logicalShape=e,t}function Ws(n,e){return e.map(t=>n[t]).join(", ")}function FC(n,e,t,r){const s=t.map((l,h)=>{const d={logicalShape:l.shape,texShape:l.isUniform?null:l.texData.texShape,isUniform:l.isUniform,isPacked:l.isUniform?!1:l.texData.isPacked,flatOffset:null};return l.texData!=null&&l.texData.slice!=null&&l.texData.slice.flatOffset>0&&(d.flatOffset=l.texData.slice.flatOffset),{name:e.variableNames[h],shapeInfo:d}}),o=s.map(l=>l.shapeInfo),a={logicalShape:r.shape,texShape:r.texData.texShape,isUniform:!1,isPacked:r.texData.isPacked,flatOffset:null},i=JS(s,a,e),u=IS(n.gl,i),c=n.createProgram(u);return j().get("ENGINE_COMPILE_ONLY")?{program:e,fragmentShader:u,source:i,webGLProgram:c,inShapeInfos:o,outShapeInfo:a,variablesLocations:null,customUniformLocations:null,infLoc:null,nanLoc:null,outShapeLocation:null,outShapeStridesLocation:null,outTexShapeLocation:null}:(n.buildVao(c),Object.assign({program:e,fragmentShader:u,source:i,webGLProgram:c,inShapeInfos:o,outShapeInfo:a},k1(n,e,c)))}function k1(n,e,t){const r=[],s=[];let o,a,i,u=null,c=null;c=n.getUniformLocation(t,"NAN",!1),j().getNumber("WEBGL_VERSION")===1&&(u=n.getUniformLocation(t,"INFINITY",!1));const l=!1;for(const h of e.variableNames){const d={name:h,uniform:n.getUniformLocation(t,h,l),offset:n.getUniformLocation(t,`offset${h}`,l)};e.enableShapeUniforms&&(d.shape=n.getUniformLocation(t,`${h}Shape`,l),d.texShape=n.getUniformLocation(t,`${h}TexShape`,l)),r.push(d)}if(e.enableShapeUniforms&&(o=n.getUniformLocation(t,"outShape",l),i=n.getUniformLocation(t,"outShapeStrides",l),a=n.getUniformLocation(t,"outTexShape",l)),e.customUniforms)for(const h of e.customUniforms)s.push(n.getUniformLocation(t,h.name,l));return{variablesLocations:r,customUniformLocations:s,infLoc:u,nanLoc:c,outShapeLocation:o,outShapeStridesLocation:i,outTexShapeLocation:a}}function ll(n,e){if(n.length!==e.length)throw Error(`Binary was compiled with ${n.length} inputs, but was executed with ${e.length} inputs`);n.forEach((t,r)=>{const s=t.logicalShape,o=e[r],a=o.shape;if(!qe(s,a))throw Error(`Binary was compiled with different shapes than the current args. Shapes ${s} and ${a} must match`);if(t.isUniform&&o.isUniform)return;const i=t.texShape,u=o.isUniform?null:o.texData.texShape;if(!qe(i,u))throw Error(`Binary was compiled with different texture shapes than the current args. Shape ${i} and ${u} must match`)})}function PC(n,e,t,r,s){e.program.enableShapeUniforms||(ll(e.inShapeInfos,t),ll([e.outShapeInfo],[r]));const o=r.texData.texture,a=r.texData.texShape;r.texData.isPacked?n.setOutputPackedMatrixTexture(o.texture,a[0],a[1]):n.setOutputMatrixTexture(o.texture,a[0],a[1]),n.setProgram(e.webGLProgram),n.bindVertexArray(e.webGLProgram.vao),j().getNumber("WEBGL_VERSION")===1&&e.infLoc!==null&&n.gl.uniform1f(e.infLoc,1/0),e.nanLoc!==null&&n.gl.uniform1f(e.nanLoc,NaN);for(let u=0;u<t.length;++u){const c=t[u],{uniform:l,offset:h,shape:d,texShape:p}=e.variablesLocations[u];if(d){const{uniformShape:f}=Cc(e.program.packedInputs,c.shape,c.texData.texShape);switch(f.length){case 1:n.gl.uniform1iv(d,new Int32Array(f));break;case 2:n.gl.uniform2iv(d,new Int32Array(f));break;case 3:n.gl.uniform3iv(d,new Int32Array(f));break;case 4:n.gl.uniform4iv(d,new Int32Array(f));break}}if(p&&n.gl.uniform2i(p,c.texData.texShape[0],c.texData.texShape[1]),l!=null){if(c.isUniform){if(ne(c.shape)<2)n.gl.uniform1f(l,c.uniformValues[0]);else{let f=c.uniformValues;f instanceof Float32Array||(f=new Float32Array(f)),n.gl.uniform1fv(l,f)}continue}c.texData.slice!=null&&h!=null&&n.gl.uniform1i(h,c.texData.slice.flatOffset),n.setInputMatrixTexture(c.texData.texture.texture,l,u)}}const i=e.outShapeLocation;if(i)switch(r.shape.length){case 1:n.gl.uniform1iv(i,new Int32Array(r.shape));break;case 2:n.gl.uniform2iv(i,new Int32Array(r.shape));break;case 3:n.gl.uniform3iv(i,new Int32Array(r.shape));break;case 4:n.gl.uniform4iv(i,new Int32Array(r.shape));break}if(e.outShapeStridesLocation){const u=dt(r.shape);switch(r.shape.length){case 2:n.gl.uniform1iv(e.outShapeStridesLocation,new Int32Array(u));break;case 3:n.gl.uniform2iv(e.outShapeStridesLocation,new Int32Array(u));break;case 4:n.gl.uniform3iv(e.outShapeStridesLocation,new Int32Array(u));break}}if(e.outTexShapeLocation&&n.gl.uniform2i(e.outTexShapeLocation,r.texData.texShape[0],r.texData.texShape[1]),e.program.customUniforms&&s)for(let u=0;u<e.program.customUniforms.length;++u){const c=e.program.customUniforms[u],l=e.customUniformLocations[u],h=s[u];if(c.type==="float")n.gl.uniform1fv(l,h);else if(c.type==="vec2")n.gl.uniform2fv(l,h);else if(c.type==="vec3")n.gl.uniform3fv(l,h);else if(c.type==="vec4")n.gl.uniform4fv(l,h);else if(c.type==="int")n.gl.uniform1iv(l,h);else if(c.type==="ivec2")n.gl.uniform2iv(l,h);else if(c.type==="ivec3")n.gl.uniform3iv(l,h);else if(c.type==="ivec4")n.gl.uniform4iv(l,h);else throw Error(`uniform type ${c.type} is not supported yet.`)}n.executeProgram()}function LC(n,e,t){let r="";e.concat(t).forEach(a=>{const i=a.texData!=null&&a.texData.slice!=null&&a.texData.slice.flatOffset>0;if(n.enableShapeUniforms&&!a.isUniform){const u=a.texData.texShape,{useSqueezeShape:c,uniformShape:l,keptDims:h}=Cc(n.packedInputs,a.shape,u);let d="",p="",f="";if(l.length===1&&n.packedInputs){const P=[Math.ceil(u[0]/2),Math.ceil(u[1]/2)];d=`${P[0]>1}_${P[1]>1}`}else if(l.length===2&&!n.packedInputs)p=`${l[0]>1}_${l[1]>1}`;else if(l.length>2&&!n.packedInputs){const P=dt(l);f=`${P[0]===u[1]}_${P[P.length-1]===u[1]}`}const b=a.shape.length,y=l.length===2&&qe(a.shape,u),x=ne(a.shape)===1,C=Pa(a.shape,t.shape),I=!n.packedInputs&&b===t.shape.length&&qe(u,t.texData.texShape),k=n.packedInputs||l.length>2?"":`${u[0]>1}_${u[1]>1}`;r+=`${b}_${I}_${c?h:""}_${l.length}_${x}_${C}_${y}_${d}_${p}_${f}_${k}_${i}`}else{const u=a.isUniform?"uniform":a.texData.texShape;r+=`${a.shape}_${u}_${i}`}});const s=n.userCode;let o=n.constructor.name;return o+="_"+r+"_"+s+`${j().getNumber("WEBGL_VERSION")}`,o}function bt(n){return j().getBool("WEBGL_USE_SHAPES_UNIFORMS")&&n<=4}class BC{constructor(e){this.variableNames=["A"],this.packedInputs=!1,this.packedOutput=!0,this.outPackingScheme=Io.DENSE,this.customUniforms=[{name:"texShape",type:"ivec2"}];const t=Ct();this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length),this.userCode=`
+      ivec3 outCoordsFromFlatIndex(int index) {
+        ${this.enableShapeUniforms?hi(["r","c","d"],e):os(["r","c","d"],e)}
+        return ivec3(r, c, d);
+      }
+
+      void main() {
+        ivec2 resTexRC = ivec2(resultUV.yx * vec2(texShape[0], texShape[1]));
+        int index = 4 * (resTexRC.x * texShape[1] + resTexRC.y);
+
+        vec4 result = vec4(0.);
+
+        for (int i=0; i<4; i++) {
+          int flatIndex = index + i;
+          ivec3 rc = outCoordsFromFlatIndex(flatIndex);
+          result[i] = getA(rc.x, rc.y, rc.z);
+        }
+
+        ${t.output} = result;
+      }
+    `}}class VC{constructor(e){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.outPackingScheme=Io.DENSE,this.customUniforms=[{name:"texShape",type:"ivec2"}];const t=Ct();this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length),this.userCode=`
+      ivec3 outCoordsFromFlatIndex(int index) {
+        ${this.enableShapeUniforms?hi(["r","c","d"],e):os(["r","c","d"],e)}
+        return ivec3(r, c, d);
+      }
+
+      void main() {
+        ivec2 resTexRC = ivec2(resultUV.yx * vec2(texShape[0], texShape[1]));
+        int index = 4 * (resTexRC.x * texShape[1] + resTexRC.y);
+
+        vec4 result = vec4(0.);
+
+        for (int i=0; i<4; i++) {
+          int flatIndex = index + i;
+          ivec3 rc = outCoordsFromFlatIndex(flatIndex);
+          result[i] = getChannel(getA(rc.x, rc.y, rc.z), vec2(rc.y, rc.z));
+        }
+
+        ${t.output} = result;
+      }
+    `}}class MC{constructor(e){this.variableNames=["A"],this.outTexUsage=Gt.DOWNLOAD;const t=Ct();this.outputShape=e,this.userCode=`
+      ${T1}
+
+      void main() {
+        float x = getAAtOutCoords();
+        ${t.output} = encode_float(x);
+      }
+    `}}class UC{constructor(e){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!1,this.outTexUsage=Gt.DOWNLOAD;const t=Ct();this.outputShape=e,this.userCode=`
+      ${T1}
+
+      void main() {
+        ivec3 coords = getOutputCoords();
+        float x = getChannel(getAAtOutCoords(), vec2(coords.y, coords.z));
+        ${t.output} = encode_float(x);
+      }
+    `}}const WC={R:0,G:1,B:2,A:3};class hl{constructor(e,t=!1,r="RGBA"){this.variableNames=["A"],this.customUniforms=[{name:"texShape",type:"ivec2"}];const s=Ct();this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length);let o="result";t&&(o="floor(result * 255. + 0.5)");let a="";for(let i=0;i<r.length;i++){const u=r[i];a+=`
+          if(offset == ${i}) {
+            result = values[${WC[u]}];
+          }`}this.userCode=`
+      ${this.enableShapeUniforms?Sc():$c(e)}
+
+      void main() {
+        ivec3 coords = getOutputCoords();
+        int flatIndex = getFlatIndex(coords);
+        float result = 0.;
+        int offset = imod(flatIndex, ${r.length});
+
+        flatIndex = idiv(flatIndex, ${r.length}, 1.);
+
+        int r = flatIndex / texShape[1];
+        if (r < texShape[0]) {
+          int c = imod(flatIndex, texShape[1]);
+          vec2 uv = (vec2(c, r) + halfCR) / vec2(texShape[1], texShape[0]);
+          vec4 values = ${s.texture2D}(A, uv);
+          ${a}
+        }
+        ${s.output} = vec4(${o}, 0., 0., 0.);
+      }
+    `}}class zC{constructor(e,t=!1){this.variableNames=["A"],this.packedInputs=!1,this.packedOutput=!0,this.customUniforms=[{name:"texShape",type:"ivec2"}];const r=Ct();this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length);let s="",o="result";t&&(o="floor(result * 255. + 0.5)");for(let a=0;a<=1;a++)for(let i=0;i<=1;i++){const u=a*2+i;s+=`
+          localCoords = coords;
+          if(localCoords[2] + ${i} < ${this.enableShapeUniforms?"outShape[2]":`${e[2]}`}) {
+          localCoords[2] += ${i};
+          if (localCoords[1] + ${a} < ${this.enableShapeUniforms?"outShape[1]":`${e[1]}`}) {
+            localCoords[1] += ${a};
+
+            flatIndex = getFlatIndex(localCoords);
+            offset = imod(flatIndex, 4);
+
+            flatIndex = idiv(flatIndex, 4, 1.);
+
+            int r = flatIndex / texShape[1];
+            int c = imod(flatIndex, texShape[1]);
+            vec2 uv = (vec2(c, r) + halfCR) / vec2(texShape[1], texShape[0]);
+            values = ${r.texture2D}(A, uv);
+
+            if (offset == 0) {
+              result[${u}] = values[0];
+            } else if (offset == 1) {
+              result[${u}] = values[1];
+            } else if (offset == 2) {
+              result[${u}] = values[2];
+            } else {
+              result[${u}] = values[3];
+            }
+          }
+        }
+        `}this.userCode=`
+        ${this.enableShapeUniforms?Sc():$c(e)}
+
+        void main() {
+          ivec3 coords = getOutputCoords();
+
+          vec4 result = vec4(0.);
+          int flatIndex, r, c, offset;
+          ivec3 localCoords;
+          vec2 uv;
+          vec4 values;
+
+          ${s}
+
+          ${r.output} = ${o};
+        }
+    `}}function GC(n){const e=Ct(),t=`${e.version}
+    precision highp float;
+    ${e.attribute} vec3 clipSpacePos;
+    ${e.attribute} vec2 uv;
+    ${e.varyingVs} vec2 resultUV;
+
+    void main() {
+      gl_Position = vec4(clipSpacePos, 1);
+      resultUV = uv;
+    }`;return ES(n,t)}function jC(n){const e=new Float32Array([-1,1,0,0,1,-1,-1,0,0,0,1,1,0,1,1,1,-1,0,1,0]);return AS(n,e)}function HC(n){const e=new Uint16Array([0,1,2,2,1,3]);return OS(n,e)}function Mo(n,e,t,r,s,o){FS(e,t);const a=DS(n),i=n.TEXTURE_2D;return ce(n,()=>n.bindTexture(i,a)),ce(n,()=>n.texParameteri(i,n.TEXTURE_WRAP_S,n.CLAMP_TO_EDGE)),ce(n,()=>n.texParameteri(i,n.TEXTURE_WRAP_T,n.CLAMP_TO_EDGE)),ce(n,()=>n.texParameteri(i,n.TEXTURE_MIN_FILTER,n.NEAREST)),ce(n,()=>n.texParameteri(i,n.TEXTURE_MAG_FILTER,n.NEAREST)),j().getNumber("WEBGL_VERSION")===1?ce(n,()=>n.texImage2D(i,0,r,e,t,0,s,o,null)):ce(n,()=>n.texStorage2D(i,1,r,e,t)),ce(n,()=>n.bindTexture(n.TEXTURE_2D,null)),{texture:a,texShape:[t,e]}}function R1(n){return n.internalFormatFloat}function KC(n,e,t,r){const[s,o]=Bo(e,t);return Mo(n,s,o,R1(r),r.textureFormatFloat,n.FLOAT)}function _1(n){return n.internalFormatHalfFloat}function XC(n,e,t,r){const[s,o]=Bo(e,t);return Mo(n,s,o,_1(r),r.textureFormatFloat,r.textureTypeHalfFloat)}function A1(n){return n.downloadTextureFormat}function qC(n,e,t,r){const[s,o]=Bo(e,t);return Mo(n,s,o,A1(r),n.RGBA,n.UNSIGNED_BYTE)}function O1(n){return n.internalFormatPackedFloat}function YC(n,e,t,r){const[s,o]=Bs(e,t);return Mo(n,s,o,O1(r),n.RGBA,n.FLOAT)}function D1(n){return n.internalFormatPackedHalfFloat}function QC(n,e,t,r){const[s,o]=Bs(e,t);return Mo(n,s,o,D1(r),n.RGBA,r.textureTypeHalfFloat)}function ZC(n,e,t){return ce(n,()=>n.bindBuffer(n.ARRAY_BUFFER,t)),il(n,e,"clipSpacePos",t,3,20,0)&&il(n,e,"uv",t,2,20,12)}function JC(n,e,t,r,s,o){ce(n,()=>n.bindTexture(n.TEXTURE_2D,e));let a,i,u;s instanceof Uint8Array?(a=new Uint8Array(t*r*4),i=n.UNSIGNED_BYTE,u=n.RGBA):(a=new Float32Array(t*r*4),i=n.FLOAT,u=o.internalFormatPackedFloat),a.set(s),j().getNumber("WEBGL_VERSION")===2?ce(n,()=>n.texSubImage2D(n.TEXTURE_2D,0,0,0,t,r,n.RGBA,i,a)):ce(n,()=>n.texImage2D(n.TEXTURE_2D,0,u,t,r,0,n.RGBA,i,a)),ce(n,()=>n.bindTexture(n.TEXTURE_2D,null))}function eT(n,e,t){ce(n,()=>n.bindTexture(n.TEXTURE_2D,e)),t.data instanceof Uint8Array?j().getNumber("WEBGL_VERSION")===2?ce(n,()=>n.texSubImage2D(n.TEXTURE_2D,0,0,0,t.width,t.height,n.RGBA,n.UNSIGNED_BYTE,t.data)):ce(n,()=>n.texImage2D(n.TEXTURE_2D,0,n.RGBA,t.width,t.height,0,n.RGBA,n.UNSIGNED_BYTE,t.data)):j().getNumber("WEBGL_VERSION")===2?ce(n,()=>n.texSubImage2D(n.TEXTURE_2D,0,0,0,n.RGBA,n.UNSIGNED_BYTE,t)):ce(n,()=>n.texImage2D(n.TEXTURE_2D,0,n.RGBA,n.RGBA,n.UNSIGNED_BYTE,t)),ce(n,()=>n.bindTexture(n.TEXTURE_2D,null))}function tT(n,e,t,r){const s=n.createBuffer();ce(n,()=>n.bindBuffer(n.PIXEL_PACK_BUFFER,s));const i=4*4*e*t;return ce(n,()=>n.bufferData(n.PIXEL_PACK_BUFFER,i,n.STREAM_READ)),ce(n,()=>n.readPixels(0,0,t,e,n.RGBA,n.FLOAT,0)),ce(n,()=>n.bindBuffer(n.PIXEL_PACK_BUFFER,null)),s}function nT(n,e,t){const r=n,s=new Float32Array(t);return r.bindBuffer(r.PIXEL_PACK_BUFFER,e),r.getBufferSubData(r.PIXEL_PACK_BUFFER,0,s),r.bindBuffer(r.PIXEL_PACK_BUFFER,null),s}function rT(n,e,t,r){const[s,o]=Bo(e,t),a=4,i=new Uint8Array(vS(e*t,a));return ce(n,()=>n.readPixels(0,0,s,o,r.downloadTextureFormat,n.UNSIGNED_BYTE,i)),new Float32Array(i.buffer)}function sT(n,e,t,r,s,o,a,i){const u=n,c=new Float32Array(wS(o,a));return u.bindBuffer(u.PIXEL_PACK_BUFFER,e),u.getBufferSubData(u.PIXEL_PACK_BUFFER,0,c),u.bindBuffer(u.PIXEL_PACK_BUFFER,null),c}function oT(n,e,t){const r=new Float32Array(e*t*4);return ce(n,()=>n.readPixels(0,0,t,e,n.RGBA,n.FLOAT,r)),r}class Vi{constructor(e){this.outputTexture=null,this.program=null,this.disposed=!1,this.itemsToPoll=[];const t=j().getNumber("WEBGL_VERSION");if(e!=null?(this.gl=e,yS(t,e)):this.gl=vn(t),e=this.gl,j().getNumber("WEBGL_VERSION")===2){const o=e;this.createVertexArray=()=>ce(o,()=>o.createVertexArray()),this.bindVertexArray=a=>ce(o,()=>o.bindVertexArray(a)),this.deleteVertexArray=a=>ce(o,()=>o.deleteVertexArray(a)),this.getVertexArray=()=>ce(o,()=>o.getParameter(o.VERTEX_ARRAY_BINDING))}else if(e!=null){const o=e.getExtension("OES_vertex_array_object");if(o==null)throw new Error("All WebGL1 implementations are expected to offer OES_vertex_array_object.");this.createVertexArray=()=>ce(e,()=>o.createVertexArrayOES()),this.bindVertexArray=a=>ce(e,()=>o.bindVertexArrayOES(a)),this.deleteVertexArray=a=>ce(e,()=>o.deleteVertexArrayOES(a)),this.getVertexArray=()=>ce(e,()=>e.getParameter(o.VERTEX_ARRAY_BINDING_OES))}let r="WEBGL_color_buffer_float";const s="EXT_color_buffer_half_float";if(this.parallelCompilationExtension=this.gl.getExtension("KHR_parallel_shader_compile"),j().getNumber("WEBGL_VERSION")===1){const o="OES_texture_float",a="OES_texture_half_float";if(this.textureFloatExtension=ha(this.gl,o),sn(this.gl,a))this.textureHalfFloatExtension=ha(this.gl,a);else if(j().get("WEBGL_FORCE_F16_TEXTURES"))throw new Error("GL context does not support half float textures, yet the environment flag WEBGL_FORCE_F16_TEXTURES is set to true.");if(this.colorBufferFloatExtension=this.gl.getExtension(r),sn(this.gl,s))this.colorBufferHalfFloatExtension=ha(this.gl,s);else if(j().get("WEBGL_FORCE_F16_TEXTURES"))throw new Error("GL context does not support color renderable half floats, yet the environment flag WEBGL_FORCE_F16_TEXTURES is set to true.")}else if(r="EXT_color_buffer_float",sn(this.gl,r))this.colorBufferFloatExtension=this.gl.getExtension(r);else if(sn(this.gl,s))this.colorBufferHalfFloatExtension=this.gl.getExtension(s);else throw new Error("GL context does not support color renderable floats");this.vertexBuffer=jC(this.gl),this.indexBuffer=HC(this.gl),this.framebuffer=PS(this.gl),this.textureConfig=wc(this.gl,this.textureHalfFloatExtension)}get debug(){return j().getBool("DEBUG")}dispose(){if(this.disposed)return;this.program!=null&&console.warn("Disposing a GPGPUContext that still has a bound WebGLProgram. This is probably a resource leak, delete the program with GPGPUContext.deleteProgram before disposing."),this.outputTexture!=null&&console.warn("Disposing a GPGPUContext that still has a bound output matrix texture.  This is probably a resource leak, delete the output matrix texture with GPGPUContext.deleteMatrixTexture before disposing.");const e=this.gl;ce(e,()=>e.finish()),ce(e,()=>e.bindFramebuffer(e.FRAMEBUFFER,null)),ce(e,()=>e.deleteFramebuffer(this.framebuffer)),ce(e,()=>e.bindBuffer(e.ARRAY_BUFFER,null)),ce(e,()=>e.bindBuffer(e.ELEMENT_ARRAY_BUFFER,null)),ce(e,()=>e.deleteBuffer(this.indexBuffer)),this.disposed=!0}createFloat32MatrixTexture(e,t){return this.throwIfDisposed(),KC(this.gl,e,t,this.textureConfig)}createFloat16MatrixTexture(e,t){return this.throwIfDisposed(),XC(this.gl,e,t,this.textureConfig)}createUnsignedBytesMatrixTexture(e,t){return this.throwIfDisposed(),qC(this.gl,e,t,this.textureConfig)}uploadPixelDataToTexture(e,t){this.throwIfDisposed(),eT(this.gl,e,t)}uploadDenseMatrixToTexture(e,t,r,s){this.throwIfDisposed(),JC(this.gl,e,t,r,s,this.textureConfig)}createFloat16PackedMatrixTexture(e,t){return this.throwIfDisposed(),QC(this.gl,e,t,this.textureConfig)}createPackedMatrixTexture(e,t){return this.throwIfDisposed(),YC(this.gl,e,t,this.textureConfig)}deleteMatrixTexture(e){this.throwIfDisposed(),this.outputTexture===e&&(ul(this.gl,this.framebuffer),this.outputTexture=null),ce(this.gl,()=>this.gl.deleteTexture(e))}downloadByteEncodedFloatMatrixFromOutputTexture(e,t,r){return this.downloadMatrixDriver(e,()=>rT(this.gl,t,r,this.textureConfig))}downloadPackedMatrixFromBuffer(e,t,r,s,o,a){return sT(this.gl,e,t,r,s,o,a,this.textureConfig)}downloadFloat32MatrixFromBuffer(e,t){return nT(this.gl,e,t)}createBufferFromTexture(e,t,r){this.bindTextureToFrameBuffer(e);const s=tT(this.gl,t,r,this.textureConfig);return this.unbindTextureToFrameBuffer(),s}createAndWaitForFence(){const e=this.createFence(this.gl);return this.pollFence(e)}createFence(e){let t,r;if(j().getBool("WEBGL_FENCE_API_ENABLED")){const s=e,o=s.fenceSync(s.SYNC_GPU_COMMANDS_COMPLETE,0);e.flush(),r=()=>{const a=s.clientWaitSync(o,0,0);return a===s.ALREADY_SIGNALED||a===s.CONDITION_SATISFIED},t=o}else j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION")>0?(t=this.beginQuery(),this.endQuery(),r=()=>this.isQueryAvailable(t,j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION"))):r=()=>!0;return{query:t,isFencePassed:r}}downloadMatrixFromPackedTexture(e,t,r){return this.downloadMatrixDriver(e,()=>oT(this.gl,t,r))}createProgram(e){this.throwIfDisposed();const t=this.gl;this.vertexShader==null&&(this.vertexShader=GC(t));const r=RS(t);ce(t,()=>t.attachShader(r,this.vertexShader)),ce(t,()=>t.attachShader(r,e)),_S(t,r);const s=Object.assign(r,{vao:this.createVertexArray()});return this.debug&&Fi(t,s),s}buildVao(e){this.setProgram(e),this.bindVertexArray(e.vao);const t=this.gl;ce(t,()=>t.bindBuffer(t.ELEMENT_ARRAY_BUFFER,this.indexBuffer)),ZC(t,e,this.vertexBuffer)}deleteProgram(e){this.throwIfDisposed(),e===this.program&&(this.program=null),e!=null&&(ce(this.gl,()=>this.gl.deleteProgram(e)),this.deleteVertexArray(e.vao))}setProgram(e){this.throwIfDisposed(),this.program=e,this.program!=null&&this.debug&&Fi(this.gl,this.program),ce(this.gl,()=>this.gl.useProgram(e))}getUniformLocation(e,t,r=!0){return this.throwIfDisposed(),r?BS(this.gl,e,t):VS(this.gl,e,t)}getAttributeLocation(e,t){return this.throwIfDisposed(),ce(this.gl,()=>this.gl.getAttribLocation(e,t))}getUniformLocationNoThrow(e,t){return this.throwIfDisposed(),this.gl.getUniformLocation(e,t)}setInputMatrixTexture(e,t,r){this.throwIfDisposed(),this.throwIfNoProgram(),MS(this.gl,e,t,r)}setOutputMatrixTexture(e,t,r){this.setOutputMatrixTextureDriver(e,r,t)}setOutputPackedMatrixTexture(e,t,r){this.throwIfDisposed();const[s,o]=Bs(t,r);this.setOutputMatrixTextureDriver(e,s,o)}setOutputMatrixWriteRegion(e,t,r,s){this.setOutputMatrixWriteRegionDriver(r,e,s,t)}setOutputPackedMatrixWriteRegion(e,t,r,s){throw new Error("setOutputPackedMatrixWriteRegion not implemented.")}debugValidate(){this.program!=null&&Fi(this.gl,this.program),da(this.gl)}executeProgram(){this.throwIfDisposed(),this.throwIfNoProgram();const e=this.gl;if(this.debug){const t=this.getVertexArray();console.assert(t===this.program.vao,"VAO changed between setProgram and executeProgram!"),this.debugValidate()}ce(e,()=>e.drawElements(e.TRIANGLES,6,e.UNSIGNED_SHORT,0))}blockUntilAllProgramsCompleted(){this.throwIfDisposed(),ce(this.gl,()=>this.gl.finish())}getQueryTimerExtension(){return this.disjointQueryTimerExtension==null&&(this.disjointQueryTimerExtension=ha(this.gl,j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION")===2?"EXT_disjoint_timer_query_webgl2":"EXT_disjoint_timer_query")),this.disjointQueryTimerExtension}getQueryTimerExtensionWebGL2(){return this.getQueryTimerExtension()}getQueryTimerExtensionWebGL1(){return this.getQueryTimerExtension()}beginQuery(){if(j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION")===2){const r=this.gl,s=this.getQueryTimerExtensionWebGL2(),o=r.createQuery();return r.beginQuery(s.TIME_ELAPSED_EXT,o),o}const e=this.getQueryTimerExtensionWebGL1(),t=e.createQueryEXT();return e.beginQueryEXT(e.TIME_ELAPSED_EXT,t),t}endQuery(){if(j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION")===2){const t=this.gl,r=this.getQueryTimerExtensionWebGL2();t.endQuery(r.TIME_ELAPSED_EXT);return}const e=this.getQueryTimerExtensionWebGL1();e.endQueryEXT(e.TIME_ELAPSED_EXT)}async waitForQueryAndGetTime(e){return await Oc(()=>this.disposed||this.isQueryAvailable(e,j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION"))),this.getQueryTime(e,j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION"))}getQueryTime(e,t){if(t===0)return null;if(t===2){const r=this.gl;return r.getQueryParameter(e,r.QUERY_RESULT)/1e6}else{const r=this.getQueryTimerExtensionWebGL1();return r.getQueryObjectEXT(e,r.QUERY_RESULT_EXT)/1e6}}isQueryAvailable(e,t){if(t===0)return!0;if(t===2){const r=this.gl,s=this.getQueryTimerExtensionWebGL2(),o=r.getQueryParameter(e,r.QUERY_RESULT_AVAILABLE);return this.disjoint==null&&(this.disjoint=this.gl.getParameter(s.GPU_DISJOINT_EXT)),o&&!this.disjoint}else{const r=this.getQueryTimerExtensionWebGL1(),s=r.getQueryObjectEXT(e,r.QUERY_RESULT_AVAILABLE_EXT);return this.disjoint==null&&(this.disjoint=this.gl.getParameter(r.GPU_DISJOINT_EXT)),s&&!this.disjoint}}pollFence(e){return new Promise(t=>{this.addItemToPoll(()=>e.isFencePassed(),()=>t())})}pollItems(){const e=aT(this.itemsToPoll.map(t=>t.isDoneFn));for(let t=0;t<=e;++t){const{resolveFn:r}=this.itemsToPoll[t];r()}this.itemsToPoll=this.itemsToPoll.slice(e+1)}addItemToPoll(e,t){if(this.itemsToPoll.push({isDoneFn:e,resolveFn:t}),this.itemsToPoll.length>1)return;let r;"setTimeoutCustom"in j().platform&&(r=j().platform.setTimeoutCustom.bind(j().platform)),Oc(()=>(this.pollItems(),this.itemsToPoll.length===0),()=>0,null,r)}bindTextureToFrameBuffer(e){this.throwIfDisposed(),Pi(this.gl,e,this.framebuffer),this.debug&&da(this.gl)}unbindTextureToFrameBuffer(){this.outputTexture!=null?(Pi(this.gl,this.outputTexture,this.framebuffer),this.debug&&da(this.gl)):ul(this.gl,this.framebuffer)}downloadMatrixDriver(e,t){this.bindTextureToFrameBuffer(e);const r=t();return this.unbindTextureToFrameBuffer(),r}setOutputMatrixTextureDriver(e,t,r){this.throwIfDisposed();const s=this.gl;Pi(s,e,this.framebuffer),this.debug&&da(s),this.outputTexture=e,ce(s,()=>s.viewport(0,0,t,r)),ce(s,()=>s.scissor(0,0,t,r))}setOutputMatrixWriteRegionDriver(e,t,r,s){this.throwIfDisposed(),ce(this.gl,()=>this.gl.scissor(e,t,r,s))}throwIfDisposed(){if(this.disposed)throw new Error("Attempted to use disposed GPGPUContext.")}throwIfNoProgram(){if(this.program==null)throw new Error("No GPU program is currently set.")}}function aT(n){let e=0;for(;e<n.length&&n[e]();++e);return e-1}function iT(n){const e=new Float32Array(n.length);for(let t=0;t<n.length;++t)e[t]=Math.abs(n[t]);return e}function kt(n){return(e,t,r,s,o)=>{const a=Fe(e,t),i=a.length,u=dt(a),c=ne(a),l=pr(o,c),h=e.length,d=t.length,p=dt(e),f=dt(t),b=Pa(e,a),y=Pa(t,a);if(b.length+y.length===0)for(let x=0;x<l.length;++x)l[x]=n(r[x%r.length],s[x%s.length]);else for(let x=0;x<l.length;++x){const C=Gu(x,i,u),I=C.slice(-h);b.forEach(H=>I[H]=0);const k=ru(I,h,p),P=C.slice(-d);y.forEach(H=>P[H]=0);const W=ru(P,d,f);l[x]=n(r[k],s[W])}return[l,a]}}function uT(n,e,t,r){if(r==="int32"){const s=Int32Array.from(n);return[e,"int32",s]}if(r==="bool"){const s=Za([0],t),[o,a]=kt((i,u)=>i!==u?1:0)(e,[],n,s,"bool");return[a,"bool",o]}throw new Error(`Error in Cast: failed to cast ${t} to ${r}`)}const cT=kt(((n,e)=>n+e));function lT(n,e,t,r,s){const o=ne(r),a=fr(s,t);for(let i=0;i<n.length;i++){const u=n[i];if(u<0)throw new Error("Input x must be non-negative!");u>=s||(o>0?a[u]+=e[i]:a[u]+=1)}return a}function hT(n,e,t,r=!1){const s=n.shape[0],o=n.shape[1],a=Ye([s,t],e.dtype);for(let i=0;i<s;i++)for(let u=0;u<o;u++){const c=n.get(i,u);if(c<0)throw new Error("Input x must be non-negative!");c>=t||(r?a.set(1,i,c):e.size>0?a.set(a.get(i,c)+e.get(i,u),i,c):a.set(a.get(i,c)+1,i,c))}return a}const dT=kt(((n,e)=>n&e));function Yn(n){return(e,t,r)=>{const s=it(t,e.length);for(let o=0;o<e.length;++o)s[o]=n(e[o],r);return s}}const pT=Yn(n=>Math.ceil(n));function fT(n,e,t,r){const s=it(t,ne(e));if(r&&t!=="string"){let o=0;n.forEach(a=>{const i=ne(a.shape);s.set(a.vals,o),o+=i})}else{let o=0;n.forEach(a=>{const i=t==="string"?Rs(a.vals):a.vals;let u=0;for(let c=0;c<a.shape[0];++c){const l=c*e[1]+o;for(let h=0;h<a.shape[1];++h)s[l+h]=i[u++]}o+=a.shape[1]})}return s}const mT=kt((n,e)=>n===e?1:0);const gT=Yn(n=>Math.exp(n));const yT=Yn(n=>Math.expm1(n));const xT=Yn(n=>Math.floor(n));const bT=kt((n,e)=>Math.floor(n/e));function vT(n,e,t,r,s,o,a,i,u){const c=Ye([r,o],t);for(let l=0;l<r;l++){const h=[];let d=0;for(let p=0;p<s;p++){const f=n[l*s+p];d+=f*a[p],h.push(f)}if(d<0||d>=u/o)throw new Error(`Invalid indices: ${h} does not index into ${i}`);for(let p=0;p<o;p++)c.values[l*o+p]=e.get(...e.indexToLoc(d*o+p))}return c}function wT(n,e,t){const r=Ye(t,n.dtype);for(let s=0;s<r.size;++s){const a=r.indexToLoc(s).slice(),i=a[0],u=a[2],c=e.locToIndex([i,u]);a[2]=e.values[c];const l=n.locToIndex(a);0<=l&&l<n.values.length&&(r.values[s]=n.values[l])}return r}const $T=kt((n,e)=>n>e?1:0);const ST=kt((n,e)=>n>=e?1:0);const CT=kt((n,e)=>n<e?1:0);const TT=kt((n,e)=>n<=e?1:0);function NT(n,e,t){const r=(e-n)/(t-1),s=fr(t,"float32");s[0]=n;for(let o=1;o<s.length;o++)s[o]=s[o-1]+r;return s}const ET=Yn(n=>Math.log(n));function IT(n,e,t,r){const s=pr(r,ne(t));for(let o=0;o<s.length;++o){const a=o*e;let i=n[a];for(let u=0;u<e;++u){const c=n[a+u];(Number.isNaN(c)||c>i)&&(i=c)}s[o]=i}return s}const kT=kt(((n,e)=>Math.max(n,e)));const RT=kt(((n,e)=>Math.min(n,e)));const F1=kt(((n,e)=>n*e));function _T(n,e,t){const r=Ds(-1,t);return F1([],e,r,n,t)}const AT=kt(((n,e)=>n!==e?1:0));function OT(n,e,t,r,s){const o=e.length,a=ne(e),i=dt(e),u=dt(s),c=pr(t,ne(s));for(let l=0;l<a;++l){const h=Gu(l,o,i),d=new Array(h.length);for(let f=0;f<d.length;f++)d[f]=h[r[f]];const p=ru(d,o,u);c[p]=n[l]}return c}function DT(n,e,t,r){const[s,o]=On(n,r),a=An(e,"int32"),i=fr(ne(s),a),u=ne(o);for(let c=0;c<i.length;++c){const l=c*u;let h=1;for(let d=0;d<u;++d)h*=t[l+d];i[c]=h}return{outVals:i,outShape:s,outDtype:a}}function FT(n,e,t){n.forEach((r,s)=>{if(r<0||r>=t){const o=Gu(s,e.length,dt(e)).join(",");throw new Error(`indices[${o}] = ${r} is not in [0, ${t})`)}})}function PT(n,e){for(let t=0;t<n.length;++t){const r=n[t],s=t===n.length-1?e:n[t+1].length;if(r.length===0)throw new Error("Ragged splits may not be empty");if(r[0]<0)throw new Error("Ragged splits must be non-negative");if(r[r.length-1]>s)throw new Error("Ragged splits must not point past values");for(let o=1;o<r.length;++o)if(r[o-1]>r[o])throw new Error("Ragged splits must be sorted in ascending order")}}function LT(n,e,t,r){const s=[];let o=0;const a=e.length-1+t.length,i=new Array(a).fill(null).map(()=>[0]);PT(t,r);let u=1;for(let c=0;c<e.length-1;++c){u*=e[c];const l=e[c+1];for(let h=1;h<u+1;++h)i[c].push(h*l)}for(let c=0;c<n.length;++c){let l=n[c],h=n[c]+1;for(let d=0;d<t.length;++d){const p=t[d],f=d+e.length-1;if(f>=0){const b=i[f],y=b[b.length-1]-p[l];for(let x=l;x<h;++x)i[f].push(p[x+1]+y)}l=p[l],h=p[h]}h!==l&&(s.push([l,h]),o+=h-l)}return{outSplits:i,valueSlices:s,numValues:o}}function BT(n){const e=[];for(let t=0;t<n.length;++t){const r=n[t].length,s=it("int32",r);e.push(s),n[t].forEach((o,a)=>s[a]=o)}return e}function dl(n,e){const t=n.slice(0,e);for(;t.length<e;)t.push(1);for(let r=e;r<n.length;r++)t[e-1]*=n[r];return t}function VT(n,e,t,r,s,o){const a=dl(e,2)[1],i=dl(o,2)[1];let u=0;for(const c of t)for(let l=c[0];l<c[1];++l){for(let h=0;h<r;++h)s[u*i+h]=n[l*a+h];++u}}function MT(n,e,t,r,s){const o=e.slice();o[0]=s;const a=it(t,ne(o)),i=n.length,u=i===0?0:i/e[0];return VT(n,e,r,u,a,o),[a,o]}function UT(n,e,t,r,s,o,a,i){if(n.length===0)throw new Error("paramsNestedSplits must be non empty");if(e[0].length===0)throw new Error("Split tensors must not be scalars");const u=e[0][0]-1;if(FT(o,a,u),r.length===0)throw new Error("params.rank must be nonzero");const c=r[0],{outSplits:l,valueSlices:h,numValues:d}=LT(o,a,n,c),p=BT(l),f=MT(t,r,s,h,d);return[p,f[0],f[1]]}const pl=2147483647;function WT(n,e,t,r,s,o,a){if(e.length>1)throw new Error("starts must be a scalar or vector");if(s.length>1)throw new Error("limits must be a scalar or vector");if(a.length>1)throw new Error("deltas must be a scalar or vector");const i=e.length===0,u=s.length===0,c=a.length===0,l=[];i||l.push(e[0]),u||l.push(s[0]),c||l.push(a[0]);for(let y=1;y<l.length;++y)if(l[y]!==l[y-1])throw new Error("starts, limits, and deltas must have the same shape");const h=l.length===0?1:l[0],d=it("int32",h+1);d[0]=0;for(let y=0;y<h;++y){const x=i?n[0]:n[y],C=u?r[0]:r[y],I=c?o[0]:o[y];if(I===0)throw new Error("Requires delta != 0");let k;if(I>0&&C<x||I<0&&C>x)k=0;else if(k=Math.ceil(Math.abs((C-x)/I)),k>pl)throw new Error(`Requires ((limit - start) / delta) <= ${pl}`);d[y+1]=d[y]+k}const p=d[h],f=it(t,p);let b=0;for(let y=0;y<h;++y){const x=d[y+1]-d[y];let C=i?n[0]:n[y];const I=c?o[0]:o[y];for(let k=0;k<x;++k)f[b++]=C,C+=I}return[d,f]}var tn=gn;class Wa{constructor(e,t,r,s,o,a,i,u,c,l){this.shape=e,this.shapeShape=t,this.values=r,this.valuesShape=s,this.valuesDType=o,this.defaultValue=a,this.defaultValueShape=i,this.rowPartitionValues=u,this.rowPartitionValuesShapes=c,this.rowPartitionTypes=zm(l),this.raggedRank=Gm(this.rowPartitionTypes)}getRowPartitionTypeByDimension(e){return this.rowPartitionTypes[0]===tn.FIRST_DIM_SIZE?this.rowPartitionTypes[e+1]:this.rowPartitionTypes[e]}getRowPartitionTensor(e){return this.rowPartitionTypes[0]===tn.FIRST_DIM_SIZE?this.rowPartitionValues[e+1]:this.rowPartitionValues[e]}getMaxWidth(e){const t=this.getRowPartitionTensor(e-1);switch(this.getRowPartitionTypeByDimension(e-1)){case tn.VALUE_ROWIDS:return Wa.getMaxWidthValueRowID(t);case tn.ROW_SPLITS:return Wa.getMaxWidthRowSplit(t);default:throw new Error(`Cannot handle partition type ${tn[this.getRowPartitionTypeByDimension(e-1)]}`)}}static getMaxWidthRowSplit(e){const t=e.length;if(t===0||t===1)return 0;let r=0;for(let s=0;s<t-1;++s){const o=e[s+1]-e[s];o>r&&(r=o)}return r}static getMaxWidthValueRowID(e){const t=e.length;if(t===0)return 0;let r=0,s=e[0],o=0;for(let a=1;a<t;++a){const i=e[a];i!==s&&(s=i,o=Math.max(a-r,o),r=a)}return Math.max(t-r,o)}tensorShapeFromTensor(e,t,r=!0){if(t.length===0){if(e[0]===-1)return[];throw new Error("The only valid scalar shape tensor is the fully unknown shape specified as -1.")}return ml(e,r)}calculateOutputSize(e){const t=this.valuesShape,r=this.defaultValueShape;jm(r,t);const s=this.tensorShapeFromTensor(this.shape,this.shapeShape),a=Wm(this.raggedRank,s,t);a[0]<0&&(a[0]=e);for(let i=1;i<=this.raggedRank;++i)a[i]<0&&(a[i]=this.getMaxWidth(i));return a}calculateFirstParentOutputIndex(e,t,r){const s=Math.min(e,r),o=[];let a=0;for(let i=0;i<s;++i,a+=t)o.push(a);for(let i=s;i<e;++i)o.push(-1);return _(o.length===e,()=>"Final length of result must be equal to firstDimension."),o}calculateOutputIndexRowSplit(e,t,r,s){const o=e.length,a=[];for(let i=0;i<o-1;++i){const u=e[i+1]-e[i];let c=Math.min(s,u),l=t[i];l===-1&&(c=0);for(let h=0;h<c;++h)a.push(l),l+=r;for(let h=0;h<u-c;++h)a.push(-1)}if(o>0&&a.length!==e[o-1])throw new Error("Invalid row split size.");return a}calculateOutputIndexValueRowID(e,t,r,s){const o=e.length,a=[];if(o===0)return[];let i=0,u=e[0];if(u>=t.length)throw new Error(`Got currentValueRowId=${u}, which is not less than ${t.length}`);let c=t[u];a.push(c);for(let l=1;l<o;++l){const h=e[l];if(h===u)c>=0&&(++i,i<s?c+=r:c=-1);else{if(i=0,u=h,h>=t.length)throw new Error(`Got nextValueRowId=${h} which is not less than ${t.length}`);c=t[h]}a.push(c)}if(a.length!==e.length)throw new Error("Invalid row ids.");return a}calculateOutputIndex(e,t,r,s){const o=this.getRowPartitionTensor(e),a=this.getRowPartitionTypeByDimension(e);switch(a){case tn.VALUE_ROWIDS:return this.calculateOutputIndexValueRowID(o,t,r,s);case tn.ROW_SPLITS:if(o.length-1>t.length)throw new Error(`Row partition size is greater than output size: ${o.length-1} > ${t.length}`);return this.calculateOutputIndexRowSplit(o,t,r,s);default:throw new Error(`Unsupported partition type: ${tn[a]}`)}}getFirstDimensionSize(){const e=this.rowPartitionValues[0];if(this.rowPartitionTypes.length===0)throw new Error("No row_partition_types given.");const t=this.rowPartitionTypes[0];switch(t){case tn.FIRST_DIM_SIZE:return e[0];case tn.VALUE_ROWIDS:throw new Error("Cannot handle VALUE_ROWIDS in first dimension.");case tn.ROW_SPLITS:return this.rowPartitionValuesShapes[0][0]-1;default:throw new Error(`Cannot handle type ${tn[t]}`)}}compute(){if(this.rowPartitionValues[0].length<=0)throw new Error("Invalid first partition input. Tensor requires at least one element.");const t=this.getFirstDimensionSize(),r=this.calculateOutputSize(t),s=new Array(this.raggedRank+1);s[s.length-1]=1;for(let u=s.length-2;u>=0;--u)s[u]=s[u+1]*r[u+1];const o=ml(r,!1),a=it(this.valuesDType,ne(o));if(s[0]*r[0]>0){let u=this.calculateFirstParentOutputIndex(t,s[0],r[0]);for(let c=1;c<=this.raggedRank;++c)u=this.calculateOutputIndex(c-1,u,s[c],r[c]);this.setOutput(this.raggedRank,u,a,o)}return[o,a]}setOutput(e,t,r,s){if(r.length===0)return;const o=this.values,a=r;let i=s.slice();i=i.slice(e+1);const u=ne(i),c=t.length;let l=this.defaultValue;if(l.length!==u&&l.length!==1){const f=this.defaultValueShape;we(()=>{const b=Z(l,f);l=xo(b,i).dataSync()})}let h=0,d=0,p=0;for(let f=0;f<=c;++f){let b=f<c?t[f]:-1;if(b===p){++p;continue}if(d<p){const y=o.subarray(h*u),x=a.subarray(d*u),C=(p-d)*u;fl(x,y,C)}if(f>=c){const y=r.length;b=Math.floor(y/u)}if(b>p)if(this.defaultValue.length===1)a.subarray(p*u,b*u).fill(this.defaultValue[0]),p=b;else for(;b>p;){const y=a.slice(p*u);fl(y,l,u),++p}b<0?(h=f+1,d=p):(h=f,d=p,p=d+1)}}}function fl(n,e,t){for(let r=0;r<t;r++)n[r]=e[r]}function ml(n,e){const t=[];for(let r of n){if(r<0){if(!e)throw new Error(`Dimension ${r} must be >= 0`);if(r<-1)throw new Error(`Dimension ${r} must be >= -1`);r=-1}t.push(r)}return t}function zT(n,e,t,r,s,o,a,i,u,c){return new Wa(n,e,t,r,s,o,a,i,u,c).compute()}function GT(n,e,t,r){const s=n===e,o=n<e&&t<0,a=e<n&&t>1;if(s||o||a)return fr(0,r);const i=Math.abs(Math.ceil((e-n)/t)),u=fr(i,r);e<n&&t===1&&(t=-1),u[0]=n;for(let c=1;c<u.length;c++)u[c]=u[c-1]+t;return u}const jT=Yn(n=>1/Math.sqrt(n));function HT(n,e,t,r,s,o,a,i,u,c){const l=[r/s,s],h=n.values,d=e.values;if(r===0)return Ye(t,e.dtype);const p=u instanceof Is?u:Ye(l,e.dtype);typeof u=="string"||typeof u=="number"?p.values.fill(u):typeof u=="boolean"&&p.values.fill(+u);for(let f=0;f<o;f++){const b=[];let y=0;for(let x=0;x<a;x++){const C=h[f*a+x];b.push(C),y+=C*i[x]}if(y<0||y>=r/s)throw new Error(`Invalid indices: ${b} does not index into ${t}`);for(let x=0;x<s;x++)c?p.values[y*s+x]+=d[f*s+x]:p.values[y*s+x]=e.rank===0?d[0]:d[f*s+x]}return p}const KT=Yn(n=>1/(1+Math.exp(-n)));function XT(n,e,t,r,s){const o=mc(r,e,t),a=ne(t),i=dt(r);if(o){const h=gc(e,i);return s==="string"?n.slice(h,h+a):n.subarray(h,h+a)}const u=s==="string"?Rs(n):n,c=Ye(r,s,u),l=Ye(t,s);for(let h=0;h<l.size;++h){const d=l.indexToLoc(h),p=d.map((f,b)=>f+e[b]);l.set(c.get(...p),...d)}return s==="string"?S1(l.values):l.values}function qT(n,e,t,r,s,o,a){const i=e[0],u=o[0],c=new Array(u),l=new Array(i),h=e[1];if(u===0){if(i!==0)throw new Error(c1(i));const y=it(t,0),x=it(s,0);return[y,[0,h],x,c,l]}let d=!0,p=0;const f=new Array(u).fill(0);for(let y=0;y<i;++y){const x=n[y*h];if(x<0)throw new Error(l1(y,x));if(x>=u)throw new Error(h1(y,x,u));++f[x],d=d&&x>=p,p=x}let b=!0;for(let y=0;y<u;++y){const x=f[y]===0;c[y]=x,b=b&&!x,f[y]=Math.max(f[y],1),y>0&&(f[y]+=f[y-1])}if(b&&d){const y=n,x=r;for(let C=0;C<i;++C)l[C]=C;return[y,[i,h],x,c,l]}else{const y=f[u-1],x=it(t,y*h),C=it(s,y),I=new Array(u).fill(0);for(let k=0;k<i;++k){const P=n[k*h],W=I[P],H=(P===0?0:f[P-1])+W;I[P]++;for(let G=0;G<h;++G)x[H*h+G]=n[k*h+G];C[H]=r[k],l[k]=H}for(let k=0;k<u;++k)if(I[k]===0){const W=k===0?0:f[k-1];x[W*h+0]=k;for(let H=1;H<h;++H)x[W*h+H]=0;C[W]=a}return[x,[y,h],C,c,l]}}function YT(n,e,t,r,s){const o=ne(r),a=e[0],i=s.length,u=[];let c=1,l=-1;for(let y=0;y<i;++y){const x=s[y];if(x===-1){if(l!==-1)throw new Error(d1(l,y));l=y,u.push(1)}else{if(x<0)throw new Error(p1(y,x));c*=x,u.push(x)}}if(l!==-1){if(c<=0)throw new Error(f1());const y=Math.trunc(o/c);if(c*y!==o)throw new Error(m1(r,u));u[l]=y}if(ne(u)!==o)throw new Error(g1(r,u));const d=r.length,p=[];if(d>0){p[d-1]=1;for(let y=d-2;y>=0;--y)p[y]=p[y+1]*r[y+1]}const f=[];if(i>0){f[i-1]=1;for(let y=i-2;y>=0;--y)f[y]=f[y+1]*u[y+1]}const b=it(t,a*i);for(let y=0;y<a;++y){let x=0;for(let C=0;C<d;++C)x+=n[y*d+C]*p[C];for(let C=0;C<i;++C)b[y*i+C]=Math.trunc(x/f[C]),x%=f[C]}return[b,[a,i],u]}function QT(n,e,t,r,s,o=!1,a=0){const i=r.length,u=[e[0],n.length/e[0]],c=u[1],h=i>0?s[i-1]+1:0;if(h<0)throw new Error(Nu());const d=e.slice();d[0]=h;const p=d.reduce((I,k)=>I*k,1),f=it(t,p);if(i===0)return h>0&&f.fill(a),[f,d];if(h<=0)throw new Error(Nu());let b=0,y=1,x=0,C=s[b];for(;;){let I=0;if(y<i){if(I=s[y],C===I){++y;continue}if(C>=I)throw new Error(y1())}if(C<0||C>=h)throw new Error(x1(C,h));C>x&&f.fill(a,x*c,C*c);for(let k=b;k<y;++k){const P=r[k];if(P<0||P>=u[0])throw new Error(b1(k,r[k],u[0]));for(let W=0;W<c;W++)f[C*c+W]+=n[P*c+W]}if(o)for(let k=0;k<c;k++)f[C*c+k]/=y-b;if(b=y,++y,x=C+1,C=I,y>i)break}return x<h&&f.fill(a,x*c,h*c),[f,d]}const ZT=Yn(n=>Math.sqrt(n));const JT=kt(((n,e)=>{const t=n-e;return t*t}));const eN=Yn((n,e)=>{const{pattern:t,replaceGlobal:r,rewrite:s}=e;return n.replace(new RegExp(t,r?"g":""),s)});function tN(n,e,t,r){const s=Ye(n,e.dtype);for(let o=0;o<s.size;o++){const a=s.indexToLoc(o),i=new Array(a.length);for(let u=0;u<i.length;u++)i[u]=a[u]*t[u]+r[u];s.set(e.get(...i),...a)}return s}class nN{constructor(e,t,r,s,o,a){this.separator=Wr(e),this.nGramWidths=t,this.leftPad=Wr(r),this.rightPad=Wr(s),this.padWidth=o,this.preserveShort=a}getPadWidth(e){return Math.min(this.padWidth<0?e-1:this.padWidth,e-1)}getNumNGrams(e,t){const r=this.getPadWidth(t);return Math.max(0,e+2*r-t+1)}createNGrams(e,t,r,s,o,a){for(let i=0;i<o;++i){const u=this.getPadWidth(a),c=Math.max(0,u-i),l=Math.max(0,u-(o-(i+1))),h=a-(c+l),d=t+(c>0?0:i-u);let p=0;p+=c*this.leftPad.length;for(let C=0;C<h;++C)p+=e[d+C].length;p+=l*this.rightPad.length;const f=c+l+h-1;p+=f*this.separator.length,r[s+i]=new Uint8Array(p);const b=r[s+i];let y=0;const x=C=>C.forEach(I=>b[y++]=I);for(let C=0;C<c;++C)x(this.leftPad),x(this.separator);for(let C=0;C<h-1;++C)x(e[d+C]),x(this.separator);if(h>0){x(e[d+h-1]);for(let C=0;C<l;++C)x(this.separator),x(this.rightPad)}else{for(let C=0;C<l-1;++C)x(this.rightPad),x(this.separator);x(this.rightPad)}}}compute(e,t){const r=e.length,s=t.length;if(s>0){let u=t[0];if(u!==0)throw new Error(`First split value must be 0, got ${u}`);for(let c=1;c<s;++c){let l=t[c]>=u;if(l=l&&t[c]<=r,!l)throw new Error(`Invalid split value ${t[c]}, must be in [${u}, ${r}]`);u=t[c]}if(u!==r)throw new Error(`Last split value must be data size. Expected ${r}, got ${u}`)}const o=s-1,a=it("int32",s);if(r===0||s===0){const u=new Array(r);for(let c=0;c<=o;++c)a[c]=0;return[u,a]}a[0]=0;for(let u=1;u<=o;++u){const c=t[u]-t[u-1];let l=0;this.nGramWidths.forEach(h=>{l+=this.getNumNGrams(c,h)}),this.preserveShort&&c>0&&l===0&&(l=1),a[u]=a[u-1]+l}const i=new Array(a[o]);for(let u=0;u<o;++u){const c=t[u];let l=a[u];if(this.nGramWidths.forEach(h=>{const d=t[u+1]-t[u],p=this.getNumNGrams(d,h);this.createNGrams(e,c,i,l,p,h),l+=p}),this.preserveShort&&l===a[u]){const h=t[u+1]-t[u];if(h===0)continue;const d=h+2*this.padWidth;this.createNGrams(e,c,i,l,1,d)}}return[i,a]}}function rN(n,e,t,r,s,o,a,i){return new nN(t,r,s,o,a,i).compute(n,e)}function sN(n,e,t,r){if(!n.length)return;if(e.length===0){for(let o=0;o<n.length;++o)r.push(n.subarray(o,o+1));return}if(e.length===1){const o=e[0];let a=n.indexOf(o);for(;a!==-1;){const i=n.subarray(0,a);(!t||i.length!==0)&&r.push(i),n=n.subarray(a+1),a=n.indexOf(o)}(!t||n.length!==0)&&r.push(n);return}let s=0;for(let o=0;o<n.length+1;o++)if(o===n.length||e.indexOf(n[o])!==-1){const a=n.subarray(s,o);(!t||a.length!==0)&&r.push(a),s=o+1}}function oN(n,e,t){const r=n.length,s=[];let o=0,a=0;const i=new Array(r);for(let d=0;d<r;++d){const p=s.length;sN(n[d],e,t,s);const f=s.length-p;i[d]=f,o+=f,a=Math.max(a,f)}const u=it("int32",o*2),c=new Array(o),l=[r,a];let h=0;for(let d=0;d<r;++d)for(let p=0;p<i[d];++p)u[h*2]=d,u[h*2+1]=p,c[h]=s[h],++h;return[u,c,l]}function aN(n,e){const t=it("int32",n.length);for(let r=0;r<n.length;++r)t[r]=b2(n[r]).modulo(e).getLowBitsUnsigned();return t}const iN=kt(((n,e)=>n-e));function uN(n,e){const t=new Array(n.rank);for(let s=0;s<t.length;s++)t[s]=n.shape[s]*e[s];const r=Ye(t,n.dtype);for(let s=0;s<r.values.length;++s){const o=r.indexToLoc(s),a=new Array(n.rank);for(let u=0;u<a.length;u++)a[u]=o[u]%n.shape[u];const i=n.locToIndex(a);r.values[s]=n.values[i]}return r}const go=(n,e)=>{const t=e.value-n.value;return t===0?n.index-e.index:t};function P1(n,e,t=0,r=n.length-1){for(;r>t;){if(r-t>600){const i=r-t+1,u=e-t+1,c=Math.log(i),l=.5*Math.exp(2*c/3),h=.5*Math.sqrt(c*l*(i-l)/i)*Math.sign(u-i/2),d=Math.max(t,Math.floor(e-u*l/i+h)),p=Math.min(r,Math.floor(e+(i-u)*l/i+h));P1(n,e,d,p)}const s=n[e];let o=t,a=r;for(lo(n,t,e),go(n[r],s)>0&&lo(n,t,r);o<a;){for(lo(n,o,a),o++,a--;go(n[o],s)<0;)o=o+1;for(;go(n[a],s)>0;)a=a-1}go(n[t],s)===0?lo(n,t,a):(a=a+1,lo(n,a,r)),a<=e&&(t=a+1),e<=a&&(r=a-1)}}function cN(n,e,t,r,s){const o=e[e.length-1],[a,i]=[n.length/o,o],u=pr(t,a*r),c=pr("int32",a*r);for(let h=0;h<a;h++){const d=h*i,p=n.subarray(d,d+i);let f=new Array(p.length);p.forEach((C,I)=>f[I]={value:C,index:I}),r<f.length&&(P1(f,r),f=f.slice(0,r)),s&&f.sort(go);const b=h*r,y=u.subarray(b,b+r),x=c.subarray(b,b+r);for(let C=0;C<r;C++)y[C]=f[C].value,x[C]=f[C].index}const l=e.slice();return l[l.length-1]=r,[Ye(l,t,u),Ye(l,"int32",c)]}function lN(n,e,t,r){const s=ut(e,t)[0],o=[1,t[0],1];for(let f=0;f<s;f++)o[0]*=t[f];o[1]=t[s];for(let f=s+1;f<t.length;f++)o[2]*=t[f];const a=new Map,i=new Int32Array(t[s]),u=new Is(o,r,n),c=[],l=o[0]===1&&o[2]===1;for(let f=0;f<t[s];f++){let b;if(l)b=n[f].toString();else{const x=[];for(let C=0;C<o[0];C++)for(let I=0;I<o[2];I++)x.push(u.get(C,f,I));b=x.join(",")}const y=a.get(b);if(y!=null)i[f]=y;else{const x=a.size;a.set(b,x),i[f]=x,c.push(f)}}const h=o.slice();h[1]=a.size;const d=new Is(h,r);c.forEach((f,b)=>{for(let y=0;y<o[0];y++)for(let x=0;x<o[2];x++)d.set(u.get(y,f,x),y,b,x)});const p=t.slice();return p[s]=h[1],{outputValues:d.values,outputShape:p,indices:i}}const hN=Object.freeze(Object.defineProperty({__proto__:null,addImpl:cT,bincountImpl:lT,bincountReduceImpl:hT,bitwiseAndImpl:dT,castImpl:uT,ceilImpl:pT,concatImpl:fT,equalImpl:mT,expImpl:gT,expm1Impl:yT,floorDivImpl:bT,floorImpl:xT,gatherNdImpl:vT,gatherV2Impl:wT,greaterEqualImpl:ST,greaterImpl:$T,lessEqualImpl:TT,lessImpl:CT,linSpaceImpl:NT,logImpl:ET,maxImpl:IT,maximumImpl:kT,minimumImpl:RT,multiplyImpl:F1,negImpl:_T,notEqualImpl:AT,prodImpl:DT,raggedGatherImpl:UT,raggedRangeImpl:WT,raggedTensorToTensorImpl:zT,rangeImpl:GT,rsqrtImpl:jT,scatterImpl:HT,sigmoidImpl:KT,simpleAbsImpl:iT,sliceImpl:XT,sparseFillEmptyRowsImpl:qT,sparseReshapeImpl:YT,sparseSegmentReductionImpl:QT,sqrtImpl:ZT,squaredDifferenceImpl:JT,staticRegexReplaceImpl:eN,stridedSliceImpl:tN,stringNGramsImpl:rN,stringSplitImpl:oN,stringToHashBucketFastImpl:aN,subImpl:iN,tileImpl:uN,topKImpl:cN,transposeImpl:OT,uniqueImpl:lN},Symbol.toStringTag,{value:"Module"}));const{addImpl:dN,bincountImpl:L1,bincountReduceImpl:pN,bitwiseAndImpl:fN,castImpl:mN,ceilImpl:gN,concatImpl:yN,equalImpl:xN,expImpl:bN,expm1Impl:vN,floorImpl:wN,gatherNdImpl:$N,gatherV2Impl:SN,greaterImpl:CN,greaterEqualImpl:TN,lessImpl:NN,lessEqualImpl:EN,linSpaceImpl:IN,logImpl:kN,maxImpl:RN,maximumImpl:_N,minimumImpl:AN,multiplyImpl:ON,negImpl:DN,notEqualImpl:FN,prodImpl:PN,raggedGatherImpl:LN,raggedRangeImpl:BN,raggedTensorToTensorImpl:VN,rangeImpl:MN,rsqrtImpl:UN,scatterImpl:WN,sigmoidImpl:zN,simpleAbsImpl:B1,sliceImpl:GN,sparseFillEmptyRowsImpl:jN,sparseReshapeImpl:HN,sparseSegmentReductionImpl:V1,sqrtImpl:KN,staticRegexReplaceImpl:XN,stridedSliceImpl:qN,stringNGramsImpl:YN,stringSplitImpl:QN,stringToHashBucketFastImpl:ZN,subImpl:JN,tileImpl:eE,topKImpl:tE,transposeImpl:Tc,uniqueImpl:nE}=hN;function M1(n,e){return["x","y","z","w","u","v"].slice(0,e).map(t=>`${n}.${t}`)}function $t(n,e){return e===1?[n]:M1(n,e)}function rE(n,e){if(n===1)return"rc";let t="";for(let r=0;r<n;r++)t+=e[r],r<n-1&&(t+=",");return t}class sE{constructor(e){if(this.variableNames=["A"],this.packedInputs=!1,this.packedOutput=!0,this.outputShape=e,this.rank=e.length,this.enableShapeUniforms=bt(this.outputShape.length),this.rank===0)this.userCode=`
+        void main() {
+          setOutput(vec4(getA(), 0., 0., 0.));
+        }
+      `;else{const t=$t("rc",this.rank),r=Ve(this.rank),s=this.getOutOfBoundsCondition(t),o=this.getSetup(t),a=this.getOutput(t);this.userCode=`
+        void main() {
+          ${r} rc = getOutputCoords();
+
+          if(${s}) {
+            setOutput(vec4(0));
+          } else {
+            ${o}
+
+            setOutput(vec4(${a}));
+          }
+        }
+      `}}getSourceCoordsArr(e){const t=[];for(let r=0;r<=1;r++)for(let s=0;s<=1;s++){let o=`${r===0?"r":"rp1"}, ${s===0?"c":"cp1"}`;for(let a=2;a<this.rank;a++)o=`${e[e.length-1-a]},`+o;t.push(o)}return t}getOutOfBoundsCondition(e){if(this.rank===1)return`rc > ${this.enableShapeUniforms?"outShape":this.outputShape[0]}`;let t="";for(let r=this.rank-2;r<this.rank;r++)t+=`${e[r]} >= ${this.enableShapeUniforms?`outShape[${r}]`:this.outputShape[r]}`,r<this.rank-1&&(t+="||");return t}getSetup(e){if(this.rank===1)return"";const t=e.slice(-2),r=this.enableShapeUniforms?`outShape[${this.rank} - 1]`:this.outputShape[this.rank-1],s=this.enableShapeUniforms?`outShape[${this.rank} - 2]`:this.outputShape[this.rank-2];return`
+      int r = ${t[0]};
+      int c = ${t[1]};
+      int rp1 = r + 1;
+      int cp1 = c + 1;
+
+      bool cEdge = cp1 >= ${r};
+      bool rEdge = rp1 >= ${s};
+    `}getOutput(e){const t=this.getSourceCoordsArr(e);return this.rank===1?`getA(rc), (rc + 1 >= ${this.enableShapeUniforms?"outShape":this.outputShape[0]} ? 0. : getA(rc + 1)), 0, 0`:`getA(${t[0]}),
+            cEdge ? 0. : getA(${t[1]}),
+            rEdge ? 0. : getA(${t[2]}),
+            rEdge || cEdge ? 0. : getA(${t[3]})`}}class U1{constructor(e,t){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"inputShape",type:"ivec3"}],this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length);let r="";for(let s=0;s<4;s++){let o="thisRC = rc;";s%2===1&&(o+="thisRC.z += 1;"),s>1&&(o+="thisRC.y += 1;"),r+=`
+        ${o}
+        ${s>0?"if(thisRC.y < rows && thisRC.z < cols){":""}
+          int flatIndex = getFlatIndex(thisRC);
+
+          ivec3 inputRC = inputCoordsFromReshapedOutCoords(flatIndex);
+          vec2 inputRCInnerDims = vec2(float(inputRC.y),float(inputRC.z));
+
+          result[${s}] =
+            getChannel(getA(inputRC.x, inputRC.y, inputRC.z), inputRCInnerDims);
+        ${s>0?"}":""}
+      `}this.userCode=`
+      ${oE(t,this.enableShapeUniforms)}
+      ${this.enableShapeUniforms?Sc():$c(e)}
+
+      void main() {
+        ivec3 rc = getOutputCoords();
+
+        vec4 result = vec4(0.);
+
+        ivec3 thisRC;
+        int rows = ${this.enableShapeUniforms?"outShape[1]":e[1]};
+        int cols = ${this.enableShapeUniforms?"outShape[2]":e[2]};
+
+        ${r}
+
+        setOutput(result);
+      }
+    `}}function oE(n,e){return`
+    ivec3 inputCoordsFromReshapedOutCoords(int index) {
+      ${e?ZS(["r","c","d"],"inputShape"):os(["r","c","d"],n)}
+      return ivec3(r, c, d);
+    }
+  `}class aE{constructor(e){this.gpgpu=e,this.numUsedTextures=0,this.numFreeTextures=0,this._numBytesAllocated=0,this._numBytesFree=0,this.freeTextures={},this.usedTextures={},this.logEnabled=!1}acquireTexture(e,t,r){const s=yl(t,r),o=xl(e,s,r);o in this.freeTextures||(this.freeTextures[o]=[]),o in this.usedTextures||(this.usedTextures[o]=[]);const a=gl(e,s,this.gpgpu.gl,this.gpgpu.textureConfig,r);if(this.freeTextures[o].length>0){this.numFreeTextures--,this.numUsedTextures++,this._numBytesFree-=a,this.log();const u=this.freeTextures[o].pop();return this.usedTextures[o].push(u),u}let i;return s===lt.PACKED_2X2_FLOAT32?i=this.gpgpu.createPackedMatrixTexture(e[0],e[1]):s===lt.PACKED_2X2_FLOAT16?i=this.gpgpu.createFloat16PackedMatrixTexture(e[0],e[1]):s===lt.UNPACKED_FLOAT32?i=this.gpgpu.createFloat32MatrixTexture(e[0],e[1]):s===lt.UNPACKED_FLOAT16?i=this.gpgpu.createFloat16MatrixTexture(e[0],e[1]):s===lt.PACKED_4X1_UNSIGNED_BYTE&&(i=this.gpgpu.createUnsignedBytesMatrixTexture(e[0],e[1])),this.usedTextures[o].push(i),this.numUsedTextures++,this._numBytesAllocated+=a,this.log(),i}releaseTexture(e,t,r,s){if(this.freeTextures==null)return;const o=yl(r,s),a=xl(t,o,s);a in this.freeTextures||(this.freeTextures[a]=[]);const i=gl(t,o,this.gpgpu.gl,this.gpgpu.textureConfig,s),u=j().getNumber("WEBGL_DELETE_TEXTURE_THRESHOLD");u!==-1&&this._numBytesAllocated>u?(this.gpgpu.deleteMatrixTexture(e.texture),this._numBytesAllocated-=i):(this.freeTextures[a].push(e),this.numFreeTextures++,this._numBytesFree+=i),this.numUsedTextures--;const c=this.usedTextures[a],l=c&&c.indexOf(e);if(l==null||l<0)throw new Error("Cannot release a texture that was never provided by this texture manager");c[l]=c[c.length-1],c.pop(),this.log()}log(){if(!this.logEnabled)return;const e=this.numFreeTextures+this.numUsedTextures;console.log("Free/Used",`${this.numFreeTextures} / ${this.numUsedTextures}`,`(${e})`);const t=this._numBytesFree/this._numBytesAllocated;console.log(`Bytes allocated: ${this._numBytesAllocated}`),console.log(`Bytes unused: ${this._numBytesFree} (${Math.round(100*t)}%)`)}get numBytesAllocated(){return this._numBytesAllocated}get numBytesFree(){return this._numBytesFree}getNumUsedTextures(){return this.numUsedTextures}getNumFreeTextures(){return this.numFreeTextures}dispose(){if(this.freeTextures!=null){for(const e in this.freeTextures)this.freeTextures[e].forEach(t=>{this.gpgpu.deleteMatrixTexture(t.texture)});for(const e in this.usedTextures)this.usedTextures[e].forEach(t=>{this.gpgpu.deleteMatrixTexture(t.texture)});this.freeTextures=null,this.usedTextures=null,this.numUsedTextures=0,this.numFreeTextures=0,this._numBytesAllocated=0,this._numBytesFree=0}}}function iE(n,e){const t=n;if(e===t.R32F)return 4;if(e===t.R16F)return 2;if(e===t.RGBA32F)return 16;if(e===n.RGBA)return 16;if(e===t.RGBA16F)return 8;if(e===t.RGBA8)return 4;throw new Error(`Unknown internal format ${e}`)}function gl(n,e,t,r,s){const o=uE(e,r);let a;if(s){const[u,c]=Bs(n[0],n[1]);a=u*c}else{const[u,c]=Bo(n[0],n[1]);a=u*c}const i=iE(t,o);return a*i}function uE(n,e){switch(n){case lt.PACKED_2X2_FLOAT32:return O1(e);case lt.PACKED_2X2_FLOAT16:return D1(e);case lt.UNPACKED_FLOAT32:return R1(e);case lt.UNPACKED_FLOAT16:return _1(e);case lt.PACKED_4X1_UNSIGNED_BYTE:return A1(e);default:throw new Error(`Unknown physical texture type ${n}`)}}function cE(n){return j().getBool("WEBGL_RENDER_FLOAT32_ENABLED")?n?lt.PACKED_2X2_FLOAT32:lt.UNPACKED_FLOAT32:n?lt.PACKED_2X2_FLOAT16:lt.UNPACKED_FLOAT16}function yl(n,e){if(n===Gt.UPLOAD)return lt.PACKED_2X2_FLOAT32;if(n===Gt.RENDER||n==null)return cE(e);if(n===Gt.DOWNLOAD||n===Gt.PIXELS)return lt.PACKED_4X1_UNSIGNED_BYTE;throw new Error(`Unknown logical texture type ${n}`)}function xl(n,e,t){return`${n[0]}_${n[1]}_${e}_${t}`}class kn{constructor(e,t){this.variableNames=["A"],this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length),this.userCode=`
+      float unaryOperation(float x) {
+        ${t}
+      }
+
+      void main() {
+        float x = getAAtOutCoords();
+        float y = unaryOperation(x);
+
+        setOutput(y);
+      }
+    `}}const ln="if (isnan(x)) return x;",lE="return x;",bl="return abs(x);",hE="return (x >= 0.0) ? x : (exp(x) - 1.0);",dE=ln+`
+  return (x < 0.0) ? 0.0 : x;
+`,pE=ln+`
+  return (x < 0.0) ? 0.0 : min(6.0, x);
+`,ar="return x;",fE="return 1.0 / (1.0 + exp(-1.0 * x));";const mE="return x;",gE=`
+  vec4 result;
+
+  result.r = (x.r >= 0.0) ? x.r : (exp(x.r) - 1.0);
+  result.g = (x.g >= 0.0) ? x.g : (exp(x.g) - 1.0);
+  result.b = (x.b >= 0.0) ? x.b : (exp(x.b) - 1.0);
+  result.a = (x.a >= 0.0) ? x.a : (exp(x.a) - 1.0);
+
+  return result;
+`,yE=`
+  vec4 result = x * vec4(greaterThanEqual(x, vec4(0.0)));
+  bvec4 isNaN = isnan(x);
+
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`,xE=`
+  vec4 result = min(x, vec4(6.)) * vec4(greaterThanEqual(x, vec4(0.0)));
+  bvec4 isNaN = isnan(x);
+
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`,bE="return 1.0 / (1.0 + exp(-1.0 * x));";class ur{constructor(e,t){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length),this.userCode=`
+      vec4 unaryOperation(vec4 x) {
+        ${t}
+      }
+
+      void main() {
+        vec4 x = getAAtOutCoords();
+        vec4 y = unaryOperation(x);
+
+        setOutput(y);
+      }
+    `}}class vE{constructor(e){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!1,this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length);const t=e.length,r=$t("rc",t),s=Ve(t),o=rE(t,r),a=r.slice(-2),i=t<=1?"rc":`vec2(${a.join(",")})`;this.userCode=`
+      void main() {
+        ${s} rc = getOutputCoords();
+        vec4 packedInput = getA(${o});
+
+        setOutput(getChannel(packedInput, ${i}));
+      }
+    `}}const wE=hm,$E=1e-7,SE=1e-4,ma={};function CE(n){return n in ma||(ma[n]={}),ma[n]}const TE=j().getNumber("CPU_HANDOFF_SIZE_THRESHOLD"),NE=600;function EE(){return j().global.screen==null?1024:j().global.screen.height*j().global.screen.width*window.devicePixelRatio*NE/1024/1024}class di extends oh{nextDataId(){return di.nextDataId++}constructor(e){if(super(),this.pendingRead=new WeakMap,this.pendingDisposal=new WeakSet,this.dataRefCount=new WeakMap,this.numBytesInGPU=0,this.uploadWaitMs=0,this.downloadWaitMs=0,this.lastGlFlushTime=0,this.warnedAboutMemory=!1,this.pendingDeletes=0,this.disposed=!1,!j().getBool("HAS_WEBGL"))throw new Error("WebGL is not supported on this device");let t;if(e!=null){if(e instanceof Vi)t=e;else{const r=vn(j().getNumber("WEBGL_VERSION"),e);t=new Vi(r)}this.binaryCache={},this.gpgpuCreatedLocally=!1}else{const r=vn(j().getNumber("WEBGL_VERSION"));t=new Vi(r),this.binaryCache=CE(j().getNumber("WEBGL_VERSION")),this.gpgpuCreatedLocally=!0}this.gpgpu=t,this.canvas=this.gpgpu.gl.canvas,this.textureManager=new aE(this.gpgpu),this.numMBBeforeWarning=EE(),this.texData=new Bg(this,sr())}numDataIds(){return this.texData.numDataIds()-this.pendingDeletes}writeTexture(e,t,r,s,o,a){const i=this.makeTensorInfo(t,r),u=this.texData.get(i.dataId);u.isPacked=!1,u.texture={texture:e,texShape:[s,o]},u.texShape=[s,o];const c=pa(t),l=new hl(c,!1,a),h=this.runWebGLProgram(l,[i],r,[[s,o]]);return h.shape=t,u.texture=null,this.disposeIntermediateTensorInfo(i),h.dataId}write(e,t,r){if((j().getBool("WEBGL_CHECK_NUMERICAL_PROBLEMS")||j().getBool("DEBUG"))&&this.checkNumericalProblems(e),r==="complex64"&&e!=null)throw new Error("Cannot write to a complex64 dtype. Please use tf.complex(real, imag).");const s={id:this.nextDataId()};return this.texData.set(s,{shape:t,dtype:r,values:e,usage:Gt.UPLOAD,refCount:1}),s}refCount(e){return this.texData.has(e)?this.texData.get(e).refCount:0}incRef(e){const t=this.texData.get(e);t.refCount++}decRef(e){if(this.texData.has(e)){const t=this.texData.get(e);t.refCount--}}move(e,t,r,s,o){if(j().getBool("DEBUG")&&this.checkNumericalProblems(t),s==="complex64")throw new Error("Cannot write to a complex64 dtype. Please use tf.complex(real, imag).");this.texData.set(e,{shape:r,dtype:s,values:t,usage:Gt.UPLOAD,refCount:o})}disposeIntermediateTensorInfo(e){this.disposeData(e.dataId)}readSync(e){const t=this.texData.get(e),{values:r,dtype:s,complexTensorInfos:o,slice:a,shape:i,isPacked:u}=t;if(a!=null){let d;u?d=new ur(i,ar):d=new kn(i,ar);const p=this.runWebGLProgram(d,[{dataId:e,shape:i,dtype:s}],s),f=this.readSync(p.dataId);return this.disposeIntermediateTensorInfo(p),f}if(r!=null)return this.convertAndCacheOnCPU(e);if(s==="string")return r;const c=this.activeTimers!=null;let l;c&&(l=fn());let h;if(s==="complex64"){const d=this.readSync(o.real.dataId),p=this.readSync(o.imag.dataId);h=Tu(d,p)}else h=this.getValuesFromTexture(e);return c&&(this.downloadWaitMs+=fn()-l),this.convertAndCacheOnCPU(e,h)}async read(e){if(this.pendingRead.has(e)){const f=this.pendingRead.get(e);return new Promise(b=>f.push(b))}const t=this.texData.get(e),{values:r,shape:s,slice:o,dtype:a,complexTensorInfos:i,isPacked:u}=t;if(o!=null){let f;u?f=new ur(s,ar):f=new kn(s,ar);const b=this.runWebGLProgram(f,[{dataId:e,shape:s,dtype:a}],a),y=this.read(b.dataId);return this.disposeIntermediateTensorInfo(b),y}if(r!=null)return this.convertAndCacheOnCPU(e);if(j().getBool("DEBUG")&&!j().getBool("WEBGL_DOWNLOAD_FLOAT_ENABLED")&&j().getNumber("WEBGL_VERSION")===2)throw new Error("tensor.data() with WEBGL_DOWNLOAD_FLOAT_ENABLED=false and WEBGL_VERSION=2 not yet supported.");let c=null,l;if(a!=="complex64"&&j().get("WEBGL_BUFFER_SUPPORTED")){l=this.decode(e);const f=this.texData.get(l.dataId);c=this.gpgpu.createBufferFromTexture(f.texture.texture,...la(s))}this.pendingRead.set(e,[]),a!=="complex64"&&await this.gpgpu.createAndWaitForFence();let h;if(a==="complex64"){const f=await Promise.all([this.read(i.real.dataId),this.read(i.imag.dataId)]),b=f[0],y=f[1];h=Tu(b,y)}else if(c==null)h=this.getValuesFromTexture(e);else{const f=ne(s);h=this.gpgpu.downloadFloat32MatrixFromBuffer(c,f)}if(l!=null&&this.disposeIntermediateTensorInfo(l),c!=null){const f=this.gpgpu.gl;ce(f,()=>f.deleteBuffer(c))}const d=this.convertAndCacheOnCPU(e,h),p=this.pendingRead.get(e);return this.pendingRead.delete(e),p.forEach(f=>f(d)),this.pendingDisposal.has(e)&&(this.pendingDisposal.delete(e),this.disposeData(e)&&sr().removeDataId(e,this),this.pendingDeletes--),d}readToGPU(e,t={}){const r=this.texData.get(e),{values:s,shape:o,slice:a,dtype:i,isPacked:u,texture:c}=r;if(i==="complex64")throw new Error("Does not support reading texture for complex64 dtype.");if(a!=null){let p;u?p=new ur(o,ar):p=new kn(o,ar);const f=this.runWebGLProgram(p,[{dataId:e,shape:o,dtype:i}],i),b=this.readToGPU(f,t);return this.disposeIntermediateTensorInfo(f),b}if(c==null)throw s!=null?new Error("Data is not on GPU but on CPU."):new Error("There is no data on GPU or CPU.");const l=this.decode(e,t.customTexShape),h=sr().makeTensorFromTensorInfo(l),d=this.texData.get(l.dataId);return Object.assign({tensorRef:h},d.texture)}bufferSync(e){const t=this.readSync(e.dataId);if(e.dtype==="string")try{const r=t.map(s=>Es(s));return Ye(e.shape,e.dtype,r)}catch{throw new Error("Failed to decode encoded string bytes into utf-8")}return Ye(e.shape,e.dtype,t)}checkNumericalProblems(e){if(e!=null)for(let t=0;t<e.length;t++){const r=e[t];if(!TS(r))throw j().getBool("WEBGL_RENDER_FLOAT32_CAPABLE")?Error(`The value ${r} cannot be represented with your current settings. Consider enabling float32 rendering: 'tf.env().set('WEBGL_RENDER_FLOAT32_ENABLED', true);'`):Error(`The value ${r} cannot be represented on this device.`)}}getValuesFromTexture(e){const{shape:t,dtype:r,isPacked:s}=this.texData.get(e),o=ne(t);if(j().getBool("WEBGL_DOWNLOAD_FLOAT_ENABLED")){const d=this.decode(e),p=this.texData.get(d.dataId),f=this.gpgpu.downloadMatrixFromPackedTexture(p.texture.texture,...la(t)).subarray(0,o);return this.disposeIntermediateTensorInfo(d),f}const a=j().getBool("WEBGL_PACK")&&s===!0,i=a?pa(t):t,u=a?new UC(i):new MC(i),c=this.runWebGLProgram(u,[{shape:i,dtype:r,dataId:e}],"float32"),l=this.texData.get(c.dataId),h=this.gpgpu.downloadByteEncodedFloatMatrixFromOutputTexture(l.texture.texture,l.texShape[0],l.texShape[1]).subarray(0,o);return this.disposeIntermediateTensorInfo(c),h}timerAvailable(){return j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE")>0}time(e){const t=this.activeTimers,r=[];let s=!1;this.programTimersStack==null?(this.programTimersStack=r,s=!0):this.activeTimers.push(r),this.activeTimers=r,e();const o=jr(this.activeTimers.map(u=>u.query)).filter(u=>u!=null),a=jr(this.activeTimers.map(u=>u.name)).filter(u=>u!=null);this.activeTimers=t,s&&(this.programTimersStack=null);const i={uploadWaitMs:this.uploadWaitMs,downloadWaitMs:this.downloadWaitMs,kernelMs:null,wallMs:null};return(async()=>{if(j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE")>0){const u=await Promise.all(o);i.kernelMs=Vg(u),i.getExtraProfileInfo=()=>u.map((c,l)=>({name:a[l],ms:c})).map(c=>`${c.name}: ${c.ms}`).join(", ")}else i.kernelMs={error:"WebGL query timers are not supported in this environment."};return this.uploadWaitMs=0,this.downloadWaitMs=0,i})()}memory(){return{unreliable:!1,numBytesInGPU:this.numBytesInGPU,numBytesInGPUAllocated:this.textureManager.numBytesAllocated,numBytesInGPUFree:this.textureManager.numBytesFree}}startTimer(){return j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE")>0?this.gpgpu.beginQuery():{startMs:fn(),endMs:null}}endTimer(e){return j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE")>0?(this.gpgpu.endQuery(),e):(e.endMs=fn(),e)}async getQueryTime(e){if(j().getNumber("WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE")>0)return this.gpgpu.waitForQueryAndGetTime(e);const t=e;return t.endMs-t.startMs}disposeData(e,t=!1){if(this.pendingDisposal.has(e))return!1;if(!this.texData.has(e))return!0;if(t?this.texData.get(e).refCount=0:this.texData.get(e).refCount--,!t&&this.texData.get(e).refCount>0)return!1;if(this.pendingRead.has(e))return this.pendingDisposal.add(e),this.pendingDeletes++,!1;this.releaseGPUData(e);const{complexTensorInfos:r}=this.texData.get(e);return r!=null&&(this.disposeData(r.real.dataId,t),this.disposeData(r.imag.dataId,t)),this.texData.delete(e),!0}releaseGPUData(e){const{texture:t,dtype:r,texShape:s,usage:o,isPacked:a,slice:i}=this.texData.get(e),u=i&&i.origDataId||e,c=this.dataRefCount.get(u);c>1?this.dataRefCount.set(u,c-1):(this.dataRefCount.delete(u),t!=null&&(this.numBytesInGPU-=this.computeBytes(s,r),this.textureManager.releaseTexture(t,s,o,a)));const l=this.texData.get(e);l.texture=null,l.texShape=null,l.isPacked=!1,l.slice=null}getTexture(e){return this.uploadToGPU(e),this.texData.get(e).texture.texture}getDataInfo(e){return this.texData.get(e)}shouldExecuteOnCPU(e,t=TE){return j().getBool("WEBGL_CPU_FORWARD")&&e.every(r=>this.texData.get(r.dataId).texture==null&&ne(r.shape)<t)}getGPGPUContext(){return this.gpgpu}where(e){yn("tf.where() in webgl locks the UI thread. Call tf.whereAsync() instead");const t=e.dataSync();return wE(e.shape,t)}packedUnaryOp(e,t,r){const s=new ur(e.shape,t),o=this.compileAndRun(s,[e],r);return sr().makeTensorFromTensorInfo(o)}abs(e){if(this.shouldExecuteOnCPU([e])&&e.dtype!=="complex64"){const s=B1(this.texData.get(e.dataId).values);return this.makeOutput(e.shape,e.dtype,s)}if(j().getBool("WEBGL_PACK_UNARY_OPERATIONS"))return this.packedUnaryOp(e,bl,e.dtype);const t=new kn(e.shape,bl),r=this.compileAndRun(t,[e]);return sr().makeTensorFromTensorInfo(r)}makeTensorInfo(e,t,r){let s;if(t==="string"&&r!=null&&r.length>0&&Ya(r[0])){const o=r.map(a=>Wr(a));s=this.write(o,e,t)}else s=this.write(r,e,t);return this.texData.get(s).usage=null,{dataId:s,shape:e,dtype:t}}makeOutput(e,t,r){return sr().makeTensorFromTensorInfo(this.makeTensorInfo(e,t,r),this)}unpackTensor(e){const t=new vE(e.shape);return this.runWebGLProgram(t,[e],e.dtype)}packTensor(e){const t=new sE(e.shape);return this.runWebGLProgram(t,[e],e.dtype,null,!0)}packedReshape(e,t){const r=[_s(e.shape),...As(e.shape)],s={dtype:e.dtype,shape:r,dataId:e.dataId},o=[_s(t),...As(t)],a=new U1(o,r),i=!0,u=[r],c=this.runWebGLProgram(a,[s],e.dtype,u,i);return{dataId:c.dataId,shape:t,dtype:c.dtype}}decode(e,t){const r=this.texData.get(e),{isPacked:s,shape:o,dtype:a}=r;if(t!=null){const d=ne(o),p=t[0]*t[1]*4;_(d<=p,()=>"customTexShape is too small. Row * Column * 4 should be equal or larger than the size of the tensor data.")}const i=pa(o);let u;s?u=new VC(i):u=new BC(i);const c=!0,l=[t??la(i)],h=this.runWebGLProgram(u,[{shape:i,dtype:a,dataId:e}],a,l,c,t);return{dtype:a,shape:o,dataId:h.dataId}}runWebGLProgram(e,t,r,s,o=!1,a){const i=this.makeTensorInfo(e.outputShape,r),u=this.texData.get(i.dataId);if(e.packedOutput&&(u.isPacked=!0),e.outPackingScheme===Io.DENSE){const x=a??la(e.outputShape);u.texShape=x.map(C=>C*2)}if(e.outTexUsage!=null&&(u.usage=e.outTexUsage),ne(i.shape)===0)return u.values=pr(i.dtype,0),i;const c=[],l=t.map(x=>{if(x.dtype==="complex64")throw new Error("GPGPUProgram does not support complex64 input. For complex64 dtypes, please separate the program into real and imaginary parts.");let C=this.texData.get(x.dataId);if(C.texture==null){if(!e.packedInputs&&ne(x.shape)<=j().getNumber("WEBGL_SIZE_UPLOAD_UNIFORM"))return{shape:x.shape,texData:null,isUniform:!0,uniformValues:C.values};e.packedInputs&&(C.isPacked=!0,C.shape=x.shape)}if(this.uploadToGPU(x.dataId),!!C.isPacked!=!!e.packedInputs)x=C.isPacked?this.unpackTensor(x):this.packTensor(x),c.push(x),C=this.texData.get(x.dataId);else if(C.isPacked&&!Ua(C.shape,x.shape)){const I=x,k=x.shape;x.shape=C.shape,x=this.packedReshape(x,k),c.push(x),C=this.texData.get(x.dataId),I.shape=k}return{shape:x.shape,texData:C,isUniform:!1}});this.uploadToGPU(i.dataId);const h={shape:i.shape,texData:u,isUniform:!1},d=LC(e,l,h),p=this.getAndSaveBinary(d,()=>FC(this.gpgpu,e,l,h)),f=this.activeTimers!=null;let b;f&&(b=this.startTimer()),j().get("ENGINE_COMPILE_ONLY")||PC(this.gpgpu,p,l,h,s),c.forEach(x=>this.disposeIntermediateTensorInfo(x)),f&&(b=this.endTimer(b),this.activeTimers.push({name:e.constructor.name,query:this.getQueryTime(b)}));const y=j().getNumber("WEBGL_FLUSH_THRESHOLD");if(y>0){const x=fn();x-this.lastGlFlushTime>y&&(this.gpgpu.gl.flush(),this.lastGlFlushTime=x)}if(!j().getBool("WEBGL_LAZILY_UNPACK")&&u.isPacked&&o===!1){const x=this.unpackTensor(i);return this.disposeIntermediateTensorInfo(i),x}return i}compileAndRun(e,t,r,s,o=!1){return r=r||t[0].dtype,this.runWebGLProgram(e,t,r,s,o)}getAndSaveBinary(e,t){return e in this.binaryCache||(this.binaryCache[e]=t()),this.binaryCache[e]}getTextureManager(){return this.textureManager}dispose(){this.disposed||(j().getBool("IS_TEST")||Object.keys(this.binaryCache).forEach(t=>{this.gpgpu.deleteProgram(this.binaryCache[t].webGLProgram),delete this.binaryCache[t]}),this.textureManager.dispose(),this.canvas!=null&&typeof HTMLCanvasElement<"u"&&this.canvas instanceof HTMLCanvasElement?this.canvas.remove():this.canvas=null,this.gpgpuCreatedLocally&&(this.gpgpu.program=null,this.gpgpu.dispose()),this.disposed=!0)}floatPrecision(){return this.floatPrecisionValue==null&&(this.floatPrecisionValue=we(()=>{if(!j().get("WEBGL_RENDER_FLOAT32_ENABLED")){const e=j().getBool("DEBUG");j().set("DEBUG",!1);const t=this.abs(Re(1e-8)).dataSync()[0];if(j().set("DEBUG",e),t>0)return 32}return 16})),this.floatPrecisionValue}epsilon(){return this.floatPrecision()===32?$E:SE}uploadToGPU(e){const t=this.texData.get(e),{shape:r,dtype:s,values:o,texture:a,usage:i,isPacked:u}=t;if(a!=null)return;const c=this.activeTimers!=null;let l;c&&(l=fn());let h=t.texShape;if(h==null&&(h=zS(r,u),t.texShape=h),o!=null){const d=pa(r);let p,f=h[1],b=h[0];const y=o instanceof Uint8Array||o instanceof Uint8ClampedArray;(u||!y)&&([f,b]=Bs(h[0],h[1])),u?p=new zC(d,y):p=new hl(d,y);const x=y?[b,f]:h,C=this.makeTensorInfo(x,s),I=this.texData.get(C.dataId);y?I.usage=Gt.PIXELS:I.usage=Gt.UPLOAD,I.texShape=x,this.gpgpu.uploadDenseMatrixToTexture(this.getTexture(C.dataId),f,b,o);const k=[[b,f]],W=this.runWebGLProgram(p,[C],s,k,!0),H=this.texData.get(W.dataId);t.texShape=H.texShape,t.isPacked=H.isPacked,t.usage=H.usage,j().get("ENGINE_COMPILE_ONLY")?this.disposeData(W.dataId):(t.texture=H.texture,t.values=null,this.texData.delete(W.dataId)),this.disposeIntermediateTensorInfo(C),c&&(this.uploadWaitMs+=fn()-l)}else{const d=this.acquireTexture(h,i,s,u);t.texture=d}}convertAndCacheOnCPU(e,t){const r=this.texData.get(e),{dtype:s}=r;return t!=null&&(r.values=IE(t,s)),r.values}acquireTexture(e,t,r,s){if(this.numBytesInGPU+=this.computeBytes(e,r),!this.warnedAboutMemory&&this.numBytesInGPU>this.numMBBeforeWarning*1024*1024){const o=(this.numBytesInGPU/1024/1024).toFixed(2);this.warnedAboutMemory=!0,console.warn(`High memory usage in GPU: ${o} MB, most likely due to a memory leak`)}return this.textureManager.acquireTexture(e,t,s)}computeBytes(e,t){return e[0]*e[1]*Aa(t)}checkCompileCompletion(){for(const[,e]of Object.entries(this.binaryCache))this.checkCompletion_(e)}async checkCompileCompletionAsync(){const e=[];if(this.gpgpu.parallelCompilationExtension){for(const[,t]of Object.entries(this.binaryCache))e.push(this.checkCompletionAsync_(t));return Promise.all(e)}else{for(const[,t]of Object.entries(this.binaryCache)){const r=new Promise(s=>{try{this.checkCompletion_(t),s(!0)}catch(o){throw o}});e.push(r)}return Promise.all(e)}}async checkCompletionAsync_(e){return this.gpgpu.gl.getProgramParameter(e.webGLProgram,this.gpgpu.parallelCompilationExtension.COMPLETION_STATUS_KHR)?this.checkCompletion_(e):(await oS(),this.checkCompletionAsync_(e))}checkCompletion_(e){if(this.gpgpu.gl.getProgramParameter(e.webGLProgram,this.gpgpu.gl.LINK_STATUS)===!1)throw console.log(this.gpgpu.gl.getProgramInfoLog(e.webGLProgram)),this.gpgpu.gl.getShaderParameter(e.fragmentShader,this.gpgpu.gl.COMPILE_STATUS)===!1?(C1(e.source,this.gpgpu.gl.getShaderInfoLog(e.fragmentShader)),new Error("Failed to compile fragment shader.")):new Error("Failed to link vertex and fragment shaders.");return!0}getUniformLocations(){for(const e of Object.values(this.binaryCache)){this.gpgpu.buildVao(e.webGLProgram);const{variablesLocations:t,customUniformLocations:r,infLoc:s,nanLoc:o,outShapeLocation:a,outShapeStridesLocation:i,outTexShapeLocation:u}=k1(this.gpgpu,e.program,e.webGLProgram);e.variablesLocations=t,e.customUniformLocations=r,e.infLoc=s,e.nanLoc=o,e.outShapeLocation=a,e.outShapeStridesLocation=i,e.outTexShapeLocation=u}}createTensorFromGPUData(e,t,r){e.channels=e.channels||"RGBA";const{texture:s,height:o,width:a,channels:i}=e,u=sr().backend;if(!u.gpgpu.gl.isTexture(s))throw new Error("The texture is invalid. Also, please make sure the texture and the TFJS WebGL backend are using the same canvas. If you want to use your own custom canvas, you have to create and use the custom TFJS WebGL backend created from the canvas through 'new tf.MathBackendWebGL(customCanvas)'.");const c=u.writeTexture(s,t,r,o,a,i);return sr().makeTensorFromDataId(c,t,r,u)}}di.nextDataId=0;function IE(n,e){if(e==="float32"||e==="complex64")return n;if(e==="int32"||e==="bool"){const t=e==="int32"?new Int32Array(n.length):new Uint8Array(n.length);for(let r=0;r<t.length;++r)t[r]=Math.round(n[r]);return t}else throw new Error(`Unknown dtype ${e}`)}ff()&&M2("webgl",()=>new di,2);const Nc=`
+  if (isnan(a)) return a;
+  if (isnan(b)) return b;
+`;class es{constructor(e,t,r){this.variableNames=["A","B"],this.outputShape=Fe(t,r),this.enableShapeUniforms=bt(this.outputShape.length),this.userCode=`
+      float binaryOperation(float a, float b) {
+        ${e}
+      }
+
+      void main() {
+        float a = getAAtOutCoords();
+        float b = getBAtOutCoords();
+        setOutput(binaryOperation(a, b));
+      }
+    `}}const is=`
+  result.r = isNaN.r ? NAN : result.r;
+  result.g = isNaN.g ? NAN : result.g;
+  result.b = isNaN.b ? NAN : result.b;
+  result.a = isNaN.a ? NAN : result.a;
+`;class zs{constructor(e,t,r,s=!1){this.variableNames=["A","B"],this.supportsBroadcasting=!0,this.packedInputs=!0,this.packedOutput=!0,this.outputShape=Fe(t,r);const o=this.outputShape.length;this.enableShapeUniforms=bt(o);let a="";if(s)if(o===0||ne(this.outputShape)===1)a=`
+          result.y = 0.;
+          result.z = 0.;
+          result.w = 0.;
+        `;else if(a=`
+          ${Ve(o)} coords = getOutputCoords();
+        `,o===1)this.enableShapeUniforms?a+=`
+            result.y = (coords + 1) >= outShape ? 0. : result.y;
+            result.z = 0.;
+            result.w = 0.;
+          `:a+=`
+            result.y = (coords + 1) >= ${this.outputShape[0]} ? 0. : result.y;
+            result.z = 0.;
+            result.w = 0.;
+          `;else{const u=$t("coords",o);this.enableShapeUniforms?a+=`
+            bool nextRowOutOfBounds =
+              (${u[o-2]} + 1) >= outShape[${o} - 2];
+            bool nextColOutOfBounds =
+              (${u[o-1]} + 1) >= outShape[${o} - 1];
+            result.y = nextColOutOfBounds ? 0. : result.y;
+            result.z = nextRowOutOfBounds ? 0. : result.z;
+            result.w = nextColOutOfBounds || nextRowOutOfBounds ? 0. : result.w;
+          `:a+=`
+            bool nextRowOutOfBounds =
+              (${u[o-2]} + 1) >= ${this.outputShape[o-2]};
+            bool nextColOutOfBounds =
+              (${u[o-1]} + 1) >= ${this.outputShape[o-1]};
+            result.y = nextColOutOfBounds ? 0. : result.y;
+            result.z = nextRowOutOfBounds ? 0. : result.z;
+            result.w = nextColOutOfBounds || nextRowOutOfBounds ? 0. : result.w;
+          `}this.userCode=`
+      vec4 binaryOperation(vec4 a, vec4 b) {
+        ${e}
+      }
+
+      void main() {
+        vec4 a = getAAtOutCoords();
+        vec4 b = getBAtOutCoords();
+
+        vec4 result = binaryOperation(a, b);
+        ${a}
+
+        setOutput(result);
+      }
+    `}}function Lt(n){const{inputs:e,backend:t}=n,{x:r}=e;return t.incRef(r.dataId),{dataId:r.dataId,shape:r.shape,dtype:r.dtype}}const kE={kernelName:Xu,backendName:"webgl",kernelFunc:Lt};function wr(n){const{inputs:e,backend:t}=n,{real:r,imag:s}=e,o=t.makeTensorInfo(r.shape,"complex64"),a=t.texData.get(o.dataId),i=Lt({inputs:{x:r},backend:t}),u=Lt({inputs:{x:s},backend:t});return a.complexTensorInfos={real:i,imag:u},o}const RE={kernelName:Ah,backendName:"webgl",kernelFunc:wr};const W1="return (a < 0.) ? b * a : a;",z1=`
+  vec4 aLessThanZero = vec4(lessThan(a, vec4(0.)));
+  return (aLessThanZero * (b * a)) + ((vec4(1.0) - aLessThanZero) * a);
+`;function _E(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{alpha:o}=r,a=t.makeTensorInfo([],"float32",Ds(o,"float32")),i=j().getBool("WEBGL_PACK_BINARY_OPERATIONS")?new zs(z1,s.shape,a.shape):new es(W1,s.shape,a.shape),u=t.runWebGLProgram(i,[s,a],"float32");return t.disposeIntermediateTensorInfo(a),u}const AE={kernelName:wd,backendName:"webgl",kernelFunc:_E};const G1="return (a < 0.) ? b * a : a;",j1=`
+  vec4 aLessThanZero = vec4(lessThan(a, vec4(0.)));
+  return (aLessThanZero * (b * a)) + ((vec4(1.0) - aLessThanZero) * a);
+`;function OE(n){const{inputs:e,backend:t}=n,{x:r,alpha:s}=e,o=j().getBool("WEBGL_PACK_BINARY_OPERATIONS")?new zs(j1,r.shape,s.shape):new es(G1,r.shape,s.shape);return t.runWebGLProgram(o,[r,s],"float32")}const DE={kernelName:Jd,backendName:"webgl",kernelFunc:OE};const Gs="if (isnan(x)) return x;";function Oe({opSnippet:n,packedOpSnippet:e,cpuKernelImpl:t,dtype:r}){return({inputs:s,backend:o})=>{const{x:a}=s,i=o,u=r||a.dtype;if(i.shouldExecuteOnCPU([a])&&t!=null){const h=i.texData.get(a.dataId),d=t(h.values,u);return i.makeTensorInfo(a.shape,u,d)}const c=j().getBool("WEBGL_PACK_UNARY_OPERATIONS")&&e!=null;let l;return c?l=new ur(a.shape,e):l=new kn(a.shape,n),i.runWebGLProgram(l,[a],u)}}function ft({opSnippet:n,packedOpSnippet:e,checkOutOfBounds:t=!1,supportsComplex:r=!1,cpuKernelImpl:s,dtype:o}){return({inputs:a,backend:i})=>{const{a:u,b:c}=a,l=i;if(r&&u.dtype==="complex64"){const f=l.texData.get(u.dataId),b=l.texData.get(c.dataId),[y,x]=[[f.complexTensorInfos.real,b.complexTensorInfos.real],[f.complexTensorInfos.imag,b.complexTensorInfos.imag]].map(I=>{const[k,P]=I,W={dataId:k.dataId,dtype:k.dtype,shape:u.shape},H={dataId:P.dataId,dtype:P.dtype,shape:c.shape},G=new es(n,u.shape,c.shape);return l.runWebGLProgram(G,[W,H],An(k.dtype,P.dtype))}),C=wr({inputs:{real:y,imag:x},backend:l});return l.disposeIntermediateTensorInfo(y),l.disposeIntermediateTensorInfo(x),C}const h=o||An(u.dtype,c.dtype);if((u.dtype==="string"||c.dtype==="string"||l.shouldExecuteOnCPU([u,c]))&&s!=null){const f=l.texData.get(u.dataId).values,b=l.texData.get(c.dataId).values,y=u.dtype==="string"?Rs(f):f,x=u.dtype==="string"?Rs(b):b,[C,I]=s(u.shape,c.shape,y,x,h),k=l.makeTensorInfo(I,h),P=l.texData.get(k.dataId);return P.values=C,k}const d=j().getBool("WEBGL_PACK_BINARY_OPERATIONS")&&e!=null;let p;return d?p=new zs(e,u.shape,c.shape,t):p=new es(n,u.shape,c.shape),l.runWebGLProgram(p,[u,c],h)}}function ko(n,e=!1){if(n==="linear")return e?mE:lE;if(n==="relu")return e?yE:dE;if(n==="elu")return e?gE:hE;if(n==="relu6")return e?xE:pE;if(n==="prelu")return e?j1:G1;if(n==="leakyrelu")return e?z1:W1;if(n==="sigmoid")return e?bE:fE;throw new Error(`Activation ${n} has not been implemented for the WebGL backend.`)}class H1{constructor(e,t,r,s=!1,o=!1,a=!1,i=null,u=!1,c=!1){this.variableNames=["matrixA","matrixB"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=r,this.enableShapeUniforms=bt(this.outputShape.length);const l=s?e[1]:e[2],h=Math.ceil(l/2),d=s?"i * 2, rc.y":"rc.y, i * 2",p=o?"rc.z, i * 2":"i * 2, rc.z",f=s?["a.xxyy","a.zzww"]:["a.xxzz","a.yyww"],b=o?["b.xzxz","b.ywyw"]:["b.xyxy","b.zwzw"];let y="",x="";i&&(u?y=`vec4 activation(vec4 a) {
+          vec4 b = getPreluActivationWeightsAtOutCoords();
+          ${i}
+        }`:c?y=`vec4 activation(vec4 a) {
+          vec4 b = getLeakyreluAlphaAtOutCoords();
+          ${i}
+        }`:y=`vec4 activation(vec4 x) {
+          ${i}
+        }`,x="result = activation(result);");const C=a?"result += getBiasAtOutCoords();":"";a&&this.variableNames.push("bias"),u&&this.variableNames.push("preluActivationWeights"),c&&this.variableNames.push("leakyreluAlpha");let I="rc.x",k="rc.x";e[0]<t[0]?I=`imod(rc.x, ${e[0]})`:t[0]<e[0]&&(k=`imod(rc.x, ${t[0]})`),this.userCode=`
+      ${y}
+      // Don't use uniform for sharedDimensionPacked for performance.
+      const float sharedDimension = ${h}.0;
+
+      vec4 dot2x2ARowBCol(ivec3 rc) {
+        vec4 result = vec4(0);
+        int batchA = ${I};
+        int batchB = ${k};
+        for (int i = 0; i < ${h}; i++) {
+          vec4 a = getMatrixA(batchA, ${d});
+          vec4 b = getMatrixB(batchB, ${p});
+
+          // These swizzled products need to be separately added.
+          // See: https://github.com/tensorflow/tfjs/issues/1735
+          result += (${f[0]} * ${b[0]});
+          result += (${f[1]} * ${b[1]});
+        }
+        return result;
+      }
+
+      void main() {
+        ivec3 rc = getOutputCoords();
+        vec4 result = dot2x2ARowBCol(rc);
+
+        ${C}
+
+        ${x}
+
+        setOutput(result);
+      }
+    `}}const vl={REAL:"return areal * breal - aimag * bimag;",IMAG:"return areal * bimag + aimag * breal;"};class wl{constructor(e,t,r){this.variableNames=["AReal","AImag","BReal","BImag"],this.outputShape=Fe(t,r),this.userCode=`
+      float binaryOpComplex(
+          float areal, float aimag, float breal, float bimag) {
+        ${e}
+      }
+
+      void main() {
+        float areal = getARealAtOutCoords();
+        float aimag = getAImagAtOutCoords();
+        float breal = getBRealAtOutCoords();
+        float bimag = getBImagAtOutCoords();
+        setOutput(binaryOpComplex(areal, aimag, breal, bimag));
+      }
+    `}}const $l="return a * b;";function Ec(n){const{inputs:e,backend:t}=n,{a:r,b:s}=e,o=An(r.dtype,s.dtype);if(r.dtype==="complex64"){const i=t.texData.get(r.dataId),u=t.texData.get(s.dataId),c=new wl(vl.REAL,r.shape,s.shape),l=new wl(vl.IMAG,r.shape,s.shape),h=[{dataId:i.complexTensorInfos.real.dataId,dtype:i.complexTensorInfos.real.dtype,shape:r.shape},{dataId:i.complexTensorInfos.imag.dataId,dtype:i.complexTensorInfos.imag.dtype,shape:r.shape},{dataId:u.complexTensorInfos.real.dataId,dtype:u.complexTensorInfos.real.dtype,shape:s.shape},{dataId:u.complexTensorInfos.imag.dataId,dtype:u.complexTensorInfos.imag.dtype,shape:s.shape}],d=t.runWebGLProgram(c,h,"float32"),p=t.runWebGLProgram(l,h,"float32"),f=wr({inputs:{real:d,imag:p},backend:t});return t.disposeIntermediateTensorInfo(d),t.disposeIntermediateTensorInfo(p),f}if(t.shouldExecuteOnCPU([r,s])){const i=t.texData.get(r.dataId),u=t.texData.get(s.dataId),[c,l]=ON(r.shape,s.shape,i.values,u.values,o),h=t.makeTensorInfo(l,o),d=t.texData.get(h.dataId);return d.values=c,h}let a;return j().getBool("WEBGL_PACK_BINARY_OPERATIONS")?a=new zs($l,r.shape,s.shape):a=new es($l,r.shape,s.shape),t.runWebGLProgram(a,[r,s],o)}const FE={kernelName:Wd,backendName:"webgl",kernelFunc:Ec};function PE(n,e,t){const r=[_s(n.shape),...As(n.shape)],s={dtype:n.dtype,shape:r,dataId:n.dataId},o=[_s(e),...As(e)],a=new U1(o,r),i=!0,u=[r],c=t.runWebGLProgram(a,[s],n.dtype,u,i);return{dataId:c.dataId,shape:e,dtype:c.dtype}}function ie(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{shape:o}=r,a=t,i=ne(s.shape),u=Ug(o,i),c=ne(u);_(i===c,()=>`The new shape (${u}) has ${c} elements and the old shape (${s.shape}) has ${i} elements. The new shape and old shape must have the same number of elements.`);const l=a.texData.get(s.dataId);return l.isPacked&&!Ua(s.shape,u)&&!(l.texture!==null&&Ua(l.shape,u))?PE(s,u,a):(a.incRef(s.dataId),{dataId:s.dataId,shape:u,dtype:s.dtype})}const LE={kernelName:up,backendName:"webgl",kernelFunc:ie};class Sl{constructor(e,t){this.variableNames=["x"];const{windowSize:r,batchSize:s,inSize:o,outSize:a}=e;this.outputShape=[s,a];const i=Math.floor(r/4)*4,u=r%4;let c="sumValue += dot(values, ones);";if(t!=null){const h=1/t;c=`sumValue += dot(values * ${Ns(h)?h.toPrecision(2):h}, ones);`}let l="";o%r>0&&(l=`
+        if (inIdx < 0 || inIdx >= ${o}) {
+          return 0.0;
+        }
+      `),this.userCode=`
+      const vec4 ones = vec4(1.0, 1.0, 1.0, 1.0);
+
+      float getValue(int batch, int inIdx) {
+        ${l}
+        return getX(batch, inIdx);
+      }
+
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int batch = coords[0];
+        int outIdx = coords[1];
+        int inOffset = outIdx * ${r};
+
+        float sumValue = 0.0;
+
+        for (int i = 0; i < ${i}; i += 4) {
+          int inIdx = inOffset + i;
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            getValue(batch, inIdx + 2),
+            getValue(batch, inIdx + 3)
+          );
+
+          ${c}
+        }
+
+        int inIdx = inOffset + ${i};
+        if (${u===1}) {
+          vec4 values = vec4(getValue(batch, inIdx), 0.0, 0.0, 0.0);
+
+          ${c}
+        } else if (${u===2}) {
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1), 0.0, 0.0);
+
+          ${c}
+        } else if (${u===3}) {
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            getValue(batch, inIdx + 2), 0.0);
+
+          ${c}
+        }
+        setOutput(sumValue);
+      }
+    `}}class BE{constructor(e,t){this.variableNames=["x"];const{windowSize:r,batchSize:s,inSize:o,outSize:a}=e;this.outputShape=[s,a];let i="0.0",u="";t==="prod"?i="1.0":t==="min"?(i="1.0 / 1e-20",u="min"):t==="max"&&(i="-1.0 / 1e-20",u="max");let c=`${t}(${t}(${t}(minMaxValue[0], minMaxValue[1]), minMaxValue[2]), minMaxValue[3])`;t==="sum"?c="sumValue":t==="prod"?c="prodValue":t==="all"?c="allValue":t==="any"&&(c="anyValue");const l=Math.floor(r/4)*4,h=r%4;let d=`
+      if (${t==="sum"}) {
+        sumValue += dot(values, ones);
+      } else if (${t==="prod"}) {
+        vec2 tmp = vec2(values[0], values[1]) * vec2(values[2], values[3]);
+        prodValue *= tmp[0] * tmp[1];
+      } else {
+        minMaxValue = ${u}(values, minMaxValue);
+        if (${t==="min"} || ${t==="max"}) {
+          minMaxValue = ${u}(values, minMaxValue);
+          bvec4 isNaN = isnan(values);
+          if (isNaN.r || isNaN.g || isNaN.b || isNaN.a) {
+            minMaxValue = vec4(NAN);
+          }
+        }
+      }
+    `,p="vec4";t==="all"?(i="1.0",d=`
+        bool reducedAllValue = all(values);
+        float floatedReducedAllValue = float(reducedAllValue);
+        allValue = float(allValue >= 1.0 && floatedReducedAllValue >= 1.0);
+      `,p="bvec4"):t==="any"&&(i="0.0",d=`
+        bool reducedAnyValue = any(values);
+        float floatedReducedAnyValue = float(reducedAnyValue);
+        anyValue = float(anyValue >= 1.0 || floatedReducedAnyValue >= 1.0);
+      `,p="bvec4");let f="";o%r>0&&(f=`
+        if (inIdx < 0 || inIdx >= ${o}) {
+          return initializationValue;
+        }
+      `),this.userCode=`
+      const float initializationValue = ${i};
+      const vec4 ones = vec4(1.0, 1.0, 1.0, 1.0);
+
+      float getValue(int batch, int inIdx) {
+        ${f}
+        return getX(batch, inIdx);
+      }
+
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int batch = coords[0];
+        int outIdx = coords[1];
+        int inOffset = outIdx * ${r};
+
+        vec4 minMaxValue = vec4(${i});
+        float prodValue = 1.0;
+        float sumValue = 0.0;
+        float allValue = 1.0;
+        float anyValue = 0.0;
+
+        for (int i = 0; i < ${l}; i += 4) {
+          int inIdx = inOffset + i;
+          ${p} values = ${p}(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            getValue(batch, inIdx + 2),
+            getValue(batch, inIdx + 3)
+          );
+
+          ${d}
+        }
+
+        int inIdx = inOffset + ${l};
+        if (${h===1}) {
+          ${p} values = ${p}(
+            getValue(batch, inIdx),
+            initializationValue,
+            initializationValue,
+            initializationValue
+          );
+
+          ${d}
+        } else if (${h===2}) {
+          ${p} values = ${p}(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            initializationValue,
+            initializationValue
+          );
+
+          ${d}
+        } else if (${h===3}) {
+          ${p} values = ${p}(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            getValue(batch, inIdx + 2),
+            initializationValue
+          );
+
+          ${d}
+        }
+        setOutput(${c});
+      }
+    `}}function VE(n){const e=[];for(;e.length===0||e[e.length-1].outSize!==1;){const t=e.length?e[e.length-1].outSize:n[1],r=li(t);e.push({inSize:t,windowSize:r,outSize:Math.ceil(t/r)})}return e}function us(n,e,t,r){const s=VE(n.shape);let o=n;for(let a=0;a<s.length;a++){const{inSize:i,windowSize:u,outSize:c}=s[a];let l,h;t==="mean"?l=a===0?new Sl({windowSize:u,inSize:i,batchSize:n.shape[0],outSize:c},i):new Sl({windowSize:u,inSize:i,batchSize:n.shape[0],outSize:c}):l=new BE({windowSize:u,inSize:i,batchSize:n.shape[0],outSize:c},t),h=o,o=r.runWebGLProgram(l,[o],e),h.dataId!==n.dataId&&r.disposeIntermediateTensorInfo(h)}return o}class ME{constructor(e,t){this.variableNames=["A"];const r=new Array(e.length);for(let a=0;a<r.length;a++)r[a]=e[t[a]];this.outputShape=r,this.rank=r.length;const s=Ve(this.rank),o=UE(t);this.userCode=`
+    void main() {
+      ${s} resRC = getOutputCoords();
+      setOutput(getA(${o}));
+    }
+    `}}function UE(n){const e=n.length;if(e>6)throw Error(`Transpose for rank ${e} is not yet supported`);const t=["resRC.x","resRC.y","resRC.z","resRC.w","resRC.u","resRC.v"],r=new Array(e);for(let s=0;s<n.length;s++)r[n[s]]=t[s];return r.join()}class WE{constructor(e,t){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0;const r=new Array(e.length);for(let l=0;l<r.length;l++)r[l]=e[t[l]];if(this.outputShape=r,this.rank=r.length,this.rank>6)throw Error(`Packed transpose for rank ${this.rank} is not yet supported.`);const s=Ve(this.rank),o=M1("rc",this.rank),a=new Array(this.rank);for(let l=0;l<t.length;l++)a[t[l]]=o[l];const i=`vec2(${a.slice(-2).join()})`,u=`++${o[this.rank-1]} < ${r[this.rank-1]}`,c=`getChannel(getA(${a.join()}), ${i})`;this.userCode=`
+    void main() {
+      ${s} rc = getOutputCoords();
+      vec4 result = vec4(0.);
+      result[0] = ${c};
+      if(${u}) {
+        result[1] = ${c};
+      }
+      --${o[this.rank-1]};
+      if(++${o[this.rank-2]} < ${r[this.rank-2]}) {
+        result[2] = ${c};
+        if(${u}) {
+          result[3] = ${c};
+        }
+      }
+      setOutput(result);
+    }
+    `}}function pi(n,e,t){const r=j().getBool("WEBGL_PACK_ARRAY_OPERATIONS")?new WE(n.shape,e):new ME(n.shape,e);return t.runWebGLProgram(r,[n],n.dtype)}function zE(n,e,t,r){const s=e,o=n.shape.length,a=ut(s,n.shape);let i=a;const u=un(i,o),c=u!=null;let l=n;c&&(l=pi(n,u,r),i=cn(i.length,o)),$n("sum",i,o);const[h,d]=On(l.shape,i);let p=h;t&&(p=qt(h,a));const f=ne(d),y=ne(n.shape)/f,x=ie({inputs:{x:l},attrs:{shape:[y,f]},backend:r}),C=Yu(n.dtype),I=us(x,C,"sum",r),k=ie({inputs:{x:I},attrs:{shape:p},backend:r});return r.disposeIntermediateTensorInfo(x),r.disposeIntermediateTensorInfo(I),c&&r.disposeIntermediateTensorInfo(l),k}function fi(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,keepDims:a}=r;return zE(s,o,a,t)}const GE={kernelName:Ep,backendName:"webgl",kernelFunc:fi};function St(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{perm:o}=r,a=t,i=s.shape.length,u=new Array(i);for(let l=0;l<u.length;l++)u[l]=s.shape[o[l]];let c;if(a.shouldExecuteOnCPU([s])){const h=a.texData.get(s.dataId).values,d=Tc(h,s.shape,s.dtype,o,u);c=a.makeTensorInfo(u,s.dtype);const p=a.texData.get(c.dataId);p.values=d}else c=pi(s,o,a);return c}const jE={kernelName:ba,backendName:"webgl",kernelFunc:St};const K1=1e3;function za({a:n,b:e,transposeA:t,transposeB:r,backend:s,bias:o=null,preluActivationWeights:a=null,leakyreluAlpha:i=0,activation:u=null}){const c=n.shape.length,l=e.shape.length,h=t?n.shape[c-2]:n.shape[c-1],d=r?e.shape[l-1]:e.shape[l-2],p=t?n.shape[c-1]:n.shape[c-2],f=r?e.shape[l-2]:e.shape[l-1],b=n.shape.slice(0,-2),y=e.shape.slice(0,-2),x=ne(b),C=ne(y),k=Fe(n.shape.slice(0,-2),e.shape.slice(0,-2)).concat([p,f]);_(h===d,()=>`Error in matMul: inner shapes (${h}) and (${d}) of Tensors with shapes ${n.shape} and ${e.shape} and transposeA=${t} and transposeB=${r} must match.`);const P=t?[x,h,p]:[x,p,h],W=r?[C,f,d]:[C,d,f],H=ie({inputs:{x:n},backend:s,attrs:{shape:P}}),G=ie({inputs:{x:e},backend:s,attrs:{shape:W}}),B=[H,G],V=Math.max(x,C),R=t?H.shape[1]:H.shape[2],q=o!=null,te=a!=null,he=u==="leakyrelu",de=u!=null?ko(u,!0):null,ge=q||te||he||de!=null;let be;if((p===1||f===1)&&R>K1&&ge===!1){let Ie=H,_e=G;t&&(Ie=St({inputs:{x:H},backend:s,attrs:{perm:[0,2,1]}}),B.push(Ie)),r&&(_e=St({inputs:{x:G},backend:s,attrs:{perm:[0,2,1]}}),B.push(_e));const Le=f!==1,Me=f===1;let Qe=Ie;Le&&(Qe=ie({inputs:{x:Ie},backend:s,attrs:{shape:[V,R,1]}}),B.push(Qe));const hn=f===1?2:1;let Qn=_e;Me&&(Qn=ie({inputs:{x:_e},backend:s,attrs:{shape:[V,1,R]}}),B.push(Qn));const Vt=Ec({inputs:{a:Qe,b:Qn},backend:s});be=fi({inputs:{x:Vt},backend:s,attrs:{axis:hn,keepDims:!0}}),B.push(Vt)}else{const Ie=An(n.dtype,e.dtype),_e=new H1(P,W,[V,p,f],t,r,q,de,te,he),Le=[H,G];if(o!=null&&Le.push(o),te&&Le.push(a),he){const Me=s.makeTensorInfo([],"float32",Ds(i,"float32"));Le.push(Me),B.push(Me)}be=s.runWebGLProgram(_e,Le,Ie)}const $e=ie({inputs:{x:be},backend:s,attrs:{shape:k}});B.push(be);for(const Ie of B)s.disposeIntermediateTensorInfo(Ie);return $e}function HE(n){const{inputs:e,backend:t,attrs:r}=n,{a:s,b:o,bias:a,preluActivationWeights:i}=e,{transposeA:u,transposeB:c,activation:l,leakyreluAlpha:h}=r;return za({a:s,b:o,transposeA:u,transposeB:c,backend:t,bias:a,preluActivationWeights:i,leakyreluAlpha:h,activation:l})}const KE={kernelName:ou,backendName:"webgl",kernelFunc:HE};const Cl="return abs(x);";function XE(n){const{inputs:e,backend:t}=n,{x:r}=e;if(t.shouldExecuteOnCPU([r])&&r.dtype!=="complex64"){const o=t.texData.get(r.dataId),a=B1(o.values);return t.makeTensorInfo(r.shape,r.dtype,a)}let s;return j().getBool("WEBGL_PACK_UNARY_OPERATIONS")?s=new ur(r.shape,Cl):s=new kn(r.shape,Cl),t.runWebGLProgram(s,[r],r.dtype)}const qE={kernelName:lh,backendName:"webgl",kernelFunc:XE};const YE=ln+`
+  if (abs(x) > 1.) {
+    return NAN;
+  }
+  return acos(x);
+`,QE=Oe({opSnippet:YE}),ZE={kernelName:hh,backendName:"webgl",kernelFunc:QE};const JE=ln+`
+  if (x < 1.0) return NAN;
+return log(x + sqrt(x * x - 1.0));`,e6=Oe({opSnippet:JE}),t6={kernelName:dh,backendName:"webgl",kernelFunc:e6};const Tl="return a + b;",n6=ft({opSnippet:Tl,packedOpSnippet:Tl,supportsComplex:!0,cpuKernelImpl:dN}),r6={kernelName:Hu,backendName:"webgl",kernelFunc:n6};class s6{constructor(e,t){this.outputShape=[],this.outputShape=e,this.variableNames=t.map((o,a)=>`T${a}`);const r=[];this.variableNames.forEach(o=>{r.push(`float v${o} = get${o}AtOutCoords();`)});const s=this.variableNames.map(o=>`v${o}`).join(" + ");this.userCode=`
+      void main() {
+        ${r.join(`
+        `)}
+
+        float result = ${s};
+        setOutput(result);
+      }
+    `}}class o6{constructor(e,t){this.outputShape=[],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=e,this.variableNames=t.map((o,a)=>`T${a}`);const r=[];this.variableNames.forEach(o=>{r.push(`vec4 v${o} = get${o}AtOutCoords();`)});const s=this.variableNames.map(o=>`v${o}`).join(" + ");this.userCode=`
+      void main() {
+        ${r.join(`
+        `)}
+
+        vec4 result = ${s};
+        setOutput(result);
+      }
+    `}}function ka(n){const{inputs:e,backend:t}=n,r=e;if(r.length===1)return Lt({inputs:{x:r[0]},backend:t});if(r.length>j().getNumber("WEBGL_MAX_TEXTURES_IN_SHADER")){const u=Math.floor(r.length/2),c=ka({inputs:r.slice(0,u),backend:t}),l=ka({inputs:r.slice(u),backend:t});return ka({inputs:[c,l],backend:t})}const s=r.map(u=>u.dtype).reduce((u,c)=>An(u,c)),o=r.map(u=>u.shape),i=j().getBool("WEBGL_PACK")?new o6(r[0].shape,o):new s6(r[0].shape,o);return t.runWebGLProgram(i,r,s)}const a6={kernelName:ph,backendName:"webgl",kernelFunc:ka};function i6(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,keepDims:a}=r,i=s.shape.length,u=ut(o,s.shape);let c=u;const l=un(c,i);let h=s;l!=null&&(h=St({inputs:{x:s},backend:t,attrs:{perm:l}}),c=cn(c.length,i)),$n("all",c,i);const[d,p]=On(h.shape,c),f=ne(p),b=ie({inputs:{x:h},backend:t,attrs:{shape:[-1,f]}}),y=us(b,b.dtype,"all",t);let x;if(a){const C=qt(d,u);x=ie({inputs:{x:y},backend:t,attrs:{shape:C}})}else x=ie({inputs:{x:y},backend:t,attrs:{shape:d}});return t.disposeIntermediateTensorInfo(b),t.disposeIntermediateTensorInfo(y),l!=null&&t.disposeIntermediateTensorInfo(h),x}const u6={kernelName:fh,backendName:"webgl",kernelFunc:i6};function c6(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,keepDims:a}=r,i=s.shape.length,u=ut(o,s.shape);let c=u;const l=un(c,i);let h=s;l!=null&&(h=St({inputs:{x:s},backend:t,attrs:{perm:l}}),c=cn(c.length,i)),$n("any",c,i);const[d,p]=On(h.shape,c),f=ne(p),b=ie({inputs:{x:h},backend:t,attrs:{shape:[-1,f]}}),y=us(b,b.dtype,"any",t);let x;if(a){const C=qt(d,u);x=ie({inputs:{x:y},backend:t,attrs:{shape:C}})}else x=ie({inputs:{x:y},backend:t,attrs:{shape:d}});return t.disposeIntermediateTensorInfo(b),t.disposeIntermediateTensorInfo(y),l!=null&&t.disposeIntermediateTensorInfo(h),x}const l6={kernelName:mh,backendName:"webgl",kernelFunc:c6};class h6{constructor(e,t,r){this.variableNames=["A"];const{windowSize:s,batchSize:o,outSize:a}=e;r||this.variableNames.push("bestIndicesA"),this.outputShape=[o,a];const i=t==="max"?">":"<",u=r?"inOffset + i;":"round(getBestIndicesA(batch, inOffset + i));";this.userCode=`
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int batch = coords[0];
+        int outIdx = coords[1];
+        int inOffset = outIdx * ${s};
+
+        int bestIndex = inOffset;
+        float bestValue = getA(batch, bestIndex);
+
+        for (int i = 0; i < ${s}; i++) {
+          int inIdx = ${u};
+          float candidate = getA(batch, inIdx);
+          if (candidate ${i} bestValue) {
+            bestValue = candidate;
+            bestIndex = inIdx;
+          }
+        }
+        setOutput(float(bestIndex));
+      }
+    `}}class d6{constructor(e,t,r,s){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,_(e.length>2,()=>`Packed arg${r.charAt(0).toUpperCase()+r.slice(1)} supports only inputs with rank above 2.`);const o=e[e.length-1],a=Math.ceil(o/t);this.outputShape=e.slice(0,-1),a>1&&this.outputShape.push(a),s||this.variableNames.push("bestIndicesA");const i=this.outputShape,u=i.length,c=Ve(u),l=$t("coords",u);let h,d;if(a===1){d=u+1;const G=Ve(d);h=`
+        ${G} sourceLocR = ${G}(${l.join()}, 0);
+        ++${l[u-1]};
+        ${G} sourceLocG = ${G}(${l.join()}, 0);
+        ++${l[u-2]};
+        ${G} sourceLocA = ${G}(${l.join()}, 0);
+        --${l[u-1]};
+        ${G} sourceLocB = ${G}(${l.join()}, 0);
+        --${l[u-2]};`}else d=u,h=`
+        ${c} sourceLocR = coords;
+        ++${l[u-1]};
+        ${c} sourceLocG = coords;
+        ++${l[u-2]};
+        ${c} sourceLocA = coords;
+        --${l[u-1]};
+        ${c} sourceLocB = coords;
+        --${l[u-2]};`;const p=["x","y","z","w","u","v"].slice(0,d),f="."+p[d-1],b=p.map(G=>"int "+G),y=$t("sourceLocR",d-1).concat("inIdx.r"),x=$t("sourceLocG",d-1).concat("inIdx.g"),C=$t("sourceLocB",d-1).concat("inIdx.b"),I=$t("sourceLocA",d-1).concat("inIdx.a"),k=r==="max"?"greaterThan":"lessThan",P=s?"":`
+          inIdx = round(vec4(getBestIndicesAChannel(${y.join()}),
+                             getBestIndicesAChannel(${x.join()}),
+                             getBestIndicesAChannel(${C.join()}),
+                             getBestIndicesAChannel(${I.join()})));`,W=`vec4(
+            getAChannel(${y.join()}),
+            hasNextCol ? getAChannel(${x.join()}) : 0.,
+            hasNextRow ? getAChannel(${C.join()}) : 0.,
+            hasNextRow && hasNextCol ? getAChannel(${I.join()}) : 0.)`,H=s?"":`
+      float getBestIndicesAChannel(${b.join()}) {
+        return getChannel(getBestIndicesA(${p.join()}),
+                                          vec2(${p.slice(-2).join()}));
+      }`;this.userCode=`
+      float getAChannel(${b.join()}) {
+        return getChannel(getA(${p.join()}),
+                               vec2(${p.slice(-2).join()}));
+      }
+      ${H}
+      void main() {
+        ${c} coords = getOutputCoords();
+        bool hasNextCol = ${l[u-1]} < ${i[u-1]-1};
+        bool hasNextRow = ${l[u-2]} < ${i[u-2]-1};
+        ${h}
+        ivec4 srcIdx = ivec4(sourceLocR${f}, sourceLocG${f},
+          sourceLocB${f}, sourceLocA${f}) * ${t};
+        ivec4 inIdx = srcIdx;
+        vec4 bestIndex = vec4(inIdx);
+        vec4 bestValue = ${W};
+
+        for (int i = 0; i < ${t}; i++) {
+          inIdx = srcIdx;
+          ${P}
+          vec4 candidate = ${W};
+          bvec4 nan = isnan(candidate);
+          bvec4 replace = bvec4(
+            vec4(${k}(candidate, bestValue)) * (vec4(1.0) - vec4(nan)));
+
+          bestValue = vec4(replace.x  ? candidate.x : bestValue.x,
+                           replace.y  ? candidate.y : bestValue.y,
+                           replace.z  ? candidate.z : bestValue.z,
+                           replace.w  ? candidate.w : bestValue.w);
+          bestIndex = mix(bestIndex, vec4(inIdx), vec4(replace));
+          srcIdx++;
+        }
+        setOutput(bestIndex);
+      }
+    `}}function X1(n,e,t,r=null){let s=e.shape[0],o=e.shape[1];r!=null&&(s=r.shape[0],o=r.shape[1]);const a=li(o),i={windowSize:a,inSize:o,batchSize:s,outSize:Math.ceil(o/a)},u=new h6(i,t,r==null),c=[e];r!=null&&c.push(r);const l=n.runWebGLProgram(u,c,"int32");if(l.shape[1]===1)return l;const h=X1(n,e,t,l);return n.disposeIntermediateTensorInfo(l),h}function q1(n,e,t,r=null){const s=r!=null?r.shape:e.shape,o=s[s.length-1],a=li(o),i=new d6(s,a,t,r==null),u=r==null?[e]:[e,r],c=n.runWebGLProgram(i,u,"int32");if(c.shape.length===e.shape.length){const l=q1(n,e,t,c);return n.disposeIntermediateTensorInfo(c),l}return c}function Y1(n,e,t,r){const s=[t];if($n("arg"+r.charAt(0).toUpperCase()+r.slice(1),s,e.shape.length),!j().getBool("WEBGL_PACK_REDUCE")||e.shape.length<=2){const o=[],a=n.texData.get(e.dataId),i=a!==null&&a.isPacked;let u=e;i&&(u=n.unpackTensor(e),o.push(u));const[c,l]=On(u.shape,s),h=ne(l),d=ie({inputs:{x:u},backend:n,attrs:{shape:[-1,h]}});o.push(d);const p=X1(n,d,r);o.push(p);const f=ie({inputs:{x:p},backend:n,attrs:{shape:c}});return o.forEach(b=>n.disposeIntermediateTensorInfo(b)),f}return q1(n,e,r)}function p6(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o}=r;let a=ut(o,s.shape);const i=un(a,s.shape.length);let u=s;const c=[];i!=null&&(u=St({inputs:{x:s},backend:t,attrs:{perm:i}}),c.push(u),a=cn(a.length,u.shape.length)),$n("argMax",[a[0]],u.shape.length);const l=Y1(t,u,a[0],"max");return c.forEach(h=>t.disposeIntermediateTensorInfo(h)),l}const f6={kernelName:gh,backendName:"webgl",kernelFunc:p6};function m6(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o}=r;let a=ut(o,s.shape);const i=un(a,s.shape.length);let u=s;const c=[];i!=null&&(u=St({inputs:{x:s},backend:t,attrs:{perm:i}}),c.push(u),a=cn(a.length,u.shape.length)),$n("argMin",[a[0]],u.shape.length);const l=Y1(t,u,a[0],"min");return c.forEach(h=>t.disposeIntermediateTensorInfo(h)),l}const g6={kernelName:yh,backendName:"webgl",kernelFunc:m6};const y6=ln+`
+  if (abs(x) > 1.) {
+    return NAN;
+  }
+  return asin(x);
+`,x6=Oe({opSnippet:y6}),b6={kernelName:xh,backendName:"webgl",kernelFunc:x6};const v6=ln+"return log(x + sqrt(x * x + 1.0));",w6=Oe({opSnippet:v6}),$6={kernelName:bh,backendName:"webgl",kernelFunc:w6};const S6=ln+`
+  return atan(x);
+`,C6=Oe({opSnippet:S6}),T6={kernelName:vh,backendName:"webgl",kernelFunc:C6};const N6=Nc+`
+  return atan(a, b);
+`,E6=`
+  vec4 result = atan(a, b);
+  bvec4 isNaNA = isnan(a);
+  bvec4 isNaNB = isnan(b);
+  bvec4 isNaN = bvec4(isNaNA.x || isNaNB.x, isNaNA.y || isNaNB.y, isNaNA.z || isNaNB.z, isNaNA.w || isNaNB.w);
+  `+is+`
+  return result;
+`,I6=ft({opSnippet:N6,packedOpSnippet:E6}),k6={kernelName:$h,backendName:"webgl",kernelFunc:I6};const R6=ln+`
+  if ((x < -1.0) || (x > 1.0)) return NAN;
+return (log(1.0 + x) - log(1.0 - x)) / 2.0;`,_6=Oe({opSnippet:R6}),A6={kernelName:wh,backendName:"webgl",kernelFunc:_6};class Ro{constructor(e,t,r,s=!1,o=!1){if(this.variableNames=["x"],t==="avg"&&r)throw new Error("Cannot compute positions for average pool.");const a=e.filterWidth,i=e.strideHeight,u=e.strideWidth,c=e.dilationHeight,l=e.dilationWidth,h=e.effectiveFilterHeight,d=e.effectiveFilterWidth,p=e.padInfo.top,f=e.padInfo.left;this.outputShape=e.outShape;const b=t==="avg",y=`((batch  * ${e.inHeight} + xR) * ${e.inWidth} + xC) * ${e.inChannels} + d`,x=`(xR * ${e.inWidth} + xC) * ${e.inChannels} + d`;let C="0.0";if(b||(C="-1.0 / 1e-20"),r){this.userCode=`
+        const ivec2 strides = ivec2(${i}, ${u});
+        const ivec2 pads = ivec2(${p}, ${f});
+
+        void main() {
+          ivec4 coords = getOutputCoords();
+          int batch = coords[0];
+          int d = coords[3];
+
+          ivec2 xRCCorner = coords.yz * strides - pads;
+          int xRCorner = xRCCorner.x;
+          int xCCorner = xRCCorner.y;
+
+          // max/min x(?, ?, d) to get y(yR, yC, d).
+          // ? = to be determined
+          float minMaxValue = 0.0;
+          float minMaxValueFound = 0.0;
+          int minMaxPosition = 0;
+          float avgValue = 0.0;
+
+          for (int wR = 0; wR < ${h};
+              wR += ${c}) {
+            int xR = xRCorner + wR;
+
+            if (xR < 0 || xR >= ${e.inHeight}) {
+              continue;
+            }
+
+            for (int wC = 0; wC < ${d};
+                wC += ${l}) {
+              int xC = xCCorner + wC;
+
+              if (xC < 0 || xC >= ${e.inWidth}) {
+                continue;
+              }
+
+              float value = getX(batch, xR, xC, d);
+
+              // If a min / max value has already been found, use it. If not,
+              // use the current value.
+              float currMinMaxValue = mix(
+                  value, minMaxValue, minMaxValueFound);
+              if (value >= currMinMaxValue) {
+                minMaxValue = value;
+                minMaxValueFound = 1.0;
+                minMaxPosition = ${s?o?y:x:`wR * ${d} + wC`};
+              }
+            }
+          }
+          setOutput(float(minMaxPosition));
+        }
+      `;return}const I="max";let k=`${t}(${t}(${t}(minMaxValue[0], minMaxValue[1]), minMaxValue[2]), minMaxValue[3])`;t==="avg"&&(k="avgValue / max(count, 1.0)");const P=Math.floor(a/4)*4,W=a%4,H=`
+      if (${b}) {
+        avgValue += dot(values, ones);
+      } else {
+        minMaxValue = ${I}(values, minMaxValue);
+      }
+    `;this.userCode=`
+      const ivec2 strides = ivec2(${i}, ${u});
+      const ivec2 pads = ivec2(${p}, ${f});
+      const float initializationValue = ${C};
+      const vec4 ones = vec4(1.0, 1.0, 1.0, 1.0);
+
+      float count = 0.0;
+
+      float getValue(int batch, int xR, int xC, int d) {
+        if (xC < 0 || xC >= ${e.inWidth}) {
+          return initializationValue;
+        }
+        count += 1.0;
+        return getX(batch, xR, xC, d);
+      }
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords[0];
+        int d = coords[3];
+
+        ivec2 xRCCorner = coords.yz * strides - pads;
+        int xRCorner = xRCCorner.x;
+        int xCCorner = xRCCorner.y;
+
+        // max/min x(?, ?, d) to get y(yR, yC, d).
+        // ? = to be determined
+        vec4 minMaxValue = vec4(${C});
+        float avgValue = 0.0;
+        count = 0.0;
+
+        for (int wR = 0; wR < ${h};
+            wR += ${c}) {
+          int xR = xRCorner + wR;
+
+          if (xR < 0 || xR >= ${e.inHeight}) {
+            continue;
+          }
+
+          for (int wC = 0; wC < ${P}; wC += 4) {
+            int xC = xCCorner + wC * ${l};
+
+            vec4 values = vec4(
+              getValue(batch, xR, xC, d),
+              getValue(batch, xR, xC + ${l}, d),
+              getValue(batch, xR, xC + 2 * ${l}, d),
+              getValue(batch, xR, xC + 3 * ${l}, d)
+            );
+
+            ${H}
+          }
+
+          int xC = xCCorner + ${P};
+          if (${W===1}) {
+            vec4 values = vec4(
+              getValue(batch, xR, xC, d),
+              initializationValue,
+              initializationValue,
+              initializationValue
+            );
+
+            ${H}
+          } else if (${W===2}) {
+            vec4 values = vec4(
+              getValue(batch, xR, xC, d),
+              getValue(batch, xR, xC + ${l}, d),
+              initializationValue,
+              initializationValue
+            );
+
+            ${H}
+          } else if (${W===3}) {
+            vec4 values = vec4(
+              getValue(batch, xR, xC, d),
+              getValue(batch, xR, xC + ${l}, d),
+              getValue(batch, xR, xC + 2 * ${l}, d),
+              initializationValue
+            );
+
+            ${H}
+          }
+        }
+        setOutput(${k});
+      }
+    `}}class Ic{constructor(e,t,r,s=!1,o=!1){if(this.variableNames=["x"],t==="avg"&&r)throw new Error("Cannot compute positions for average pool.");const a=e.filterWidth,i=e.strideDepth,u=e.strideHeight,c=e.strideWidth,l=e.dilationDepth,h=e.dilationHeight,d=e.dilationWidth,p=e.effectiveFilterDepth,f=e.effectiveFilterHeight,b=e.effectiveFilterWidth,y=e.padInfo.front,x=e.padInfo.top,C=e.padInfo.left;this.outputShape=e.outShape;const I=t==="avg";let k="0.0";if(I||(k="-1.0 / 1e-20"),r){this.userCode=`
+        const ivec3 strides =
+            ivec3(${i}, ${u}, ${c});
+        const ivec3 pads = ivec3(${y}, ${x}, ${C});
+
+        void main() {
+          ivec5 coords = getOutputCoords();
+          int batch = coords.x;
+          int ch = coords.u;
+
+          ivec3 xCorner = ivec3(coords.y, coords.z, coords.w) * strides - pads;
+          int xDCorner = xCorner.x;
+          int xRCorner = xCorner.y;
+          int xCCorner = xCorner.z;
+
+          // max/min x(?, ?, ?, ch) to get y(yD, yR, yC, ch).
+          // ? = to be determined
+          float minMaxValue = 0.0;
+          float minMaxValueFound = 0.0;
+          int minMaxPosition = 0;
+
+          for (int wD = 0; wD < ${p};
+              wD += ${l}) {
+            int xD = xDCorner + wD;
+
+            if (xD < 0 || xD >= ${e.inDepth}) {
+              continue;
+            }
+
+            for (int wR = 0; wR < ${f};
+                wR += ${h}) {
+              int xR = xRCorner + wR;
+
+              if (xR < 0 || xR >= ${e.inHeight}) {
+                continue;
+              }
+
+              for (int wC = 0; wC < ${b};
+                  wC += ${d}) {
+                int xC = xCCorner + wC;
+
+                if (xC < 0 || xC >= ${e.inWidth}) {
+                  continue;
+                }
+
+                float value = getX(batch, xD, xR, xC, ch);
+
+                // If a min / max value has already been found, use it. If not,
+                // use the current value.
+                float currMinMaxValue = mix(
+                    value, minMaxValue, minMaxValueFound);
+                if (value >= currMinMaxValue) {
+                  minMaxValue = value;
+                  minMaxValueFound = 1.0;
+                  minMaxPosition = ${s?o?`(((batch * ${e.inDepth} + xD) * ${e.inHeight} + xR) * ${e.inWidth} + xC) * ${e.inChannels} + ch`:`((xD * ${e.inHeight} + xR) * ${e.inWidth} + xC) * ${e.inChannels} + ch`:`wD * ${f} * ${b} +
+                      wR * ${b} + wC`};
+                }
+              }
+            }
+          }
+          setOutput(float(minMaxPosition));
+        }
+      `;return}const P="max";let W=`${t}(${t}(${t}(minMaxValue[0], minMaxValue[1]), minMaxValue[2]), minMaxValue[3])`;t==="avg"&&(W="avgValue / max(count, 1.0)");const H=Math.floor(a/4)*4,G=a%4,B=`
+      if (${I}) {
+        avgValue += dot(values, ones);
+      } else {
+        minMaxValue = ${P}(values, minMaxValue);
+      }
+    `;this.userCode=`
+      const ivec3 strides =
+        ivec3(${i}, ${u}, ${c});
+      const ivec3 pads = ivec3(${y}, ${x}, ${C});
+      const float initializationValue = ${k};
+      const vec4 ones = vec4(1.0, 1.0, 1.0, 1.0);
+
+      float count = 0.0;
+
+      float getValue(int batch, int xD, int xR, int xC, int ch) {
+        if (xC < 0 || xC >= ${e.inWidth}) {
+          return initializationValue;
+        }
+        count += 1.0;
+        return getX(batch, xD, xR, xC, ch);
+      }
+
+      void main() {
+        ivec5 coords = getOutputCoords();
+        int batch = coords.x;
+        int ch = coords.u;
+
+        ivec3 xCorner = ivec3(coords.y, coords.z, coords.w) * strides - pads;
+        int xDCorner = xCorner.x;
+        int xRCorner = xCorner.y;
+        int xCCorner = xCorner.z;
+
+        // max/min x(?, ?, ?, d) to get y(yD, yR, yC, ch).
+        // ? = to be determined
+        vec4 minMaxValue = vec4(${k});
+        float avgValue = 0.0;
+        count = 0.0;
+
+        for (int wD = 0; wD < ${p};
+            wD += ${l}) {
+          int xD = xDCorner + wD;
+
+          if (xD < 0 || xD >= ${e.inDepth}) {
+            continue;
+          }
+
+          for (int wR = 0; wR < ${f};
+            wR += ${h}) {
+            int xR = xRCorner + wR;
+
+            if (xR < 0 || xR >= ${e.inHeight}) {
+              continue;
+            }
+
+            for (int wC = 0; wC < ${H}; wC += 4) {
+              int xC = xCCorner + wC * ${d};
+
+              vec4 values = vec4(
+                getValue(batch, xD, xR, xC, ch),
+                getValue(batch, xD, xR, xC + ${d}, ch),
+                getValue(batch, xD, xR, xC + 2 * ${d}, ch),
+                getValue(batch, xD, xR, xC + 3 * ${d}, ch)
+              );
+
+              ${B}
+            }
+
+            int xC = xCCorner + ${H};
+            if (${G===1}) {
+              vec4 values = vec4(
+                getValue(batch, xD, xR, xC, ch),
+                initializationValue,
+                initializationValue,
+                initializationValue
+              );
+
+              ${B}
+            } else if (${G===2}) {
+              vec4 values = vec4(
+                getValue(batch, xD, xR, xC, ch),
+                getValue(batch, xD, xR, xC + ${d}, ch),
+                initializationValue,
+                initializationValue
+              );
+
+              ${B}
+            } else if (${G===3}) {
+              vec4 values = vec4(
+                getValue(batch, xD, xR, xC, ch),
+                getValue(batch, xD, xR, xC + ${d}, ch),
+                getValue(batch, xD, xR, xC + 2 * ${d}, ch),
+                initializationValue
+              );
+
+              ${B}
+            }
+          }
+        }
+        setOutput(${W});
+      }
+    `}}function O6(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e;Vo(s,"avgPool");const{filterSize:o,strides:a,pad:i,dimRoundingMode:u}=r,c=1;_(Bt(a,c),()=>`Error in avgPool: Either strides or dilations must be 1. Got strides ${a} and dilations '${c}'`);const l=ns(s.shape,o,a,c,i,u);if(l.filterWidth===1&&l.filterHeight===1&&qe(l.inShape,l.outShape))return Lt({inputs:{x:s},backend:t});const h=new Ro(l,"avg",!1);return t.runWebGLProgram(h,[s],"float32")}const D6={kernelName:Sh,backendName:"webgl",kernelFunc:O6};function F6(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{filterSize:o,strides:a,pad:i,dimRoundingMode:u,dataFormat:c}=r,l=[1,1,1],h=Do(s.shape,o,a,l,i,u,c),d=new Ic(h,"avg",!1);return t.runWebGLProgram(d,[s],"float32")}const P6={kernelName:Ch,backendName:"webgl",kernelFunc:F6};class L6{constructor(e){this.variableNames=["dy"],this.outputShape=e.inShape;const t=e.filterHeight,r=e.filterWidth,s=e.strideHeight,o=e.strideWidth,a=e.dilationHeight,i=e.dilationWidth,u=e.effectiveFilterHeight,c=e.effectiveFilterWidth,l=u-1-e.padInfo.top,h=c-1-e.padInfo.left,d=1/(t*r);this.userCode=`
+      const ivec2 pads = ivec2(${l}, ${h});
+      const float avgMultiplier = float(${d});
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+
+        ivec2 dyRCCorner = coords.yz - pads;
+        int dyRCorner = dyRCCorner.x;
+        int dyCCorner = dyRCCorner.y;
+
+        // Convolve dy(?, ?, d) with pos mask(:, :, d) to get dx(xR, xC, d).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+        for (int wR = 0; wR < ${u};
+            wR += ${a}) {
+          float dyR = float(dyRCorner + wR) / ${s}.0;
+
+          if (dyR < 0.0 || dyR >= ${e.outHeight}.0 || fract(dyR) > 0.0) {
+            continue;
+          }
+          int idyR = int(dyR);
+
+          for (int wC = 0; wC < ${c};
+            wC+= ${i}) {
+            float dyC = float(dyCCorner + wC) / ${o}.0;
+
+            if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                fract(dyC) > 0.0) {
+              continue;
+            }
+            int idyC = int(dyC);
+
+            float dyValue = getDy(b, idyR, idyC, d);
+
+            dotProd += dyValue * avgMultiplier;
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class B6{constructor(e){this.variableNames=["dy"],this.outputShape=e.inShape;const t=e.filterDepth,r=e.filterHeight,s=e.filterWidth,o=e.strideDepth,a=e.strideHeight,i=e.strideWidth,u=e.dilationDepth,c=e.dilationHeight,l=e.dilationWidth,h=e.effectiveFilterDepth,d=e.effectiveFilterHeight,p=e.effectiveFilterWidth,f=h-1-e.padInfo.front,b=d-1-e.padInfo.top,y=p-1-e.padInfo.left,x=1/(t*r*s);this.userCode=`
+      const ivec3 pads = ivec3(${f}, ${b}, ${y});
+      const float avgMultiplier = float(${x});
+
+      void main() {
+        ivec5 coords = getOutputCoords();
+        int batch = coords.x;
+        int ch = coords.u;
+
+        ivec3 dyCorner = ivec3(coords.y, coords.z, coords.w) - pads;
+        int dyDCorner = dyCorner.x;
+        int dyRCorner = dyCorner.y;
+        int dyCCorner = dyCorner.z;
+
+        // Convolve dy(?, ?, ?, d) with pos mask(:, :, :, ch) to get
+        // dx(xD, xR, xC, ch).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+
+        for (int wD = 0; wD < ${h};
+            wD += ${u}) {
+          float dyD = float(dyDCorner + wD) / ${o}.0;
+
+          if (dyD < 0.0 || dyD >= ${e.outDepth}.0 || fract(dyD) > 0.0) {
+            continue;
+          }
+          int idyD = int(dyD);
+
+          for (int wR = 0; wR < ${d};
+              wR += ${c}) {
+            float dyR = float(dyRCorner + wR) / ${a}.0;
+
+            if (dyR < 0.0 || dyR >= ${e.outHeight}.0 ||
+                fract(dyR) > 0.0) {
+              continue;
+            }
+            int idyR = int(dyR);
+
+            for (int wC = 0; wC < ${p};
+                wC += ${l}) {
+              float dyC = float(dyCCorner + wC) / ${i}.0;
+
+              if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                  fract(dyC) > 0.0) {
+                continue;
+              }
+              int idyC = int(dyC);
+
+              float dyValue = getDy(batch, idyD, idyR, idyC, ch);
+
+              dotProd += dyValue * avgMultiplier;
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}function V6(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,input:o}=e,a=o,{filterSize:i,strides:u,pad:c,dimRoundingMode:l}=r,h=[1,1,1],d=Do(a.shape,i,u,h,c,l),p=new B6(d);return t.runWebGLProgram(p,[s],a.dtype)}const M6={kernelName:t2,backendName:"webgl",kernelFunc:V6};function U6(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,input:o}=e,a=o;Vo([s,o],"avgPoolGrad");const{filterSize:i,strides:u,pad:c}=r,l=ns(a.shape,i,u,1,c),h=new L6(l);return t.runWebGLProgram(h,[s],a.dtype)}const W6={kernelName:e2,backendName:"webgl",kernelFunc:U6};function z6(n){const{inputs:e,backend:t,attrs:r}=n,{a:s,b:o}=e,{transposeA:a,transposeB:i}=r;return za({a:s,b:o,transposeA:a,transposeB:i,backend:t})}const G6={kernelName:Th,backendName:"webgl",kernelFunc:z6};class j6{constructor(e,t,r,s,o,a){this.outputShape=[],this.variableNames=["x","mean","variance"],Fe(e,t),Fe(e,r);let i="0.0";s!=null&&(Fe(e,s),this.variableNames.push("offset"),i="getOffsetAtOutCoords()");let u="1.0";o!=null&&(Fe(e,o),this.variableNames.push("scale"),u="getScaleAtOutCoords()"),this.outputShape=e,this.userCode=`
+      void main() {
+        float x = getXAtOutCoords();
+        float mean = getMeanAtOutCoords();
+        float variance = getVarianceAtOutCoords();
+        float offset = ${i};
+        float scale = ${u};
+        float inv = scale * inversesqrt(variance + float(${a}));
+        setOutput(dot(vec3(x, -mean, offset), vec3(inv, inv, 1)));
+      }
+    `}}class H6{constructor(e,t,r,s,o,a){this.packedInputs=!0,this.packedOutput=!0,this.variableNames=["x","mean","variance"],Fe(e,t),Fe(e,r);let i="vec4(0.0)";s!=null&&(Fe(e,s),this.variableNames.push("offset"),i="getOffsetAtOutCoords()");let u="vec4(1.0)";o!=null&&(Fe(e,o),this.variableNames.push("scale"),u="getScaleAtOutCoords()"),this.outputShape=e,this.userCode=`
+      void main() {
+        vec4 offset = ${i};
+        vec4 scale = ${u};
+
+        vec4 x = getXAtOutCoords();
+        vec4 mean = getMeanAtOutCoords();
+        vec4 variance = getVarianceAtOutCoords();
+
+        vec4 inv = scale * inversesqrt(variance + vec4(${a}));
+
+        setOutput((x - mean) * inv + offset);
+      }
+    `}}const K6=({inputs:n,backend:e,attrs:t})=>{const{x:r,mean:s,variance:o,offset:a,scale:i}=n;_(s.shape.length===o.shape.length,()=>"Batch normalization gradient requires mean and variance to have equal ranks."),_(a==null||s.shape.length===a.shape.length,()=>"Batch normalization gradient requires mean and offset to have equal ranks."),_(i==null||s.shape.length===i.shape.length,()=>"Batch normalization gradient requires mean and scale to have equal ranks.");let{varianceEpsilon:u}=t;u==null&&(u=.001);const c=[r,s,o];let l=null;a!=null&&(l=a.shape,c.push(a));let h=null;i!=null&&(h=i.shape,c.push(i));const d=j().getBool("WEBGL_PACK_NORMALIZATION")?new H6(r.shape,s.shape,o.shape,l,h,u):new j6(r.shape,s.shape,o.shape,l,h,u);return e.runWebGLProgram(d,c,c[0].dtype)},X6={kernelName:hd,backendName:"webgl",kernelFunc:K6};class q6{constructor(e){this.variableNames=["source"],this.outputShape=e,this.rank=e.length;const t=Ve(this.rank);this.customUniforms=[{name:"start",arrayIndex:this.rank,type:"int"}];const r=Y6(this.rank);let s;const o=e.map((a,i)=>`sourceLoc.${Iu[i]} = start[${i}] + coords.${Iu[i]};`);s=`
+        ${t} sourceLoc;
+        ${t} coords = getOutputCoords();
+        ${o.join(`
+`)}
+      `,this.userCode=`
+      void main() {
+        ${s}
+        setOutput(getSource(${r}));
+      }
+    `}}const Iu=["x","y","z","w","u","v"];function Y6(n){if(n===1)return"sourceLoc";if(n<=6)return Iu.slice(0,n).map(e=>"sourceLoc."+e).join(",");throw Error(`Slicing for rank ${n} is not yet supported`)}class Q6{constructor(e){this.variableNames=["source"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=e,this.rank=e.length,this.customUniforms=[{name:"start",arrayIndex:this.rank,type:"int"}];const t=Ve(this.rank),r=$t("coords",this.rank),s=$t("sourceLoc",this.rank),o=this.rank===1?"sourceLoc":`vec2(${s.slice(-2).join()})`,a=`getChannel(getSource(${s.join()}), ${o})`,i=`
+      result.x = ${a};
+      if (++${r[this.rank-1]} < ${e[this.rank-1]}) {
+        ++${s[this.rank-1]};
+        result.y = ${a};
+        --${s[this.rank-1]};
+      }
+    `,u=this.rank===1?"":`
+      --${r[this.rank-1]};
+      if (++${r[this.rank-2]} < ${e[this.rank-2]}) {
+        ++${s[this.rank-2]};
+        result.z = ${a};
+        if (++${r[this.rank-1]} < ${e[this.rank-1]}) {
+          ++${s[this.rank-1]};
+          result.w = ${a};
+        }
+      }
+    `,c=this.rank<=4?`sourceLoc = coords +
+            ${t}(${e.map((l,h)=>`start[${h}]`).join()});`:e.map((l,h)=>`${s[h]} = ${r[h]} + start[${h}];`).join(`
+`);this.userCode=`
+      void main() {
+        ${t} coords = getOutputCoords();
+        ${t} sourceLoc;
+        ${c}
+        vec4 result = vec4(0.);
+        ${i}
+        ${u}
+        setOutput(result);
+      }
+    `}}function Z6(n,e,t,r){const s=r.texData.get(n.dataId),o=r.makeTensorInfo(t,n.dtype),a=r.texData.get(o.dataId);Object.assign(a,s),a.refCount=1,a.shape=t,a.dtype=n.dtype;let i=gc(e,dt(n.shape));s.slice&&(i+=s.slice.flatOffset),a.slice={flatOffset:i,origDataId:s.slice&&s.slice.origDataId||n.dataId};const u=r.dataRefCount.get(a.slice.origDataId)||1;return r.dataRefCount.set(a.slice.origDataId,u+1),o}function js(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{begin:o,size:a}=r,[i,u]=Vm(s,o,a);if(km(s,i,u),ne(u)===0)return t.makeTensorInfo(u,s.dtype,[]);if(t.shouldExecuteOnCPU([s])||s.dtype==="string"){const h=t.texData.get(s.dataId),d=GN(h.values,i,u,s.shape,s.dtype);return t.makeTensorInfo(u,s.dtype,d)}const{isPacked:c}=t.texData.get(s.dataId),l=mc(s.shape,i,u);if(c||!l){const h=j().getBool("WEBGL_PACK_ARRAY_OPERATIONS")?new Q6(u):new q6(u),d=[i];return t.runWebGLProgram(h,[s],s.dtype,d)}return t.uploadToGPU(s.dataId),Z6(s,i,u,t)}const J6={kernelName:vp,backendName:"webgl",kernelFunc:js};const eI=n=>{const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{blockShape:o,crops:a}=r;_(s.shape.length<=4,()=>"batchToSpaceND for rank > 4 with a WebGL backend not implemented yet");const i=o.reduce((C,I)=>C*I),u=xc(s.shape,o,i),c=bc(u.length,o.length),l=vc(s.shape,o,i),h=Km(a,o.length),d=Xm(l,a,o.length),p=[],f=ie({inputs:{x:s},backend:t,attrs:{shape:u}}),b=St({inputs:{x:f},backend:t,attrs:{perm:c}}),y=ie({inputs:{x:b},backend:t,attrs:{shape:l}}),x=js({inputs:{x:y},backend:t,attrs:{begin:h,size:d}});return p.push(f),p.push(b),p.push(y),p.forEach(C=>t.disposeIntermediateTensorInfo(C)),x},tI={kernelName:Nh,backendName:"webgl",kernelFunc:eI};function nI(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,weights:o}=e,{size:a}=r,i=t.readSync(s.dataId),u=t.readSync(o.dataId),c=L1(i,u,o.dtype,o.shape,a);return t.makeTensorInfo([a],o.dtype,c)}const rI={kernelName:Eh,backendName:"webgl",kernelFunc:nI};const sI=`
+  int r = int(a.r) & int(b.r);
+  int g = int(a.g) & int(b.g);
+  int rb = int(a.b) & int(b.b);
+  int ra = int(a.a) & int(b.a);
+  return vec4(r, g, rb, ra);
+`,oI=`
+  return float(int(a.r) & int(b.r));
+`;function aI(n){const{inputs:e,backend:t}=n,{a:r,b:s}=e,o=j().getBool("WEBGL_PACK_BINARY_OPERATIONS"),a=j().getNumber("WEBGL_VERSION");if(t.shouldExecuteOnCPU([r,s])||a===1){const u=t.texData.get(r.dataId).values,c=t.texData.get(s.dataId).values,[l,h]=fN(r.shape,s.shape,u,c,r.dtype),d=t.makeTensorInfo(h,r.dtype),p=t.texData.get(d.dataId);return p.values=l,d}let i;return o?i=new zs(sI,r.shape,s.shape,!1):i=new es(oI,r.shape,s.shape),t.runWebGLProgram(i,[r,s],r.dtype)}const iI={kernelName:Ih,backendName:"webgl",kernelFunc:aI};function uI(n){const{inputs:e,backend:t}=n,{s0:r,s1:s}=e,o=t.readSync(r.dataId),a=t.readSync(s.dataId),i=Fe(Array.from(o),Array.from(a));return t.makeTensorInfo([i.length],"int32",Int32Array.from(i))}const cI={kernelName:kh,backendName:"webgl",kernelFunc:uI};const lI="return float(a != b);",Q1=ft({opSnippet:lI,cpuKernelImpl:FN,dtype:"bool"}),hI={kernelName:Gd,backendName:"webgl",kernelFunc:Q1};function Uo(n){const{inputs:e,backend:t}=n,{input:r}=e,s=t.texData.get(r.dataId);return Lt({inputs:{x:s.complexTensorInfos.real},backend:t})}const dI={kernelName:op,backendName:"webgl",kernelFunc:Uo};const pI="return float(int(x));";function fI(n,e){const t=new kn(n.shape,pI),r=e.runWebGLProgram(t,[n],"int32");return{dataId:r.dataId,shape:r.shape,dtype:r.dtype}}function ku(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{dtype:o}=r;if(o==="complex64"){if(s.dtype==="complex64")return Lt({inputs:{x:s},backend:t});const a=Yr(s.shape),i=ku({inputs:{x:s},backend:t,attrs:{dtype:"float32"}}),u=wr({inputs:{real:i,imag:a},backend:t});return a.dispose(),t.disposeIntermediateTensorInfo(i),u}if(s.dtype==="complex64"){const a=Uo({inputs:{input:s},backend:t}),i=ku({inputs:{x:a},backend:t,attrs:{dtype:o}});return t.disposeIntermediateTensorInfo(a),i}if(!Gg(s.dtype,o)){const a=Lt({inputs:{x:s},backend:t});return{dataId:a.dataId,shape:a.shape,dtype:o}}if(t.shouldExecuteOnCPU([s])){const a=t.texData.get(s.dataId).values,[i,u,c]=mN(a,s.shape,s.dtype,o);return t.makeTensorInfo(i,u,c)}if(o==="int32")return fI(s,t);if(o==="bool"){const a=t.makeTensorInfo([],"bool",pr("bool",1)),u=Q1({inputs:{a:s,b:a},backend:t});return t.disposeIntermediateTensorInfo(a),u}throw new Error(`Error in Cast: failed to cast ${s.dtype} to ${o}`)}const mI={kernelName:Ku,backendName:"webgl",kernelFunc:ku};const Nl="return ceil(x);",gI=Oe({opSnippet:Nl,packedOpSnippet:Nl,cpuKernelImpl:gN}),yI={kernelName:Rh,backendName:"webgl",kernelFunc:gI};class xI{constructor(e){this.variableNames=["A"],this.customUniforms=[{name:"minVal",type:"float"},{name:"maxVal",type:"float"}],this.outputShape=e,this.userCode=`
+
+      void main() {
+        float value = getAAtOutCoords();
+        if (isnan(value)) {
+          setOutput(value);
+          return;
+        }
+
+        setOutput(clamp(value, minVal, maxVal));
+      }
+    `}}class bI{constructor(e){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"minVal",type:"float"},{name:"maxVal",type:"float"}],this.outputShape=e,this.userCode=`
+      void main() {
+        vec4 value = getAAtOutCoords();
+
+        if (any(isnan(value))) {
+          setOutput(value);
+          return;
+        }
+
+        setOutput(clamp(value, vec4(minVal), vec4(maxVal)));
+      }
+    `}}function vI(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{clipValueMin:o,clipValueMax:a}=r;let i;j().getBool("WEBGL_PACK_CLIP")?i=new bI(s.shape):i=new xI(s.shape);const u=[[o],[a]];return t.runWebGLProgram(i,[s],s.dtype,u)}const wI={kernelName:_h,backendName:"webgl",kernelFunc:vI};class $I{constructor(e){this.variableNames=["real","imag"],this.outputShape=e,this.userCode=`
+      void main() {
+        float re = abs(getRealAtOutCoords());
+        float im = abs(getImagAtOutCoords());
+        float mx = max(re, im);
+
+        // sadly the length function in glsl is not underflow-safe
+        // (at least not on Intel GPUs). So the safe solution is
+        // to ensure underflow-safety in all cases.
+        setOutput(
+          mx == 0.0 ? 0.0 : mx * length(vec2(1, min(re, im)/mx))
+        );
+      }
+    `}}function El(n,e){return{dataId:e.dataId,dtype:e.dtype,shape:n.shape}}function SI(n){const{inputs:e,backend:t}=n,{x:r}=e,s=t.texData.get(r.dataId),o=new $I(r.shape),a=[El(r,s.complexTensorInfos.real),El(r,s.complexTensorInfos.imag)];return t.runWebGLProgram(o,a,a[0].dtype)}const CI={kernelName:Oh,backendName:"webgl",kernelFunc:SI};class TI{constructor(e){this.outputShape=[],this.outputShape=Jr(e,1),this.variableNames=e.map((a,i)=>`T${i}`);const t=new Array(e.length-1);t[0]=e[0][1];for(let a=1;a<t.length;a++)t[a]=t[a-1]+e[a][1];const r=[`if (yC < ${t[0]}) setOutput(getT0(yR, yC));`];for(let a=1;a<t.length;a++){const i=t[a-1];r.push(`else if (yC < ${t[a]}) setOutput(getT${a}(yR, yC-${i}));`)}const s=t.length,o=t[t.length-1];r.push(`else setOutput(getT${s}(yR, yC-${o}));`),this.userCode=`
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int yR = coords.x;
+        int yC = coords.y;
+
+        ${r.join(`
+        `)}
+      }
+    `}}class NI{constructor(e,t){this.packedInputs=!0,this.packedOutput=!0,this.outputShape=[],this.outputShape=Jr(e,t);const r=this.outputShape,s=r.length,o=Ve(s),a=$t("coords",s),i=["x","y","z","w","u","v"].slice(0,s);this.variableNames=e.map((b,y)=>`T${y}`);const u=new Array(e.length-1);u[0]=e[0][t];for(let b=1;b<u.length;b++)u[b]=u[b-1]+e[b][t];const c=i[t],l=i.slice(-2),h=i.join();let d=`if (${c} < ${u[0]}) {
+        return getChannel(
+            getT0(${h}), vec2(${l.join()}));
+        }`;for(let b=1;b<u.length;b++){const y=u[b-1];d+=`
+        if (${c} < ${u[b]}  && ${c} >= ${u[b-1]}) {
+          return getChannel(
+            getT${b}(${ga(i,c,y)}),
+            vec2(${ga(l,c,y)}));
+        }`}const p=u.length,f=u[u.length-1];d+=`
+        return getChannel(
+          getT${p}(${ga(i,c,f)}),
+          vec2(${ga(l,c,f)}));`,this.userCode=`
+      float getValue(${i.map(b=>"int "+b)}) {
+        ${d}
+      }
+
+      void main() {
+        ${o} coords = getOutputCoords();
+        vec4 result = vec4(getValue(${a}), 0., 0., 0.);
+
+        ${a[s-1]} = ${a[s-1]} + 1;
+        if (${a[s-1]} < ${r[s-1]}) {
+          result.g = getValue(${a});
+        }
+
+        ${a[s-2]} = ${a[s-2]} + 1;
+        if (${a[s-2]} < ${r[s-2]}) {
+          result.a = getValue(${a});
+        }
+
+        ${a[s-1]} = ${a[s-1]} - 1;
+        if (${a[s-2]} < ${r[s-2]} &&
+            ${a[s-1]} < ${r[s-1]}) {
+          result.b = getValue(${a});
+        }
+        setOutput(result);
+      }
+    `}}function ga(n,e,t){const r=n.indexOf(e);return n.map((o,a)=>a===r?`${o} - ${t}`:o).join()}function mi(n){const{inputs:e,backend:t}=n,{input:r}=e,s=t.texData.get(r.dataId);return Lt({inputs:{x:s.complexTensorInfos.imag},backend:t})}const EI={kernelName:yd,backendName:"webgl",kernelFunc:mi};function yo(n,e,t){const r=n[0].dtype;if(r==="complex64"){const p=n.map(C=>Uo({inputs:{input:C},backend:t})),f=n.map(C=>mi({inputs:{input:C},backend:t})),b=yo(p,e,t),y=yo(f,e,t),x=wr({inputs:{real:b,imag:y},backend:t});return p.forEach(C=>t.disposeIntermediateTensorInfo(C)),f.forEach(C=>t.disposeIntermediateTensorInfo(C)),t.disposeIntermediateTensorInfo(b),t.disposeIntermediateTensorInfo(y),x}let s=t.shouldExecuteOnCPU(n);if(r==="string"&&(s=!0),s){const p=n.map(k=>{const W=[-1,ne(k.shape.slice(e))];return ie({inputs:{x:k},backend:t,attrs:{shape:W}})}),f=p.map(k=>({vals:t.readSync(k.dataId),shape:k.shape})),b=Jr(p.map(k=>k.shape),1),y=p[0].shape[0]===1,x=yN(f,b,r,y),C=Jr(n.map(k=>k.shape),e),I=t.makeTensorInfo(C,r,x);return p.forEach(k=>t.disposeIntermediateTensorInfo(k)),I}const o=n.filter(p=>ne(p.shape)>0),a=j().getBool("WEBGL_PACK_ARRAY_OPERATIONS")&&o[0].shape.length>1;if(o.length===1){const p=a?new kn(n[0].shape,ar):new ur(n[0].shape,ar);return t.runWebGLProgram(p,n,r)}const i=j().getNumber("WEBGL_MAX_TEXTURES_IN_SHADER");if(o.length>i){const p=[];for(let b=0;b<o.length;b+=i){const y=o.slice(b,b+i);p.push(yo(y,e,t))}const f=yo(p,e,t);for(const b of p)t.disposeIntermediateTensorInfo(b);return f}if(a){const p=new NI(o.map(f=>f.shape),e);return t.runWebGLProgram(p,o,r)}const{tensors2D:u,outShape:c}=II(o,e,t),l=new TI(u.map(p=>p.shape)),h=t.runWebGLProgram(l,u,r);u.forEach(p=>t.disposeIntermediateTensorInfo(p));const d=ie({inputs:{x:h},attrs:{shape:c},backend:t});return t.disposeIntermediateTensorInfo(h),d}function II(n,e,t){const r=Jr(n.map(o=>o.shape),e);return{tensors2D:n.map(o=>ie({inputs:{x:o},attrs:{shape:[-1,ne(o.shape.slice(e))]},backend:t})),outShape:r}}function Z1(n){const{inputs:e,backend:t,attrs:r}=n,{axis:s}=r,o=ut(s,e[0].shape)[0],a=e.map(c=>c.shape);Um(a,o);const i=Jr(e.map(c=>c.shape),o);if(ne(i)===0)return t.makeTensorInfo(i,e[0].dtype,[]);const u=e.filter(c=>ne(c.shape)>0);return u.length===1?Lt({inputs:{x:u[0]},backend:t}):yo(u,o,t)}const kI={kernelName:Dh,backendName:"webgl",kernelFunc:Z1};class J1{constructor(e,t=!1,r=null,s=!1,o=!1){this.variableNames=["x","W"],this.outputShape=e.outShape;const a=e.padInfo.top,i=e.padInfo.left,u=e.strideHeight,c=e.strideWidth,l=e.dilationHeight,h=e.dilationWidth,d=e.filterHeight,p=e.filterWidth,f=Math.floor(e.inChannels/4)*4,b=e.inChannels%4,y=e.dataFormat==="channelsLast",x=y?1:2,C=y?2:3,I=y?3:1;let k="",P="";r&&(s?k=`float activation(float a) {
+          float b = getPreluActivationWeightsAtOutCoords();
+          ${r}
+        }`:o?k=`float activation(float a) {
+          float b = getLeakyreluAlphaAtOutCoords();
+          ${r}
+        }`:k=`
+          float activation(float x) {
+            ${r}
+          }
+        `,P="result = activation(result);");const W=t?"result += getBiasAtOutCoords();":"";t&&this.variableNames.push("bias"),s&&this.variableNames.push("preluActivationWeights"),o&&this.variableNames.push("leakyreluAlpha"),this.userCode=`
+      ${k}
+
+      const ivec2 strides = ivec2(${u}, ${c});
+      const ivec2 pads = ivec2(${a}, ${i});
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords[0];
+        int d2 = coords[${I}];
+
+        ivec2 xRCCorner =
+            ivec2(coords[${x}], coords[${C}]) * strides - pads;
+        int xRCorner = xRCCorner.x;
+        int xCCorner = xRCCorner.y;
+
+        // Convolve x(?, ?, d1) with w(:, :, d1, d2) to get y(yR, yC, d2).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+        for (int wR = 0; wR < ${d}; wR++) {
+          int xR = xRCorner + wR * ${l};
+
+          if (xR < 0 || xR >= ${e.inHeight}) {
+            continue;
+          }
+
+          for (int wC = 0; wC < ${p}; wC++) {
+            int xC = xCCorner + wC * ${h};
+
+            if (xC < 0 || xC >= ${e.inWidth}) {
+              continue;
+            }
+
+            for (int d1 = 0; d1 < ${f}; d1 += 4) {
+              vec4 wValues = vec4(
+                getW(wR, wC, d1, d2),
+                getW(wR, wC, d1 + 1, d2),
+                getW(wR, wC, d1 + 2, d2),
+                getW(wR, wC, d1 + 3, d2)
+              );
+
+              if (${y}) {
+                vec4 xValues = vec4(
+                  getX(batch, xR, xC, d1),
+                  getX(batch, xR, xC, d1 + 1),
+                  getX(batch, xR, xC, d1 + 2),
+                  getX(batch, xR, xC, d1 + 3)
+                );
+                dotProd += dot(xValues, wValues);
+              } else {
+                vec4 xValues = vec4(
+                  getX(batch, d1, xR, xC),
+                  getX(batch, d1 + 1, xR, xC),
+                  getX(batch, d1 + 2, xR, xC),
+                  getX(batch, d1 + 3, xR, xC)
+                );
+                dotProd += dot(xValues, wValues);
+              }
+            }
+
+            if (${b===1}) {
+
+              if (${y}) {
+                dotProd +=
+                    getX(batch, xR, xC, ${f}) *
+                    getW(wR, wC, ${f}, d2);
+              } else {
+                dotProd +=
+                    getX(batch, ${f}, xR, xC) *
+                    getW(wR, wC, ${f}, d2);
+              }
+
+            } else if (${b===2}) {
+              vec2 wValues = vec2(
+                getW(wR, wC, ${f}, d2),
+                getW(wR, wC, ${f} + 1, d2)
+              );
+
+              if (${y}) {
+                vec2 xValues = vec2(
+                  getX(batch, xR, xC, ${f}),
+                  getX(batch, xR, xC, ${f} + 1)
+                );
+                dotProd += dot(xValues, wValues);
+              } else {
+                vec2 xValues = vec2(
+                  getX(batch, ${f}, xR, xC),
+                  getX(batch, ${f} + 1, xR, xC)
+                );
+                dotProd += dot(xValues, wValues);
+              }
+
+            } else if (${b===3}) {
+              vec3 wValues = vec3(
+                getW(wR, wC, ${f}, d2),
+                getW(wR, wC, ${f} + 1, d2),
+                getW(wR, wC, ${f} + 2, d2)
+              );
+
+              if (${y}) {
+                vec3 xValues = vec3(
+                  getX(batch, xR, xC, ${f}),
+                  getX(batch, xR, xC, ${f} + 1),
+                  getX(batch, xR, xC, ${f} + 2)
+                );
+                dotProd += dot(xValues, wValues);
+              } else {
+                vec3 xValues = vec3(
+                  getX(batch, ${f}, xR, xC),
+                  getX(batch, ${f} + 1, xR, xC),
+                  getX(batch, ${f} + 2, xR, xC)
+                );
+                dotProd += dot(xValues, wValues);
+              }
+
+            }
+          }
+        }
+
+        float result = dotProd;
+        ${W}
+        ${P}
+        setOutput(result);
+      }
+    `}}class RI{constructor(e){this.variableNames=["x","W"],this.outputShape=e.outShape;const t=e.padInfo.front,r=e.padInfo.top,s=e.padInfo.left,o=e.strideDepth,a=e.strideHeight,i=e.strideWidth,u=e.dilationDepth,c=e.dilationHeight,l=e.dilationWidth,h=e.filterDepth,d=e.filterHeight,p=e.filterWidth,f=Math.floor(e.inChannels/4)*4,b=e.inChannels%4;this.userCode=`
+      const ivec3 strides = ivec3(${o}, ${a}, ${i});
+      const ivec3 pads = ivec3(${t}, ${r}, ${s});
+
+      void main() {
+        ivec5 coords = getOutputCoords();
+        int batch = coords.x;
+        int d2 = coords.u;
+
+        ivec3 xFRCCorner = ivec3(coords.y, coords.z, coords.w) * strides - pads;
+        int xFCorner = xFRCCorner.x;
+        int xRCorner = xFRCCorner.y;
+        int xCCorner = xFRCCorner.z;
+
+        // Convolve x(?, ?, ?, d1) with w(:, :, :, d1, d2) to get
+        // y(yF, yR, yC, d2). ? = to be determined. : = across all
+        // values in that axis.
+        float dotProd = 0.0;
+        for (int wF = 0; wF < ${h}; wF++) {
+          int xF = xFCorner + wF * ${u};
+
+          if (xF < 0 || xF >= ${e.inDepth}) {
+            continue;
+          }
+
+          for (int wR = 0; wR < ${d}; wR++) {
+            int xR = xRCorner + wR * ${c};
+
+            if (xR < 0 || xR >= ${e.inHeight}) {
+              continue;
+            }
+
+            for (int wC = 0; wC < ${p}; wC++) {
+              int xC = xCCorner + wC * ${l};
+
+              if (xC < 0 || xC >= ${e.inWidth}) {
+                continue;
+              }
+
+              for (int d1 = 0; d1 < ${f}; d1 += 4) {
+                vec4 xValues = vec4(
+                  getX(batch, xF, xR, xC, d1),
+                  getX(batch, xF, xR, xC, d1 + 1),
+                  getX(batch, xF, xR, xC, d1 + 2),
+                  getX(batch, xF, xR, xC, d1 + 3)
+                );
+                vec4 wValues = vec4(
+                  getW(wF, wR, wC, d1, d2),
+                  getW(wF, wR, wC, d1 + 1, d2),
+                  getW(wF, wR, wC, d1 + 2, d2),
+                  getW(wF, wR, wC, d1 + 3, d2)
+                );
+
+                dotProd += dot(xValues, wValues);
+              }
+
+              if (${b===1}) {
+                dotProd +=
+                  getX(batch, xF, xR, xC, ${f}) *
+                  getW(wF, wR, wC, ${f}, d2);
+              } else if (${b===2}) {
+                vec2 xValues = vec2(
+                  getX(batch, xF, xR, xC, ${f}),
+                  getX(batch, xF, xR, xC, ${f} + 1)
+                );
+                vec2 wValues = vec2(
+                  getW(wF, wR, wC, ${f}, d2),
+                  getW(wF, wR, wC, ${f} + 1, d2)
+                );
+                dotProd += dot(xValues, wValues);
+              } else if (${b===3}) {
+                vec3 xValues = vec3(
+                  getX(batch, xF, xR, xC, ${f}),
+                  getX(batch, xF, xR, xC, ${f} + 1),
+                  getX(batch, xF, xR, xC, ${f} + 2)
+                );
+                vec3 wValues = vec3(
+                  getW(wF, wR, wC, ${f}, d2),
+                  getW(wF, wR, wC, ${f} + 1, d2),
+                  getW(wF, wR, wC, ${f} + 2, d2)
+                );
+                dotProd += dot(xValues, wValues);
+              }
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class eg{constructor(e,t=!1,r=null,s=!1,o=!1){this.variableNames=["x","W"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"pads",type:"ivec2"},{name:"strides",type:"ivec2"},{name:"dilations",type:"ivec2"},{name:"inDims",type:"ivec2"}],this.outputShape=e.outShape,this.enableShapeUniforms=bt(this.outputShape.length);const a=e.padInfo.left,i=e.strideWidth,u=e.dilationWidth,c=e.filterHeight,l=e.filterWidth,h=l;let d=`
+       int xR; int xC; int xCOffset;
+       vec4 wTexel; vec4 previous; vec4 final;`;for(let y=0;y<l;y++)d+=`
+           vec4 xTexelC${y*2};
+           int xTexelC${y*2}Ready;
+           vec4 xTexelC${y*2+1};
+           int xTexelC${y*2+1}Ready;
+           vec4 xC${y};`;d+=`
+     for (int r = 0; r < ${c}; r++) {
+      for (int d1 = 0; d1 < ${e.inChannels}; d1 += 2) {
+       `;for(let y=0;y<l;y++)d+=`
+           xTexelC${y*2} = vec4(0.0);
+           xTexelC${y*2}Ready = 0;
+           xTexelC${y*2+1} = vec4(0.0);
+           xTexelC${y*2+1}Ready = 0;
+           xC${y} = vec4(0.0);`;d+=`
+         xR = xRCorner + r * dilations[0];
+         if (xR >=0 && xR < inDims[0]) {
+       `;for(let y=0;y<(h+1)/2;y++){const x=y*2;if(d+=`
+           xC = xCCorner + ${x*u};
+           `,i===1){if(x<l&&(a%2===1?(d+=`
+                 xCOffset = xC + 1;
+                 if (xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${x}Ready == 0) {
+                   xTexelC${x} = getX(batch, xR, xCOffset, d1);
+
+                   // Need to manually clear unused channels in case
+                   // we're reading from recycled texture.
+                   if (xCOffset + 1 >= inDims[1]) {
+                     xTexelC${x}.zw = vec2(0.0);
+                   }
+                   xTexelC${x}Ready = 1;
+                 }
+               `,u===1&&x>0?d+=`
+                 xC${x} = vec4(xTexelC${x-2}.zw, xTexelC${x}.xy);
+                 `:d+=`
+                   xCOffset = xC + 1 - 2;
+
+                   if (xCOffset >= 0 && xCOffset < inDims[1]) {
+                     previous = getX(batch, xR, xCOffset, d1);
+
+                     // Need to manually clear unused channels in case
+                     // we're reading from recycled texture.
+                     if (xCOffset + 1 >= inDims[1]) {
+                       previous.zw = vec2(0.0);
+                     }
+
+                     xC${x} = vec4(previous.zw, xTexelC${x}.xy);
+                   } else {
+                     xC${x} = vec4(0.0, 0.0, xTexelC${x}.xy);
+                   }
+                   `):d+=`
+                 if (xC >= 0 && xC < inDims[1] && xTexelC${x}Ready == 0) {
+                   xTexelC${x} = getX(batch, xR, xC, d1);
+                   if (xC + 1 >= inDims[1]) {
+                     xTexelC${x}.zw = vec2(0.0);
+                   }
+                   xTexelC${x}Ready = 1;
+                 }
+
+                 xC${x} = xTexelC${x};
+                 `,x+1<l)){const C=a%2===0?zu(u):u;u%2===0&&a%2===1||u%2!==0&&a%2!==1?(d+=`
+                   xCOffset = xC + imod(pads[1], 2) + ${C};
+
+                   if (xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${x+1}Ready == 0) {
+                     xTexelC${x+1} = getX(batch, xR, xCOffset, d1);
+
+                     // Need to manually clear unused channels in case
+                     // we're reading from recycled texture.
+                     if (xCOffset + 1 >= inDims[1]) {
+                       xTexelC${x+1}.zw = vec2(0.0);
+                     }
+                     xTexelC${x+1}Ready = 1;
+                   }
+                   `,u>1?d+=`
+                     xCOffset -= 2;
+                     if (xCOffset >= 0 && xCOffset < inDims[1]) {
+                      previous = getX(batch, xR, xCOffset, d1);
+                      xC${x+1} = vec4(previous.zw, xTexelC${x+1}.xy);
+                     } else {
+                      xC${x+1} = vec4(0.0, 0.0, xTexelC${x+1}.xy);
+                     }
+                     `:d+=`
+                     xC${x+1} = vec4(xTexelC${x}.zw, xTexelC${x+1}.xy);
+                     `):C===1?d+=`
+                     xC${x+1} = xTexelC${x};
+                     `:d+=`
+                     xCOffset = xC + ${C};
+
+                     if (xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${x+1}Ready == 0) {
+                       xTexelC${x+1} = getX(batch, xR, xCOffset, d1);
+                       if (xCOffset + 1 >= inDims[1]) {
+                         xTexelC${x+1}.zw = vec2(0.0);
+                       }
+                       xTexelC${x+1}Ready = 1;
+                     }
+
+                     xC${x+1} = xTexelC${x+1};
+                     `}}else x<l&&(a%2===1?(d+=`
+                 xCOffset = xC + 1 - strides[1];
+                 if(xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${x}Ready == 0) {
+                   xTexelC${x} = getX(batch, xR, xCOffset, d1);
+                   // Need to manually clear unused channels in case
+                   // we're reading from recycled texture.
+                   if (xCOffset + 1 >= inDims[1]) {
+                     xTexelC${x}.zw = vec2(0.0);
+                   }
+                   xTexelC${x}Ready = 1;
+                 }
+
+                 if(xC + 1 >= 0 && xC + 1 < inDims[1] && xTexelC${x+1}Ready == 0) {
+                   xTexelC${x+1} = getX(batch, xR, xC + 1, d1);
+                   // Need to manually clear unused channels in case
+                   // we're reading from recycled texture.
+                   if (xC + 2 >= inDims[1]) {
+                     xTexelC${x+1}.zw = vec2(0.0);
+                   }
+                   xTexelC${x+1}Ready = 1;
+                 }
+
+                 xC${x} = vec4(xTexelC${x}.zw, xTexelC${x+1}.zw);
+               `,x+1<l&&(d+=`
+                   final = vec4(0.0);
+                   xCOffset = xC + 1 + strides[1];
+                   if(xCOffset >= 0 && xCOffset < inDims[1]) {
+                     final = getX(batch, xR, xCOffset, d1);
+                   }
+                   xC${x+1} = vec4(xTexelC${x+1}.xy, final.xy);
+                 `)):(d+=`
+                 if(xC >= 0 && xC < inDims[1] && xTexelC${x}Ready == 0) {
+                   xTexelC${x} = getX(batch, xR, xC, d1);
+                   if (xC + 1 >= inDims[1]) {
+                     xTexelC${x}.zw = vec2(0.0);
+                   }
+                   xTexelC${x}Ready = 1;
+                 }
+
+                 xCOffset = xC + strides[1];
+                 if(xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${x+1}Ready == 0) {
+                   xTexelC${x+1} = getX(batch, xR, xCOffset, d1);
+                   if (xCOffset + 1 >= inDims[1]) {
+                     xTexelC${x+1}.zw = vec2(0.);
+                   }
+                   xTexelC${x+1}Ready = 1;
+                 }
+
+                 xC${x} = vec4(
+                   xTexelC${x}.xy, xTexelC${x+1}.xy);
+               `,x+1<l&&(d+=`
+                   xC${x+1} = vec4(xTexelC${x}.zw, xTexelC${x+1}.zw);
+                 `)));x<l&&(d+=`
+             wTexel = getW(r, ${x}, d1, d2);
+             dotProd += xC${x}.xxzz * vec4(wTexel.xy, wTexel.xy);
+             if(d1 + 1 < ${e.inChannels}) {
+               dotProd += xC${x}.yyww * vec4(wTexel.zw, wTexel.zw);
+             }
+           `,x+1<l&&(d+=`
+               wTexel = getW(r, ${x+1}, d1, d2);
+               dotProd += xC${x+1}.xxzz * vec4(wTexel.xy, wTexel.xy);
+               if(d1 + 1 < ${e.inChannels}) {
+                 dotProd += xC${x+1}.yyww * vec4(wTexel.zw, wTexel.zw);
+               }
+             `))}d+=`
+     }
+   `,d+=`
+     }
+   `,d+=`
+     }
+   `;let p="",f="";r&&(s?p=`vec4 activation(vec4 a) {
+           vec4 b = getPreluActivationWeightsAtOutCoords();
+           ${r}
+         }`:o?p=`vec4 activation(vec4 a) {
+           vec4 b = getLeakyreluAlphaAtOutCoords();
+           ${r}
+         }`:p=`vec4 activation(vec4 x) {
+           ${r}
+         }`,f="result = activation(result);");const b=t?"result += getBiasAtOutCoords();":"";t&&this.variableNames.push("bias"),s&&this.variableNames.push("preluActivationWeights"),o&&this.variableNames.push("leakyreluAlpha"),this.userCode=`
+       ${p}
+
+       void main() {
+         ivec4 coords = getOutputCoords();
+         int batch = coords.x;
+         ivec2 xRCCorner = coords.yz * strides - pads;
+         int d2 = coords.w;
+         int xRCorner = xRCCorner.x;
+         int xCCorner = xRCCorner.y;
+
+         //intialize dotProd with a small epsilon seems to reduce GPU accuracy loss.
+         vec4 dotProd = vec4(0.000000000000001);
+
+         ${d}
+
+         vec4 result = dotProd - vec4(0.000000000000001);
+         ${b}
+         ${f}
+         setOutput(result);
+       }
+     `}}class _I{constructor(e,t){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"inputShape",type:"ivec4"},{name:"pad",type:"ivec2"},{name:"stride",type:"ivec2"},{name:"dilation",type:"ivec2"},{name:"inChannels",type:"int"},{name:"itemsPerBlockRow",type:"int"},{name:"outWidth",type:"int"}],this.outputShape=e,this.enableShapeUniforms=bt(this.outputShape.length);const{dataFormat:r}=t,s=Ct(),o=r==="channelsLast",a=o?1:2,i=o?2:3,u=this.enableShapeUniforms?"if(blockIndex < outShape[2] && pos < outShape[1]) {":`if(blockIndex < ${e[2]} && pos < ${e[1]}) {`;let c="";for(let l=0;l<=1;l++)for(let h=0;h<=1;h++)c+=`
+          blockIndex = rc.z + ${h};
+          pos = rc.y + ${l};
+
+          ${u}
+            offsetY = int(blockIndex / outWidth) * stride[0] - pad[0];
+            d0 = offsetY + dilation[0] * (pos / itemsPerBlockRow);
+
+            if(d0 < inputShape[${a}] && d0 >= 0) {
+              // Use custom imod instead mod. On Intel GPU, mod may generate
+              // unexpected value.
+              // https://github.com/tensorflow/tfjs/issues/5447
+              offsetX = imod(blockIndex, outWidth) * stride[1] - pad[1];
+              d1 = offsetX + dilation[1] * (imod(pos, itemsPerBlockRow) /
+                  inChannels);
+
+              if(d1 < inputShape[${i}] && d1 >= 0) {
+
+                ch = imod(pos, inChannels);
+
+                if (${o}) {
+                  innerDims = vec2(d1, ch);
+                  result[${l*2+h}] = getChannel(
+                    getA(rc.x, d0, int(innerDims.x),
+                    int(innerDims.y)), innerDims);
+                } else {
+                  innerDims = vec2(d0, d1);
+                  result[${l*2+h}] = getChannel(
+                    getA(rc.x, ch, int(innerDims.x),
+                    int(innerDims.y)), innerDims);
+                }
+              }
+            }
+          }
+        `;this.userCode=`
+      void main() {
+        ivec3 rc = getOutputCoords();
+
+        vec4 result = vec4(0);
+
+        int blockIndex, pos, offsetY, d0, offsetX, d1, ch;
+        vec2 innerDims;
+
+        ${c}
+
+        ${s.output} = result;
+      }
+    `}}function Ga(n,e){const t=n.length;return t>=3?e?[...n.slice(0,-3),n[t-3]*n[t-2],n[t-1]]:[...n.slice(0,-3),n[t-3],n[t-2]*n[t-1]]:!e&&t===1&&n[0]>1?[n[0],1]:null}function tg({x:n,filter:e,convInfo:t,backend:r,bias:s=null,preluActivationWeights:o=null,leakyreluAlpha:a=0,activation:i=null}){const u=n.shape,c=r.texData.get(n.dataId),l=t.inChannels,h=u[0]*u[1]*u[2],d=t.outChannels,p=t.dataFormat==="channelsLast",f=!1,b=!1;let y;const x=[];if(o!=null){const k=Ga(o.shape,p);k!=null&&(o=ie({inputs:{x:o},backend:r,attrs:{shape:k}}),x.push(o))}if(s!=null){const k=Ga(s.shape,p);k!=null&&(s=ie({inputs:{x:s},backend:r,attrs:{shape:k}}),x.push(s))}if(!((h===1||d===1)&&l>K1)&&c.isPacked&&p&&c.texture!=null&&u[2]%2!==0&&qe(c.shape.slice(-3),u.slice(-3))){const k=u[0]*u[1]*(u[2]+1),P={dataId:n.dataId,shape:[1,k,t.inChannels],dtype:n.dtype},W=c.shape;c.shape=c.shape.slice(),c.shape[c.shape.length-2]++,_(Ua(c.shape,P.shape),()=>`packed reshape ${c.shape} to ${P.shape} isn't free`);const H=ie({inputs:{x:e},backend:r,attrs:{shape:[1,t.inChannels,t.outChannels]}});x.push(H);const G=za({a:P,b:H,backend:r,transposeA:f,transposeB:b,bias:s,activation:i,preluActivationWeights:o,leakyreluAlpha:a}),B=r.texData.get(G.dataId);_(B.isPacked,()=>"batchMatMul result is expected to be packed"),c.shape=W,B.shape=t.outShape,y=Lt({inputs:{x:G},backend:r}),y.shape=t.outShape,x.push(G)}else{const k=t.outHeight*t.outWidth,P=ie({inputs:{x:n},backend:r,attrs:{shape:p?[t.batchSize,k,t.inChannels]:[t.batchSize,t.inChannels,k]}}),W=ie({inputs:{x:e},backend:r,attrs:{shape:[1,t.inChannels,t.outChannels]}}),H=za({a:p?P:W,b:p?W:P,transposeA:!p,transposeB:b,backend:r,bias:s,activation:i,preluActivationWeights:o,leakyreluAlpha:a});y=ie({inputs:{x:H},backend:r,attrs:{shape:t.outShape}}),x.push(P),x.push(W),x.push(H)}for(const k of x)r.disposeIntermediateTensorInfo(k);return y}function ng({x:n,filter:e,convInfo:t,backend:r,bias:s=null,preluActivationWeights:o=null,leakyreluAlpha:a=0,activation:i=null}){const{filterWidth:u,filterHeight:c,inChannels:l,outWidth:h,outHeight:d,dataFormat:p}=t,f=p==="channelsLast",b=u*c*l,y=d*h,x=[t.batchSize,b,y],C=!0,I=!1,k=[];if(o!=null){const $e=Ga(o.shape,f);$e!=null&&(o=ie({inputs:{x:o},backend:r,attrs:{shape:$e}}),k.push(o))}if(s!=null){const $e=Ga(s.shape,f);$e!=null&&(s=ie({inputs:{x:s},backend:r,attrs:{shape:$e}}),k.push(s))}const P=ie({inputs:{x:e},backend:r,attrs:{shape:[1,b,ne(e.shape)/b]}});k.push(P);const W=new _I(x,t),H=[n.shape,[t.padInfo.top,t.padInfo.left],[t.strideHeight,t.strideWidth],[t.dilationHeight,t.dilationWidth],[t.inChannels],[t.filterWidth*t.inChannels],[t.outWidth]],G=r.runWebGLProgram(W,[n],"float32",H),B=ie({inputs:{x:G},backend:r,attrs:{shape:x}});k.push(G),k.push(B);const V=s!=null,R=o!=null,q=i==="leakyrelu",te=i?ko(i,!0):null,he=new H1(f?B.shape:P.shape,f?P.shape:B.shape,f?[t.batchSize,y,t.outChannels]:[t.batchSize,t.outChannels,y],C,I,V,te,R,q),de=f?[B,P]:[P,B];if(s&&de.push(s),R&&de.push(o),q){const $e=r.makeTensorInfo([],"float32",Ds(a,"float32"));de.push($e),k.push($e)}const ge=r.runWebGLProgram(he,de,"float32"),be=ie({inputs:{x:ge},backend:r,attrs:{shape:t.outShape}});k.push(ge);for(const $e of k)r.disposeIntermediateTensorInfo($e);return be}function AI(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,filter:o}=e,{strides:a,pad:i,dataFormat:u,dilations:c,dimRoundingMode:l}=r,h=Fs(u),d=Xt(s.shape,o.shape,a,c,i,l,!1,h);let p;if(d.filterHeight===1&&d.filterWidth===1&&d.dilationHeight===1&&d.dilationWidth===1&&d.strideHeight===1&&d.strideWidth===1&&(d.padInfo.type==="SAME"||d.padInfo.type==="VALID"))p=tg({x:s,filter:o,convInfo:d,backend:t});else if(d.strideWidth<=2&&h==="channelsLast"&&j().getBool("WEBGL_EXP_CONV")){const b=new eg(d),y=[[d.padInfo.top,d.padInfo.left],[d.strideHeight,d.strideWidth],[d.dilationHeight,d.dilationWidth],[d.inHeight,d.inWidth]];p=t.runWebGLProgram(b,[s,o],"float32",y)}else if(j().getBool("WEBGL_CONV_IM2COL"))p=ng({x:s,filter:o,convInfo:d,backend:t});else{const b=new J1(d);p=t.runWebGLProgram(b,[s,o],"float32")}const f=ie({inputs:{x:p},backend:t,attrs:{shape:d.outShape}});return t.disposeIntermediateTensorInfo(p),f}const OI={kernelName:Fh,backendName:"webgl",kernelFunc:AI};class DI{constructor(e){this.variableNames=["x","dy"],this.outputShape=e.filterShape;const t=e.strideHeight,r=e.strideWidth,s=e.padInfo.top,o=e.padInfo.left,a=e.dataFormat==="channelsLast";this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int wR = coords.x;
+        int wC = coords.y;
+        int d1 = coords.z;
+        int d2 = coords.w;
+
+        // Convolve x(?, ?, d1) with dy(:, :, d2) to get dw(wR, wC, d1, d2).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+
+        for (int b = 0; b < ${e.batchSize}; b++) {
+          for (int yR = 0; yR < ${e.outHeight}; yR++) {
+            int xR = wR + yR * ${t} - ${s};
+
+            if (xR < 0 || xR >= ${e.inHeight}) {
+              continue;
+            }
+
+            for (int yC = 0; yC < ${e.outWidth}; yC++) {
+              int xC = wC + yC * ${r} - ${o};
+
+              if (xC < 0 || xC >= ${e.inWidth}) {
+                continue;
+              }
+
+              ${a?`float dyValue = getDy(b, yR, yC, d2);
+              float xValue = getX(b, xR, xC, d1);
+              dotProd += (xValue * dyValue);`:`float dyValue = getDy(b, d2, yR, yC);
+              float xValue = getX(b, d1, xR, xC);
+              dotProd += (xValue * dyValue);`}
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class FI{constructor(e){this.variableNames=["dy","W"],this.outputShape=e.inShape;const t=e.filterHeight,r=e.filterWidth,s=e.strideHeight,o=e.strideWidth,a=e.dataFormat==="channelsLast",i=t-1-e.padInfo.top,u=r-1-e.padInfo.left,c=a?1:2,l=a?2:3,h=a?3:1;this.userCode=`
+      const ivec2 pads = ivec2(${i}, ${u});
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords[0];
+        int d1 = coords[${h}];
+
+        ivec2 dyCorner = ivec2(coords[${c}], coords[${l}]) - pads;
+        int dyRCorner = dyCorner.x;
+        int dyCCorner = dyCorner.y;
+
+        // Convolve dy(?, ?, d2) with w(:, :, d1, d2) to compute dx(xR, xC, d1).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+        for (int wR = 0; wR < ${t}; wR++) {
+          float dyR = float(dyRCorner + wR) / ${s}.0;
+
+          if (dyR < 0.0 || dyR >= ${e.outHeight}.0 || fract(dyR) > 0.0) {
+            continue;
+          }
+          int idyR = int(dyR);
+
+          int wRPerm = ${t} - 1 - wR;
+
+          for (int wC = 0; wC < ${r}; wC++) {
+            float dyC = float(dyCCorner + wC) / ${o}.0;
+
+            if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                fract(dyC) > 0.0) {
+              continue;
+            }
+            int idyC = int(dyC);
+
+            int wCPerm = ${r} - 1 - wC;
+
+            for (int d2 = 0; d2 < ${e.outChannels}; d2++) {
+
+              if (${a}) {
+                float xValue = getDy(batch, idyR, idyC, d2);
+                float wValue = getW(wRPerm, wCPerm, d1, d2);
+                dotProd += xValue * wValue;
+              } else {
+                float xValue = getDy(batch, d2, idyR, idyC);
+                float wValue = getW(wRPerm, wCPerm, d1, d2);
+                dotProd += xValue * wValue;
+              }
+
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class PI{constructor(e){this.variableNames=["x","dy"],this.outputShape=e.filterShape;const t=e.strideDepth,r=e.strideHeight,s=e.strideWidth,o=e.padInfo.front,a=e.padInfo.top,i=e.padInfo.left;this.userCode=`
+      void main() {
+        ivec5 coords = getOutputCoords();
+        int wF = coords.x;
+        int wR = coords.y;
+        int wC = coords.z;
+        int d1 = coords.w;
+        int d2 = coords.u;
+
+        float dotProd = 0.0;
+
+        for (int b = 0; b < ${e.batchSize}; b++) {
+          for (int yF = 0; yF < ${e.outDepth}; yF++) {
+            int xF = wF + yF * ${t} - ${o};
+
+            if (xF < 0 || xF >= ${e.inDepth}) {
+              continue;
+            }
+
+            for (int yR = 0; yR < ${e.outHeight}; yR++) {
+              int xR = wR + yR * ${r} - ${a};
+
+              if (xR < 0 || xR >= ${e.inHeight}) {
+                continue;
+              }
+
+              for (int yC = 0; yC < ${e.outWidth}; yC++) {
+                int xC = wC + yC * ${s} - ${i};
+
+                if (xC < 0 || xC >= ${e.inWidth}) {
+                  continue;
+                }
+
+                float dyValue = getDy(b, yF, yR, yC, d2);
+                float xValue = getX(b, xF, xR, xC, d1);
+                dotProd += (xValue * dyValue);
+              }
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class LI{constructor(e){this.variableNames=["dy","W"],this.outputShape=e.inShape;const t=e.filterDepth,r=e.filterHeight,s=e.filterWidth,o=e.strideDepth,a=e.strideHeight,i=e.strideWidth,u=t-1-e.padInfo.front,c=r-1-e.padInfo.top,l=s-1-e.padInfo.left;this.userCode=`
+      const ivec3 pads = ivec3(${u}, ${c}, ${l});
+
+      void main() {
+        ivec5 coords = getOutputCoords();
+        int batch = coords.x;
+        int d1 = coords.u;
+
+
+        ivec3 dyCorner = ivec3(coords.y, coords.z, coords.w) - pads;
+        int dyFCorner = dyCorner.x;
+        int dyRCorner = dyCorner.y;
+        int dyCCorner = dyCorner.z;
+
+        float dotProd = 0.0;
+        for (int wF = 0; wF < ${t}; wF++) {
+          float dyF = float(dyFCorner + wF) / ${o}.0;
+
+          if (dyF < 0.0 || dyF >= ${e.outDepth}.0 || fract(dyF) > 0.0) {
+            continue;
+          }
+          int idyF = int(dyF);
+
+          int wFPerm = ${t} - 1 - wF;
+
+          for (int wR = 0; wR < ${r}; wR++) {
+            float dyR = float(dyRCorner + wR) / ${a}.0;
+
+            if (dyR < 0.0 || dyR >= ${e.outHeight}.0 ||
+              fract(dyR) > 0.0) {
+              continue;
+            }
+            int idyR = int(dyR);
+
+            int wRPerm = ${r} - 1 - wR;
+
+            for (int wC = 0; wC < ${s}; wC++) {
+              float dyC = float(dyCCorner + wC) / ${i}.0;
+
+              if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                  fract(dyC) > 0.0) {
+                continue;
+              }
+              int idyC = int(dyC);
+
+              int wCPerm = ${s} - 1 - wC;
+
+              for (int d2 = 0; d2 < ${e.outChannels}; d2++) {
+                float xValue = getDy(batch, idyF, idyR, idyC, d2);
+                float wValue = getW(wFPerm, wRPerm, wCPerm, d1, d2);
+                dotProd += xValue * wValue;
+              }
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}function BI(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,dy:o}=e,{strides:a,pad:i,dataFormat:u,dimRoundingMode:c,filterShape:l}=r,h=Fs(u),d=Xt(s.shape,l,a,1,i,c,!1,h),p=new DI(d);return t.runWebGLProgram(p,[s,o],"float32")}const VI={kernelName:Ph,backendName:"webgl",kernelFunc:BI};class MI{constructor(e){this.variableNames=["dy","W"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"strides",type:"vec2"}],this.outputShape=e.inShape,this.enableShapeUniforms=bt(this.outputShape.length);const t=e.filterHeight,r=e.filterWidth,s=t-1-e.padInfo.top,o=r-1-e.padInfo.left;this.userCode=`
+      const ivec2 pads = ivec2(${s}, ${o});
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords[0];
+        int d1 = coords[3];
+
+        ivec2 dyCorner = ivec2(coords[1], coords[2]) - pads;
+        int dyRCorner = dyCorner.x;
+        int dyCCorner = dyCorner.y;
+
+        vec4 result = vec4(0.);
+        for (int wR = 0; wR < ${t}; wR++) {
+          float dyR = float(dyRCorner + wR) / strides[0];
+          if (dyR < 0.0 || dyR >= ${e.outHeight}.0 || fract(dyR) > 0.0) {
+            continue;
+          }
+          int idyR = int(dyR);
+          int wRPerm = ${t} - 1 - wR;
+
+          for (int wC = 0; wC < ${r}; wC++) {
+            int wCPerm = ${r} - 1 - wC;
+
+            float dyC = float(dyCCorner + wC) / strides[1];
+            bool idyCVal = (dyC >= 0.0) && (dyC < ${e.outWidth}.0)
+              && (fract(dyC) == 0.0);
+            int idyC = int(dyC);
+
+            float dyC2 = float(dyCCorner + wC + 1) / strides[1];
+            bool idyCVal2 = (dyC2 >= 0.0) && (dyC2 < ${e.outWidth}.0)
+              && (fract(dyC2) == 0.0);
+            int idyC2 = int(dyC2);
+
+            if (idyCVal && idyCVal2) {
+              for (int d2 = 0; d2 < ${e.outChannels}; d2 += 2) {
+                vec4 wValue = getW(wRPerm, wCPerm, d1, d2);
+                vec4 dySample = getDy(batch, idyR, idyC, d2);
+                vec4 dySample2 = (idyC / 2 == idyC2 / 2) ?
+                  dySample : getDy(batch, idyR, idyC2, d2);
+
+                vec2 dyValue = mod(float(idyC), 2.) == 0. ?
+                  dySample.xy : dySample.zw;
+                result.xy += vec2(dot(dyValue, wValue.xy),
+                  dot(dyValue, wValue.zw));
+
+                dyValue = mod(float(idyC2), 2.) == 0. ?
+                  dySample2.xy : dySample2.zw;
+                result.zw += vec2(dot(dyValue, wValue.xy),
+                  dot(dyValue, wValue.zw));
+              }
+            } else if (idyCVal) {
+              for (int d2 = 0; d2 < ${e.outChannels}; d2 += 2) {
+                vec4 wValue = getW(wRPerm, wCPerm, d1, d2);
+                vec4 dySample = getDy(batch, idyR, idyC, d2);
+                vec2 dyValue = mod(float(idyC), 2.) == 0. ?
+                  dySample.xy : dySample.zw;
+                result.xy += vec2(dot(dyValue, wValue.xy),
+                  dot(dyValue, wValue.zw));
+              }
+            } else if (idyCVal2) {
+              for (int d2 = 0; d2 < ${e.outChannels}; d2 += 2) {
+                vec4 wValue = getW(wRPerm, wCPerm, d1, d2);
+                vec4 dySample = getDy(batch, idyR, idyC2, d2);
+                vec2 dyValue = mod(float(idyC2), 2.) == 0. ?
+                  dySample.xy : dySample.zw;
+                result.zw += vec2(dot(dyValue, wValue.xy),
+                  dot(dyValue, wValue.zw));
+              }
+            }
+          }
+        }
+        setOutput(result);
+      }
+    `}}function UI(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,filter:o}=e,{inputShape:a,strides:i,pad:u,dataFormat:c,dimRoundingMode:l}=r,h=Fs(c),d=Xt(a,o.shape,i,1,u,l,!1,h);if(j().getBool("WEBGL_PACK_CONV2DTRANSPOSE")&&h==="channelsLast"){const p=[[d.strideHeight,d.strideWidth]],f=new MI(d);return t.runWebGLProgram(f,[s,o],"float32",p)}else{const p=new FI(d);return t.runWebGLProgram(p,[s,o],"float32")}}const WI={kernelName:Lh,backendName:"webgl",kernelFunc:UI};function zI(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,filter:o}=e,{strides:a,pad:i,dilations:u}=r,c=Fo(s.shape,o.shape,a,u,i),l=new RI(c);return t.runWebGLProgram(l,[s,o],"float32")}const GI={kernelName:Bh,backendName:"webgl",kernelFunc:zI};function jI(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,dy:o}=e,{strides:a,pad:i,filterShape:u}=r,c=Fo(s.shape,u,a,1,i),l=new PI(c);return t.runWebGLProgram(l,[s,o],"float32")}const HI={kernelName:n2,backendName:"webgl",kernelFunc:jI};function KI(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,filter:o}=e,{pad:a,strides:i,inputShape:u}=r,c=Fo(u,o.shape,i,1,a),l=new LI(c);return t.runWebGLProgram(l,[s,o],"float32")}const XI={kernelName:Vh,backendName:"webgl",kernelFunc:KI};const qI=Gs+`
+  return cos(x);
+`,YI=`
+  vec4 result = cos(x);
+  bvec4 isNaN = isnan(x);
+  ${is}
+  return result;
+`,QI=Oe({opSnippet:qI,packedOpSnippet:YI}),ZI={kernelName:Mh,backendName:"webgl",kernelFunc:QI};const JI=`
+  float e2x = exp(-x);
+  return (e2x + 1.0 / e2x) / 2.0;
+`,e5=Oe({opSnippet:JI}),t5={kernelName:Uh,backendName:"webgl",kernelFunc:e5};class n5{constructor(e,t,r,s,o){this.variableNames=["Image","Boxes","BoxInd"],this.outputShape=[];const[a,i,u,c]=e,[l]=t,[h,d]=r;this.outputShape=[l,h,d,c];const p=s==="bilinear"?1:0,[f,b]=[`${i-1}.0`,`${u-1}.0`],[y,x,C]=h>1?[`${(i-1)/(h-1)}`,"(y2-y1) * height_ratio",`y1*${f} + float(y)*(height_scale)`]:["0.0","0.0",`0.5 * (y1+y2) * ${f}`],[I,k,P]=d>1?[`${(u-1)/(d-1)}`,"(x2-x1) * width_ratio",`x1*${b} + float(x)*(width_scale)`]:["0.0","0.0",`0.5 * (x1+x2) * ${b}`];this.userCode=`
+      const float height_ratio = float(${y});
+      const float width_ratio = float(${I});
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int y = coords[1];
+        int x = coords[2];
+        int d = coords[3];
+
+        // get box vals
+        float y1 = getBoxes(b,0);
+        float x1 = getBoxes(b,1);
+        float y2 = getBoxes(b,2);
+        float x2 = getBoxes(b,3);
+
+        // get image in batch index
+        int bInd = round(getBoxInd(b));
+        if(bInd < 0 || bInd >= ${a}) {
+          return;
+        }
+
+        float height_scale = ${x};
+        float width_scale = ${k};
+
+        float in_y = ${C};
+        if( in_y < 0.0 || in_y > ${f} ) {
+          setOutput(float(${o}));
+          return;
+        }
+        float in_x = ${P};
+        if( in_x < 0.0 || in_x > ${b} ) {
+          setOutput(float(${o}));
+          return;
+        }
+
+        vec2 sourceFracIndexCR = vec2(in_x,in_y);
+        if(${p} == 1) {
+          // Compute the four integer indices.
+          ivec2 sourceFloorCR = ivec2(sourceFracIndexCR);
+          ivec2 sourceCeilCR = ivec2(ceil(sourceFracIndexCR));
+
+          float topLeft = getImage(b, sourceFloorCR.y, sourceFloorCR.x, d);
+          float bottomLeft = getImage(b, sourceCeilCR.y, sourceFloorCR.x, d);
+          float topRight = getImage(b, sourceFloorCR.y, sourceCeilCR.x, d);
+          float bottomRight = getImage(b, sourceCeilCR.y, sourceCeilCR.x, d);
+
+          vec2 fracCR = sourceFracIndexCR - vec2(sourceFloorCR);
+
+          float top = topLeft + (topRight - topLeft) * fracCR.x;
+          float bottom = bottomLeft + (bottomRight - bottomLeft) * fracCR.x;
+          float newValue = top + (bottom - top) * fracCR.y;
+          setOutput(newValue);
+        } else {
+          // Compute the coordinators of nearest neighbor point.
+          ivec2 sourceNearestCR = ivec2(floor(
+            sourceFracIndexCR + vec2(0.5,0.5)));
+          float newValue = getImage(b, sourceNearestCR.y, sourceNearestCR.x, d);
+          setOutput(newValue);
+        }
+      }
+    `}}const r5=n=>{const{inputs:e,backend:t,attrs:r}=n,{image:s,boxes:o,boxInd:a}=e,{cropSize:i,method:u,extrapolationValue:c}=r,l=new n5(s.shape,o.shape,i,u,c);return t.runWebGLProgram(l,[s,o,a],"float32")},s5={kernelName:Gh,backendName:"webgl",kernelFunc:r5};var _o;(function(n){n.Prod="*",n.Sum="+"})(_o||(_o={}));class Il{constructor(e,t,r,s){this.op=e,this.outputShape=t,this.variableNames=["x"],this.customUniforms=[{name:"index",type:"float"}];const o=this.outputShape.length,a=this.op===_o.Prod?"1.0":"0.0",i=r?a:`getX(${kl(o,"coords",this.op)})`,u=this.outputShape[this.outputShape.length-1];let c="",l="";r?(c=s?`end != ${u-1}`:"end != 0",l=s?"end + 1":"end - 1"):(c=s?`end + pow2 < ${u}`:"end >= pow2",l=s?"end + pow2":"end - pow2"),this.userCode=`
+      void main() {
+        ${Ve(o)} coords = getOutputCoords();
+        int end = ${Rl(o,"coords",this.op)};
+        float val = ${i};
+        int pow2 = int(pow(2.0, index));
+        if (${c}) {
+          int idx = ${l};
+          ${Rl(o,"coords",this.op)} = idx;
+          val ${this.op}= getX(${kl(o,"coords",this.op)});
+        }
+        setOutput(val);
+      }
+    `}}function kl(n,e,t){if(n===1)return`${e}`;if(n===2)return`${e}.x, ${e}.y`;if(n===3)return`${e}.x, ${e}.y, ${e}.z`;if(n===4)return`${e}.x, ${e}.y, ${e}.z, ${e}.w`;throw new Error(`Cumulative ${t} for rank ${n} is not yet supported`)}function Rl(n,e,t){if(n===1)return`${e}`;if(n===2)return`${e}.y`;if(n===3)return`${e}.z`;if(n===4)return`${e}.w`;throw new Error(`Cumulative ${t} for rank ${n} is not yet supported`)}function rg(n,e,t,r,s,o){const a=e.shape.length,i=un([r],a);let u=e;i!=null&&(u=St({inputs:{x:e},backend:t,attrs:{perm:i}}));const c=cn(1,a)[0];if(c!==a-1)throw new Error(`WebGL cumprod shader expects an inner-most axis=${e.shape.length-1} but got axis=${r}`);const l=u.shape[c];let h=Lt({inputs:{x:u},backend:t});for(let d=0;d<=Math.ceil(Math.log2(l))-1;d++){const p=new Il(n,u.shape,!1,o),f=[[d]],b=h;h=t.runWebGLProgram(p,[h],h.dtype,f),t.disposeIntermediateTensorInfo(b)}if(s){const d=new Il(n,u.shape,s,o),p=h;h=t.runWebGLProgram(d,[h],h.dtype),t.disposeIntermediateTensorInfo(p)}if(i!=null){const d=nc(i),p=St({inputs:{x:h},backend:t,attrs:{perm:d}});return t.disposeIntermediateTensorInfo(h),t.disposeIntermediateTensorInfo(u),p}return h}function o5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,exclusive:a,reverse:i}=r;return rg(_o.Prod,s,t,o,a,i)}const a5={kernelName:Wh,backendName:"webgl",kernelFunc:o5};function i5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,exclusive:a,reverse:i}=r;return rg(_o.Sum,s,t,o,a,i)}const u5={kernelName:zh,backendName:"webgl",kernelFunc:i5};function c5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,weights:o}=e,{size:a,binaryOutput:i}=r;if(s.shape.length===1){const u=t.readSync(s.dataId),c=t.readSync(o.dataId),l=L1(u,c,o.dtype,o.shape,a);return t.makeTensorInfo([a],o.dtype,l)}else if(s.shape.length===2){const u=t.bufferSync(s),c=t.bufferSync(o),l=pN(u,c,a,i);return t.makeTensorInfo(l.shape,o.dtype,l.values)}throw new Error(`Error in denseBincount: input must be at most rank 2, but got rank${s.shape.length}.`)}const l5={kernelName:jh,backendName:"webgl",kernelFunc:c5};class h5{constructor(e,t,r){this.variableNames=["x"],this.outputShape=[],this.outputShape=e,this.blockSize=t,this.dataFormat=r,this.userCode=`
+    void main() {
+      ivec4 coords = getOutputCoords();
+      int b = coords[0];
+      int h = ${this.getHeightCoordString()};
+      int w = ${this.getWidthCoordString()};
+      int d = ${this.getDepthCoordString()};
+
+      int in_h = h / ${t};
+      int offset_h = imod(h, ${t});
+      int in_w = w / ${t};
+      int offset_w = imod(w, ${t});
+      int offset_d = (offset_h * ${t} + offset_w) *
+        ${this.getOutputDepthSize()};
+      int in_d = d + offset_d;
+
+      float result = ${this.getInputSamplingString()};
+      setOutput(result);
+    }
+  `}getHeightCoordString(){return this.dataFormat==="NHWC"?"coords[1]":"coords[2]"}getWidthCoordString(){return this.dataFormat==="NHWC"?"coords[2]":"coords[3]"}getDepthCoordString(){return this.dataFormat==="NHWC"?"coords[3]":"coords[1]"}getOutputDepthSize(){return this.dataFormat==="NHWC"?this.outputShape[3]:this.outputShape[1]}getInputSamplingString(){return this.dataFormat==="NHWC"?"getX(b, in_h, in_w, in_d)":"getX(b, in_d, in_h, in_w)"}}function d5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{blockSize:o,dataFormat:a}=r,i=s.shape[0],u=a==="NHWC"?s.shape[1]:s.shape[2],c=a==="NHWC"?s.shape[2]:s.shape[3],l=a==="NHWC"?s.shape[3]:s.shape[1],h=u*o,d=c*o,p=l/(o*o),f=a==="NHWC"?[i,h,d,p]:[i,p,h,d],b=new h5(f,o,a);return t.runWebGLProgram(b,[s],s.dtype)}const p5={kernelName:Hh,backendName:"webgl",kernelFunc:d5};class sg{constructor(e,t=!1,r=null,s=!1,o=!1){this.variableNames=["x","W"],this.customUniforms=[{name:"pads",type:"ivec2"},{name:"strides",type:"ivec2"},{name:"dilations",type:"ivec2"},{name:"inDims",type:"ivec2"}],this.outputShape=e.outShape,this.enableShapeUniforms=bt(this.outputShape.length);const a=e.filterHeight,i=e.filterWidth,u=e.outChannels/e.inChannels;let c="",l="";r&&(s?c=`float activation(float a) {
+          float b = getPreluActivationWeightsAtOutCoords();
+          ${r}
+        }`:o?c=`float activation(float a) {
+          float b = getLeakyreluAlphaAtOutCoords();
+          ${r}
+        }`:c=`
+          float activation(float x) {
+            ${r}
+          }
+        `,l="result = activation(result);");const h=t?"result += getBiasAtOutCoords();":"";t&&this.variableNames.push("bias"),s&&this.variableNames.push("preluActivationWeights"),o&&this.variableNames.push("leakyreluAlpha"),this.userCode=`
+      ${c}
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords.x;
+        ivec2 xRCCorner = coords.yz * strides - pads;
+        int d2 = coords.w;
+        int d1 = d2 / ${u};
+        int q = d2 - d1 * ${u};
+
+        int xRCorner = xRCCorner.x;
+        int xCCorner = xRCCorner.y;
+
+        // Convolve x(?, ?, d1) with w(:, :, d1, q) to get y(yR, yC, d2).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+        // TO DO(dsmilkov): Flatten the two for loops and vec4 the operations.
+        for (int wR = 0; wR < ${a}; wR++) {
+          int xR = xRCorner + wR * dilations[0];
+
+          if (xR < 0 || xR >= inDims[0]) {
+            continue;
+          }
+
+          for (int wC = 0; wC < ${i}; wC++) {
+            int xC = xCCorner + wC * dilations[1];
+
+            if (xC < 0 || xC >= inDims[1]) {
+              continue;
+            }
+
+            float xVal = getX(batch, xR, xC, d1);
+            float wVal = getW(wR, wC, d1, q);
+            dotProd += xVal * wVal;
+          }
+        }
+
+        float result = dotProd;
+        ${h}
+        ${l}
+        setOutput(result);
+      }
+    `}}class og{constructor(e,t=!1,r=null,s=!1,o=!1){this.variableNames=["x","W"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"pads",type:"ivec2"},{name:"strides",type:"ivec2"},{name:"dilations",type:"ivec2"},{name:"inDims",type:"ivec2"}],this.outputShape=e.outShape,this.enableShapeUniforms=bt(this.outputShape.length);const a=e.outChannels/e.inChannels,i=e.padInfo.left,u=e.strideWidth,c=e.dilationWidth,l=e.filterHeight,h=e.filterWidth,d=h;let p=`
+      int xR; int xC; int xCOffset;
+      vec4 wTexel; vec4 previous; vec4 final;`;for(let x=0;x<h;x++)p+=`
+          vec4 xTexelC${x*2};
+          int xTexelC${x*2}Ready;
+          vec4 xTexelC${x*2+1};
+          int xTexelC${x*2+1}Ready;
+          vec4 xC${x};`;p+=`
+    for (int r = 0; r < ${l}; r++) {
+      `;for(let x=0;x<h;x++)p+=`
+          xTexelC${x*2} = vec4(0.0);
+          xTexelC${x*2}Ready = 0;
+          xTexelC${x*2+1} = vec4(0.0);
+          xTexelC${x*2+1}Ready = 0;
+          xC${x} = vec4(0.0);`;p+=`
+        xR = xRCorner + r * dilations[0];
+        if (xR >=0 && xR < inDims[0]) {
+      `;for(let x=0;x<(d+1)/2;x++){const C=x*2;if(p+=`
+          xC = xCCorner + ${C*c};
+          `,u===1){if(C<h&&(i%2===1?(p+=`
+                xCOffset = xC + 1;
+                if (xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${C}Ready == 0) {
+                  xTexelC${C} = getX(batch, xR, xCOffset, d1);
+
+                  // Need to manually clear unused channels in case
+                  // we're reading from recycled texture.
+                  if (xCOffset + 1 >= inDims[1]) {
+                    xTexelC${C}.zw = vec2(0.0);
+                  }
+                  xTexelC${C}Ready = 1;
+                }
+              `,c===1&&C>0?p+=`
+                xC${C} = vec4(xTexelC${C-2}.zw, xTexelC${C}.xy);
+                `:p+=`
+                  xCOffset = xC + 1 - 2;
+
+                  if (xCOffset >= 0 && xCOffset < inDims[1]) {
+                    previous = getX(batch, xR, xCOffset, d1);
+
+                    // Need to manually clear unused channels in case
+                    // we're reading from recycled texture.
+                    if (xCOffset + 1 >= inDims[1]) {
+                      previous.zw = vec2(0.0);
+                    }
+
+                    xC${C} = vec4(previous.zw, xTexelC${C}.xy);
+                  } else {
+                    xC${C} = vec4(0.0, 0.0, xTexelC${C}.xy);
+                  }
+                  `):p+=`
+                if (xC >= 0 && xC < inDims[1] && xTexelC${C}Ready == 0) {
+                  xTexelC${C} = getX(batch, xR, xC, d1);
+                  if (xC + 1 >= inDims[1]) {
+                    xTexelC${C}.zw = vec2(0.0);
+                  }
+                  xTexelC${C}Ready = 1;
+                }
+
+                xC${C} = xTexelC${C};
+                `,C+1<h)){const I=i%2===0?zu(c):c;c%2===0&&i%2===1||c%2!==0&&i%2!==1?(p+=`
+                  xCOffset = xC + imod(pads[1], 2) + ${I};
+
+                  if (xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${C+1}Ready == 0) {
+                    xTexelC${C+1} = getX(batch, xR, xCOffset, d1);
+
+                    // Need to manually clear unused channels in case
+                    // we're reading from recycled texture.
+                    if (xCOffset + 1 >= inDims[1]) {
+                      xTexelC${C+1}.zw = vec2(0.0);
+                    }
+                    xTexelC${C+1}Ready = 1;
+                  }
+                  `,c>1?p+=`
+                    xCOffset -= 2;
+                    if (xCOffset >= 0 && xCOffset < inDims[1]) {
+                     previous = getX(batch, xR, xCOffset, d1);
+                     xC${C+1} = vec4(previous.zw, xTexelC${C+1}.xy);
+                    } else {
+                     xC${C+1} = vec4(0.0, 0.0, xTexelC${C+1}.xy);
+                    }
+                    `:p+=`
+                    xC${C+1} = vec4(xTexelC${C}.zw, xTexelC${C+1}.xy);
+                    `):I===1?p+=`
+                    xC${C+1} = xTexelC${C};
+                    `:p+=`
+                    xCOffset = xC + ${I};
+
+                    if (xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${C+1}Ready == 0) {
+                      xTexelC${C+1} = getX(batch, xR, xCOffset, d1);
+                      if (xCOffset + 1 >= inDims[1]) {
+                        xTexelC${C+1}.zw = vec2(0.0);
+                      }
+                      xTexelC${C+1}Ready = 1;
+                    }
+
+                    xC${C+1} = xTexelC${C+1};
+                    `}}else C<h&&(i%2===1?(p+=`
+                xCOffset = xC + 1 - strides[1];
+                if(xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${C}Ready == 0) {
+                  xTexelC${C} = getX(batch, xR, xCOffset, d1);
+                  // Need to manually clear unused channels in case
+                  // we're reading from recycled texture.
+                  if (xCOffset + 1 >= inDims[1]) {
+                    xTexelC${C}.zw = vec2(0.0);
+                  }
+                  xTexelC${C}Ready = 1;
+                }
+
+                if(xC + 1 >= 0 && xC + 1 < inDims[1] && xTexelC${C+1}Ready == 0) {
+                  xTexelC${C+1} = getX(batch, xR, xC + 1, d1);
+                  // Need to manually clear unused channels in case
+                  // we're reading from recycled texture.
+                  if (xC + 2 >= inDims[1]) {
+                    xTexelC${C+1}.zw = vec2(0.0);
+                  }
+                  xTexelC${C+1}Ready = 1;
+                }
+
+                xC${C} = vec4(xTexelC${C}.zw, xTexelC${C+1}.zw);
+              `,C+1<h&&(p+=`
+                  final = vec4(0.0);
+                  xCOffset = xC + 1 + strides[1];
+                  if(xCOffset >= 0 && xCOffset < inDims[1]) {
+                    final = getX(batch, xR, xCOffset, d1);
+                  }
+                  xC${C+1} = vec4(xTexelC${C+1}.xy, final.xy);
+                `)):(p+=`
+                if(xC >= 0 && xC < inDims[1] && xTexelC${C}Ready == 0) {
+                  xTexelC${C} = getX(batch, xR, xC, d1);
+                  if (xC + 1 >= inDims[1]) {
+                    xTexelC${C}.zw = vec2(0.0);
+                  }
+                  xTexelC${C}Ready = 1;
+                }
+
+                xCOffset = xC + strides[1];
+                if(xCOffset >= 0 && xCOffset < inDims[1] && xTexelC${C+1}Ready == 0) {
+                  xTexelC${C+1} = getX(batch, xR, xCOffset, d1);
+                  if (xCOffset + 1 >= inDims[1]) {
+                    xTexelC${C+1}.zw = vec2(0.);
+                  }
+                  xTexelC${C+1}Ready = 1;
+                }
+
+                xC${C} = vec4(
+                  xTexelC${C}.xy, xTexelC${C+1}.xy);
+              `,C+1<h&&(p+=`
+                  xC${C+1} = vec4(xTexelC${C}.zw, xTexelC${C+1}.zw);
+                `)));C<h&&(p+=`
+            wTexel = getW(r, ${C}, d1, q);
+            dotProd += xC${C} * vec4(wTexel.xz, wTexel.xz);
+          `,C+1<h&&(p+=`
+              wTexel = getW(r, ${C+1}, d1, q);
+              dotProd += xC${C+1} * vec4(wTexel.xz, wTexel.xz);
+            `))}p+=`
+    }
+  `,p+=`
+      }
+    `;let f="",b="";r&&(s?f=`vec4 activation(vec4 a) {
+          vec4 b = getPreluActivationWeightsAtOutCoords();
+          ${r}
+        }`:o?f=`vec4 activation(vec4 a) {
+          vec4 b = getLeakyreluAlphaAtOutCoords();
+          ${r}
+        }`:f=`vec4 activation(vec4 x) {
+          ${r}
+        }`,b="result = activation(result);");const y=t?"result += getBiasAtOutCoords();":"";t&&this.variableNames.push("bias"),s&&this.variableNames.push("preluActivationWeights"),o&&this.variableNames.push("leakyreluAlpha"),this.userCode=`
+      ${f}
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords.x;
+        ivec2 xRCCorner = coords.yz * strides - pads;
+        int d2 = coords.w;
+        int d1 = d2 / ${a};
+        int q = d2 - d1 * ${a};
+        int xRCorner = xRCCorner.x;
+        int xCCorner = xRCCorner.y;
+
+        //intialize dotProd with a small epsilon seems to reduce GPU accuracy loss.
+        vec4 dotProd = vec4(0.000000000000001);
+
+        ${p}
+
+        vec4 result = dotProd - vec4(0.000000000000001);
+        ${y}
+        ${b}
+        setOutput(result);
+      }
+    `}}function f5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,filter:o}=e,{strides:a,pad:i,dilations:u,dimRoundingMode:c}=r;let l=u;l==null&&(l=[1,1]),_(Bt(a,l),()=>`Error in depthwiseConv2d: Either strides or dilations must be 1. Got strides ${a} and dilations '${l}'`);const h=Xt(s.shape,o.shape,a,l,i,c,!0);let d;j().getBool("WEBGL_PACK_DEPTHWISECONV")&&h.strideWidth<=2&&h.outChannels/h.inChannels===1?d=new og(h):d=new sg(h);const p=[[h.padInfo.top,h.padInfo.left],[h.strideHeight,h.strideWidth],[h.dilationHeight,h.dilationWidth],[h.inHeight,h.inWidth]];return t.runWebGLProgram(d,[s,o],"float32",p)}const m5={kernelName:Kh,backendName:"webgl",kernelFunc:f5};class g5{constructor(e){this.variableNames=["x","dy"],this.outputShape=e.filterShape;const t=e.strideHeight,r=e.strideWidth,s=e.padInfo.top,o=e.padInfo.left,a=e.outChannels/e.inChannels;this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int wR = coords.x;
+        int wC = coords.y;
+        int d1 = coords.z;
+        int dm = coords.w;
+        int d2 = d1 * ${a} + dm;
+
+        float dotProd = 0.0;
+
+        // TO DO: Vec4 over the batch size
+        for (int b = 0; b < ${e.batchSize}; b++) {
+          for (int yR = 0; yR < ${e.outHeight}; yR++) {
+            int xR = wR + yR * ${t} - ${s};
+
+            if (xR < 0 || xR >= ${e.inHeight}) {
+              continue;
+            }
+
+            for (int yC = 0; yC < ${e.outWidth}; yC++) {
+              int xC = wC + yC * ${r} - ${o};
+
+              if (xC < 0 || xC >= ${e.inWidth}) {
+                continue;
+              }
+
+              float dyValue = getDy(b, yR, yC, d2);
+              float xValue = getX(b, xR, xC, d1);
+              dotProd += (xValue * dyValue);
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class y5{constructor(e){this.variableNames=["dy","W"],this.outputShape=e.inShape;const t=e.filterHeight,r=e.filterWidth,s=e.strideHeight,o=e.strideWidth,a=t-1-e.padInfo.top,i=r-1-e.padInfo.left,u=e.outChannels/e.inChannels;this.userCode=`
+      const ivec2 pads = ivec2(${a}, ${i});
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords[0];
+        int d1 = coords[3];
+        ivec2 dyCorner = coords.yz - pads;
+        int dyRCorner = dyCorner.x;
+        int dyCCorner = dyCorner.y;
+
+        float dotProd = 0.0;
+
+        for (int wR = 0; wR < ${t}; wR++) {
+          float dyR = float(dyRCorner + wR) / ${s}.0;
+
+          if (dyR < 0.0 || dyR >= ${e.outHeight}.0 || fract(dyR) > 0.0) {
+            continue;
+          }
+          int idyR = int(dyR);
+
+          int wRPerm = ${t} - 1 - wR;
+
+          for (int wC = 0; wC < ${r}; wC++) {
+            float dyC = float(dyCCorner + wC) / ${o}.0;
+
+            if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                fract(dyC) > 0.0) {
+              continue;
+            }
+            int idyC = int(dyC);
+
+            int wCPerm = ${r} - 1 - wC;
+
+            // TO DO: Vec4 over the channelMul
+            for (int dm = 0; dm < ${u}; dm++) {
+              int d2 = d1 * ${u} + dm;
+              float xValue = getDy(batch, idyR, idyC, d2);
+              float wValue = getW(wRPerm, wCPerm, d1, dm);
+              dotProd += xValue * wValue;
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}function x5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,dy:o}=e,{strides:a,dilations:i,pad:u,dimRoundingMode:c,filterShape:l}=r,h=Xt(s.shape,l,a,i,u,c,!0),d=new g5(h);return t.runWebGLProgram(d,[s,o],"float32")}const b5={kernelName:Xh,backendName:"webgl",kernelFunc:x5};function v5(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,filter:o}=e,{strides:a,dilations:i,pad:u,dimRoundingMode:c,inputShape:l}=r,h=Xt(l,o.shape,a,i,u,c,!0),d=new y5(h);return t.runWebGLProgram(d,[s,o],"float32")}const w5={kernelName:qh,backendName:"webgl",kernelFunc:v5};class $5{constructor(e){this.variableNames=["X"],this.outputShape=[e,e],this.userCode=`
+      void main() {
+          ivec2 coords = getOutputCoords();
+          float val = coords[0] == coords[1] ? getX(coords[0]) : 0.0;
+          setOutput(val);
+      }
+    `}}function S5(n){const{inputs:e,backend:t}=n,{x:r}=e,s=[...r.shape,...r.shape],o=ne(r.shape),a=ie({inputs:{x:r},backend:t,attrs:{shape:[o]}}),i=new $5(o),u=t.runWebGLProgram(i,[a],a.dtype),c=ie({inputs:{x:u},backend:t,attrs:{shape:s}});return t.disposeIntermediateTensorInfo(a),t.disposeIntermediateTensorInfo(u),c}const C5={kernelName:Yh,backendName:"webgl",kernelFunc:S5};class T5{constructor(e){this.variableNames=["x","W"],this.outputShape=e.outShape;const{inHeight:t,inWidth:r,padInfo:s,strideHeight:o,strideWidth:a,filterHeight:i,filterWidth:u,dilationHeight:c,dilationWidth:l}=e,{top:h,left:d}=s;this.userCode=`
+      const ivec2 strides = ivec2(${o}, ${a});
+      const ivec2 pads = ivec2(${h}, ${d});
+      const float neg_infinity = -3.4e38;
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int batch = coords.x;
+        int d1 = coords.w;
+        ivec2 outTopLeftCorner =
+            coords.yz * strides - pads;
+        int hBeg = outTopLeftCorner.x;
+        int wBeg = outTopLeftCorner.y;
+
+        float curVal = neg_infinity;
+        for (int h = 0; h < ${i}; h++) {
+          int hIn = hBeg + h * ${c};
+
+          if (hIn >= 0 && hIn < ${t}) {
+            for (int w = 0; w < ${u}; w++) {
+              int wIn = wBeg + w * ${l};
+
+              if (wIn >= 0 && wIn < ${r}) {
+                float xVal = getX(batch, hIn, wIn, d1);
+                float wVal = getW(h, w, d1);
+
+                float val = xVal + wVal;
+                if (val > curVal) {
+                  curVal = val;
+                }
+              }
+            }
+          }
+        }
+
+        float result = curVal;
+        setOutput(result);
+      }
+    `}}function N5(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,filter:o}=e,{strides:a,pad:i,dilations:u}=r,c=_f(s.shape,o.shape,a,i,"NHWC",u);let l;const h=new T5(c);l=t.runWebGLProgram(h,[s,o],"float32");const d=ie({inputs:{x:l},backend:t,attrs:{shape:c.outShape}});return t.disposeIntermediateTensorInfo(l),d}const E5={kernelName:Qh,backendName:"webgl",kernelFunc:N5};function I5(n){const{inputs:e,backend:t,attrs:r}=n,{equation:s}=r,o=e,{allDims:a,summedDims:i,idDims:u}=r1(s,o.length);o1(a.length,u,o);const{path:c,steps:l}=a1(i,u),h=l.length;let d=null,p=a.length;const f=[];for(let b=0;b<h;++b){for(const y of l[b]){const{permutationIndices:x,expandDims:C}=s1(p,u[y]);let I;i1(x)?I=o[y]:(I=St({inputs:{x:o[y]},backend:t,attrs:{perm:x}}),f.push(I));const k=I.shape.slice();for(let P=0;P<C.length;++P)k.splice(C[P],0,1);qe(I.shape,k)||(I=ie({inputs:{x:I},backend:t,attrs:{shape:k}}),f.push(I)),d===null?d=I:(d=Ec({inputs:{a:I,b:d},backend:t}),f.push(d))}b<h-1&&(c[b]>=0&&(d=fi({inputs:{x:d},backend:t,attrs:{axis:c[b]-(a.length-p),keepDims:!1}}),f.push(d)),p--)}for(const b of f)b!==d&&t.disposeIntermediateTensorInfo(b);return d}const k5={kernelName:Jh,backendName:"webgl",kernelFunc:I5};const R5="return (x >= 0.0) ? x : (exp(x) - 1.0);",_5=`
+  vec4 result;
+
+  result.r = (x.r >= 0.0) ? x.r : (exp(x.r) - 1.0);
+  result.g = (x.g >= 0.0) ? x.g : (exp(x.g) - 1.0);
+  result.b = (x.b >= 0.0) ? x.b : (exp(x.b) - 1.0);
+  result.a = (x.a >= 0.0) ? x.a : (exp(x.a) - 1.0);
+
+  return result;
+`,A5=Oe({opSnippet:R5,packedOpSnippet:_5}),O5={kernelName:ed,backendName:"webgl",kernelFunc:A5};const D5="return (b >= 0.0) ? a : a * (b + 1.0);",F5=`
+  vec4 bGTEZero = vec4(greaterThanEqual(b, vec4(0.)));
+  return (bGTEZero * a) + ((vec4(1.0) - bGTEZero) * (a * (b + vec4(1.0))));
+`,P5=n=>{const{inputs:e,backend:t}=n,{dy:r,y:s}=e,o=j().getBool("WEBGL_PACK_BINARY_OPERATIONS")?new zs(F5,r.shape,s.shape):new es(D5,r.shape,s.shape);return t.runWebGLProgram(o,[r,s],r.dtype)},L5={kernelName:r2,backendName:"webgl",kernelFunc:P5};const B5=`
+  return vec4(equal(a, b));
+`,V5="return float(a == b);",M5=ft({opSnippet:V5,packedOpSnippet:B5,dtype:"bool",cpuKernelImpl:xN}),U5={kernelName:nd,backendName:"webgl",kernelFunc:M5};const W5=`
+  // Error function is calculated approximately with elementary function.
+  // See "Handbook of Mathematical Functions with Formulas,
+  // Graphs, and Mathematical Tables", Abramowitz and Stegun.
+  float p = ${Qm};
+  float a1 = ${Zm};
+  float a2 = ${Jm};
+  float a3 = ${e1};
+  float a4 = ${t1};
+  float a5 = ${n1};
+
+  float sign = sign(x);
+  x = abs(x);
+  float t = 1.0 / (1.0 + p * x);
+  return sign * (1.0 - (((((a5*t + a4)*t) + a3)*t + a2)*t + a1)*t*exp(-x*x));
+`,z5=Oe({opSnippet:W5}),G5={kernelName:td,backendName:"webgl",kernelFunc:z5};const j5=Gs+`
+  return exp(x);
+`,H5=`
+  vec4 result = exp(x);
+  bvec4 isNaN = isnan(x);
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`,ag=Oe({opSnippet:j5,packedOpSnippet:H5,cpuKernelImpl:bN,dtype:"float32"}),K5={kernelName:rd,backendName:"webgl",kernelFunc:ag};function Ru(n){const{inputs:e,attrs:t,backend:r}=n,{dim:s}=t,{input:o}=e,a=o.shape.length,i=o.shape.slice();let u=s;return s<0&&(_(-(a+1)<=s,()=>`Axis must be in the interval [${-(a+1)}, ${a}]`),u=a+s+1),i.splice(u,0,1),ie({inputs:{x:o},backend:r,attrs:{shape:i}})}const X5={kernelName:sd,backendName:"webgl",kernelFunc:Ru};const _l="return exp(x) - 1.0;",q5=Oe({opSnippet:_l,packedOpSnippet:_l,cpuKernelImpl:vN}),Y5={kernelName:od,backendName:"webgl",kernelFunc:q5};class Al{constructor(e,t,r){this.variableNames=["real","imag"];const s=t[1];this.outputShape=t;const o=r?`2.0 * ${Math.PI}`:`-2.0 * ${Math.PI}`,a=r?`${s}.0`:"1.0";let i;if(e==="real")i="return real * expR - imag * expI;";else if(e==="imag")i="return real * expI + imag * expR;";else throw new Error(`FFT component must be either "real" or "imag", got ${e}.`);this.userCode=`
+      const float exponentMultiplier = ${o};
+
+      float unaryOpComplex(float real, float expR, float imag, float expI) {
+        ${i}
+      }
+
+      float mulMatDFT(int batch, int index) {
+        float indexRatio = float(index) / float(${s});
+        float exponentMultiplierTimesIndexRatio =
+            exponentMultiplier * indexRatio;
+
+        float result = 0.0;
+
+        for (int i = 0; i < ${s}; i++) {
+          // x = (-2|2 * PI / N) * index * i;
+          float x = exponentMultiplierTimesIndexRatio * float(i);
+          float expR = cos(x);
+          float expI = sin(x);
+          float real = getReal(batch, i);
+          float imag = getImag(batch, i);
+
+          result +=
+              unaryOpComplex(real, expR, imag, expI) / ${a};
+        }
+
+        return result;
+      }
+
+      void main() {
+        ivec2 coords = getOutputCoords();
+        setOutput(mulMatDFT(coords[0], coords[1]));
+      }
+    `}}function ig(n,e,t){const r=t.texData.get(n.dataId),s=ne(n.shape),o=n.shape[n.shape.length-1],a=s/o,i=ie({inputs:{x:n},backend:t,attrs:{shape:[a,o]}}),u=i.shape,c=new Al("real",u,e),l=new Al("imag",u,e),h=[{dataId:r.complexTensorInfos.real.dataId,dtype:r.complexTensorInfos.real.dtype,shape:u},{dataId:r.complexTensorInfos.imag.dataId,dtype:r.complexTensorInfos.imag.dtype,shape:u}],d=t.runWebGLProgram(c,h,"float32"),p=t.runWebGLProgram(l,h,"float32"),f=wr({inputs:{real:d,imag:p},backend:t});t.disposeIntermediateTensorInfo(d),t.disposeIntermediateTensorInfo(p);const b=ie({inputs:{x:f},backend:t,attrs:{shape:n.shape}});return t.disposeIntermediateTensorInfo(i),t.disposeIntermediateTensorInfo(f),b}function Q5(n){const{inputs:e,backend:t}=n,{input:r}=e;return ig(r,!1,t)}const Z5={kernelName:ad,backendName:"webgl",kernelFunc:Q5};class J5{constructor(e,t){this.outputShape=[],this.customUniforms=[{name:"value",type:"float"}],this.variableNames=["x"],this.outputShape=e,this.userCode=`
+      void main() {
+        // Input can be obtained from uniform value.
+        setOutput(value);
+      }
+    `}}function Wo(n){const{backend:e,attrs:t}=n,{shape:r,value:s}=t;let{dtype:o}=t;if(o=o||Ao(s),o==="string"){const a=it(o,ne(r));return a.fill(s),e.makeTensorInfo(r,o,a)}else{const a=new J5(r,s),i=[[s]];return e.runWebGLProgram(a,[],o,i)}}const ek={kernelName:id,backendName:"webgl",kernelFunc:Wo};class tk{constructor(e){this.variableNames=["Image"],this.outputShape=[];const t=e[2];this.outputShape=e,this.userCode=`
+        void main() {
+          ivec4 coords = getOutputCoords();
+          int x = coords[2];
+
+          int coordX = ${t} - x - 1;
+          float outputValue;
+          if(coordX >= 0 && coordX < ${t}) {
+            outputValue = getImage(coords[0], coords[1], coordX, coords[3]);
+          } else {
+            outputValue = getImage(coords[0], coords[1], coords[2], coords[3]);
+          }
+          setOutput(outputValue);
+        }
+    `}}const nk={kernelName:ud,backendName:"webgl",kernelFunc:({inputs:n,backend:e})=>{const{image:t}=n,r=e,s=new tk(t.shape);return r.runWebGLProgram(s,[t],t.dtype)}};const Ol="return floor(x);",rk=Oe({opSnippet:Ol,packedOpSnippet:Ol,cpuKernelImpl:wN}),sk={kernelName:cd,backendName:"webgl",kernelFunc:rk};const ok=`
+  float s = sign(a) * sign(b);
+  int ia = round(a);
+  int ib = round(b);
+  if (ib != 0) {
+    // Windows (D3D) wants guaranteed non-zero int division at compile-time.
+    return float(idiv(ia, ib, s));
+  } else {
+    return NAN;
+  }
+`,ak=`
+  ivec4 ia = round(a);
+  ivec4 ib = round(b);
+  bvec4 cond = notEqual(ib, ivec4(0));
+  ivec4 result = ivec4(0);
+  vec4 s = sign(a) * sign(b);
+
+  // Windows (D3D) wants guaranteed non-zero int division at compile-time.
+  if (cond[0]) {
+    result[0] = idiv(ia[0], ib[0], s[0]);
+  }
+  if (cond[1]) {
+    result[1] = idiv(ia[1], ib[1], s[1]);
+  }
+  if (cond[2]) {
+    result[2] = idiv(ia[2], ib[2], s[2]);
+  }
+  if (cond[3]) {
+    result[3] = idiv(ia[3], ib[3], s[3]);
+  }
+  return vec4(result);
+`,ik=ft({opSnippet:ok,packedOpSnippet:ak,dtype:"int32"}),uk={kernelName:ld,backendName:"webgl",kernelFunc:ik};class ck{constructor(e){this.variableNames=["A"];const t=Ct(),[r,s]=e;this.outputShape=e,this.userCode=`
+      void main() {
+        ivec3 coords = getOutputCoords();
+        int texR = coords[0];
+        int texC = coords[1];
+        int depth = coords[2];
+        vec2 uv = (vec2(texC, texR) + halfCR) / vec2(${s}.0, ${r}.0);
+
+        vec4 values = ${t.texture2D}(A, uv);
+        float value;
+        if (depth == 0) {
+          value = values.r;
+        } else if (depth == 1) {
+          value = values.g;
+        } else if (depth == 2) {
+          value = values.b;
+        } else if (depth == 3) {
+          value = values.a;
+        }
+
+        setOutput(floor(value * 255.0 + 0.5));
+      }
+    `}}class lk{constructor(e){this.variableNames=["A"],this.packedInputs=!1,this.packedOutput=!0;const t=Ct(),[r,s]=e;this.outputShape=e,this.userCode=`
+      void main() {
+        ivec3 coords = getOutputCoords();
+        int texR = coords[0];
+        int texC = coords[1];
+        int depth = coords[2];
+
+        vec4 result = vec4(0.);
+
+        for(int row=0; row<=1; row++) {
+          for(int col=0; col<=1; col++) {
+            texC = coords[1] + row;
+            depth = coords[2] + col;
+
+            vec2 uv = (vec2(texC, texR) + halfCR) /
+                       vec2(${s}.0, ${r}.0);
+            vec4 values = ${t.texture2D}(A, uv);
+            float value;
+            if (depth == 0) {
+              value = values.r;
+            } else if (depth == 1) {
+              value = values.g;
+            } else if (depth == 2) {
+              value = values.b;
+            } else if (depth == 3) {
+              value = values.a;
+            }
+
+            result[row * 2 + col] = floor(value * 255.0 + 0.5);
+          }
+        }
+
+        ${t.output} = result;
+      }
+    `}}const hk={kernelName:su,backendName:"webgl",kernelFunc:dk};let xs,Mi=j().getBool("CANVAS2D_WILL_READ_FREQUENTLY_FOR_GPU");function dk(n){const{inputs:e,backend:t,attrs:r}=n;let{pixels:s}=e;const{numChannels:o}=r,a=typeof HTMLVideoElement<"u"&&s instanceof HTMLVideoElement,i=typeof HTMLImageElement<"u"&&s instanceof HTMLImageElement,[u,c]=a?[s.videoWidth,s.videoHeight]:[s.width,s.height],l=[c,u],h=[c,u,o];if(i||a){const b=j().getBool("CANVAS2D_WILL_READ_FREQUENTLY_FOR_GPU");(xs==null||b!==Mi)&&(Mi=b,xs=document.createElement("canvas").getContext("2d",{willReadFrequently:Mi})),xs.canvas.width=u,xs.canvas.height=c,xs.drawImage(s,0,0,u,c),s=xs.canvas}const d=t.makeTensorInfo(l,"int32");t.texData.get(d.dataId).usage=Gt.PIXELS,t.gpgpu.uploadPixelDataToTexture(t.getTexture(d.dataId),s);const p=j().getBool("WEBGL_PACK")?new lk(h):new ck(h),f=t.runWebGLProgram(p,[d],"int32");return t.disposeData(d.dataId),f}function pk(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,filter:o,bias:a,preluActivationWeights:i}=e,{strides:u,pad:c,dataFormat:l,dilations:h,dimRoundingMode:d,activation:p,leakyreluAlpha:f}=r,b=Fs(l),y=Xt(s.shape,o.shape,u,h,c,d,!1,b);let x;const C=[],I=a!=null,k=i!=null,P=p==="leakyrelu",W=()=>{const G=[s,o],B=(V,R)=>{if(R==="NCHW"&&V.shape.length===1&&V.shape[0]!==1){const q=ie({inputs:{x:V},backend:t,attrs:{shape:[V.shape[0],1,1]}});return C.push(q),q}return V};if(I&&G.push(B(a,l)),k&&G.push(B(i,l)),P){const V=t.makeTensorInfo([],"float32",Ds(f,"float32"));G.push(V),C.push(V)}return G};if(y.filterHeight===1&&y.filterWidth===1&&y.dilationHeight===1&&y.dilationWidth===1&&y.strideHeight===1&&y.strideWidth===1&&(y.padInfo.type==="SAME"||y.padInfo.type==="VALID"))x=tg({x:s,filter:o,convInfo:y,backend:t,bias:a,activation:p,preluActivationWeights:i,leakyreluAlpha:f});else if(y.strideWidth<=2&&b==="channelsLast"&&j().getBool("WEBGL_EXP_CONV")){const G=p?ko(p,!0):null,B=new eg(y,I,G,k,P),V=[[y.padInfo.top,y.padInfo.left],[y.strideHeight,y.strideWidth],[y.dilationHeight,y.dilationWidth],[y.inHeight,y.inWidth]],R=W();x=t.runWebGLProgram(B,R,"float32",V)}else if(j().getBool("WEBGL_CONV_IM2COL"))x=ng({x:s,filter:o,convInfo:y,backend:t,bias:a,activation:p,preluActivationWeights:i,leakyreluAlpha:f});else{const G=p?ko(p,!1):null,B=new J1(y,I,G,k,P),V=W();x=t.runWebGLProgram(B,V,"float32")}const H=ie({inputs:{x},backend:t,attrs:{shape:y.outShape}});return C.push(x),C.forEach(G=>t.disposeIntermediateTensorInfo(G)),H}const fk={kernelName:au,backendName:"webgl",kernelFunc:pk};function mk(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,filter:o,bias:a,preluActivationWeights:i}=e,{strides:u,pad:c,dilations:l,dimRoundingMode:h,activation:d,leakyreluAlpha:p}=r,f=[];let b=l;b==null&&(b=[1,1]),_(Bt(u,b),()=>`Error in depthwiseConv2d: Either strides or dilations must be 1. Got strides ${u} and dilations '${b}'`);const y=Xt(s.shape,o.shape,u,b,c,h,!0),x=j().getBool("WEBGL_PACK_DEPTHWISECONV")&&y.strideWidth<=2&&y.outChannels/y.inChannels===1,C=d?ko(d,x):null,I=[s,o],k=a!=null,P=i!=null,W=d==="leakyrelu";if(k&&I.push(a),P&&I.push(i),W){const V=t.makeTensorInfo([],"float32",Ds(p,"float32"));I.push(V),f.push(V)}let H;x?H=new og(y,k,C,P,W):H=new sg(y,k,C,P,W);const G=[[y.padInfo.top,y.padInfo.left],[y.strideHeight,y.strideWidth],[y.dilationHeight,y.dilationWidth],[y.inHeight,y.inWidth]],B=t.runWebGLProgram(H,I,"float32",G);return f.forEach(V=>t.disposeIntermediateTensorInfo(V)),B}const gk={kernelName:iu,backendName:"webgl",kernelFunc:mk};class yk{constructor(e,t,r,s){this.sliceDim=e,this.strides=t,this.paramsShape=s,this.variableNames=["x","indices"],this.outputShape=r;const o=Ve(r.length);let a=`
+    int index;`;for(let i=0;i<this.sliceDim;i++)a+=`
+          index = round(getIndices(coords[0], ${i}));
+          out_of_bounds = out_of_bounds || index < 0;
+          out_of_bounds = out_of_bounds || index >= ${this.paramsShape[i]};
+          flattenIndex += index * ${this.strides[i]};`;this.userCode=`
+         void main() {
+          ${o} coords = getOutputCoords();
+          int flattenIndex = 0;
+          bool out_of_bounds = false;
+
+          ${a}
+
+          setOutput(out_of_bounds ? 0.0 : getX(flattenIndex, coords[1]));
+        }
+      `}}function xk(n){const{inputs:e,backend:t}=n,{params:r,indices:s}=e,o=s.shape,a=o[o.length-1],i=ne(r.shape),[u,c,l,h]=Im(r,s),d=ie({inputs:{x:s},backend:t,attrs:{shape:[c,a]}}),p=ie({inputs:{x:r},backend:t,attrs:{shape:[ne(r.shape)/l,l]}});if(t.shouldExecuteOnCPU([r,s])||r.dtype==="string"){const x=t.readSync(s.dataId),C=t.bufferSync(r),I=$N(x,C,r.dtype,c,a,l,h,r.shape,i);return t.makeTensorInfo(u,r.dtype,I.values)}const f=new yk(a,h,[c,l],r.shape),b=t.runWebGLProgram(f,[p,d],p.dtype),y=ie({inputs:{x:b},backend:t,attrs:{shape:u}});return t.disposeIntermediateTensorInfo(d),t.disposeIntermediateTensorInfo(p),t.disposeIntermediateTensorInfo(b),y}const bk={kernelName:pd,backendName:"webgl",kernelFunc:xk};class vk{constructor(e,t){this.variableNames=["A","indices"],this.outputShape=t,this.rank=t.length;const r=Ve(this.rank),s=wk(e);this.userCode=`
+      void main() {
+        ${r} resRC = getOutputCoords();
+        int index = int(getIndices(resRC.x, resRC.z));
+        float inBounds = (index >= 0) && (index < ${e[2]}) ? 1.0 : 0.0;
+        setOutput(inBounds * getA(${s}));
+      }
+    `}}function wk(n,e){const t=["resRC.x","resRC.y","resRC.z","resRC.w"],r=[];for(let s=0;s<n.length;s++)s===2?r.push("index"):r.push(`${t[s]}`);return r.join()}function ug(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,indices:o}=e,{axis:a,batchDims:i}=r,u=ut(a,s.shape)[0];if(j().get("DEBUG")){const C=t.readSync(o.dataId),I=s.shape[u];for(let k=0;k<C.length;++k){const P=C[k];_(P<=I-1&&P>=0,()=>`GatherV2: the index value ${P} is not in [0, ${I-1}]`)}}const c=$1(s,o,u,i),l=ne(o.shape),h=[],d=ie({inputs:{x:s},backend:t,attrs:{shape:[c.batchSize,c.outerSize,c.dimSize,c.sliceSize]}}),p=ie({inputs:{x:o},backend:t,attrs:{shape:[c.batchSize,l/c.batchSize]}});h.push(d),h.push(p);const f=[c.batchSize,c.outerSize,l/c.batchSize,c.sliceSize];if(t.shouldExecuteOnCPU([s,o])||s.dtype==="string"){const C=t.bufferSync(p),I=t.bufferSync(d),k=SN(I,C,f);return h.forEach(P=>t.disposeIntermediateTensorInfo(P)),t.makeTensorInfo(c.outputShape,k.dtype,k.values)}const b=new vk(d.shape,f),y=t.runWebGLProgram(b,[d,p],d.dtype);h.push(y);const x=ie({inputs:{x:y},backend:t,attrs:{shape:c.outputShape}});return h.forEach(C=>t.disposeIntermediateTensorInfo(C)),x}const $k={kernelName:dd,backendName:"webgl",kernelFunc:ug};const Sk="return float(a > b);",Ck=`
+  return vec4(greaterThan(a, b));
+`,Tk=ft({opSnippet:Sk,packedOpSnippet:Ck,cpuKernelImpl:CN,dtype:"bool"}),Nk={kernelName:fd,backendName:"webgl",kernelFunc:Tk};const Ek="return float(a >= b);",Ik=`
+  return vec4(greaterThanEqual(a, b));
+`,kk=ft({opSnippet:Ek,packedOpSnippet:Ik,dtype:"bool",cpuKernelImpl:TN}),Rk={kernelName:md,backendName:"webgl",kernelFunc:kk};function _k(n){const{inputs:e,backend:t}=n,{input:r}=e;return ig(r,!0,t)}const Ak={kernelName:gd,backendName:"webgl",kernelFunc:_k};const Ok="return float(!isnan(x) && !isinf(x));",Dk=Oe({opSnippet:Ok,dtype:"bool"}),Fk={kernelName:xd,backendName:"webgl",kernelFunc:Dk};const Pk="return float(isinf(x));",Lk=Oe({opSnippet:Pk,dtype:"bool"}),Bk={kernelName:bd,backendName:"webgl",kernelFunc:Lk};const Vk="return float(isnan(x));",Mk=Oe({opSnippet:Vk,dtype:"bool"}),Uk={kernelName:vd,backendName:"webgl",kernelFunc:Mk};const Wk="return float(a < b);",zk=`
+  return vec4(lessThan(a, b));
+`,Gk=ft({opSnippet:Wk,packedOpSnippet:zk,cpuKernelImpl:NN,dtype:"bool"}),jk={kernelName:$d,backendName:"webgl",kernelFunc:Gk};const Hk="return float(a <= b);",Kk=`
+  return vec4(lessThanEqual(a, b));
+`,Xk=ft({opSnippet:Hk,packedOpSnippet:Kk,cpuKernelImpl:EN,dtype:"bool"}),qk={kernelName:Sd,backendName:"webgl",kernelFunc:Xk};function Yk(n){const{backend:e,attrs:t}=n,{start:r,stop:s,num:o}=t,a=IN(r,s,o);return e.makeTensorInfo([a.length],"float32",a)}const Qk={kernelName:Cd,backendName:"webgl",kernelFunc:Yk};const Zk=Gs+`
+  return x < 0.0 ? 0./0. : log(x);
+`,Jk=`
+  vec4 result = log(x);
+  bvec4 isNaN = isnan(x);
+  result.r = isNaN.r ? x.r : (x.r < 0.0 ? 0./0. : result.r);
+  result.g = isNaN.g ? x.g : (x.g < 0.0 ? 0./0. : result.g);
+  result.b = isNaN.b ? x.b : (x.b < 0.0 ? 0./0. : result.b);
+  result.a = isNaN.a ? x.a : (x.a < 0.0 ? 0./0. : result.a);
+  return result;
+`,eR=Oe({opSnippet:Zk,packedOpSnippet:Jk,cpuKernelImpl:kN}),tR={kernelName:Td,backendName:"webgl",kernelFunc:eR};const nR=Gs+`
+  return log(1.0 + x);
+`,rR=Oe({opSnippet:nR}),sR={kernelName:Nd,backendName:"webgl",kernelFunc:rR};const oR="return float(a >= 1.0 && b >= 1.0);",aR=`
+  return vec4(
+    vec4(greaterThanEqual(a, vec4(1.0))) *
+    vec4(greaterThanEqual(b, vec4(1.0))));
+`,iR=ft({opSnippet:oR,packedOpSnippet:aR,dtype:"bool"}),uR={kernelName:Ed,backendName:"webgl",kernelFunc:iR};const cR="return float(!(x >= 1.0));",lR=Oe({opSnippet:cR}),hR={kernelName:Id,backendName:"webgl",kernelFunc:lR};const dR="return float(a >= 1.0 || b >= 1.0);",pR=`
+  return min(
+    vec4(greaterThanEqual(a, vec4(1.0))) +
+    vec4(greaterThanEqual(b, vec4(1.0))),
+    vec4(1.0));
+`,fR=ft({opSnippet:dR,packedOpSnippet:pR,dtype:"bool"}),mR={kernelName:kd,backendName:"webgl",kernelFunc:fR};class gR{constructor(e,t,r,s,o){this.variableNames=["x"],this.outputShape=[];const a=t,i=e[3]-1;this.outputShape=e;let u;const c=`float(${r}) + float(${s}) * sum`;o===.5?u=`inversesqrt(${c})`:o===1?u=`1.0/(${c})`:u=`exp(log(${c}) * float(-${o}));`,this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int r = coords[1];
+        int c = coords[2];
+        int d = coords[3];
+        float x = getX(b, r, c, d);
+        float sum = 0.0;
+        for (int j = -${a}; j <= ${a}; j++) {
+          int idx = d + j;
+          if (idx >= 0 && idx <=  ${i}) {
+            float z = getX(b, r, c, idx);
+            sum += z * z;
+          }
+        }
+        float val = x * ${u};
+        setOutput(val);
+      }
+    `}}class yR{constructor(e,t,r,s,o){this.variableNames=["x"],this.outputShape=[],this.packedInputs=!0,this.packedOutput=!0;const a=t,i=e[3]-1;this.outputShape=e;let u;const c=`float(${r}) + float(${s}) * sum`;o===.5?u=`inversesqrt(${c})`:o===1?u=`1.0/(${c})`:u=`exp(log(${c}) * float(-${o}));`,this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords.x;
+        int r = coords.y;
+        int c = coords.z;
+        int d = coords.w;
+
+        bool hasNextCol = d < ${this.outputShape[3]};
+        bool hasNextRow = c < ${this.outputShape[2]};
+
+        vec4 sum = vec4(0.);
+        vec4 xFragAtOutputCoords = getX(b, r, c, d);
+
+        vec4 xAtOutputCoords = vec4(
+          getChannel(xFragAtOutputCoords, vec2(c, d)),
+          hasNextCol ?
+            getChannel(xFragAtOutputCoords, vec2(c, d + 1)) : 0.0,
+          hasNextRow ?
+            getChannel(xFragAtOutputCoords , vec2(c + 1, d)) : 0.0,
+          (hasNextRow && hasNextCol) ?
+            getChannel(xFragAtOutputCoords, vec2(c + 1, d + 1)) : 0.0
+        );
+
+        int firstChannel = d - ${a};
+        vec2 cache = vec2(0.);
+        if(firstChannel >= 0){
+          vec4 firstChannelFrag = getX(b, r, c, firstChannel);
+          cache.x = getChannel(firstChannelFrag, vec2(c, firstChannel));
+            if(hasNextRow){
+              cache.y = getChannel(firstChannelFrag, vec2(c + 1, firstChannel));
+            }
+        }
+
+        ivec2 depth = ivec2(d, d + 1);
+        for (int j = - ${a}; j <= ${a}; j++) {
+          ivec2 idx = depth + j;
+          bvec2 aboveLowerBound = greaterThanEqual(idx, ivec2(0));
+          bvec2 belowUpperBound = lessThanEqual(idx, ivec2(${i}));
+
+          bool depthInRange = aboveLowerBound.x && belowUpperBound.x;
+          bool depthPlusOneInRange = aboveLowerBound.y && belowUpperBound.y;
+
+          if(depthInRange || depthPlusOneInRange){
+            vec4 z = vec4(0.);
+            vec4 xFragAtCurrentDepth;
+            z.xz = cache.xy;
+            if(depthPlusOneInRange && hasNextCol){
+              xFragAtCurrentDepth = idx.y != d ?
+                getX(b, r, c, idx.y) : xFragAtOutputCoords;
+              z.y = getChannel(xFragAtCurrentDepth, vec2(c, idx.y));
+              if(hasNextRow){
+                z.w = getChannel(xFragAtCurrentDepth, vec2(c + 1, idx.y));
+              }
+            }
+            cache.xy = z.yw;
+            sum += z * z;
+          }
+        }
+        vec4 result = xAtOutputCoords * ${u};
+        setOutput(result);
+      }
+    `}}const xR=n=>{const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{depthRadius:o,bias:a,alpha:i,beta:u}=r,c=j().getBool("WEBGL_PACK_NORMALIZATION")?new yR(s.shape,o,a,i,u):new gR(s.shape,o,a,i,u);return t.runWebGLProgram(c,[s],s.dtype)},bR={kernelName:Rd,backendName:"webgl",kernelFunc:xR};class vR{constructor(e,t,r,s,o){this.variableNames=["inputImage","outputImage","dy"],this.outputShape=[],this.outputShape=e,this.depth=e[3],this.depthRadius=t,this.bias=r,this.alpha=s,this.beta=o,this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int r = coords[1];
+        int c = coords[2];
+
+        float result = 0.0;
+        for (int d = 0; d < ${this.depth}; ++d) {
+          int depthBegin = int(max(0.0, float(d - ${t})));
+          int depthEnd = int(min(float(${this.depth}),
+              float(d + ${t} + 1)));
+
+          const int MIN_DEPTH_BEGIN = 0;
+          const int MAX_DEPTH_END = ${this.depth};
+
+          float norm = 0.0;
+          for (int k = MIN_DEPTH_BEGIN; k < MAX_DEPTH_END; ++k) {
+            if (k < depthBegin){
+              continue;
+            }
+            else if (k >= depthBegin && k < depthEnd) {
+              norm += getInputImage(b, r, c, k) * getInputImage(b, r, c, k);
+            }
+            else {
+              break;
+            }
+          }
+
+          norm = float(${s}) * norm + float(${r});
+
+          for(int k = MIN_DEPTH_BEGIN; k < MAX_DEPTH_END; ++k){
+            if (k < depthBegin){
+              continue;
+            }
+            else if (k >= depthBegin && k < depthEnd){
+              float dyi = -2.0 * float(${s})
+                * float(${o})
+                * getInputImage(b, r, c, k) * getOutputImage(b, r, c, d)
+                / norm;
+              if (k == d) {
+                dyi += pow(norm, -1.0 * ${o});
+              }
+              if (k == coords[3]) {
+                dyi *= getDy(b, r, c, d);
+                result += dyi;
+              }
+            }
+            else {
+              break;
+            }
+          }
+      }
+      setOutput(result);
+      }
+    `}}const wR=n=>{const{inputs:e,backend:t,attrs:r}=n,{x:s,y:o,dy:a}=e,{depthRadius:i,bias:u,alpha:c,beta:l}=r,h=new vR(s.shape,i,u,c,l);return t.runWebGLProgram(h,[s,o,a],s.dtype)},$R={kernelName:s2,backendName:"webgl",kernelFunc:wR};function SR(n,e,t,r){const s=ne(e),a=ne(n.shape)/s,i=ie({inputs:{x:n},attrs:{shape:[a,s]},backend:r}),u=us(i,n.dtype,"max",r),c=ie({inputs:{x:u},attrs:{shape:t},backend:r});return r.disposeIntermediateTensorInfo(i),r.disposeIntermediateTensorInfo(u),c}function cg(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{reductionIndices:o,keepDims:a}=r,i=s.shape.length,u=ut(o,s.shape);let c=u;const l=un(c,i),h=l!=null,d=t.shouldExecuteOnCPU([s]);let p=s;if(h){if(d){const I=t.texData.get(p.dataId).values,k=new Array(i);for(let H=0;H<k.length;H++)k[H]=s.shape[l[H]];const P=Tc(I,s.shape,s.dtype,l,k);p=t.makeTensorInfo(k,s.dtype);const W=t.texData.get(p.dataId);W.values=P}else p=pi(s,l,t);c=cn(c.length,i)}$n("max",c,i);const[f,b]=On(p.shape,c);let y=f;a&&(y=qt(f,u));let x;if(d){const I=t.texData.get(p.dataId).values,k=RN(I,ne(b),y,s.dtype);x=t.makeTensorInfo(y,s.dtype);const P=t.texData.get(x.dataId);P.values=k}else x=SR(p,b,y,t);return h&&t.disposeIntermediateTensorInfo(p),x}const CR={kernelName:_d,backendName:"webgl",kernelFunc:cg};const TR=Nc+`
+  return max(a, b);
+`,NR=`
+  vec4 result = vec4(max(a, b));
+  bvec4 isNaNA = isnan(a);
+  bvec4 isNaNB = isnan(b);
+  bvec4 isNaN = bvec4(isNaNA.x || isNaNB.x, isNaNA.y || isNaNB.y, isNaNA.z || isNaNB.z, isNaNA.w || isNaNB.w);
+  `+is+`
+  return result;
+`,ER=ft({opSnippet:TR,packedOpSnippet:NR,cpuKernelImpl:_N}),IR={kernelName:Ad,backendName:"webgl",kernelFunc:ER};function kR(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e;Vo(s,"maxPool");const{filterSize:o,strides:a,pad:i,dimRoundingMode:u}=r,c=1;_(Bt(a,c),()=>`Error in maxPool: Either strides or dilations must be 1. Got strides ${a} and dilations '${c}'`);const l=ns(s.shape,o,a,c,i,u);if(l.filterWidth===1&&l.filterHeight===1&&qe(l.inShape,l.outShape))return Lt({inputs:{x:s},backend:t});const h=new Ro(l,"max",!1);return t.runWebGLProgram(h,[s],s.dtype)}const RR={kernelName:Od,backendName:"webgl",kernelFunc:kR};function _R(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{filterSize:o,strides:a,pad:i,dataFormat:u,dimRoundingMode:c}=r,l=[1,1,1],h=Do(s.shape,o,a,l,i,c,u),d=new Ic(h,"max",!1);return t.runWebGLProgram(d,[s],s.dtype)}const AR={kernelName:Dd,backendName:"webgl",kernelFunc:_R};class OR{constructor(e){this.variableNames=["dy","maxPos"],this.outputShape=e.inShape;const t=e.strideHeight,r=e.strideWidth,s=e.dilationHeight,o=e.effectiveFilterHeight,a=e.effectiveFilterWidth,i=o-1-e.padInfo.top,u=a-1-e.padInfo.left,c=o*a-1;this.userCode=`
+      const ivec2 pads = ivec2(${i}, ${u});
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+
+        ivec2 dyRCCorner = coords.yz - pads;
+        int dyRCorner = dyRCCorner.x;
+        int dyCCorner = dyRCCorner.y;
+
+        // Convolve dy(?, ?, d) with pos mask(:, :, d) to get dx(xR, xC, d).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+        for (int wR = 0; wR < ${o};
+          wR += ${s}) {
+          float dyR = float(dyRCorner + wR) / ${t}.0;
+
+          if (dyR < 0.0 || dyR >= ${e.outHeight}.0 || fract(dyR) > 0.0) {
+            continue;
+          }
+          int idyR = int(dyR);
+
+          for (int wC = 0; wC < ${a}; wC++) {
+            float dyC = float(dyCCorner + wC) / ${r}.0;
+
+            if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                fract(dyC) > 0.0) {
+              continue;
+            }
+            int idyC = int(dyC);
+
+            float dyValue = getDy(b, idyR, idyC, d);
+            int maxPosValue = ${c} - int(getMaxPos(b, idyR, idyC, d));
+
+            // Get the current value, check it against the value from the
+            // position matrix.
+            int curPosValue = wR * ${a} + wC;
+            float mask = float(maxPosValue == curPosValue ? 1.0 : 0.0);
+
+            dotProd += dyValue * mask;
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}class DR{constructor(e){this.variableNames=["dy","maxPos"],this.outputShape=e.inShape;const t=e.strideDepth,r=e.strideHeight,s=e.strideWidth,o=e.dilationDepth,a=e.dilationHeight,i=e.dilationWidth,u=e.effectiveFilterDepth,c=e.effectiveFilterHeight,l=e.effectiveFilterWidth,h=u-1-e.padInfo.front,d=c-1-e.padInfo.top,p=l-1-e.padInfo.left,f=u*c*l-1;this.userCode=`
+      const ivec3 pads = ivec3(${h}, ${d}, ${p});
+
+      void main() {
+        ivec5 coords = getOutputCoords();
+        int batch = coords.x;
+        int ch = coords.u;
+
+        ivec3 dyCorner = ivec3(coords.y, coords.z, coords.w) - pads;
+        int dyDCorner = dyCorner.x;
+        int dyRCorner = dyCorner.y;
+        int dyCCorner = dyCorner.z;
+
+        // Convolve dy(?, ?, ?, ch) with pos mask(:, :, :, d) to get
+        // dx(xD, xR, xC, ch).
+        // ? = to be determined. : = across all values in that axis.
+        float dotProd = 0.0;
+
+        for (int wD = 0; wD < ${u};
+           wD += ${o}) {
+          float dyD = float(dyDCorner + wD) / ${t}.0;
+
+          if (dyD < 0.0 || dyD >= ${e.outDepth}.0 || fract(dyD) > 0.0) {
+            continue;
+          }
+          int idyD = int(dyD);
+
+          for (int wR = 0; wR < ${c};
+              wR += ${a}) {
+            float dyR = float(dyRCorner + wR) / ${r}.0;
+
+            if (dyR < 0.0 || dyR >= ${e.outHeight}.0 ||
+                fract(dyR) > 0.0) {
+              continue;
+            }
+            int idyR = int(dyR);
+
+            for (int wC = 0; wC < ${l};
+                wC += ${i}) {
+              float dyC = float(dyCCorner + wC) / ${s}.0;
+
+              if (dyC < 0.0 || dyC >= ${e.outWidth}.0 ||
+                  fract(dyC) > 0.0) {
+                continue;
+              }
+              int idyC = int(dyC);
+
+              float dyValue = getDy(batch, idyD, idyR, idyC, ch);
+              int maxPosValue = ${f} -
+                  int(getMaxPos(batch, idyD, idyR, idyC, ch));
+
+              // Get the current value, check it against the value from the
+              // position matrix.
+              int curPosValue =
+                  wD * ${c} * ${l} +
+                  wR * ${l} + wC;
+              float mask = float(maxPosValue == curPosValue ? 1.0 : 0.0);
+
+              dotProd += dyValue * mask;
+            }
+          }
+        }
+        setOutput(dotProd);
+      }
+    `}}function FR(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,input:o}=e,a=o,{filterSize:i,strides:u,pad:c,dimRoundingMode:l}=r,h=[1,1,1],d=Do(a.shape,i,u,h,c,l),p=new Ic(d,"max",!0),f=t.runWebGLProgram(p,[a],a.dtype),b=new DR(d),y=t.runWebGLProgram(b,[s,f],a.dtype);return t.disposeIntermediateTensorInfo(f),y}const PR={kernelName:a2,backendName:"webgl",kernelFunc:FR};function LR(n){const{inputs:e,backend:t,attrs:r}=n,{dy:s,input:o,output:a}=e,i=o;Vo([o,a],"maxPoolGrad");const{filterSize:u,strides:c,pad:l,dimRoundingMode:h}=r,d=ns(i.shape,u,c,1,l,h),p=!0,f=new Ro(d,"max",p),b=t.runWebGLProgram(f,[i],i.dtype),y=new OR(d),x=t.runWebGLProgram(y,[s,b],i.dtype);return t.disposeIntermediateTensorInfo(b),x}const BR={kernelName:o2,backendName:"webgl",kernelFunc:LR};function VR(n,e,t,r){let s=new Ro(t,"max",!1);const o=r.runWebGLProgram(s,[n],"float32");s=new Ro(t,"max",!0,!0,e);const a=r.runWebGLProgram(s,[n],"float32");return[o,a]}const MR={kernelName:Fd,backendName:"webgl",kernelFunc:({inputs:n,attrs:e,backend:t})=>{const{x:r}=n,{filterSize:s,strides:o,pad:a,includeBatchInIndex:i}=e,u=t;_(r.shape.length===4,()=>`Error in maxPool: input must be rank 4 but got rank ${r.shape.length}.`);const c=[1,1];_(Bt(o,c),()=>`Error in maxPool: Either strides or dilations must be 1. Got strides ${o} and dilations '${c}'`);const l=ns(r.shape,s,o,c,a),[h,d]=VR(r,i,l,u);return[h,d]}};function UR(n,e,t,r){const s=ne(e),a=ne(n.shape)/s,i=ie({inputs:{x:n},attrs:{shape:[a,s]},backend:r}),u=us(i,"float32","mean",r),c=ie({inputs:{x:u},attrs:{shape:t},backend:r});return r.disposeIntermediateTensorInfo(i),r.disposeIntermediateTensorInfo(u),c}const WR={kernelName:Pd,backendName:"webgl",kernelFunc:({inputs:n,attrs:e,backend:t})=>{const{x:r}=n,{keepDims:s,axis:o}=e,a=t,i=r.shape.length,u=ut(o,r.shape);let c=u;const l=un(c,i),h=l!=null,d=a.shouldExecuteOnCPU([r]),p=[];let f=r;if(h){if(d){const k=a.texData.get(f.dataId).values,P=new Array(i);for(let G=0;G<P.length;G++)P[G]=r.shape[l[G]];const W=Tc(k,r.shape,r.dtype,l,P);f=a.makeTensorInfo(P,r.dtype);const H=a.texData.get(f.dataId);H.values=W}else f=pi(r,l,a);p.push(f),c=cn(c.length,i)}$n("sum",c,i);const[b,y]=On(f.shape,c);let x=b;s&&(x=qt(b,u));const C=UR(f,y,x,a);for(const I of p)a.disposeIntermediateTensorInfo(I);return C}};function zR(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,keepDims:a}=r,i=s.shape.length,u=ut(o,s.shape);let c=u;const l=un(c,i);let h=s;l!=null&&(h=St({inputs:{x:s},backend:t,attrs:{perm:l}}),c=cn(c.length,s.shape.length)),$n("min",c,i);const[d,p]=On(h.shape,c),f=ne(p),b=ie({inputs:{x:h},backend:t,attrs:{shape:[-1,f]}}),y=us(b,b.dtype,"min",t);let x;if(a){const C=qt(d,u);x=ie({inputs:{x:y},backend:t,attrs:{shape:C}})}else x=ie({inputs:{x:y},backend:t,attrs:{shape:d}});return t.disposeIntermediateTensorInfo(b),t.disposeIntermediateTensorInfo(y),l!=null&&t.disposeIntermediateTensorInfo(h),x}const GR={kernelName:Ld,backendName:"webgl",kernelFunc:zR};const jR=Nc+`
+  return min(a, b);
+`,HR=`
+  vec4 result = vec4(min(a, b));
+  bvec4 isNaNA = isnan(a);
+  bvec4 isNaNB = isnan(b);
+  bvec4 isNaN = bvec4(isNaNA.x || isNaNB.x, isNaNA.y || isNaNB.y, isNaNA.z || isNaNB.z, isNaNA.w || isNaNB.w);
+  `+is+`
+  return result;
+`,KR=ft({opSnippet:jR,packedOpSnippet:HR,cpuKernelImpl:AN}),XR={kernelName:Bd,backendName:"webgl",kernelFunc:KR};class qR{constructor(e,t,r){this.variableNames=["x"],this.outputShape=t.map((l,h)=>l[0]+e[h]+l[1]);const s=e.length,o=Ve(s),a=t.map(l=>l[0]).join(","),i=t.map((l,h)=>l[0]+e[h]).join(","),u=["coords[0]","coords[1]","coords[2]","coords[3]"].slice(0,s),c=r==="reflect"?0:1;if(s===1){this.userCode=`
+        int start = ${a};
+        int end = ${i};
+
+        void main() {
+          int outC = getOutputCoords();
+          if (outC < start) {
+            outC = start * 2 - outC - ${c};
+          } else if(outC >= end) {
+            outC = (end - 1) * 2 - outC + ${c};
+          }
+          setOutput(getX(outC - start));
+        }
+      `;return}this.userCode=`
+      ${o} start = ${o}(${a});
+      ${o} end = ${o}(${i});
+
+      void main() {
+        ${o} outC = getOutputCoords();
+        for (int i = 0; i < ${s}; i++) {
+          if (outC[i] < start[i]) {
+            outC[i] = start[i] * 2 - outC[i] - ${c};
+          } else if(outC[i] >= end[i]) {
+            outC[i] = (end[i] - 1) * 2 - outC[i] + ${c};
+          }
+        }
+        ${o} coords = outC - start;
+        setOutput(getX(${u}));
+      }
+    `}}class YR{constructor(e,t,r){this.variableNames=["x"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=t.map((f,b)=>f[0]+e[b]+f[1]);const s=e.length,o=Ve(s),a=t.map(f=>f[0]).join(","),i=t.map((f,b)=>f[0]+e[b]).join(","),u=$t("rc",s),c=$t("source",s),l=`${u[s-1]} < ${this.outputShape[s-1]}`,h=s===1?"source":`vec2(${c.slice(-2).join()})`,d=r==="reflect"?0:1;let p="";if(s===1){const f=`
+        ${o} source = rc;
+        if (source < start) {
+          source = start * 2 - source - ${d};
+        } else if (source >= end) {
+          source = (end - 1) * 2 - source + ${d};
+        }
+        source -= start;
+      `;p=`
+        ${o} rc = outputLoc;
+        ${f}
+        result[0] = getChannel(getX(${c.join()}), ${h});
+        ${u[s-1]} += 1;
+        if(${l}) {
+          ${f}
+          result[1] = getChannel(getX(${c.join()}), ${h});
+        }
+      `}else{const f=`
+        ${o} source = rc;
+        ${o} lt = ${o}(lessThan(source, start));
+        ${o} gte = ${o}(greaterThanEqual(source, end));
+        ${o} orig = 1 - (lt + gte);
+        source = orig * source +
+                lt * (start * 2 - source - ${d}) +
+                gte * ((end - 1) * 2 - source + ${d});
+        source -= start;
+      `;p=`
+        ${o} rc = outputLoc;
+        ${f}
+        result[0] = getChannel(getX(${c.join()}), ${h});
+        ${u[s-1]} += 1;
+        if(${l}) {
+          ${f}
+          result[1] = getChannel(getX(${c.join()}), ${h});
+        }
+        rc = outputLoc;
+        ${u[s-2]} += 1;
+        if(${u[s-2]} < ${this.outputShape[s-2]}) {
+          ${f}
+          result[2] = getChannel(getX(${c.join()}), ${h});
+          ${u[s-1]} += 1;
+          if(${l}) {
+            ${f}
+            result[3] = getChannel(getX(${c.join()}), ${h});
+          }
+        }
+      `}this.userCode=`
+      const ${o} start = ${o}(${a});
+      const ${o} end = ${o}(${i});
+
+      void main() {
+        ${o} outputLoc = getOutputCoords();
+        vec4 result = vec4(0.);
+        ${p}
+        setOutput(result);
+      }
+    `}}const QR=({inputs:n,backend:e,attrs:t})=>{const{x:r}=n,{paddings:s,mode:o}=t,a=j().getBool("WEBGL_PACK_ARRAY_OPERATIONS")?new YR(r.shape,s,o):new qR(r.shape,s,o);return e.runWebGLProgram(a,[r],r.dtype)},ZR={kernelName:Vd,backendName:"webgl",kernelFunc:QR};const JR=`if (b == 0.0) return NAN;
+  return mod(a, b);`,e_=`
+  vec4 result = mod(a, b);
+  bvec4 isNaN = equal(b, vec4(0.0));
+  `+is+`
+  return result;
+`,t_=ft({opSnippet:JR,packedOpSnippet:e_}),n_={kernelName:Md,backendName:"webgl",kernelFunc:t_};class r_{constructor(e,t,r){this.variableNames=["probs"],this.customUniforms=[{name:"seed",type:"float"}],this.outputShape=[e,r],this.userCode=`
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int batch = coords[0];
+
+        float r = random(seed);
+        float cdf = 0.0;
+
+        for (int i = 0; i < ${t-1}; i++) {
+          cdf += getProbs(batch, i);
+
+          if (r < cdf) {
+            setOutput(float(i));
+            return;
+          }
+        }
+
+        // If no other event happened, last event happened.
+        setOutput(float(${t-1}));
+      }
+    `}}const s_=`
+if (a == b) {
+  return 1.0;
+};
+return a / b;`,o_=`
+  // vec4 one = vec4(equal(a, b));
+  // return one + (vec4(1.0) - one) * a / b;
+  vec4 result = a / b;
+  if(a.x == b.x) {
+    result.x = 1.;
+  }
+  if(a.y == b.y) {
+    result.y = 1.;
+  }
+  if(a.z == b.z) {
+    result.z = 1.;
+  }
+  if(a.w == b.w) {
+    result.w = 1.;
+  }
+
+  return result;
+`,lg=ft({opSnippet:s_,packedOpSnippet:o_,checkOutOfBounds:!0}),a_={kernelName:Zh,backendName:"webgl",kernelFunc:lg};const Dl="return a - b;",hg=ft({opSnippet:Dl,packedOpSnippet:Dl,supportsComplex:!0,cpuKernelImpl:JN}),i_={kernelName:Wp,backendName:"webgl",kernelFunc:hg};function dg(n){const{inputs:e,backend:t,attrs:r}=n,{logits:s}=e,{dim:o}=r,a=ut([o],s.shape),i=cg({inputs:{x:s},backend:t,attrs:{reductionIndices:a,keepDims:!1}}),u=qt(i.shape,a),c=ie({inputs:{x:i},backend:t,attrs:{shape:u}}),l=hg({inputs:{a:s,b:c},backend:t}),h=ag({inputs:{x:l},backend:t}),d=fi({inputs:{x:h},backend:t,attrs:{axis:a,keepDims:!1}}),p=ie({inputs:{x:d},backend:t,attrs:{shape:u}}),f=lg({inputs:{a:h,b:p},backend:t});return t.disposeIntermediateTensorInfo(i),t.disposeIntermediateTensorInfo(c),t.disposeIntermediateTensorInfo(l),t.disposeIntermediateTensorInfo(h),t.disposeIntermediateTensorInfo(d),t.disposeIntermediateTensorInfo(p),f}const u_={kernelName:Rp,backendName:"webgl",kernelFunc:dg};function c_(n){const{inputs:e,backend:t,attrs:r}=n,{logits:s}=e,{numSamples:o,seed:a,normalized:i}=r,u=i?s:dg({inputs:{logits:s},backend:t,attrs:{dim:s.shape.length-1}}),c=u.shape[0],l=u.shape[1],h=new r_(c,l,o),d=[[a]],p=t.runWebGLProgram(h,[u],"int32",d);return i||t.disposeIntermediateTensorInfo(u),p}const l_={kernelName:Ud,backendName:"webgl",kernelFunc:c_};const h_=ln+`
+  return -x;
+`,d_=`
+  vec4 result = -x;
+  bvec4 isNaN = isnan(x);
+
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`;function p_(n){const{inputs:e,backend:t}=n,{x:r}=e;if(t.shouldExecuteOnCPU([r])){const o=t.texData.get(r.dataId),[a,i]=DN(o.values,r.shape,r.dtype);return t.makeTensorInfo(i,r.dtype,a)}let s;return j().getBool("WEBGL_PACK_UNARY_OPERATIONS")?s=new ur(r.shape,d_):s=new kn(r.shape,h_),t.runWebGLProgram(s,[r],r.dtype)}const f_={kernelName:zd,backendName:"webgl",kernelFunc:p_};const m_=gm;function g_(n){yn("tf.nonMaxSuppression() in webgl locks the UI thread. Call tf.nonMaxSuppressionAsync() instead");const{inputs:e,backend:t,attrs:r}=n,{boxes:s,scores:o}=e,{maxOutputSize:a,iouThreshold:i,scoreThreshold:u}=r,c=t.readSync(s.dataId),l=t.readSync(o.dataId),{selectedIndices:h}=m_(c,l,a,i,u);return t.makeTensorInfo([h.length],"int32",new Int32Array(h))}const y_={kernelName:jd,backendName:"webgl",kernelFunc:g_};const x_=ym;function b_(n){yn("tf.nonMaxSuppression() in webgl locks the UI thread. Call tf.nonMaxSuppressionAsync() instead");const{inputs:e,backend:t,attrs:r}=n,{boxes:s,scores:o}=e,{maxOutputSize:a,iouThreshold:i,scoreThreshold:u,padToMaxOutputSize:c}=r,l=t.readSync(s.dataId),h=t.readSync(o.dataId),{selectedIndices:d,validOutputs:p}=x_(l,h,a,i,u,c);return[t.makeTensorInfo([d.length],"int32",new Int32Array(d)),t.makeTensorInfo([],"int32",new Int32Array([p]))]}const v_={kernelName:Hd,backendName:"webgl",kernelFunc:b_};const w_=xm;function $_(n){yn("tf.nonMaxSuppression() in webgl locks the UI thread. Call tf.nonMaxSuppressionAsync() instead");const{inputs:e,backend:t,attrs:r}=n,{boxes:s,scores:o}=e,{maxOutputSize:a,iouThreshold:i,scoreThreshold:u,softNmsSigma:c}=r,l=t.readSync(s.dataId),h=t.readSync(o.dataId),d=a,p=i,f=u,b=c,{selectedIndices:y,selectedScores:x}=w_(l,h,d,p,f,b);return[t.makeTensorInfo([y.length],"int32",new Int32Array(y)),t.makeTensorInfo([x.length],"float32",new Float32Array(x))]}const S_={kernelName:Kd,backendName:"webgl",kernelFunc:$_};class C_{constructor(e,t,r,s){this.variableNames=["indices"],this.outputShape=[e,t],this.userCode=`
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int index = round(getIndices(coords.x));
+        setOutput(mix(float(${s}), float(${r}),
+                      float(index == coords.y)));
+      }
+    `}}const T_=n=>{const{inputs:e,backend:t,attrs:r}=n,{indices:s}=e,{dtype:o,depth:a,onValue:i,offValue:u}=r,c=ne(s.shape),l=new C_(c,a,i,u),h=ie({inputs:{x:s},backend:t,attrs:{shape:[c]}}),d=t.runWebGLProgram(l,[h],o);t.disposeIntermediateTensorInfo(h);const p=[...s.shape,a],f=ie({inputs:{x:d},backend:t,attrs:{shape:p}});return t.disposeIntermediateTensorInfo(d),f},N_={kernelName:qd,backendName:"webgl",kernelFunc:T_};function ja(n){const{inputs:e,backend:t}=n,{x:r}=e;if(r.dtype==="complex64"){const s=Uo({inputs:{input:r},backend:t}),o=ja({inputs:{x:s},backend:t}),a=mi({inputs:{input:r},backend:t}),i=ja({inputs:{x:a},backend:t}),u=wr({inputs:{real:o,imag:i},backend:t});return t.disposeIntermediateTensorInfo(s),t.disposeIntermediateTensorInfo(o),t.disposeIntermediateTensorInfo(a),t.disposeIntermediateTensorInfo(i),u}else return Wo({attrs:{shape:r.shape,dtype:r.dtype,value:r.dtype==="string"?"":0},backend:t})}const E_={kernelName:Yp,backendName:"webgl",kernelFunc:ja};function pg(n){const{inputs:e,backend:t}=n,{x:r}=e;if(r.dtype==="string")throw new Error("onesLike is not supported under string dtype");if(r.dtype==="complex64"){const s=Uo({inputs:{input:r},backend:t}),o=pg({inputs:{x:s},backend:t}),a=mi({inputs:{input:r},backend:t}),i=ja({inputs:{x:a},backend:t}),u=wr({inputs:{real:o,imag:i},backend:t});return t.disposeIntermediateTensorInfo(s),t.disposeIntermediateTensorInfo(o),t.disposeIntermediateTensorInfo(a),t.disposeIntermediateTensorInfo(i),u}else return Wo({attrs:{shape:r.shape,dtype:r.dtype,value:1},backend:t})}const I_={kernelName:Xd,backendName:"webgl",kernelFunc:pg};function k_(n){const{inputs:e,backend:t,attrs:r}=n,{axis:s}=r;if(e.length===1)return Ru({inputs:{input:e[0]},backend:t,attrs:{dim:s}});const o=e[0].shape,a=e[0].dtype;e.forEach(l=>{Ht(o,l.shape,"All tensors passed to stack must have matching shapes"),_(a===l.dtype,()=>"All tensors passed to stack must have matching dtypes")});const i=[],u=e.map(l=>{const h=Ru({inputs:{input:l},backend:t,attrs:{dim:s}});return i.push(h),h}),c=Z1({inputs:u,backend:t,attrs:{axis:s}});return i.forEach(l=>t.disposeIntermediateTensorInfo(l)),c}const R_={kernelName:Yd,backendName:"webgl",kernelFunc:k_};class __{constructor(e,t,r){this.variableNames=["x"],this.customUniforms=[{name:"value",type:"float"}],this.outputShape=t.map((c,l)=>c[0]+e[l]+c[1]);const s=e.length,o=Ve(s),a=t.map(c=>c[0]).join(","),i=t.map((c,l)=>c[0]+e[l]).join(","),u=["coords[0]","coords[1]","coords[2]","coords[3]"].slice(0,s);if(s===1){this.userCode=`
+        int start = ${a};
+        int end = ${i};
+
+        void main() {
+          int outC = getOutputCoords();
+          if (outC < start || outC >= end) {
+            setOutput(value);
+          } else {
+            setOutput(getX(outC - start));
+          }
+        }
+      `;return}this.userCode=`
+      ${o} start = ${o}(${a});
+      ${o} end = ${o}(${i});
+
+      void main() {
+        ${o} outC = getOutputCoords();
+        if (any(lessThan(outC, start)) || any(greaterThanEqual(outC, end))) {
+          setOutput(value);
+        } else {
+          ${o} coords = outC - start;
+          setOutput(getX(${u}));
+        }
+      }
+    `}}class A_{constructor(e,t,r){this.variableNames=["x"],this.packedInputs=!0,this.packedOutput=!0,this.customUniforms=[{name:"value",type:"float"}],this.outputShape=t.map((b,y)=>b[0]+e[y]+b[1]);const s=e.length,o=Ve(s),a=t.map(b=>b[0]).join(","),i=t.map((b,y)=>b[0]+e[y]).join(","),u=$t("rc",s),c=$t("source",s),l=`${u[s-1]} < ${this.outputShape[s-1]}`,h=s===1?"source":`vec2(${c.slice(-2).join()})`,d=[`${o} rc = outputLoc;`,`${u[s-1]} += 1;
+       if(${l}) {
+      `,s===1?"":`}
+       rc = outputLoc;
+       ${u[s-2]} += 1;
+       if(${u[s-2]} < ${this.outputShape[s-2]}) {`,s===1?"":`  ${u[s-1]} += 1;
+         if(${l}) {`],p=s===1?"rc < start || rc >= end":"any(lessThan(rc, start)) || any(greaterThanEqual(rc, end))";let f="";for(let b=0,y=s===1?2:4;b<y;b++)f+=`
+        ${d[b]}
+        if (${p}) {
+          result[${b}] = float(value);
+        } else {
+          ${o} source = rc - start;
+          result[${b}] = getChannel(getX(${c.join()}), ${h});
+        }
+      `;f+=s===1?"} ":"}}",this.userCode=`
+      const ${o} start = ${o}(${a});
+      const ${o} end = ${o}(${i});
+
+      void main() {
+        ${o} outputLoc = getOutputCoords();
+        vec4 result = vec4(0.);
+        ${f}
+        setOutput(result);
+      }
+    `}}const fg=n=>{const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{paddings:o,constantValue:a}=r;if(ne(s.shape)===0){const c=o.map((l,h)=>l[0]+s.shape[h]+l[1]);return Wo({backend:t,attrs:{shape:c,value:a,dtype:s.dtype}})}const i=j().getBool("WEBGL_PACK_ARRAY_OPERATIONS")?new A_(s.shape,o,a):new __(s.shape,o,a),u=[[a]];return t.runWebGLProgram(i,[s],s.dtype,u)},O_={kernelName:Qd,backendName:"webgl",kernelFunc:fg};const D_=`
+  if(a < 0.0 && floor(b) < b){
+    return NAN;
+  }
+  if (b == 0.0) {
+    return 1.0;
+  }
+  return (round(mod(b, 2.0)) != 1) ?
+      pow(abs(a), b) : sign(a) * pow(abs(a), b);
+`,F_=`
+  // isModRound1 has 1 for components with round(mod(b, 2.0)) == 1, 0 otherwise.
+  vec4 isModRound1 = vec4(equal(round(mod(b, 2.0)), ivec4(1)));
+  vec4 multiplier = sign(a) * isModRound1 + (vec4(1.0) - isModRound1);
+  vec4 result = multiplier * pow(abs(a), b);
+
+  // Ensure that a^0 = 1, including 0^0 = 1 as this correspond to TF and JS
+  bvec4 isExpZero = equal(b, vec4(0.0));
+  result.r = isExpZero.r ? 1.0 : result.r;
+  result.g = isExpZero.g ? 1.0 : result.g;
+  result.b = isExpZero.b ? 1.0 : result.b;
+  result.a = isExpZero.a ? 1.0 : result.a;
+
+  bvec4 isNaN1 = lessThan(a, vec4(0.0));
+  bvec4 isNaN2 = lessThan(floor(b), b);
+  bvec4 isNaN = bvec4(isNaN1.x && isNaN2.x, isNaN1.y && isNaN2.y, isNaN1.z && isNaN2.z, isNaN1.w && isNaN2.w);
+  `+is+`
+  return result;
+`,P_=ft({opSnippet:D_,packedOpSnippet:F_}),L_={kernelName:Zd,backendName:"webgl",kernelFunc:P_};function B_(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{axis:o,keepDims:a}=r,i=s.shape.length,u=[],c=ut(o,s.shape);let l=c;const h=un(l,i);let d=s;h!=null&&(d=St({inputs:{x:s},backend:t,attrs:{perm:h}}),l=cn(l.length,i),u.push(d)),$n("prod",l,i);let p;if(t.shouldExecuteOnCPU([d])){const f=t.texData.get(d.dataId).values,{outVals:b,outShape:y,outDtype:x}=PN(d.shape,d.dtype,f,l);p=t.makeTensorInfo(y,x,b)}else{const[f,b]=On(d.shape,l),y=ne(b),x=ie({inputs:{x:d},backend:t,attrs:{shape:[-1,y]}}),C=Yu(s.dtype),I=us(x,C,"prod",t);p=ie({inputs:{x:I},backend:t,attrs:{shape:f}}),u.push(x),u.push(I)}if(a){u.push(p);const f=qt(p.shape,c);p=ie({inputs:{x:p},backend:t,attrs:{shape:f}})}return u.forEach(f=>t.disposeIntermediateTensorInfo(f)),p}const V_={kernelName:ep,backendName:"webgl",kernelFunc:B_};function M_(n){const{inputs:e,backend:t,attrs:r}=n,{paramsNestedSplits:s,paramsDenseValues:o,indices:a}=e,{outputRaggedRank:i}=r,u=s.map(x=>t.readSync(x.dataId)),c=s.map(x=>x.shape),l=t.readSync(o.dataId),h=t.readSync(a.dataId),[d,p,f]=LN(u,c,l,o.shape,o.dtype,h,a.shape,i),b=d.map(x=>t.makeTensorInfo([x.length],"int32",x)),y=t.makeTensorInfo(f,o.dtype,p);return b.concat([y])}const U_={kernelName:tp,backendName:"webgl",kernelFunc:M_};function W_(n){const{inputs:e,backend:t}=n,{starts:r,limits:s,deltas:o}=e,a=t.readSync(r.dataId),i=t.readSync(s.dataId),u=t.readSync(o.dataId),[c,l]=BN(a,r.shape,r.dtype,i,s.shape,u,o.shape),h=t.makeTensorInfo([c.length],"int32",c),d=t.makeTensorInfo([l.length],r.dtype,l);return[h,d]}const z_={kernelName:np,backendName:"webgl",kernelFunc:W_};function G_(n){const{inputs:e,backend:t,attrs:r}=n,{shape:s,values:o,defaultValue:a,rowPartitionTensors:i}=e,{rowPartitionTypes:u}=r,c=t.readSync(s.dataId),l=t.readSync(o.dataId),h=t.readSync(a.dataId),d=i.map(y=>t.readSync(y.dataId)),p=i.map(y=>y.shape),[f,b]=VN(c,s.shape,l,o.shape,o.dtype,h,a.shape,d,p,u);return t.makeTensorInfo(f,o.dtype,b)}const j_={kernelName:rp,backendName:"webgl",kernelFunc:G_};const mg=n=>{const{backend:e,attrs:t}=n,{start:r,stop:s,step:o,dtype:a}=t,i=MN(r,s,o,a);return e.makeTensorInfo([i.length],a,i)},H_={kernelName:sp,backendName:"webgl",kernelFunc:mg};const K_="return 1.0 / x;",X_=Oe({opSnippet:K_}),q_={kernelName:ap,backendName:"webgl",kernelFunc:X_};const Y_=ln+`
+  return (x < 0.0) ? 0.0 : x;
+`,Q_=`
+  vec4 result = x * vec4(greaterThanEqual(x, vec4(0.0)));
+  bvec4 isNaN = isnan(x);
+
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`,Z_=Oe({opSnippet:Y_,packedOpSnippet:Q_}),J_={kernelName:ip,backendName:"webgl",kernelFunc:Z_};const e8=ln+`
+  return (x < 0.0) ? 0.0 : min(6.0, x);
+`,t8=`
+  vec4 result = min(x, vec4(6.)) * vec4(greaterThanEqual(x, vec4(0.0)));
+  bvec4 isNaN = isnan(x);
+
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`,n8=Oe({opSnippet:e8,packedOpSnippet:t8}),r8={kernelName:hp,backendName:"webgl",kernelFunc:n8};class s8{constructor(e,t,r,s,o){this.variableNames=["A"],this.outputShape=[];const[a,i,u,c]=e;this.outputShape=[a,t,r,c];const l=[s&&t>1?i-1:i,s&&r>1?u-1:u],h=[s&&t>1?t-1:t,s&&r>1?r-1:r];let d;o?d="(vec2(yRC) + vec2(0.5)) * effectiveInputOverOutputRatioRC - vec2(0.5)":d="vec2(yRC) * effectiveInputOverOutputRatioRC",this.userCode=`
+      const vec2 effectiveInputOverOutputRatioRC = vec2(
+          ${l[0]/h[0]},
+          ${l[1]/h[1]});
+      const vec2 inputShapeRC = vec2(${i}.0, ${u}.0);
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+        ivec2 yRC = coords.yz;
+
+        // Fractional source index.
+        vec2 sourceFracIndexRC = ${d};
+
+        // Compute the four integer indices.
+        ivec2 sourceFloorRC = ivec2(max(sourceFracIndexRC, vec2(0.0)));
+        ivec2 sourceCeilRC = ivec2(
+          min(inputShapeRC - 1.0, ceil(sourceFracIndexRC)));
+
+        float topLeft = getA(b, sourceFloorRC.x, sourceFloorRC.y, d);
+        float bottomLeft = getA(b, sourceCeilRC.x, sourceFloorRC.y, d);
+        float topRight = getA(b, sourceFloorRC.x, sourceCeilRC.y, d);
+        float bottomRight = getA(b, sourceCeilRC.x, sourceCeilRC.y, d);
+
+        vec2 fracRC = sourceFracIndexRC - vec2(sourceFloorRC);
+
+        float top = topLeft + (topRight - topLeft) * fracRC.y;
+        float bottom = bottomLeft + (bottomRight - bottomLeft) * fracRC.y;
+        float newValue = top + (bottom - top) * fracRC.x;
+
+        setOutput(newValue);
+      }
+    `}}class o8{constructor(e,t,r,s,o){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=[];const[a,i,u,c]=e;this.outputShape=[a,t,r,c];const l=[s&&t>1?i-1:i,s&&r>1?u-1:u],h=[s&&t>1?t-1:t,s&&r>1?r-1:r];let d;o?d="(vec3(yRC) + vec3(0.5)) * effectiveInputOverOutputRatioRC - vec3(0.5)":d="vec3(yRC) * effectiveInputOverOutputRatioRC",this.userCode=`
+      const vec3 effectiveInputOverOutputRatioRC = vec3(
+          ${l[0]/h[0]},
+          ${l[1]/h[1]},
+          ${l[1]/h[1]});
+      const vec3 inputShapeRC = vec3(${i}.0, ${u}.0,
+                                     ${u}.0);
+
+      float getAValue(int b, int r, int c, int d) {
+        return getChannel(getA(b, r, c, d), vec2(c, d));
+      }
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+        // Calculate values for next column in yRC.z.
+        ivec3 yRC = coords.yzz + ivec3(0, 0, 1);
+
+        // Fractional source index.
+        vec3 sourceFracIndexRC = ${d};
+
+        // Compute the four integer indices.
+        ivec3 sourceFloorRC = ivec3(max(sourceFracIndexRC, vec3(0.0)));
+        ivec3 sourceCeilRC = ivec3(
+          min(inputShapeRC - 1.0, ceil(sourceFracIndexRC)));
+
+        // Should we calculate next column and row elements in 2x2 packed cell.
+        bool hasNextCol = d < ${c-1};
+        bool hasNextRow = coords.z < ${r-1};
+
+        // In parallel, construct four corners for all four components in
+        // packed 2x2 cell.
+        vec4 topLeft = vec4(
+          getAValue(b, sourceFloorRC.x, sourceFloorRC.y, d),
+          hasNextCol ? getAValue(b, sourceFloorRC.x, sourceFloorRC.y, d + 1)
+                     : 0.0,
+          hasNextRow ? getAValue(b, sourceFloorRC.x, sourceFloorRC.z, d)
+                     : 0.0,
+          (hasNextRow && hasNextCol) ?
+            getAValue(b, sourceFloorRC.x, sourceFloorRC.z, d + 1) : 0.0);
+
+        vec4 bottomLeft = vec4(
+          getAValue(b, sourceCeilRC.x, sourceFloorRC.y, d),
+          hasNextCol ? getAValue(b, sourceCeilRC.x, sourceFloorRC.y, d + 1)
+                     : 0.0,
+          hasNextRow ? getAValue(b, sourceCeilRC.x, sourceFloorRC.z, d)
+                     : 0.0,
+          (hasNextRow && hasNextCol) ?
+            getAValue(b, sourceCeilRC.x, sourceFloorRC.z, d + 1) : 0.0);
+
+        vec4 topRight = vec4(
+          getAValue(b, sourceFloorRC.x, sourceCeilRC.y, d),
+          hasNextCol ? getAValue(b, sourceFloorRC.x, sourceCeilRC.y, d + 1)
+                     : 0.0,
+          hasNextRow ? getAValue(b, sourceFloorRC.x, sourceCeilRC.z, d)
+                     : 0.0,
+          (hasNextRow && hasNextCol) ?
+            getAValue(b, sourceFloorRC.x, sourceCeilRC.z, d + 1) : 0.0);
+
+        vec4 bottomRight = vec4(
+          getAValue(b, sourceCeilRC.x, sourceCeilRC.y, d),
+          hasNextCol ? getAValue(b, sourceCeilRC.x, sourceCeilRC.y, d + 1)
+                     : 0.0,
+          hasNextRow ? getAValue(b, sourceCeilRC.x, sourceCeilRC.z, d)
+                     : 0.0,
+          (hasNextRow && hasNextCol) ?
+            getAValue(b, sourceCeilRC.x, sourceCeilRC.z, d + 1) : 0.0);
+
+        vec3 fracRC = sourceFracIndexRC - vec3(sourceFloorRC);
+
+        vec4 top = mix(topLeft, topRight, fracRC.yyzz);
+        vec4 bottom = mix(bottomLeft, bottomRight, fracRC.yyzz);
+        vec4 newValue = mix(top, bottom, fracRC.x);
+
+        setOutput(newValue);
+      }
+    `}}function a8(n){const{inputs:e,backend:t,attrs:r}=n,{images:s}=e,{alignCorners:o,halfPixelCenters:a,size:i}=r,[u,c]=i,l=j().getBool("WEBGL_PACK_IMAGE_OPERATIONS")?new o8(s.shape,u,c,o,a):new s8(s.shape,u,c,o,a);return t.runWebGLProgram(l,[s],"float32")}const i8={kernelName:lp,backendName:"webgl",kernelFunc:a8};class u8{constructor(e,t,r){this.variableNames=["dy"],this.outputShape=[],this.outputShape=t;const[,s,o]=t,[,a,i]=e,u=[r&&a>1?s-1:s,r&&i>1?o-1:o],c=[r&&a>1?a-1:a,r&&i>1?i-1:i],l=u[0]/c[0],h=u[1]/c[1],d=1/l,p=1/h,f=Math.ceil(d)*2+2,b=Math.ceil(p)*2+2;this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+        int r = coords[1];
+        int c = coords[2];
+
+        float accumulator = 0.0;
+
+        const float heightScale = float(${l});
+        const float widthScale = float(${h});
+
+        const float invHeightScale = float(${d});
+        const float invWidthScale = float(${p});
+
+        const int winHeight = int(${f});
+        const int winWidth = int(${b});
+
+        // Compute bounds for where in dy we will look
+        float startRLerp = floor(float(r) * invHeightScale);
+        int startDyR = int(startRLerp - float(winHeight / 2));
+
+        float startCLerp = floor(float(c) * invWidthScale);
+        int startDyC = int(startCLerp - float(winWidth / 2));
+
+        // Loop over dy
+        for (int dyROffset = 0; dyROffset < winHeight; dyROffset++) {
+          int dyR = dyROffset + startDyR;
+
+          // Guard against the window exceeding the bounds of dy
+          if (dyR < 0 || dyR >= ${a}) {
+            continue;
+          }
+
+          for (int dyCOffset = 0; dyCOffset < winWidth; dyCOffset++) {
+            int dyC = dyCOffset + startDyC;
+
+            // Guard against the window exceeding the bounds of dy
+            if (dyC < 0 || dyC >= ${i}) {
+              continue;
+            }
+
+            float dxR = float(dyR) * heightScale;
+            int topDxRIndex = int(floor(dxR));
+            int bottomDxRIndex = int(min(ceil(dxR), ${s-1}.0));
+            float dxRLerp = dxR - float(topDxRIndex);
+            float inverseDxRLerp = 1.0 - dxRLerp;
+
+            float dxC = float(dyC) * widthScale;
+            int leftDxCIndex = int(floor(dxC));
+            int rightDxCIndex = int(min(ceil(dxC), ${o-1}.0));
+            float dxCLerp = dxC - float(leftDxCIndex);
+            float inverseDxCLerp = 1.0 - dxCLerp;
+
+            if (r == topDxRIndex && c == leftDxCIndex) {
+              // topLeft
+              accumulator +=
+                getDy(b, dyR, dyC, d) * inverseDxRLerp * inverseDxCLerp;
+            }
+
+            if (r == topDxRIndex && c == rightDxCIndex) {
+              // topRight
+              accumulator += getDy(b, dyR, dyC, d) * inverseDxRLerp * dxCLerp;
+            }
+
+            if (r == bottomDxRIndex && c == leftDxCIndex) {
+              // bottomLeft
+              accumulator += getDy(b, dyR, dyC, d) * dxRLerp * inverseDxCLerp;
+            }
+
+            if (r == bottomDxRIndex && c == rightDxCIndex) {
+              // bottomRight
+              accumulator += getDy(b, dyR, dyC, d) * dxRLerp * dxCLerp;
+            }
+          }
+        }
+        // End loop over dy
+
+        setOutput(accumulator);
+      }
+    `}}function c8(n){const{inputs:e,backend:t,attrs:r}=n,{images:s,dy:o}=e,{alignCorners:a}=r,i=new u8(o.shape,s.shape,a);return t.runWebGLProgram(i,[o],o.dtype)}const l8={kernelName:u2,backendName:"webgl",kernelFunc:c8};class h8{constructor(e,t,r,s,o){this.variableNames=["A"],this.outputShape=[];const[a,i,u,c]=e;this.outputShape=[a,t,r,c];const l=[s&&t>1?i-1:i,s&&r>1?u-1:u],h=[s&&t>1?t-1:t,s&&r>1?r-1:r],d=s?"0.5":"0.0";let p;o?p="max((vec2(yRC) + vec2(0.5)) * effectiveInputOverOutputRatioRC, vec2(0.0))":p="vec2(yRC) * effectiveInputOverOutputRatioRC",this.userCode=`
+      const vec2 effectiveInputOverOutputRatioRC = vec2(
+          ${l[0]/h[0]},
+          ${l[1]/h[1]});
+      const vec2 inputShapeRC = vec2(${i}.0, ${u}.0);
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+        ivec2 yRC = coords.yz;
+
+        // Fractional source index.
+        vec2 sourceFracIndexRC = ${p};
+
+        // Compute the coordinators of nearest neighbor point.
+        ivec2 sourceNearestRC = ivec2(
+          min(inputShapeRC - 1.0, floor(sourceFracIndexRC + ${d})));
+        float newValue = getA(b, sourceNearestRC.x, sourceNearestRC.y, d);
+
+        setOutput(newValue);
+      }
+    `}}class d8{constructor(e,t,r,s,o){this.variableNames=["A"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=[];const[a,i,u,c]=e;this.outputShape=[a,t,r,c];const l=[s&&t>1?i-1:i,s&&r>1?u-1:u],h=[s&&t>1?t-1:t,s&&r>1?r-1:r],d=s?"0.5":"0.0";let p;o?p="max((vec3(yRC) + vec3(0.5)) * effectiveInputOverOutputRatioRC, vec3(0.0))":p="vec3(yRC) * effectiveInputOverOutputRatioRC",this.userCode=`
+      const vec3 effectiveInputOverOutputRatioRC = vec3(
+          ${l[0]/h[0]},
+          ${l[1]/h[1]},
+          ${l[1]/h[1]});
+      const vec3 inputShapeRC = vec3(${i}.0, ${u}.0,
+                                     ${u}.0);
+
+      float getAValue(int b, int r, int c, int d) {
+        return getChannel(getA(b, r, c, d), vec2(c, d));
+      }
+
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+        // Calculate values for next column in yRC.z.
+        ivec3 yRC = coords.yzz + ivec3(0, 0, 1);
+
+        // Fractional source index.
+        vec3 sourceFracIndexRC = ${p};
+
+        // Compute the coordinators of nearest neighbor point.
+        ivec3 sourceNearestRC = ivec3(
+          min(inputShapeRC - 1.0, floor(sourceFracIndexRC + ${d})));
+
+        // Should we calculate next column and row elements in 2x2 packed cell.
+        bool hasNextCol = d < ${c-1};
+        bool hasNextRow = coords.z < ${r-1};
+
+        vec4 newValue = vec4(
+          getAValue(b, sourceNearestRC.x, sourceNearestRC.y, d),
+          hasNextCol ? getAValue(b, sourceNearestRC.x, sourceNearestRC.y, d + 1)
+                     : 0.0,
+          hasNextRow ? getAValue(b, sourceNearestRC.x, sourceNearestRC.z, d)
+                     : 0.0,
+          (hasNextRow && hasNextCol) ?
+            getAValue(b, sourceNearestRC.x, sourceNearestRC.z, d + 1) : 0.0);
+
+        setOutput(newValue);
+      }
+    `}}function p8(n){const{inputs:e,backend:t,attrs:r}=n,{images:s}=e,{alignCorners:o,halfPixelCenters:a,size:i}=r,[u,c]=i,l=j().getBool("WEBGL_PACK_IMAGE_OPERATIONS")?new d8(s.shape,u,c,o,a):new h8(s.shape,u,c,o,a);return t.runWebGLProgram(l,[s],s.dtype)}const f8={kernelName:cp,backendName:"webgl",kernelFunc:p8};class m8{constructor(e,t,r){this.variableNames=["dy"],this.outputShape=[],this.outputShape=t;const[,s,o]=t,[,a,i]=e,u=[r&&a>1?s-1:s,r&&i>1?o-1:o],c=[r&&a>1?a-1:a,r&&i>1?i-1:i],l=u[0]/c[0],h=u[1]/c[1],d=1/l,p=1/h,f=Math.ceil(d)*2+2,b=Math.ceil(p)*2+2;this.userCode=`
+      void main() {
+        ivec4 coords = getOutputCoords();
+        int b = coords[0];
+        int d = coords[3];
+        int r = coords[1];
+        int c = coords[2];
+
+        float accumulator = 0.0;
+
+        const float heightScale = float(${l});
+        const float widthScale = float(${h});
+
+        const float invHeightScale = float(${d});
+        const float invWidthScale = float(${p});
+
+        const int winHeight = int(${f});
+        const int winWidth = int(${b});
+
+        // Compute bounds for where in dy we will look
+        float startRLerp = floor(float(r) * invHeightScale);
+        int startDyR = int(floor(startRLerp - float(winHeight / 2)));
+
+        float startCLerp = floor(float(c) * invWidthScale);
+        int startDyC = int(floor(startCLerp - float(winWidth / 2)));
+
+        // Loop over dy
+        for (int dyROffset = 0; dyROffset < winHeight; dyROffset++) {
+          int dyR = dyROffset + startDyR;
+
+          // Guard against the window exceeding the bounds of dy
+          if (dyR < 0 || dyR >= ${a}) {
+            continue;
+          }
+
+          for (int dyCOffset = 0; dyCOffset < winWidth; dyCOffset++) {
+            int dyC = dyCOffset + startDyC;
+
+            // Guard against the window exceeding the bounds of dy
+            if (dyC < 0 || dyC >= ${i}) {
+              continue;
+            }
+
+            float sourceFracRow =
+              float(${u[0]}) *
+                (float(dyR) / float(${c[0]}));
+
+            float sourceFracCol =
+                float(${u[1]}) *
+                  (float(dyC) / float(${c[1]}));
+
+            int sourceNearestRow = int(min(
+                float(int(${s}) - 1),
+                ${r} ? float(round(sourceFracRow)) :
+                                  float(floor(sourceFracRow))));
+
+            int sourceNearestCol = int(min(
+                float(int(${o}) - 1),
+                ${r} ? float(round(sourceFracCol)) :
+                                  float(floor(sourceFracCol))));
+
+            if (r == sourceNearestRow && c == sourceNearestCol) {
+              accumulator += getDy(b, dyR, dyC, d);
+            }
+          }
+        }
+        // End loop over dy
+
+        setOutput(accumulator);
+      }
+    `}}function g8(n){const{inputs:e,backend:t,attrs:r}=n,{images:s,dy:o}=e,{alignCorners:a}=r,i=new m8(o.shape,s.shape,a);return t.runWebGLProgram(i,[o],o.dtype)}const y8={kernelName:i2,backendName:"webgl",kernelFunc:g8};class x8{constructor(e,t){this.variableNames=["x"];const r=e.length;if(r>4)throw new Error(`WebGL backend: Reverse of rank-${r} tensor is not yet supported`);if(this.outputShape=e,r===1){this.userCode=`
+        void main() {
+          int coord = getOutputCoords();
+          setOutput(getX(${e[0]} - coord - 1));
+        }
+      `;return}const s=i=>t.indexOf(i)!==-1&&e[i]!==1?`${e[i]} - coords[${i}] - 1`:`coords[${i}]`,o=e.map((i,u)=>s(u)).join(","),a=Ve(r);this.userCode=`
+      void main() {
+        ${a} coords = getOutputCoords();
+        setOutput(getX(${o}));
+      }
+    `}}class b8{constructor(e,t){this.variableNames=["x"],this.packedInputs=!0,this.packedOutput=!0;const r=e.length;if(r>4)throw new Error(`WebGL backend: Reverse of rank-${r} tensor is not yet supported`);this.outputShape=e;const s=$t("rc",r),o=`${s[r-1]} + 1 < ${this.outputShape[r-1]}`,a=`${s[r-2]} + 1 < ${this.outputShape[r-2]}`,i=Ve(r);r===1?this.userCode=`
+        void main(){
+          int rc = getOutputCoords();
+          vec4 result = vec4(0.);
+          result.r = getChannel(getX(${e[0]} - rc - 1),
+            ${e[0]} - rc - 1);
+          if(${o}){
+              result.g = getChannel(getX(${e[0]} - (rc  + 1) - 1),
+                ${e[0]} - (rc  + 1) - 1);
+          }
+          setOutput(result);
+        }
+      `:this.userCode=`
+        void main() {
+          ${i} rc = getOutputCoords();
+          vec4 result = vec4(0.);
+          result.r = ${u(s.slice())};
+          if(${o}){
+            result.g = ${c(s.slice())};
+          }
+          if(${a}) {
+            result.b = ${l(s.slice())};
+            if(${o}) {
+              result.a = ${h(s.slice())};
+            }
+          }
+          setOutput(result);
+        }
+    `;function u(f){return d(f)}function c(f){return f[r-1]="("+f[r-1]+" + 1)",d(f)}function l(f){return f[r-2]="("+f[r-2]+" + 1)",d(f)}function h(f){return f[r-1]="("+f[r-1]+" + 1)",f[r-2]="("+f[r-2]+" + 1)",d(f)}function d(f){const b=e.map((C,I)=>p(I,f)),y=b.join(","),x=b.slice(-2).join(",");return`getChannel(getX(${y}), vec2(${x}))`}function p(f,b){return t.indexOf(f)!==-1&&e[f]!==1?`${e[f]} - ${b[f]} - 1`:`${b[f]}`}}}function v8(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{dims:o}=r,a=s.shape.length,i=ut(o,s.shape);if(a===0)return Lt({inputs:{x:s},backend:t});const u=j().getBool("WEBGL_PACK_ARRAY_OPERATIONS")?new b8(s.shape,i):new x8(s.shape,i);return t.runWebGLProgram(u,[s],s.dtype)}const w8={kernelName:dp,backendName:"webgl",kernelFunc:v8};class $8{constructor(e,t){this.variableNames=["Image"],this.outputShape=[],this.customUniforms=[{name:"params",type:"vec4"}];const r=e[1],s=e[2];this.outputShape=e;let o="";typeof t=="number"?o=`float outputValue = ${t.toFixed(2)};`:o=`
+        vec3 fill = vec3(${t.join(",")});
+        float outputValue = fill[coords[3]];`,this.userCode=`
+        void main() {
+          ivec4 coords = getOutputCoords();
+          int x = coords[2];
+          int y = coords[1];
+          float coordXFloat = (float(x) - params[0]) * params[3] -
+            (float(y) - params[1]) * params[2];
+          float coordYFloat = (float(x) - params[0]) * params[2] +
+            (float(y) - params[1]) * params[3];
+          int coordX = int(round(coordXFloat + params[0]));
+          int coordY = int(round(coordYFloat + params[1]));
+          ${o}
+          if(coordX >= 0 && coordX < ${s} && coordY >= 0 && coordY < ${r}) {
+            outputValue = getImage(coords[0], coordY, coordX, coords[3]);
+          }
+          setOutput(outputValue);
+        }
+    `}}const S8={kernelName:Zp,backendName:"webgl",kernelFunc:({inputs:n,attrs:e,backend:t})=>{const{image:r}=n,{radians:s,fillValue:o,center:a}=e,i=t,u=new $8(r.shape,o),[c,l]=Hm(a,r.shape[1],r.shape[2]),h=[[c,l,Math.sin(s),Math.cos(s)]];return i.runWebGLProgram(u,[r],r.dtype,h)}};const C8=`
+  // OpenGL ES does not support round function.
+  // The algorithm is based on banker's rounding.
+  float base = floor(x);
+  if ((x - base) < 0.5) {
+    return floor(x);
+  } else if ((x - base) > 0.5) {
+    return ceil(x);
+  } else {
+    if (mod(base, 2.0) == 0.0) {
+      return base;
+    } else {
+      return base + 1.0;
+    }
+  }
+`,T8=Oe({opSnippet:C8}),N8={kernelName:pp,backendName:"webgl",kernelFunc:T8};const E8="return inversesqrt(x);",I8=Oe({opSnippet:E8,cpuKernelImpl:UN}),k8={kernelName:fp,backendName:"webgl",kernelFunc:I8};class kc{constructor(e,t,r,s,o,a,i=!0,u=!1){this.variableNames=["updates","indices","defaultValue"],this.outputShape=a;const c=Ve(o.length),l=Ve(a.length);let h="";r===1?h="i":r===2&&(h="i, j");const d=`getIndices(${h})`;let p="";s===1?p="i":s===2&&(p="i, coords[1]");const f=`getUpdates(${p})`;let b="";u&&(b="coords[0], coords[1]");const y=`getDefaultValue(${b})`,x=t>1?"strides[j]":"strides";this.userCode=`
+        ${c} strides = ${c}(${o});
+
+        void main() {
+          ${l} coords = getOutputCoords();
+          float sum = 0.0;
+          bool found = false;
+          for (int i = 0; i < ${e}; i++) {
+            int flattenedIndex = 0;
+            for (int j = 0; j < ${t}; j++) {
+              int index = round(${d});
+              flattenedIndex += index * ${x};
+            }
+            if (flattenedIndex == coords[0]) {
+              sum += ${f};
+              found = true;
+            }
+          }
+          setOutput(mix(${y}, sum, float(found)));
+        }
+      `}}class R8{constructor(e,t,r,s,o,a,i=!0,u=!1){this.variableNames=["updates","indices","defaultValue"],this.packedInputs=!0,this.packedOutput=!0,this.outputShape=a;const c=Ve(o.length),l=Ve(a.length);let h="";r===1?h="i":r===2&&(h="i, j");const d=`getIndices(${h})`;let p="";s===1?p="i":s===2&&(p="i, coords[1]");const f=`getUpdates(${p})`;let b="";u&&(b="coords[0], coords[1]");const y=`getDefaultValue(${b})`,x=t>1?"strides[j]":"strides",C=t>1?"strides[j + 1]":"strides";this.userCode=`
+        ${c} strides = ${c}(${o});
+
+        void main() {
+          ${l} coords = getOutputCoords();
+          vec4 sum = vec4(0.);
+          vec4 found = vec4(0.);
+          for (int i = 0; i < ${e}; i+=2) {
+            ivec2 flattenedIndex = ivec2(0);
+            for (int j = 0; j < ${t}; j+=2) {
+              ivec4 index = round(${d});
+              flattenedIndex += index.xz * ${x};
+              if (j + 1 < ${t}) {
+                flattenedIndex += index.yw * ${C};
+              }
+            }
+            if (flattenedIndex[0] == coords[0] || flattenedIndex[1] == coords[0] ||
+                flattenedIndex[0] == coords[0] + 1 || flattenedIndex[1] == coords[0] + 1) {
+              vec4 updVals = ${f};
+              if (flattenedIndex[0] == coords[0]) {
+                sum.xy += updVals.xy;
+                found.xy = vec2(1.);
+              } else if (flattenedIndex[0] == coords[0] + 1) {
+                sum.zw += updVals.xy;
+                found.zw = vec2(1.);
+              }
+              if (flattenedIndex[1] == coords[0]) {
+                sum.xy += updVals.zw;
+                found.xy = vec2(1.);
+              } else if (flattenedIndex[1] == coords[0] + 1) {
+                sum.zw += updVals.zw;
+                found.zw = vec2(1.);
+              }
+            }
+          }
+          setOutput(mix(${y}, sum, found));
+        }
+      `}}function _8(n){const{inputs:e,backend:t,attrs:r}=n,{indices:s,updates:o}=e,{shape:a}=r,{sliceRank:i,numUpdates:u,sliceSize:c,strides:l,outputSize:h}=oi(o,s,a),d=[h/c,c];if(h===0)return t.makeTensorInfo(a,s.dtype);const p=ie({inputs:{x:s},backend:t,attrs:{shape:[u,i]}}),f=ie({inputs:{x:o},backend:t,attrs:{shape:[u,c]}}),b=t.makeTensorInfo([],"float32",new Float32Array([0]));let y;j().getBool("WEBGL_PACK")?y=new R8(u,i,p.shape.length,f.shape.length,l,d):y=new kc(u,i,p.shape.length,f.shape.length,l,d);const x=t.runWebGLProgram(y,[f,p,b],f.dtype),C=ie({inputs:{x},backend:t,attrs:{shape:a}});return t.disposeIntermediateTensorInfo(p),t.disposeIntermediateTensorInfo(f),t.disposeIntermediateTensorInfo(x),t.disposeIntermediateTensorInfo(b),C}const A8={kernelName:mp,backendName:"webgl",kernelFunc:_8};class O8{constructor(e,t,r,s){this.variableNames=["sortedSequence","values"],this.customUniforms=[{name:"numInputs",type:"int"}],this.outputShape=[e,r];const o="while (left < right) {",a=`for (int i = 0; i < ${Math.ceil(Math.log2(t+1))}; ++i) { if (left >= right) break;`,i=j().getNumber("WEBGL_VERSION")===2?o:a,u=s==="left"?"<":"<=";this.userCode=`
+       int findBound(int batch, float value) {
+         int left = 0;
+         int right = numInputs;
+         int mid;
+         ${i}
+           mid = (left + right) / 2;
+           if (getSortedSequence(batch, mid) ${u} value) {
+             left = mid + 1;
+           } else {
+             right = mid;
+           }
+         }
+         return right;
+       }
+
+       void main() {
+         ivec2 coords = getOutputCoords();
+         int batch = coords[0];
+         int valueIndex = coords[1];
+
+         float value = getValues(batch, valueIndex);
+
+         setOutput(float(findBound(batch, value)));
+       }
+     `}}function D8(n){const{inputs:e,backend:t,attrs:r}=n,{sortedSequence:s,values:o}=e,{side:a}=r,i=new O8(s.shape[0],s.shape[1],o.shape[1],a),u=[[s.shape[1]]];return t.runWebGLProgram(i,[s,o],"int32",u)}const F8={kernelName:yp,backendName:"webgl",kernelFunc:D8};class P8{constructor(e,t,r){this.variableNames=["c","a","b"],this.outputShape=t;let s,o;if(r>4)throw Error(`Where for rank ${r} is not yet supported`);if(r===1)o="resRC",s="resRC";else{const i=["resRC.x","resRC.y","resRC.z","resRC.w"],u=[],c=[];for(let l=0;l<t.length;l++)c.push(`${i[l]}`),l<e&&u.push(`${i[l]}`);s=u.join(),o=c.join()}const a=Ve(r);this.userCode=`
+      void main() {
+        ${a} resRC = getOutputCoords();
+        float cVal = getC(${s});
+        if (cVal >= 1.0) {
+          setOutput(getA(${o}));
+        } else {
+          setOutput(getB(${o}));
+        }
+      }
+    `}}function L8(n){const{inputs:e,backend:t}=n,{condition:r,t:s,e:o}=e,a=new P8(r.shape.length,s.shape,s.shape.length);return t.runWebGLProgram(a,[r,s,o],An(s.dtype,o.dtype))}const B8={kernelName:xp,backendName:"webgl",kernelFunc:L8};const V8=`
+  // Stable and Attracting Fixed Point (0, 1) for Normalized Weights.
+  // see: https://arxiv.org/abs/1706.02515
+  float scaleAlpha = ${qm};
+  float scale = ${Ym};
+  return (x >= 0.0) ? scale * x : scaleAlpha * (exp(x) - 1.0);
+`,M8=Oe({opSnippet:V8}),U8={kernelName:bp,backendName:"webgl",kernelFunc:M8};const W8=Gs+`
+  return 1.0 / (1.0 + exp(-1.0 * x));
+`,z8=`
+  vec4 result = 1.0 / (1.0 + exp(-1.0 * x));
+  bvec4 isNaN = isnan(x);
+
+  result.r = isNaN.r ? x.r : result.r;
+  result.g = isNaN.g ? x.g : result.g;
+  result.b = isNaN.b ? x.b : result.b;
+  result.a = isNaN.a ? x.a : result.a;
+
+  return result;
+`,G8=Oe({opSnippet:W8,packedOpSnippet:z8,cpuKernelImpl:zN}),j8={kernelName:Cp,backendName:"webgl",kernelFunc:G8};const H8=`
+  if (isnan(x)) { return 0.0; }
+  return sign(x);
+`,K8=Oe({opSnippet:H8}),X8={kernelName:Sp,backendName:"webgl",kernelFunc:K8};const q8=Gs+`
+  return sin(x);
+`,Y8=`
+  vec4 result = sin(x);
+  bvec4 isNaN = isnan(x);
+  ${is}
+  return result;
+`,Q8=Oe({opSnippet:q8,packedOpSnippet:Y8}),Z8={kernelName:wp,backendName:"webgl",kernelFunc:Q8};const J8=`
+  float e2x = exp(x);
+  return (e2x - 1.0 / e2x) / 2.0;
+`,e7=Oe({opSnippet:J8}),t7={kernelName:$p,backendName:"webgl",kernelFunc:e7};const n7=`
+  float epsilon = 1.1920928955078125e-7;
+  float threshold = log(epsilon) + 2.0;
+
+  bool too_large = x > -threshold;
+  bool too_small = x < threshold;
+
+  float result;
+  float exp_x = exp(x);
+
+  if (too_large){
+    result = x;
+  }
+  else if (too_small){
+    result = exp_x;
+  }
+  else{
+    result = log(exp_x + 1.0);
+  }
+  return result;
+`,r7=Oe({opSnippet:n7}),s7={kernelName:Tp,backendName:"webgl",kernelFunc:r7};const o7=n=>{const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{blockShape:o,paddings:a}=r;_(s.shape.length<=4,()=>"spaceToBatchND for rank > 4 with a WebGL backend not implemented yet");const i=o.reduce((x,C)=>x*C),u=[[0,0]];u.push(...a);for(let x=1+o.length;x<s.shape.length;++x)u.push([0,0]);const c=[],l=fg({inputs:{x:s},backend:t,attrs:{paddings:u,constantValue:0}}),h=xc(l.shape,o,i,!1),d=bc(h.length,o.length,!1),p=vc(l.shape,o,i,!1),f=ie({inputs:{x:l},backend:t,attrs:{shape:h}}),b=St({inputs:{x:f},backend:t,attrs:{perm:d}}),y=ie({inputs:{x:b},backend:t,attrs:{shape:p}});return c.push(l),c.push(f),c.push(b),c.forEach(x=>t.disposeIntermediateTensorInfo(x)),y},a7={kernelName:Ip,backendName:"webgl",kernelFunc:o7};function i7(n){const{inputs:e,backend:t}=n,{indices:r,values:s,denseShape:o,defaultValue:a}=e;if(o.shape.length!==1)throw new Error(`Dense shape must be a vector, saw:
+         ${o.shape}`);if(r.shape.length!==2)throw new Error(`Indices must be a matrix, saw:
+         ${r.shape}`);if(s.shape.length!==1)throw new Error(`Values must be a vector, saw:
+         ${s.shape}`);if(a.shape.length!==0)throw new Error(`Default value must be a scalar, saw:
+        ${a.shape}`);const i=t.readSync(r.dataId),u=t.readSync(s.dataId),c=t.readSync(o.dataId),l=t.readSync(a.dataId)[0],[h,d,p,f,b]=jN(i,r.shape,r.dtype,u,s.dtype,c,l);return[t.makeTensorInfo(d,r.dtype,h),t.makeTensorInfo([d[0]],s.dtype,p),t.makeTensorInfo([f.length],"bool",new Uint8Array(f.map(y=>Number(y)))),t.makeTensorInfo([b.length],r.dtype,new Int32Array(b))]}const u7={kernelName:_p,backendName:"webgl",kernelFunc:i7};function c7(n){const{inputs:e,backend:t}=n,{inputIndices:r,inputShape:s,newShape:o}=e;if(r.shape.length!==2)throw new Error(`Input indices should be a matrix but received shape ${r.shape}`);if(s.shape.length!==1)throw new Error(`Input shape should be a vector but received shape ${s.shape}`);if(o.shape.length!==1)throw new Error(`Target shape should be a vector but received shape ${o.shape}`);const a=Array.from(t.readSync(s.dataId)),i=t.readSync(r.dataId),u=Array.from(t.readSync(o.dataId)),[c,l,h]=HN(i,r.shape,r.dtype,a,u);return[t.makeTensorInfo(l,r.dtype,c),t.makeTensorInfo([h.length],o.dtype,new Int32Array(h))]}const l7={kernelName:Ap,backendName:"webgl",kernelFunc:c7};function h7(n){const{inputs:e,backend:t}=n,{data:r,indices:s,segmentIds:o}=e;if(r.shape.length<1)throw new Error("Data should be at least 1 dimensional but received scalar");if(s.shape.length!==1)throw new Error(`Indices should be a vector but received shape
+              ${s.shape}`);if(o.shape.length!==1)throw new Error(`Segment ids should be a vector but received shape
+              ${o.shape}`);const a=t.readSync(r.dataId),i=t.readSync(s.dataId),u=t.readSync(o.dataId),[c,l]=V1(a,r.shape,r.dtype,i,u,!0);return t.makeTensorInfo(l,r.dtype,c)}const d7={kernelName:Op,backendName:"webgl",kernelFunc:h7};function p7(n){const{inputs:e,backend:t}=n,{data:r,indices:s,segmentIds:o}=e;if(r.shape.length<1)throw new Error("Data should be at least 1 dimensional but received scalar");if(s.shape.length!==1)throw new Error(`Indices should be a vector but received shape
+             ${s.shape}`);if(o.shape.length!==1)throw new Error(`Segment ids should be a vector but received shape
+             ${o.shape}`);const a=t.readSync(r.dataId),i=t.readSync(s.dataId),u=t.readSync(o.dataId),[c,l]=V1(a,r.shape,r.dtype,i,u);return t.makeTensorInfo(l,r.dtype,c)}const f7={kernelName:Dp,backendName:"webgl",kernelFunc:p7};function m7(n){const{inputs:e,backend:t,attrs:r}=n,{sparseIndices:s,sparseValues:o,defaultValue:a}=e,{outputShape:i}=r,{sliceRank:u,numUpdates:c,sliceSize:l,strides:h,outputSize:d}=oi(o,s,i),p=!1;if(o.dtype==="string"){const x=t.bufferSync(s),C=t.bufferSync(o),I=Es(t.readSync(a.dataId)[0]),k=WN(x,C,i,d,l,c,u,h,I,p);return t.makeTensorInfo(i,k.dtype,k.values)}const f=new kc(c,u,s.shape.length,o.shape.length,h,[d,1],p),b=t.runWebGLProgram(f,[o,s,a],o.dtype),y=ie({inputs:{x:b},backend:t,attrs:{shape:i}});return t.disposeIntermediateTensorInfo(b),y}const g7={kernelName:Fp,backendName:"webgl",kernelFunc:m7};function y7(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{numOrSizeSplits:o,axis:a}=r,i=ut(a,s.shape)[0],u=u1(s,o,i),c=s.shape.length,l=new Array(c).fill(0),h=s.shape.slice();return u.map(d=>{const p=[...h];p[i]=d;const f=js({inputs:{x:s},backend:t,attrs:{begin:l,size:p}});return l[i]+=d,f})}const x7={kernelName:kp,backendName:"webgl",kernelFunc:y7};const Fl="return sqrt(x);",b7=Oe({opSnippet:Fl,packedOpSnippet:Fl,cpuKernelImpl:KN}),v7={kernelName:Np,backendName:"webgl",kernelFunc:b7};const w7="return x * x;",$7=Oe({opSnippet:w7}),S7={kernelName:c2,backendName:"webgl",kernelFunc:$7};const Pl="return (a - b) * (a - b);",C7=ft({opSnippet:Pl,packedOpSnippet:Pl}),T7={kernelName:Pp,backendName:"webgl",kernelFunc:C7};function N7(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e;if(s.dtype!=="string")throw new Error("Input must be of datatype string");const o=t.readSync(s.dataId),a=Rs(o),i=XN(a,"string",r);return t.makeTensorInfo(s.shape,"string",i)}const E7={kernelName:Lp,backendName:"webgl",kernelFunc:N7};function I7({inputs:n,attrs:e,backend:t}){const{x:r}=n,s=ln+`
+    return x > 0.0 ? 1.0 : float(${e.alpha});
+  `,o=new kn(r.shape,s);return t.runWebGLProgram(o,[r],r.dtype)}const k7={kernelName:Qp,backendName:"webgl",kernelFunc:I7};class R7{constructor(e,t,r){this.variableNames=["x"],this.outputShape=r;const s=r.length,o=Ve(r.length),a=Ve(r.length);let i="";if(s===1)i="coords * strides + begin";else{let u=0;i=r.map((c,l)=>(u++,r.length===1?`coords * strides[${l}] + begin[${l}]`:`coords[${u-1}] * strides[${l}] + begin[${l}]`)).join(",")}this.userCode=`
+      ${o} begin = ${o}(${e});
+      ${o} strides = ${o}(${t});
+
+      void main() {
+        ${a} coords = getOutputCoords();
+        setOutput(getX(${i}));
+      }
+    `}}function _7(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{begin:o,end:a,strides:i,beginMask:u,endMask:c,ellipsisMask:l,newAxisMask:h,shrinkAxisMask:d}=r,{finalShapeSparse:p,finalShape:f,isIdentity:b,sliceDim0:y,isSimpleSlice:x,begin:C,end:I,strides:k}=Mm(s.shape,o,a,i,u,c,l,h,d);let P;if(b)P=ie({inputs:{x:s},backend:t,attrs:{shape:f}});else if(y||x){_(s.shape.length>=1,()=>`Input must have rank at least 1, got: ${s.shape.length}`);const H=Rm(C,I,k),G=js({inputs:{x:s},backend:t,attrs:{begin:C,size:H}});P=ie({inputs:{x:G},backend:t,attrs:{shape:f}}),t.disposeIntermediateTensorInfo(G)}else if(t.shouldExecuteOnCPU([s])){const G=t.readSync(s.dataId),B=Ye(s.shape,s.dtype,G),V=qN(p,B,k,C);P=t.makeTensorInfo(f,s.dtype,V.values)}else{const G=new R7(C,k,p);P=t.runWebGLProgram(G,[s],s.dtype)}const W=ie({inputs:{x:P},backend:t,attrs:{shape:f}});return t.disposeIntermediateTensorInfo(P),W}const A7={kernelName:Bp,backendName:"webgl",kernelFunc:_7};function O7(n){const{inputs:e,backend:t,attrs:r}=n,{separator:s,nGramWidths:o,leftPad:a,rightPad:i,padWidth:u,preserveShortSequences:c}=r,{data:l,dataSplits:h}=e,d=t.readSync(l.dataId),p=t.readSync(h.dataId),[f,b]=YN(d,p,s,o,a,i,u,c);return[t.makeTensorInfo([f.length],"string",f),t.makeTensorInfo(h.shape,"int32",b)]}const D7={kernelName:Vp,backendName:"webgl",kernelFunc:O7};function F7(n){const{inputs:e,backend:t,attrs:r}=n,{skipEmpty:s}=r,{input:o,delimiter:a}=e;if(o.dtype!=="string")throw new Error("Input must be of datatype string");if(o.shape.length!==1)throw new Error(`Input must be a vector, got shape: ${o.shape}`);if(a.shape.length!==0)throw new Error(`Delimiter must be a scalar, got shape: ${a.shape}`);const i=t.readSync(o.dataId),u=t.readSync(a.dataId)[0],[c,l,h]=QN(i,u,s),d=l.length;return[t.makeTensorInfo([d,2],"int32",c),t.makeTensorInfo([d],"string",l),t.makeTensorInfo([2],"int32",new Int32Array(h))]}const P7={kernelName:Mp,backendName:"webgl",kernelFunc:F7};function L7(n){const{inputs:e,backend:t,attrs:r}=n,{numBuckets:s}=r,{input:o}=e;if(o.dtype!=="string")throw new Error("Input must be of datatype string");if(s<=0)throw new Error("Number of buckets must be at least 1");const a=t.readSync(o.dataId),i=ZN(a,s);return t.makeTensorInfo(o.shape,"int32",i)}const B7={kernelName:Up,backendName:"webgl",kernelFunc:L7};const V7="return tan(x);",M7=Oe({opSnippet:V7}),U7={kernelName:zp,backendName:"webgl",kernelFunc:M7};const W7=`
+  float e2x = exp(-2.0 * abs(x));
+  return sign(x) * (1.0 - e2x) / (1.0 + e2x);
+`,z7=Oe({opSnippet:W7}),G7={kernelName:Gp,backendName:"webgl",kernelFunc:z7};function j7(n){const{inputs:e,backend:t,attrs:r}=n,{tensor:s,indices:o,updates:a}=e,{sliceRank:i,numUpdates:u,sliceSize:c,strides:l,outputSize:h}=oi(a,o,s.shape),d=[h/c,c];if(h===0)return t.makeTensorInfo(s.shape,o.dtype);const p=ie({inputs:{x:o},backend:t,attrs:{shape:[u,i]}}),f=ie({inputs:{x:a},backend:t,attrs:{shape:[u,c]}}),b=ie({inputs:{x:s},backend:t,attrs:{shape:d}}),y=new kc(u,i,p.shape.length,f.shape.length,l,d,!1,!0),x=t.runWebGLProgram(y,[f,p,b],b.dtype),C=ie({inputs:{x},backend:t,attrs:{shape:s.shape}});return t.disposeIntermediateTensorInfo(p),t.disposeIntermediateTensorInfo(f),t.disposeIntermediateTensorInfo(b),t.disposeIntermediateTensorInfo(x),C}const H7={kernelName:gp,backendName:"webgl",kernelFunc:j7};class K7{constructor(e,t){this.variableNames=["A"];const r=new Array(e.length);for(let a=0;a<r.length;a++)r[a]=e[a]*t[a];this.outputShape=r,this.rank=r.length;const s=Ve(this.rank),o=X7(e);this.userCode=`
+      void main() {
+        ${s} resRC = getOutputCoords();
+        setOutput(getA(${o}));
+      }
+    `}}function X7(n){const e=n.length;if(e>5)throw Error(`Tile for rank ${e} is not yet supported`);if(e===1)return`imod(resRC, ${n[0]})`;const t=["resRC.x","resRC.y","resRC.z","resRC.w","resRC.u"],r=[];for(let s=0;s<n.length;s++)r.push(`imod(${t[s]}, ${n[s]})`);return r.join()}function gg(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{reps:o}=r;if(s.dtype==="string"||s.shape.length>5){const u=t.readSync(s.dataId),c=s.dtype==="string"?u.map(d=>Es(d)):u,l=Ye(s.shape,s.dtype,c),h=eE(l,o);return t.makeTensorInfo(h.shape,h.dtype,h.values)}const a=new K7(s.shape,o);return t.runWebGLProgram(a,[s],s.dtype)}const q7={kernelName:qu,backendName:"webgl",kernelFunc:gg};class Y7{constructor(e){this.variableNames=["x","indices"],this.customUniforms=[{name:"n",type:"int"},{name:"firstPass",type:"int"},{name:"negativeInf",type:"float"},{name:"dir",type:"int"},{name:"inc",type:"int"}],this.outputShape=e,this.userCode=`
+       void main() {
+         ivec2 coords = getOutputCoords();
+         int batch = coords[0];
+         int elemIdx = coords[1];
+
+         // We compare elements pair-wise within a group of size 2 * inc.
+         // The comparing rule for each group alternates between ascending
+         // and descending. Within each group, we compare each pair at
+         // positions i and i+inc. To decide whether an element at position i
+         // is x0 or x1, we mod it by 2 * inc, if the result is smaller than
+         // inc, it is in the first half of the group, we denote it as x0,
+         // otherwise we denote it as x1.
+         // For example, as shown in the Bitonic top K paper referenced above,
+         // Figure5(a) shows that element[1] is in the
+         // second half of the group when group size is 2, but it is in the
+         // first half of the group when group size is 4.
+
+         bool isFirstInPair = imod(elemIdx, 2 * inc) < inc;
+         int i = isFirstInPair ? elemIdx : elemIdx - inc;
+
+         int i0 = firstPass == 1 ? i : int(getIndices(batch, i));
+         int i1 = firstPass == 1 ? i + inc : int(getIndices(batch, i + inc));
+         float x0 = i0 < n ? getX(batch, i0) : negativeInf;
+         float x1 = i1 < n ? getX(batch, i1) : negativeInf;
+
+         // Denotes which direction indices are in (ascending or descending).
+         bool reverse = imod(elemIdx, 2 * dir) >= dir;
+         bool isGreater = x0 > x1 || (x0 == x1 && i1 > i0);
+         if (reverse == isGreater) { // Elements in opposite order of direction
+           int iTemp = i0;
+           i0 = i1;
+           i1 = iTemp;
+         }
+         if (isFirstInPair) {
+            setOutput(float(i0));
+         } else {
+            setOutput(float(i1));
+         }
+       }
+     `}}class Q7{constructor(e){this.variableNames=["x","indices"],this.customUniforms=[{name:"n",type:"int"},{name:"firstPass",type:"int"},{name:"k",type:"int"}],this.outputShape=e,this.userCode=`
+    void main() {
+         // Takes max of indices (0, k), (1, k + 1), (2, k + 2) ...
+         ivec2 coords = getOutputCoords();
+         int batch = coords[0];
+         int elemIdx = coords[1];
+
+         // The output size is half of the previous size.
+         // If the previous sequence is | | | | _ _ _ _  | | | |  _ _ _ _ (k=4),
+         // we only need to output the indices at positions |, the indices at
+         // positions _ can be thrown away, see Figure5(b) After Phase 2
+         // (Merge phase) in the Bitonic Top K paper referenced above.
+         // For example, the paper shows we only need to output the orange bars.
+         // The output sequence should look like this | | | | | | | |.
+         // Because the sequence is halved, to map the output index back
+         // to the previous sequence to find the corresponding value,
+         // we need to double the index. When we double the index,
+         // we basically interpolate a position, so 2i looks like
+         // | _ | _ | _ | _ | _ | _ | _. We move the | to the first k position
+         // of each 2k positions by - elemIdx % k. E.g. for output at
+         // index 4,5,6,7, we want to get the corresponding element at
+         // original index 8,9,10,11, for output at index 8,9,10,11,
+         // we want to get the corresponding element at original index
+         // 16,17,18,19, so on and so forth.
+
+         int i = elemIdx < k ? elemIdx : (elemIdx * 2 - imod(elemIdx, k));
+         int i0 = firstPass == 1 ? i : int(getIndices(batch, i));
+         int i1 = firstPass == 1 ? i + k : int(getIndices(batch, i + k));
+
+         float x0 = getX(batch, i0);
+         float x1 = i1 < n ? getX(batch, i1) : x0;
+
+         setOutput(x0 >= x1 ? float(i0) : float(i1));
+       }
+     `}}function Or(n,e){e!==null&&n.disposeIntermediateTensorInfo(e)}function Ll(n){let e=1;for(;e<n;)e*=2;return e}function Z7(n){const{inputs:e,backend:t,attrs:r}=n,{x:s}=e,{k:o,sorted:a}=r,i=j().getNumber("TOPK_LAST_DIM_CPU_HANDOFF_SIZE_THRESHOLD"),u=j().getNumber("TOPK_K_CPU_HANDOFF_THRESHOLD"),c=s.shape,l=c[c.length-1];if(t.shouldExecuteOnCPU([s])||l<i||o>u){const V=t.readSync(s.dataId),[R,q]=tE(V,c,s.dtype,o,a);return[t.makeTensorInfo(R.shape,R.dtype,R.values),t.makeTensorInfo(q.shape,q.dtype,q.values)]}if(o===0)return c[c.length-1]=0,[t.makeTensorInfo(c,s.dtype,[]),t.makeTensorInfo(c,"int32",[])];if(l===1)return[s,Wo({attrs:{shape:c,dtype:"int32",value:0},backend:t})];const h=t.texData.get(s.dataId),d=h!==null&&h.isPacked,p=d?t.unpackTensor(s):s,b=ne(c)/l,y=ie({inputs:{x:p},attrs:{shape:[b,l]},backend:t});d&&Or(t,p);const x=Ll(o),C=Ll(l);let I=null;const k=()=>I===null?[y,y]:[y,I],P=(V,R,q)=>{const te=k(),he=new Y7(q),ge=[[l],[I===null?1:0],[Number.NEGATIVE_INFINITY],[V],[R]],be=I;I=t.runWebGLProgram(he,te,"int32",ge),Or(t,be)};for(let V=1;V<x;V*=2){const R=V*2;for(let q=V;q>=1;q/=2)P(R,q,[b,C])}for(let V=C;V>x;V/=2){const R=k(),q=new Q7([b,V/2]),he=[[l],[I===null?1:0],[x]],de=I;I=t.runWebGLProgram(q,R,"int32",he),Or(t,de);const ge=x/2,be=ge*2;for(let $e=ge;$e>=1;$e/=2)P(be,$e,I.shape)}let W=I;I=js({inputs:{x:I},backend:t,attrs:{begin:0,size:[b,o]}}),Or(t,W);let H=ug({inputs:{x:y,indices:I},backend:t,attrs:{axis:1,batchDims:1}});Or(t,y);const G=c.slice(0,-1);G.push(o),W=I,I=ie({inputs:{x:I},attrs:{shape:G},backend:t}),Or(t,W);const B=H;return H=ie({inputs:{x:H},attrs:{shape:G},backend:t}),Or(t,B),[H,I]}const J7={kernelName:jp,backendName:"webgl",kernelFunc:Z7};class eA{constructor(e,t,r,s,o,a){this.variableNames=["Image","Transforms"],this.outputShape=a;const i=r==="nearest"?1:2;let u;switch(s){case"constant":u=1;break;case"reflect":u=2;break;case"wrap":u=3;break;case"nearest":u=4;break;default:u=1;break}this.userCode=`
+            float mapCoord(float outCoord, float len) {
+              float inCoord = outCoord;
+              if(${u} == 2) {
+                if (inCoord < 0.0) {
+                  if (len <= 1.0) {
+                    inCoord = 0.0;
+                  } else {
+                    float sz2 = 2.0 * len;
+                    if (inCoord < sz2) {
+                      inCoord = sz2 * float(int(float(-inCoord / sz2))) +
+                      inCoord;
+                    }
+                    inCoord = inCoord < -len ? inCoord + sz2 : -inCoord - 1.0;
+                  }
+                } else if (inCoord > len - 1.0) {
+                  if (len <= 1.0) {
+                    inCoord = 0.0;
+                  } else {
+                    float sz2 = 2.0 * len;
+                    inCoord -= sz2 * float(int(float(inCoord / sz2)));
+                    if (inCoord >= len) {
+                      inCoord = sz2 - inCoord - 1.0;
+                    }
+                  }
+                }
+                return clamp(inCoord, 0.0, len - 1.0);
+              } else if (${u} == 3) {
+                if (inCoord < 0.0) {
+                  if (len <= 1.0) {
+                    inCoord = 0.0;
+                  } else {
+                    float sz = len - 1.0;
+                    inCoord += len * (float(int(float(-inCoord / sz))) + 1.0);
+                  }
+                } else if (inCoord > len - 1.0) {
+                  if (len <= 1.0) {
+                    inCoord = 0.0;
+                  } else {
+                    float sz = len - 1.0;
+                    inCoord -= len * float(int(float(inCoord / sz)));
+                  }
+                }
+                return clamp(inCoord, 0.0, len - 1.0);
+              } else if (${u} == 4) {
+                return clamp(outCoord, 0.0, len - 1.0);
+              } else {
+                return outCoord;
+              }
+            }
+
+            float readWithFillValue(int batch, int coordY, int coordX,
+              int channel) {
+              float outputValue;
+              if (0 <= coordY && coordY < ${e} && 0 <= coordX && coordX < ${t}) {
+                  outputValue = getImage(batch, coordY, coordX, channel);
+              } else {
+                outputValue = float(${o});
+              }
+              return outputValue;
+            }
+
+            void main() {
+              ivec4 coords = getOutputCoords();
+              float outputValue;
+              int batch = coords[0];
+              int x = coords[2];
+              int y = coords[1];
+              int channel = coords[3];
+              float xf = float(x);
+              float yf = float(y);
+              float a1 = getTransforms(batch, 0);
+              float a2 = getTransforms(batch, 1);
+              float a3 = getTransforms(batch, 2);
+              float b1 = getTransforms(batch, 3);
+              float b2 = getTransforms(batch, 4);
+              float b3 = getTransforms(batch, 5);
+              float c1 = getTransforms(batch, 6);
+              float c2 = getTransforms(batch, 7);
+              float projection = c1 * xf + c2 * yf + 1.0;
+              if (projection == 0.0) {
+                outputValue = float(${o});
+              } else {
+                float inX = (a1 * xf + a2 * yf + a3) / projection;
+                float inY = (b1 * xf + b2 * yf + b3) / projection;
+                float mapX = mapCoord(inX, float(${t}));
+                float mapY = mapCoord(inY, float(${e}));
+
+                if (${i} == 1) {
+                  int coordY = int(round(mapY));
+                  int coordX = int(round(mapX));
+                  outputValue = readWithFillValue(batch, coordY, coordX,
+                    channel);
+                } else {
+                  float yFloor = floor(mapY);
+                  float xFloor = floor(mapX);
+                  float yCeil = yFloor + 1.0;
+                  float xCeil = xFloor + 1.0;
+                  float valueYFloor = (xCeil - mapX) *
+                  readWithFillValue(batch, int(yFloor), int(xFloor), channel) +
+                  (mapX - xFloor) *
+                  readWithFillValue(batch, int(yFloor), int(xCeil), channel);
+                  float valueYCeil = (xCeil - mapX) *
+                  readWithFillValue(batch, int(yCeil), int(xFloor), channel) +
+                  (mapX - xFloor) *
+                  readWithFillValue(batch, int(yCeil), int(xCeil), channel);
+                  outputValue = (yCeil - mapY) * valueYFloor +
+                  (mapY - yFloor) * valueYCeil;
+                }
+              }
+              setOutput(outputValue);
+            }
+        `}}function tA(n){const{inputs:e,backend:t,attrs:r}=n,{image:s,transforms:o}=e,{interpolation:a,fillMode:i,fillValue:u,outputShape:c}=r,[l,h,d,p]=s.shape,[f,b]=c??[h,d],y=[l,f,b,p],x=new eA(h,d,a,i,u,y);return t.runWebGLProgram(x,[s,o],"float32")}const nA={kernelName:Hp,backendName:"webgl",kernelFunc:tA};function rA(n){const{inputs:e,attrs:t,backend:r}=n,{axis:s}=t,{x:o}=e;Vo(o,"unique"),console.warn("WARNING: ","UI might be locked temporarily as data is being downloaded");const a=r.readSync(o.dataId),{outputValues:i,outputShape:u,indices:c}=nE(a,s,o.shape,o.dtype);return[r.makeTensorInfo(u,o.dtype,i),r.makeTensorInfo([c.length],"int32",c)]}const sA={kernelName:Kp,backendName:"webgl",kernelFunc:rA};function oA(n){const{inputs:e,backend:t,attrs:r}=n,{value:s}=e;let{axis:o}=r;o<0&&(o+=s.shape.length);const a=s,i=a.shape.length,u=s.shape[o],c=new Array(i-1);let l=0;for(let b=0;b<i;b++)b!==o&&(c[l++]=a.shape[b]);const h=[],d=new Array(i).fill(0),p=a.shape.slice();p[o]=1;const f=new Array(u);for(let b=0;b<f.length;b++){d[o]=b;const y=js({inputs:{x:a},backend:t,attrs:{begin:d,size:p}}),x=ie({inputs:{x:y},backend:t,attrs:{shape:c}});f[b]=x,h.push(y)}return h.forEach(b=>t.disposeIntermediateTensorInfo(b)),f}const aA={kernelName:Xp,backendName:"webgl",kernelFunc:oA};class iA{constructor(e,t){this.variableNames=["x","segmentIds"];const r=e.windowSize,s=e.batchSize,o=e.inSize,a=e.numSegments,i=a*Math.ceil(o/r);this.outputShape=[s,i];const u="0.0",c="sumValue",l=Math.floor(r/4)*4,h=r%4,d=`
+        sumValue += dot(values, segFilter);
+    `;let p="";o%r>0&&(p=`
+        if (inIdx < 0 || inIdx >= ${o}) {
+          return initializationValue;
+        }
+      `);let f="";o%r>0&&(f=`
+        if (inIdx < 0 || inIdx >= ${o}) {
+          return -1.0;
+        }
+      `),this.userCode=`
+      const float initializationValue = ${u};
+
+      float getValue(int batch, int inIdx) {
+        ${p}
+        return getX(batch, inIdx);
+      }
+
+      float getSegmentIdAtIndex(int inIdx) {
+        ${f}
+        return getSegmentIds(inIdx);
+      }
+
+      void main() {
+        ivec2 coords = getOutputCoords();
+        int batch = coords[0];
+        int outIdx = coords[1];
+        int inOffset = int(floor(float(outIdx) / float(
+          ${a})) * float(${r}));
+        int currentSeg = int(mod(float(outIdx), float(${a})));
+
+        float sumValue = 0.0;
+
+        for (int i = 0; i < ${l}; i += 4) {
+          int inIdx = inOffset + i;
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            getValue(batch, inIdx + 2),
+            getValue(batch, inIdx + 3)
+          );
+
+          vec4 segFilter = vec4(
+            int(getSegmentIdAtIndex(inIdx)) == currentSeg ? 1 : 0,
+            int(getSegmentIdAtIndex(inIdx + 1)) == currentSeg ? 1 : 0,
+            int(getSegmentIdAtIndex(inIdx + 2)) == currentSeg ? 1 : 0,
+            int(getSegmentIdAtIndex(inIdx + 3)) == currentSeg ? 1 : 0
+          );
+
+          ${d}
+        }
+
+        int inIdx = inOffset + ${l};
+        if (${h===1}) {
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            initializationValue,
+            initializationValue,
+            initializationValue
+          );
+
+          int inIdxSeg = int(getSegmentIdAtIndex(inIdx));
+
+          vec4 segFilter = vec4(
+            int(getSegmentIdAtIndex(inIdx)) == currentSeg ? 1 : 0,
+            0,
+            0,
+            0
+          );
+
+          ${d}
+        } else if (${h===2}) {
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            initializationValue,
+            initializationValue
+          );
+
+          vec4 segFilter = vec4(
+            int(getSegmentIdAtIndex(inIdx)) == currentSeg ? 1 : 0,
+            int(getSegmentIdAtIndex(inIdx + 1)) == currentSeg ? 1 : 0,
+              0,
+              0
+          );
+
+          ${d}
+        } else if (${h===3}) {
+          vec4 values = vec4(
+            getValue(batch, inIdx),
+            getValue(batch, inIdx + 1),
+            getValue(batch, inIdx + 2),
+            initializationValue
+          );
+
+          vec4 segFilter = vec4(
+            int(getSegmentIdAtIndex(inIdx)) == currentSeg ? 1 : 0,
+            int(getSegmentIdAtIndex(inIdx + 1)) == currentSeg ? 1 : 0,
+            int(getSegmentIdAtIndex(inIdx + 2)) == currentSeg ? 1 : 0,
+            0
+          );
+
+          ${d}
+        }
+        setOutput(${c});
+      }
+    `}}function uA(n){const{inputs:e,backend:t,attrs:r}=n,{x:s,segmentIds:o}=e,{numSegments:a}=r,i=s.shape.length,u=[];let c=0;const l=un([c],i);let h=s;l!=null&&(h=St({inputs:{x:s},backend:t,attrs:{perm:l}}),u.push(h),c=cn(1,i)[0]);const d=w1(h.shape,c,a),p=ne([h.shape[c]]),f=ie({inputs:{x:h},backend:t,attrs:{shape:[-1,p]}});u.push(f);const b=Yu(s.dtype),y=(k,P,W,H,G)=>{const B=k.shape[0],V=k.shape[1],R=v1(V,G),q={windowSize:R,inSize:V,batchSize:B,numSegments:G},te=new iA(q,P),he=t.compileAndRun(te,[k,W],H);if(u.push(he),he.shape[1]===G)return he;const de=mg({backend:t,attrs:{start:0,stop:G,step:1,dtype:"float32"}}),ge=gg({inputs:{x:de},backend:t,attrs:{reps:[V/R]}});return u.push(de),u.push(ge),y(he,P,ge,H,G)},x=y(f,"unsortedSegmentSum",o,b,a),C=ie({inputs:{x},backend:t,attrs:{shape:d}});let I=C;if(l!=null){u.push(C);const k=nc(l);I=St({inputs:{x:I},backend:t,attrs:{perm:k}})}return u.forEach(k=>t.disposeIntermediateTensorInfo(k)),I}const cA={kernelName:qp,backendName:"webgl",kernelFunc:uA};const lA=[KE,qE,ZE,t6,r6,a6,u6,l6,f6,g6,b6,$6,T6,k6,A6,D6,P6,M6,W6,G6,X6,tI,rI,iI,cI,mI,yI,wI,RE,CI,kI,OI,VI,WI,GI,HI,XI,ZI,t5,s5,a5,u5,l5,p5,m5,b5,w5,C5,E5,k5,O5,L5,U5,G5,K5,X5,Y5,Z5,ek,nk,sk,uk,hk,fk,gk,bk,$k,Nk,Rk,kE,Ak,EI,Fk,Bk,Uk,AE,jk,qk,Qk,tR,sR,uR,hR,mR,bR,$R,CR,IR,RR,AR,PR,BR,MR,WR,GR,XR,ZR,n_,l_,FE,f_,y_,v_,S_,hI,N_,I_,R_,O_,L_,DE,V_,U_,z_,j_,H_,dI,a_,q_,J_,r8,LE,i8,l8,f8,y8,w8,S8,N8,k8,A8,F8,B8,U8,j8,X8,Z8,t7,J6,u_,s7,a7,u7,l7,d7,f7,g7,x7,v7,S7,T7,E7,k7,A7,D7,P7,B7,i_,GE,U7,G7,H7,q7,J7,nA,jE,sA,aA,cA,E_];for(const n of lA)d2(n);var Ui={},Bl;function hA(){return Bl||(Bl=1,(function(){var n;function e(g){var w=0;return function(){return w<g.length?{done:!1,value:g[w++]}:{done:!0}}}var t=typeof Object.defineProperties=="function"?Object.defineProperty:function(g,w,S){return g==Array.prototype||g==Object.prototype||(g[w]=S.value),g};function r(g){g=[typeof globalThis=="object"&&globalThis,g,typeof window=="object"&&window,typeof self=="object"&&self,typeof Ac=="object"&&Ac];for(var w=0;w<g.length;++w){var S=g[w];if(S&&S.Math==Math)return S}throw Error("Cannot find global object")}var s=r(this);function o(g,w){if(w)e:{var S=s;g=g.split(".");for(var D=0;D<g.length-1;D++){var z=g[D];if(!(z in S))break e;S=S[z]}g=g[g.length-1],D=S[g],w=w(D),w!=D&&w!=null&&t(S,g,{configurable:!0,writable:!0,value:w})}}o("Symbol",function(g){function w(Y){if(this instanceof w)throw new TypeError("Symbol is not a constructor");return new S(D+(Y||"")+"_"+z++,Y)}function S(Y,K){this.g=Y,t(this,"description",{configurable:!0,writable:!0,value:K})}if(g)return g;S.prototype.toString=function(){return this.g};var D="jscomp_symbol_"+(1e9*Math.random()>>>0)+"_",z=0;return w}),o("Symbol.iterator",function(g){if(g)return g;g=Symbol("Symbol.iterator");for(var w="Array Int8Array Uint8Array Uint8ClampedArray Int16Array Uint16Array Int32Array Uint32Array Float32Array Float64Array".split(" "),S=0;S<w.length;S++){var D=s[w[S]];typeof D=="function"&&typeof D.prototype[g]!="function"&&t(D.prototype,g,{configurable:!0,writable:!0,value:function(){return a(e(this))}})}return g});function a(g){return g={next:g},g[Symbol.iterator]=function(){return this},g}function i(g){var w=typeof Symbol<"u"&&Symbol.iterator&&g[Symbol.iterator];return w?w.call(g):{next:e(g)}}function u(g){if(!(g instanceof Array)){g=i(g);for(var w,S=[];!(w=g.next()).done;)S.push(w.value);g=S}return g}var c=typeof Object.create=="function"?Object.create:function(g){function w(){}return w.prototype=g,new w},l;if(typeof Object.setPrototypeOf=="function")l=Object.setPrototypeOf;else{var h;e:{var d={a:!0},p={};try{p.__proto__=d,h=p.a;break e}catch{}h=!1}l=h?function(g,w){if(g.__proto__=w,g.__proto__!==w)throw new TypeError(g+" is not extensible");return g}:null}var f=l;function b(g,w){if(g.prototype=c(w.prototype),g.prototype.constructor=g,f)f(g,w);else for(var S in w)if(S!="prototype")if(Object.defineProperties){var D=Object.getOwnPropertyDescriptor(w,S);D&&Object.defineProperty(g,S,D)}else g[S]=w[S];g.ea=w.prototype}function y(){this.l=!1,this.i=null,this.h=void 0,this.g=1,this.s=this.m=0,this.j=null}function x(g){if(g.l)throw new TypeError("Generator is already running");g.l=!0}y.prototype.o=function(g){this.h=g};function C(g,w){g.j={U:w,V:!0},g.g=g.m||g.s}y.prototype.return=function(g){this.j={return:g},this.g=this.s};function I(g,w,S){return g.g=S,{value:w}}function k(g){this.g=new y,this.h=g}function P(g,w){x(g.g);var S=g.g.i;return S?W(g,"return"in S?S.return:function(D){return{value:D,done:!0}},w,g.g.return):(g.g.return(w),H(g))}function W(g,w,S,D){try{var z=w.call(g.g.i,S);if(!(z instanceof Object))throw new TypeError("Iterator result "+z+" is not an object");if(!z.done)return g.g.l=!1,z;var Y=z.value}catch(K){return g.g.i=null,C(g.g,K),H(g)}return g.g.i=null,D.call(g.g,Y),H(g)}function H(g){for(;g.g.g;)try{var w=g.h(g.g);if(w)return g.g.l=!1,{value:w.value,done:!1}}catch(S){g.g.h=void 0,C(g.g,S)}if(g.g.l=!1,g.g.j){if(w=g.g.j,g.g.j=null,w.V)throw w.U;return{value:w.return,done:!0}}return{value:void 0,done:!0}}function G(g){this.next=function(w){return x(g.g),g.g.i?w=W(g,g.g.i.next,w,g.g.o):(g.g.o(w),w=H(g)),w},this.throw=function(w){return x(g.g),g.g.i?w=W(g,g.g.i.throw,w,g.g.o):(C(g.g,w),w=H(g)),w},this.return=function(w){return P(g,w)},this[Symbol.iterator]=function(){return this}}function B(g,w){return w=new G(new k(w)),f&&g.prototype&&f(w,g.prototype),w}function V(g,w){g instanceof String&&(g+="");var S=0,D=!1,z={next:function(){if(!D&&S<g.length){var Y=S++;return{value:w(Y,g[Y]),done:!1}}return D=!0,{done:!0,value:void 0}}};return z[Symbol.iterator]=function(){return z},z}var R=typeof Object.assign=="function"?Object.assign:function(g,w){for(var S=1;S<arguments.length;S++){var D=arguments[S];if(D)for(var z in D)Object.prototype.hasOwnProperty.call(D,z)&&(g[z]=D[z])}return g};o("Object.assign",function(g){return g||R}),o("Promise",function(g){function w(K){this.h=0,this.i=void 0,this.g=[],this.o=!1;var J=this.j();try{K(J.resolve,J.reject)}catch(re){J.reject(re)}}function S(){this.g=null}function D(K){return K instanceof w?K:new w(function(J){J(K)})}if(g)return g;S.prototype.h=function(K){if(this.g==null){this.g=[];var J=this;this.i(function(){J.l()})}this.g.push(K)};var z=s.setTimeout;S.prototype.i=function(K){z(K,0)},S.prototype.l=function(){for(;this.g&&this.g.length;){var K=this.g;this.g=[];for(var J=0;J<K.length;++J){var re=K[J];K[J]=null;try{re()}catch(le){this.j(le)}}}this.g=null},S.prototype.j=function(K){this.i(function(){throw K})},w.prototype.j=function(){function K(le){return function(ye){re||(re=!0,le.call(J,ye))}}var J=this,re=!1;return{resolve:K(this.C),reject:K(this.l)}},w.prototype.C=function(K){if(K===this)this.l(new TypeError("A Promise cannot resolve to itself"));else if(K instanceof w)this.F(K);else{e:switch(typeof K){case"object":var J=K!=null;break e;case"function":J=!0;break e;default:J=!1}J?this.u(K):this.m(K)}},w.prototype.u=function(K){var J=void 0;try{J=K.then}catch(re){this.l(re);return}typeof J=="function"?this.G(J,K):this.m(K)},w.prototype.l=function(K){this.s(2,K)},w.prototype.m=function(K){this.s(1,K)},w.prototype.s=function(K,J){if(this.h!=0)throw Error("Cannot settle("+K+", "+J+"): Promise already settled in state"+this.h);this.h=K,this.i=J,this.h===2&&this.D(),this.A()},w.prototype.D=function(){var K=this;z(function(){if(K.B()){var J=s.console;typeof J<"u"&&J.error(K.i)}},1)},w.prototype.B=function(){if(this.o)return!1;var K=s.CustomEvent,J=s.Event,re=s.dispatchEvent;return typeof re>"u"?!0:(typeof K=="function"?K=new K("unhandledrejection",{cancelable:!0}):typeof J=="function"?K=new J("unhandledrejection",{cancelable:!0}):(K=s.document.createEvent("CustomEvent"),K.initCustomEvent("unhandledrejection",!1,!0,K)),K.promise=this,K.reason=this.i,re(K))},w.prototype.A=function(){if(this.g!=null){for(var K=0;K<this.g.length;++K)Y.h(this.g[K]);this.g=null}};var Y=new S;return w.prototype.F=function(K){var J=this.j();K.J(J.resolve,J.reject)},w.prototype.G=function(K,J){var re=this.j();try{K.call(J,re.resolve,re.reject)}catch(le){re.reject(le)}},w.prototype.then=function(K,J){function re(Ne,ve){return typeof Ne=="function"?function(fe){try{le(Ne(fe))}catch(m){ye(m)}}:ve}var le,ye,Ae=new w(function(Ne,ve){le=Ne,ye=ve});return this.J(re(K,le),re(J,ye)),Ae},w.prototype.catch=function(K){return this.then(void 0,K)},w.prototype.J=function(K,J){function re(){switch(le.h){case 1:K(le.i);break;case 2:J(le.i);break;default:throw Error("Unexpected state: "+le.h)}}var le=this;this.g==null?Y.h(re):this.g.push(re),this.o=!0},w.resolve=D,w.reject=function(K){return new w(function(J,re){re(K)})},w.race=function(K){return new w(function(J,re){for(var le=i(K),ye=le.next();!ye.done;ye=le.next())D(ye.value).J(J,re)})},w.all=function(K){var J=i(K),re=J.next();return re.done?D([]):new w(function(le,ye){function Ae(fe){return function(m){Ne[fe]=m,ve--,ve==0&&le(Ne)}}var Ne=[],ve=0;do Ne.push(void 0),ve++,D(re.value).J(Ae(Ne.length-1),ye),re=J.next();while(!re.done)})},w}),o("Object.is",function(g){return g||function(w,S){return w===S?w!==0||1/w===1/S:w!==w&&S!==S}}),o("Array.prototype.includes",function(g){return g||function(w,S){var D=this;D instanceof String&&(D=String(D));var z=D.length;for(S=S||0,0>S&&(S=Math.max(S+z,0));S<z;S++){var Y=D[S];if(Y===w||Object.is(Y,w))return!0}return!1}}),o("String.prototype.includes",function(g){return g||function(w,S){if(this==null)throw new TypeError("The 'this' value for String.prototype.includes must not be null or undefined");if(w instanceof RegExp)throw new TypeError("First argument to String.prototype.includes must not be a regular expression");return this.indexOf(w,S||0)!==-1}}),o("Array.prototype.keys",function(g){return g||function(){return V(this,function(w){return w})}});var q=this||self;function te(g,w){g=g.split(".");var S=q;g[0]in S||typeof S.execScript>"u"||S.execScript("var "+g[0]);for(var D;g.length&&(D=g.shift());)g.length||w===void 0?S[D]&&S[D]!==Object.prototype[D]?S=S[D]:S=S[D]={}:S[D]=w}function he(g,w){return w=String.fromCharCode.apply(null,w),g==null?w:g+w}var de,ge=typeof TextDecoder<"u",be,$e=typeof TextEncoder<"u";function Ie(g){if($e)g=(be||(be=new TextEncoder)).encode(g);else{var w=void 0;w=w===void 0?!1:w;for(var S=0,D=new Uint8Array(3*g.length),z=0;z<g.length;z++){var Y=g.charCodeAt(z);if(128>Y)D[S++]=Y;else{if(2048>Y)D[S++]=Y>>6|192;else{if(55296<=Y&&57343>=Y){if(56319>=Y&&z<g.length){var K=g.charCodeAt(++z);if(56320<=K&&57343>=K){Y=1024*(Y-55296)+K-56320+65536,D[S++]=Y>>18|240,D[S++]=Y>>12&63|128,D[S++]=Y>>6&63|128,D[S++]=Y&63|128;continue}else z--}if(w)throw Error("Found an unpaired surrogate");Y=65533}D[S++]=Y>>12|224,D[S++]=Y>>6&63|128}D[S++]=Y&63|128}}g=D.subarray(0,S)}return g}var _e={},Le=null;function Me(g,w){w===void 0&&(w=0),Qn(),w=_e[w];for(var S=Array(Math.floor(g.length/3)),D=w[64]||"",z=0,Y=0;z<g.length-2;z+=3){var K=g[z],J=g[z+1],re=g[z+2],le=w[K>>2];K=w[(K&3)<<4|J>>4],J=w[(J&15)<<2|re>>6],re=w[re&63],S[Y++]=le+K+J+re}switch(le=0,re=D,g.length-z){case 2:le=g[z+1],re=w[(le&15)<<2]||D;case 1:g=g[z],S[Y]=w[g>>2]+w[(g&3)<<4|le>>4]+re+D}return S.join("")}function Qe(g){var w=g.length,S=3*w/4;S%3?S=Math.floor(S):"=.".indexOf(g[w-1])!=-1&&(S="=.".indexOf(g[w-2])!=-1?S-2:S-1);var D=new Uint8Array(S),z=0;return hn(g,function(Y){D[z++]=Y}),D.subarray(0,z)}function hn(g,w){function S(re){for(;D<g.length;){var le=g.charAt(D++),ye=Le[le];if(ye!=null)return ye;if(!/^[\s\xa0]*$/.test(le))throw Error("Unknown base64 encoding at char: "+le)}return re}Qn();for(var D=0;;){var z=S(-1),Y=S(0),K=S(64),J=S(64);if(J===64&&z===-1)break;w(z<<2|Y>>4),K!=64&&(w(Y<<4&240|K>>2),J!=64&&w(K<<6&192|J))}}function Qn(){if(!Le){Le={};for(var g="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""),w=["+/=","+/","-_=","-_.","-_"],S=0;5>S;S++){var D=g.concat(w[S].split(""));_e[S]=D;for(var z=0;z<D.length;z++){var Y=D[z];Le[Y]===void 0&&(Le[Y]=z)}}}}var Vt=typeof Uint8Array.prototype.slice=="function",Hs;function cs(g,w,S){return w===S?Hs||(Hs=new Uint8Array(0)):Vt?g.slice(w,S):new Uint8Array(g.subarray(w,S))}var Yt=0,Qt=0;function et(g,w){w=w===void 0?{}:w,w=w.v===void 0?!1:w.v,this.h=null,this.g=this.j=this.l=0,this.m=!1,this.v=w,g&&Zn(this,g)}function Zn(g,w){w=w.constructor===Uint8Array?w:w.constructor===ArrayBuffer?new Uint8Array(w):w.constructor===Array?new Uint8Array(w):w.constructor===String?Qe(w):w instanceof Uint8Array?new Uint8Array(w.buffer,w.byteOffset,w.byteLength):new Uint8Array(0),g.h=w,g.l=0,g.j=g.h.length,g.g=g.l}et.prototype.reset=function(){this.g=this.l};function $r(g){for(var w=128,S=0,D=0,z=0;4>z&&128<=w;z++)w=g.h[g.g++],S|=(w&127)<<7*z;if(128<=w&&(w=g.h[g.g++],S|=(w&127)<<28,D|=(w&127)>>4),128<=w)for(z=0;5>z&&128<=w;z++)w=g.h[g.g++],D|=(w&127)<<7*z+3;if(128>w)return g=S>>>0,w=D>>>0,(D=w&2147483648)&&(g=~g+1>>>0,w=~w>>>0,g==0&&(w=w+1>>>0)),g=4294967296*w+(g>>>0),D?-g:g;g.m=!0}et.prototype.i=function(){var g=this.h,w=g[this.g],S=w&127;return 128>w?(this.g+=1,S):(w=g[this.g+1],S|=(w&127)<<7,128>w?(this.g+=2,S):(w=g[this.g+2],S|=(w&127)<<14,128>w?(this.g+=3,S):(w=g[this.g+3],S|=(w&127)<<21,128>w?(this.g+=4,S):(w=g[this.g+4],S|=(w&15)<<28,128>w?(this.g+=5,S>>>0):(this.g+=5,128<=g[this.g++]&&128<=g[this.g++]&&128<=g[this.g++]&&128<=g[this.g++]&&this.g++,S)))))},et.prototype.o=function(){var g=this.h[this.g],w=this.h[this.g+1],S=this.h[this.g+2],D=this.h[this.g+3];return this.g+=4,S=(g<<0|w<<8|S<<16|D<<24)>>>0,g=2*(S>>31)+1,w=S>>>23&255,S&=8388607,w==255?S?NaN:1/0*g:w==0?g*Math.pow(2,-149)*S:g*Math.pow(2,w-150)*(S+Math.pow(2,23))};var ls=[];function Zt(){this.g=new Uint8Array(64),this.h=0}Zt.prototype.push=function(g){if(!(this.h+1<this.g.length)){var w=this.g;this.g=new Uint8Array(Math.ceil(1+2*this.g.length)),this.g.set(w)}this.g[this.h++]=g},Zt.prototype.length=function(){return this.h},Zt.prototype.end=function(){var g=this.g,w=this.h;return this.h=0,cs(g,0,w)};function dn(g,w){for(;127<w;)g.push(w&127|128),w>>>=7;g.push(w)}function Jn(g){var w={},S=w.N===void 0?!1:w.N;this.o={v:w.v===void 0?!1:w.v},this.N=S,w=this.o,ls.length?(S=ls.pop(),w&&(S.v=w.v),g&&Zn(S,g),g=S):g=new et(g,w),this.g=g,this.m=this.g.g,this.h=this.i=this.l=-1,this.j=!1}Jn.prototype.reset=function(){this.g.reset(),this.h=this.l=-1};function Rt(g){var w=g.g;if((w=w.g==w.j)||(w=g.j)||(w=g.g,w=w.m||0>w.g||w.g>w.j),w)return!1;g.m=g.g.g,w=g.g.i();var S=w&7;return S!=0&&S!=5&&S!=1&&S!=2&&S!=3&&S!=4?(g.j=!0,!1):(g.i=w,g.l=w>>>3,g.h=S,!0)}function pn(g){switch(g.h){case 0:if(g.h!=0)pn(g);else{for(g=g.g;g.h[g.g]&128;)g.g++;g.g++}break;case 1:g.h!=1?pn(g):(g=g.g,g.g+=8);break;case 2:if(g.h!=2)pn(g);else{var w=g.g.i();g=g.g,g.g+=w}break;case 5:g.h!=5?pn(g):(g=g.g,g.g+=4);break;case 3:w=g.l;do{if(!Rt(g)){g.j=!0;break}if(g.h==4){g.l!=w&&(g.j=!0);break}pn(g)}while(!0);break;default:g.j=!0}}function hs(g,w,S){var D=g.g.j,z=g.g.i(),Y=g.g.g+z;if(g.g.j=Y,S(w,g),S=Y-g.g.g,S!==0)throw Error("Message parsing ended unexpectedly. Expected to read "+z+" bytes, instead read "+(z-S)+" bytes, either the data ended unexpectedly or the message misreported its own length");return g.g.g=Y,g.g.j=D,w}function rt(g){return g.g.o()}function Sr(g){var w=g.g.i();g=g.g;var S=g.g;g.g+=w,g=g.h;var D;if(ge)(D=de)||(D=de=new TextDecoder("utf-8",{fatal:!1})),D=D.decode(g.subarray(S,S+w));else{w=S+w;for(var z=[],Y=null,K,J,re;S<w;)K=g[S++],128>K?z.push(K):224>K?S>=w?z.push(65533):(J=g[S++],194>K||(J&192)!==128?(S--,z.push(65533)):z.push((K&31)<<6|J&63)):240>K?S>=w-1?z.push(65533):(J=g[S++],(J&192)!==128||K===224&&160>J||K===237&&160<=J||((D=g[S++])&192)!==128?(S--,z.push(65533)):z.push((K&15)<<12|(J&63)<<6|D&63)):244>=K?S>=w-2?z.push(65533):(J=g[S++],(J&192)!==128||(K<<28)+(J-144)>>30!==0||((D=g[S++])&192)!==128||((re=g[S++])&192)!==128?(S--,z.push(65533)):(K=(K&7)<<18|(J&63)<<12|(D&63)<<6|re&63,K-=65536,z.push((K>>10&1023)+55296,(K&1023)+56320))):z.push(65533),8192<=z.length&&(Y=he(Y,z),z.length=0);D=he(Y,z)}return D}function Ks(g,w,S){var D=g.g.i();for(D=g.g.g+D;g.g.g<D;)S.push(w.call(g.g))}function Xs(g,w){g.h==2?Ks(g,et.prototype.o,w):w.push(rt(g))}function Dn(){this.h=[],this.i=0,this.g=new Zt}function Jt(g,w){w.length!==0&&(g.h.push(w),g.i+=w.length)}function Cr(g){var w=g.i+g.g.length();if(w===0)return new Uint8Array(0);w=new Uint8Array(w);for(var S=g.h,D=S.length,z=0,Y=0;Y<D;Y++){var K=S[Y];K.length!==0&&(w.set(K,z),z+=K.length)}return S=g.g,D=S.h,D!==0&&(w.set(S.g.subarray(0,D),z),S.h=0),g.h=[w],w}function _t(g,w,S){if(S!=null){dn(g.g,8*w+5),g=g.g;var D=S;D=(S=0>D?1:0)?-D:D,D===0?0<1/D?Yt=Qt=0:(Qt=0,Yt=2147483648):isNaN(D)?(Qt=0,Yt=2147483647):34028234663852886e22<D?(Qt=0,Yt=(S<<31|2139095040)>>>0):11754943508222875e-54>D?(D=Math.round(D/Math.pow(2,-149)),Qt=0,Yt=(S<<31|D)>>>0):(w=Math.floor(Math.log(D)/Math.LN2),D*=Math.pow(2,-w),D=Math.round(8388608*D),16777216<=D&&++w,Qt=0,Yt=(S<<31|w+127<<23|D&8388607)>>>0),S=Yt,g.push(S>>>0&255),g.push(S>>>8&255),g.push(S>>>16&255),g.push(S>>>24&255)}}var Tr=typeof Uint8Array=="function";function qs(g,w,S){if(g!=null)return typeof g=="object"?Tr&&g instanceof Uint8Array?S(g):Ys(g,w,S):w(g)}function Ys(g,w,S){if(Array.isArray(g)){for(var D=Array(g.length),z=0;z<g.length;z++)D[z]=qs(g[z],w,S);return Array.isArray(g)&&g.W&&gt(D),D}D={};for(z in g)D[z]=qs(g[z],w,S);return D}function zo(g){return typeof g=="number"?isFinite(g)?g:String(g):g}var Go={W:{value:!0,configurable:!0}};function gt(g){return Array.isArray(g)&&!Object.isFrozen(g)&&Object.defineProperties(g,Go),g}var tt;function nt(g,w,S){var D=tt;tt=null,g||(g=D),D=this.constructor.ca,g||(g=D?[D]:[]),this.j=D?0:-1,this.m=this.g=null,this.h=g;e:{if(D=this.h.length,g=D-1,D&&(D=this.h[g],!(D===null||typeof D!="object"||Array.isArray(D)||Tr&&D instanceof Uint8Array))){this.l=g-this.j,this.i=D;break e}w!==void 0&&-1<w?(this.l=Math.max(w,g+1-this.j),this.i=null):this.l=Number.MAX_VALUE}if(S)for(w=0;w<S.length;w++)g=S[w],g<this.l?(g+=this.j,(D=this.h[g])?gt(D):this.h[g]=Tt):(Nr(this),(D=this.i[g])?gt(D):this.i[g]=Tt)}var Tt=Object.freeze(gt([]));function Nr(g){var w=g.l+g.j;g.h[w]||(g.i=g.h[w]={})}function We(g,w,S){return w===-1?null:S!==void 0&&S||w>=g.l?g.i?g.i[w]:void 0:g.h[w+g.j]}function Er(g,w){var S=S===void 0?!1:S,D=We(g,w,S);return D==null&&(D=Tt),D===Tt&&(D=gt([]),Ee(g,w,D,S)),D}function Qs(g){var w=Er(g,3);if(g.m||(g.m={}),!g.m[3]){for(var S=0;S<w.length;S++)w[S]=+w[S];g.m[3]=!0}return w}function Sn(g,w,S){return g=We(g,w),g??S}function Mt(g,w,S){return g=We(g,w),g=g==null?g:+g,g??(S===void 0?0:S)}function Ee(g,w,S,D){D!==void 0&&D||w>=g.l?(Nr(g),g.i[w]=S):g.h[w+g.j]=S}function jo(g,w,S){if(S===-1)return null;if(g.g||(g.g={}),!g.g[S]){var D=We(g,S,!1);D&&(g.g[S]=new w(D))}return g.g[S]}function ds(g,w){g.g||(g.g={});var S=g.g[1];if(!S){var D=Er(g,1);S=[];for(var z=0;z<D.length;z++)S[z]=new w(D[z]);g.g[1]=S}return S}function Ir(g,w,S){var D=D===void 0?!1:D;g.g||(g.g={});var z=S&&Cn(S);g.g[w]=S,Ee(g,w,z,D)}function kr(g,w,S,D){var z=ds(g,S);w=w||new S,g=Er(g,1),D!=null?(z.splice(D,0,w),g.splice(D,0,Cn(w))):(z.push(w),g.push(Cn(w)))}nt.prototype.toJSON=function(){var g=Cn(this);return Ys(g,zo,Me)};function Cn(g,w){if(g.g)for(var S in g.g){var D=g.g[S];if(Array.isArray(D))for(var z=0;z<D.length;z++)D[z]&&Cn(D[z]);else D&&Cn(D)}return g.h}nt.prototype.toString=function(){return Cn(this).toString()};function ps(g,w){if(g=g.o){Jt(w,w.g.end());for(var S=0;S<g.length;S++)Jt(w,g[S])}}function Ut(g,w){if(w.h==4)return!1;var S=w.m;return pn(w),w.N||(w=cs(w.g.h,S,w.g.g),(S=g.o)?S.push(w):g.o=[w]),!0}function Tn(g){nt.call(this,g,-1,gi)}b(Tn,nt),Tn.prototype.getRows=function(){return We(this,1)},Tn.prototype.getCols=function(){return We(this,2)},Tn.prototype.getPackedDataList=function(){return Qs(this)},Tn.prototype.getLayout=function(){return Sn(this,4,0)};function Ho(g,w){for(;Rt(w);)switch(w.i){case 8:var S=w.g.i();Ee(g,1,S);break;case 16:S=w.g.i(),Ee(g,2,S);break;case 29:case 26:Xs(w,g.getPackedDataList());break;case 32:S=$r(w.g),Ee(g,4,S);break;default:if(!Ut(g,w))return g}return g}var gi=[3];function ct(g,w){var S=void 0;return new(S||(S=Promise))(function(D,z){function Y(re){try{J(w.next(re))}catch(le){z(le)}}function K(re){try{J(w.throw(re))}catch(le){z(le)}}function J(re){re.done?D(re.value):new S(function(le){le(re.value)}).then(Y,K)}J((w=w.apply(g,void 0)).next())})}function Nn(g){nt.call(this,g)}b(Nn,nt);function Ko(g,w){for(;Rt(w);)switch(w.i){case 8:var S=w.g.i();Ee(g,1,S);break;case 21:S=rt(w),Ee(g,2,S);break;case 26:S=Sr(w),Ee(g,3,S);break;case 34:S=Sr(w),Ee(g,4,S);break;default:if(!Ut(g,w))return g}return g}function fs(g){nt.call(this,g,-1,Xo)}b(fs,nt),fs.prototype.addClassification=function(g,w){return kr(this,g,Nn,w),this};var Xo=[1];function er(g){nt.call(this,g)}b(er,nt);function yi(g,w){for(;Rt(w);)switch(w.i){case 13:var S=rt(w);Ee(g,1,S);break;case 21:S=rt(w),Ee(g,2,S);break;case 29:S=rt(w),Ee(g,3,S);break;case 37:S=rt(w),Ee(g,4,S);break;case 45:S=rt(w),Ee(g,5,S);break;default:if(!Ut(g,w))return g}return g}function qo(g){nt.call(this,g,-1,Qo)}b(qo,nt);function Yo(g){e:{var w=new qo;for(g=new Jn(g);Rt(g);)switch(g.i){case 10:var S=hs(g,new er,yi);kr(w,S,er,void 0);break;default:if(!Ut(w,g))break e}}return w}var Qo=[1];function ms(g){nt.call(this,g)}b(ms,nt);function Fn(g){nt.call(this,g,-1,bi)}b(Fn,nt),Fn.prototype.getVertexType=function(){return Sn(this,1,0)},Fn.prototype.getPrimitiveType=function(){return Sn(this,2,0)},Fn.prototype.getVertexBufferList=function(){return Qs(this)},Fn.prototype.getIndexBufferList=function(){return Er(this,4)};function xi(g,w){for(;Rt(w);)switch(w.i){case 8:var S=$r(w.g);Ee(g,1,S);break;case 16:S=$r(w.g),Ee(g,2,S);break;case 29:case 26:Xs(w,g.getVertexBufferList());break;case 32:case 34:S=w;var D=g.getIndexBufferList();S.h==2?Ks(S,et.prototype.i,D):D.push(S.g.i());break;default:if(!Ut(g,w))return g}return g}var bi=[3,4];function gs(g){nt.call(this,g)}b(gs,nt),gs.prototype.getMesh=function(){return jo(this,Fn,1)},gs.prototype.getPoseTransformMatrix=function(){return jo(this,Tn,2)};function Zo(g){e:{var w=new gs;for(g=new Jn(g);Rt(g);)switch(g.i){case 10:var S=hs(g,new Fn,xi);Ir(w,1,S);break;case 18:S=hs(g,new Tn,Ho),Ir(w,2,S);break;default:if(!Ut(w,g))break e}}return w}function Zs(g,w,S){if(S=g.createShader(S===0?g.VERTEX_SHADER:g.FRAGMENT_SHADER),g.shaderSource(S,w),g.compileShader(S),!g.getShaderParameter(S,g.COMPILE_STATUS))throw Error(`Could not compile WebGL shader.
+
+`+g.getShaderInfoLog(S));return S}function Js(g){return ds(g,Nn).map(function(w){return{index:Sn(w,1,0),Y:Mt(w,2),label:We(w,3)!=null?Sn(w,3,""):void 0,displayName:We(w,4)!=null?Sn(w,4,""):void 0}})}function eo(g){return{x:Mt(g,1),y:Mt(g,2),z:Mt(g,3),visibility:We(g,4)!=null?Mt(g,4):void 0}}function Rr(g,w){this.h=g,this.g=w,this.l=0}function tr(g,w,S){return Wt(g,w),typeof g.g.canvas.transferToImageBitmap=="function"?Promise.resolve(g.g.canvas.transferToImageBitmap()):S?Promise.resolve(g.g.canvas):typeof createImageBitmap=="function"?createImageBitmap(g.g.canvas):(g.i===void 0&&(g.i=document.createElement("canvas")),new Promise(function(D){g.i.height=g.g.canvas.height,g.i.width=g.g.canvas.width,g.i.getContext("2d",{}).drawImage(g.g.canvas,0,0,g.g.canvas.width,g.g.canvas.height),D(g.i)}))}function Wt(g,w){var S=g.g;if(g.m===void 0){var D=Zs(S,`
+  attribute vec2 aVertex;
+  attribute vec2 aTex;
+  varying vec2 vTex;
+  void main(void) {
+    gl_Position = vec4(aVertex, 0.0, 1.0);
+    vTex = aTex;
+  }`,0),z=Zs(S,`
+  precision mediump float;
+  varying vec2 vTex;
+  uniform sampler2D sampler0;
+  void main(){
+    gl_FragColor = texture2D(sampler0, vTex);
+  }`,1),Y=S.createProgram();if(S.attachShader(Y,D),S.attachShader(Y,z),S.linkProgram(Y),!S.getProgramParameter(Y,S.LINK_STATUS))throw Error(`Could not compile WebGL program.
+
+`+S.getProgramInfoLog(Y));D=g.m=Y,S.useProgram(D),z=S.getUniformLocation(D,"sampler0"),g.j={I:S.getAttribLocation(D,"aVertex"),H:S.getAttribLocation(D,"aTex"),da:z},g.s=S.createBuffer(),S.bindBuffer(S.ARRAY_BUFFER,g.s),S.enableVertexAttribArray(g.j.I),S.vertexAttribPointer(g.j.I,2,S.FLOAT,!1,0,0),S.bufferData(S.ARRAY_BUFFER,new Float32Array([-1,-1,-1,1,1,1,1,-1]),S.STATIC_DRAW),S.bindBuffer(S.ARRAY_BUFFER,null),g.o=S.createBuffer(),S.bindBuffer(S.ARRAY_BUFFER,g.o),S.enableVertexAttribArray(g.j.H),S.vertexAttribPointer(g.j.H,2,S.FLOAT,!1,0,0),S.bufferData(S.ARRAY_BUFFER,new Float32Array([0,1,0,0,1,0,1,1]),S.STATIC_DRAW),S.bindBuffer(S.ARRAY_BUFFER,null),S.uniform1i(z,0)}D=g.j,S.useProgram(g.m),S.canvas.width=w.width,S.canvas.height=w.height,S.viewport(0,0,w.width,w.height),S.activeTexture(S.TEXTURE0),g.h.bindTexture2d(w.glName),S.enableVertexAttribArray(D.I),S.bindBuffer(S.ARRAY_BUFFER,g.s),S.vertexAttribPointer(D.I,2,S.FLOAT,!1,0,0),S.enableVertexAttribArray(D.H),S.bindBuffer(S.ARRAY_BUFFER,g.o),S.vertexAttribPointer(D.H,2,S.FLOAT,!1,0,0),S.bindFramebuffer(S.DRAW_FRAMEBUFFER?S.DRAW_FRAMEBUFFER:S.FRAMEBUFFER,null),S.clearColor(0,0,0,0),S.clear(S.COLOR_BUFFER_BIT),S.colorMask(!0,!0,!0,!0),S.drawArrays(S.TRIANGLE_FAN,0,4),S.disableVertexAttribArray(D.I),S.disableVertexAttribArray(D.H),S.bindBuffer(S.ARRAY_BUFFER,null),g.h.bindTexture2d(0)}function vi(g){this.g=g}var wi=new Uint8Array([0,97,115,109,1,0,0,0,1,4,1,96,0,0,3,2,1,0,10,9,1,7,0,65,0,253,15,26,11]);function Jo(g,w){return w+g}function to(g,w){window[g]=w}function At(g){var w=document.createElement("script");return w.setAttribute("src",g),w.setAttribute("crossorigin","anonymous"),new Promise(function(S){w.addEventListener("load",function(){S()},!1),w.addEventListener("error",function(){S()},!1),document.body.appendChild(w)})}function ea(){return ct(this,function g(){return B(g,function(w){switch(w.g){case 1:return w.m=2,I(w,WebAssembly.instantiate(wi),4);case 4:w.g=3,w.m=0;break;case 2:return w.m=0,w.j=null,w.return(!1);case 3:return w.return(!0)}})})}function Pn(g){if(this.g=g,this.listeners={},this.j={},this.F={},this.m={},this.s={},this.G=this.o=this.R=!0,this.C=Promise.resolve(),this.P="",this.B={},this.locateFile=g&&g.locateFile||Jo,typeof window=="object")var w=window.location.pathname.toString().substring(0,window.location.pathname.toString().lastIndexOf("/"))+"/";else if(typeof location<"u")w=location.pathname.toString().substring(0,location.pathname.toString().lastIndexOf("/"))+"/";else throw Error("solutions can only be loaded on a web page or in a web worker");if(this.S=w,g.options){w=i(Object.keys(g.options));for(var S=w.next();!S.done;S=w.next()){S=S.value;var D=g.options[S].default;D!==void 0&&(this.j[S]=typeof D=="function"?D():D)}}}n=Pn.prototype,n.close=function(){return this.i&&this.i.delete(),Promise.resolve()};function ta(g,w){return g.g.files===void 0?[]:typeof g.g.files=="function"?g.g.files(w):g.g.files}function no(g){return ct(g,function w(){var S=this,D,z,Y,K,J,re,le,ye,Ae,Ne,ve;return B(w,function(fe){switch(fe.g){case 1:return D=S,S.R?(z=ta(S,S.j),I(fe,ea(),2)):fe.return();case 2:if(Y=fe.h,typeof window=="object")return to("createMediapipeSolutionsWasm",{locateFile:S.locateFile}),to("createMediapipeSolutionsPackedAssets",{locateFile:S.locateFile}),re=z.filter(function(m){return m.data!==void 0}),le=z.filter(function(m){return m.data===void 0}),ye=Promise.all(re.map(function(m){var $=nr(D,m.url);if(m.path!==void 0){var T=m.path;$=$.then(function(N){return D.overrideFile(T,N),Promise.resolve(N)})}return $})),Ae=Promise.all(le.map(function(m){return m.simd===void 0||m.simd&&Y||!m.simd&&!Y?At(D.locateFile(m.url,D.S)):Promise.resolve()})).then(function(){return ct(D,function m(){var $,T,N=this;return B(m,function(O){if(O.g==1)return $=window.createMediapipeSolutionsWasm,T=window.createMediapipeSolutionsPackedAssets,I(O,$(T),2);N.h=O.h,O.g=0})})}),Ne=(function(){return ct(D,function m(){var $=this;return B(m,function(T){return $.g.graph&&$.g.graph.url?T=I(T,nr($,$.g.graph.url),0):(T.g=0,T=void 0),T})})})(),I(fe,Promise.all([Ae,ye,Ne]),7);if(typeof importScripts!="function")throw Error("solutions can only be loaded on a web page or in a web worker");return K=z.filter(function(m){return m.simd===void 0||m.simd&&Y||!m.simd&&!Y}).map(function(m){return D.locateFile(m.url,D.S)}),importScripts.apply(null,u(K)),I(fe,createMediapipeSolutionsWasm(Module),6);case 6:S.h=fe.h,S.l=new OffscreenCanvas(1,1),S.h.canvas=S.l,J=S.h.GL.createContext(S.l,{antialias:!1,alpha:!1,ba:typeof WebGL2RenderingContext<"u"?2:1}),S.h.GL.makeContextCurrent(J),fe.g=4;break;case 7:if(S.l=document.createElement("canvas"),ve=S.l.getContext("webgl2",{}),!ve&&(ve=S.l.getContext("webgl",{}),!ve))return alert("Failed to create WebGL canvas context when passing video frame."),fe.return();S.D=ve,S.h.canvas=S.l,S.h.createContext(S.l,!0,!0,{});case 4:S.i=new S.h.SolutionWasm,S.R=!1,fe.g=0}})})}function $i(g){return ct(g,function w(){var S=this,D,z,Y,K,J,re,le,ye;return B(w,function(Ae){if(Ae.g==1){if(S.g.graph&&S.g.graph.url&&S.P===S.g.graph.url)return Ae.return();if(S.o=!0,!S.g.graph||!S.g.graph.url){Ae.g=2;return}return S.P=S.g.graph.url,I(Ae,nr(S,S.g.graph.url),3)}for(Ae.g!=2&&(D=Ae.h,S.i.loadGraph(D)),z=i(Object.keys(S.B)),Y=z.next();!Y.done;Y=z.next())K=Y.value,S.i.overrideFile(K,S.B[K]);if(S.B={},S.g.listeners)for(J=i(S.g.listeners),re=J.next();!re.done;re=J.next())le=re.value,Ci(S,le);ye=S.j,S.j={},S.setOptions(ye),Ae.g=0})})}n.reset=function(){return ct(this,function g(){var w=this;return B(g,function(S){w.i&&(w.i.reset(),w.m={},w.s={}),S.g=0})})},n.setOptions=function(g,w){var S=this;if(w=w||this.g.options){for(var D=[],z=[],Y={},K=i(Object.keys(g)),J=K.next();!J.done;Y={K:Y.K,L:Y.L},J=K.next()){var re=J.value;re in this.j&&this.j[re]===g[re]||(this.j[re]=g[re],J=w[re],J!==void 0&&(J.onChange&&(Y.K=J.onChange,Y.L=g[re],D.push((function(le){return function(){return ct(S,function ye(){var Ae,Ne=this;return B(ye,function(ve){if(ve.g==1)return I(ve,le.K(le.L),2);Ae=ve.h,Ae===!0&&(Ne.o=!0),ve.g=0})})}})(Y))),J.graphOptionXref&&(re={valueNumber:J.type===1?g[re]:0,valueBoolean:J.type===0?g[re]:!1,valueString:J.type===2?g[re]:""},J=Object.assign(Object.assign(Object.assign({},{calculatorName:"",calculatorIndex:0}),J.graphOptionXref),re),z.push(J))))}(D.length!==0||z.length!==0)&&(this.o=!0,this.A=(this.A===void 0?[]:this.A).concat(z),this.u=(this.u===void 0?[]:this.u).concat(D))}};function Si(g){return ct(g,function w(){var S=this,D,z,Y,K,J,re,le;return B(w,function(ye){switch(ye.g){case 1:if(!S.o)return ye.return();if(!S.u){ye.g=2;break}D=i(S.u),z=D.next();case 3:if(z.done){ye.g=5;break}return Y=z.value,I(ye,Y(),4);case 4:z=D.next(),ye.g=3;break;case 5:S.u=void 0;case 2:if(S.A){for(K=new S.h.GraphOptionChangeRequestList,J=i(S.A),re=J.next();!re.done;re=J.next())le=re.value,K.push_back(le);S.i.changeOptions(K),K.delete(),S.A=void 0}S.o=!1,ye.g=0}})})}n.initialize=function(){return ct(this,function g(){var w=this;return B(g,function(S){return S.g==1?I(S,no(w),2):S.g!=3?I(S,$i(w),3):I(S,Si(w),0)})})};function nr(g,w){return ct(g,function S(){var D=this,z,Y;return B(S,function(K){return w in D.F?K.return(D.F[w]):(z=D.locateFile(w,""),Y=fetch(z).then(function(J){return J.arrayBuffer()}),D.F[w]=Y,K.return(Y))})})}n.overrideFile=function(g,w){this.i?this.i.overrideFile(g,w):this.B[g]=w},n.clearOverriddenFiles=function(){this.B={},this.i&&this.i.clearOverriddenFiles()},n.send=function(g,w){return ct(this,function S(){var D=this,z,Y,K,J,re,le,ye,Ae,Ne;return B(S,function(ve){switch(ve.g){case 1:return D.g.inputs?(z=1e3*(w??performance.now()),I(ve,D.C,2)):ve.return();case 2:return I(ve,D.initialize(),3);case 3:for(Y=new D.h.PacketDataList,K=i(Object.keys(g)),J=K.next();!J.done;J=K.next())if(re=J.value,le=D.g.inputs[re]){e:{var fe=D,m=g[re];switch(le.type){case"video":var $=fe.m[le.stream];if($||($=new Rr(fe.h,fe.D),fe.m[le.stream]=$),fe=$,fe.l===0&&(fe.l=fe.h.createTexture()),typeof HTMLVideoElement<"u"&&m instanceof HTMLVideoElement){var T=m.videoWidth;$=m.videoHeight}else typeof HTMLImageElement<"u"&&m instanceof HTMLImageElement?(T=m.naturalWidth,$=m.naturalHeight):(T=m.width,$=m.height);$={glName:fe.l,width:T,height:$},T=fe.g,T.canvas.width=$.width,T.canvas.height=$.height,T.activeTexture(T.TEXTURE0),fe.h.bindTexture2d(fe.l),T.texImage2D(T.TEXTURE_2D,0,T.RGBA,T.RGBA,T.UNSIGNED_BYTE,m),fe.h.bindTexture2d(0),fe=$;break e;case"detections":for($=fe.m[le.stream],$||($=new vi(fe.h),fe.m[le.stream]=$),fe=$,fe.data||(fe.data=new fe.g.DetectionListData),fe.data.reset(m.length),$=0;$<m.length;++$){T=m[$];var N=fe.data,O=N.setBoundingBox,A=$,F=T.T,M=new ms;Ee(M,1,F.Z),Ee(M,2,F.$),Ee(M,3,F.height),Ee(M,4,F.width),Ee(M,5,F.rotation),Ee(M,6,F.X);var X=F=new Dn;_t(X,1,We(M,1)),_t(X,2,We(M,2)),_t(X,3,We(M,3)),_t(X,4,We(M,4)),_t(X,5,We(M,5));var Q=We(M,6);if(Q!=null&&Q!=null){dn(X.g,48);var ee=X.g,se=Q;Q=0>se,se=Math.abs(se);var ae=se>>>0;for(se=Math.floor((se-ae)/4294967296),se>>>=0,Q&&(se=~se>>>0,ae=(~ae>>>0)+1,4294967295<ae&&(ae=0,se++,4294967295<se&&(se=0))),Yt=ae,Qt=se,Q=Yt,ae=Qt;0<ae||127<Q;)ee.push(Q&127|128),Q=(Q>>>7|ae<<25)>>>0,ae>>>=7;ee.push(Q)}if(ps(M,X),F=Cr(F),O.call(N,A,F),T.O)for(N=0;N<T.O.length;++N)M=T.O[N],X=!!M.visibility,O=fe.data,A=O.addNormalizedLandmark,F=$,M=Object.assign(Object.assign({},M),{visibility:X?M.visibility:0}),X=new er,Ee(X,1,M.x),Ee(X,2,M.y),Ee(X,3,M.z),M.visibility&&Ee(X,4,M.visibility),ee=M=new Dn,_t(ee,1,We(X,1)),_t(ee,2,We(X,2)),_t(ee,3,We(X,3)),_t(ee,4,We(X,4)),_t(ee,5,We(X,5)),ps(X,ee),M=Cr(M),A.call(O,F,M);if(T.M)for(N=0;N<T.M.length;++N){if(O=fe.data,A=O.addClassification,F=$,M=T.M[N],X=new Nn,Ee(X,2,M.Y),M.index&&Ee(X,1,M.index),M.label&&Ee(X,3,M.label),M.displayName&&Ee(X,4,M.displayName),ee=M=new Dn,ae=We(X,1),ae!=null&&ae!=null)if(dn(ee.g,8),Q=ee.g,0<=ae)dn(Q,ae);else{for(se=0;9>se;se++)Q.push(ae&127|128),ae>>=7;Q.push(1)}_t(ee,2,We(X,2)),Q=We(X,3),Q!=null&&(Q=Ie(Q),dn(ee.g,26),dn(ee.g,Q.length),Jt(ee,ee.g.end()),Jt(ee,Q)),Q=We(X,4),Q!=null&&(Q=Ie(Q),dn(ee.g,34),dn(ee.g,Q.length),Jt(ee,ee.g.end()),Jt(ee,Q)),ps(X,ee),M=Cr(M),A.call(O,F,M)}}fe=fe.data;break e;default:fe={}}}switch(ye=fe,Ae=le.stream,le.type){case"video":Y.pushTexture2d(Object.assign(Object.assign({},ye),{stream:Ae,timestamp:z}));break;case"detections":Ne=ye,Ne.stream=Ae,Ne.timestamp=z,Y.pushDetectionList(Ne);break;default:throw Error("Unknown input config type: '"+le.type+"'")}}return D.i.send(Y),I(ve,D.C,4);case 4:Y.delete(),ve.g=0}})})};function na(g,w,S){return ct(g,function D(){var z,Y,K,J,re,le,ye=this,Ae,Ne,ve,fe,m,$,T,N;return B(D,function(O){switch(O.g){case 1:if(!S)return O.return(w);for(z={},Y=0,K=i(Object.keys(S)),J=K.next();!J.done;J=K.next())re=J.value,le=S[re],typeof le!="string"&&le.type==="texture"&&w[le.stream]!==void 0&&++Y;1<Y&&(ye.G=!1),Ae=i(Object.keys(S)),J=Ae.next();case 2:if(J.done){O.g=4;break}if(Ne=J.value,ve=S[Ne],typeof ve=="string")return T=z,N=Ne,I(O,ra(ye,Ne,w[ve]),14);if(fe=w[ve.stream],ve.type==="detection_list"){if(fe){for(var A=fe.getRectList(),F=fe.getLandmarksList(),M=fe.getClassificationsList(),X=[],Q=0;Q<A.size();++Q){var ee=A.get(Q);e:{var se=new ms;for(ee=new Jn(ee);Rt(ee);)switch(ee.i){case 13:var ae=rt(ee);Ee(se,1,ae);break;case 21:ae=rt(ee),Ee(se,2,ae);break;case 29:ae=rt(ee),Ee(se,3,ae);break;case 37:ae=rt(ee),Ee(se,4,ae);break;case 45:ae=rt(ee),Ee(se,5,ae);break;case 48:ae=$r(ee.g),Ee(se,6,ae);break;default:if(!Ut(se,ee))break e}}se={Z:Mt(se,1),$:Mt(se,2),height:Mt(se,3),width:Mt(se,4),rotation:Mt(se,5,0),X:Sn(se,6,0)},ee=ds(Yo(F.get(Q)),er).map(eo);var ue=M.get(Q);e:for(ae=new fs,ue=new Jn(ue);Rt(ue);)switch(ue.i){case 10:ae.addClassification(hs(ue,new Nn,Ko));break;default:if(!Ut(ae,ue))break e}se={T:se,O:ee,M:Js(ae)},X.push(se)}A=X}else A=[];z[Ne]=A,O.g=7;break}if(ve.type==="proto_list"){if(fe){for(A=Array(fe.size()),F=0;F<fe.size();F++)A[F]=fe.get(F);fe.delete()}else A=[];z[Ne]=A,O.g=7;break}if(fe===void 0){O.g=3;break}if(ve.type==="float_list"){z[Ne]=fe,O.g=7;break}if(ve.type==="proto"){z[Ne]=fe,O.g=7;break}if(ve.type!=="texture")throw Error("Unknown output config type: '"+ve.type+"'");return m=ye.s[Ne],m||(m=new Rr(ye.h,ye.D),ye.s[Ne]=m),I(O,tr(m,fe,ye.G),13);case 13:$=O.h,z[Ne]=$;case 7:ve.transform&&z[Ne]&&(z[Ne]=ve.transform(z[Ne])),O.g=3;break;case 14:T[N]=O.h;case 3:J=Ae.next(),O.g=2;break;case 4:return O.return(z)}})})}function ra(g,w,S){return ct(g,function D(){var z=this,Y;return B(D,function(K){return typeof S=="number"||S instanceof Uint8Array||S instanceof z.h.Uint8BlobList?K.return(S):S instanceof z.h.Texture2dDataOut?(Y=z.s[w],Y||(Y=new Rr(z.h,z.D),z.s[w]=Y),K.return(tr(Y,S,z.G))):K.return(void 0)})})}function Ci(g,w){for(var S=w.name||"$",D=[].concat(u(w.wants)),z=new g.h.StringList,Y=i(w.wants),K=Y.next();!K.done;K=Y.next())z.push_back(K.value);Y=g.h.PacketListener.implement({onResults:function(J){for(var re={},le=0;le<w.wants.length;++le)re[D[le]]=J.get(le);var ye=g.listeners[S];ye&&(g.C=na(g,re,w.outs).then(function(Ae){Ae=ye(Ae);for(var Ne=0;Ne<w.wants.length;++Ne){var ve=re[D[Ne]];typeof ve=="object"&&ve.hasOwnProperty&&ve.hasOwnProperty("delete")&&ve.delete()}Ae&&(g.C=Ae)}))}}),g.i.attachMultiListener(z,Y),z.delete()}n.onResults=function(g,w){this.listeners[w||"$"]=g},te("Solution",Pn),te("OptionType",{BOOL:0,NUMBER:1,aa:2,0:"BOOL",1:"NUMBER",2:"STRING"});function Ti(g){g=Zo(g);var w=g.getMesh();if(!w)return g;var S=new Float32Array(w.getVertexBufferList());w.getVertexBufferList=function(){return S};var D=new Uint32Array(w.getIndexBufferList());return w.getIndexBufferList=function(){return D},g}var ro={files:[{url:"face_mesh_solution_packed_assets_loader.js"},{simd:!0,url:"face_mesh_solution_simd_wasm_bin.js"},{simd:!1,url:"face_mesh_solution_wasm_bin.js"}],graph:{url:"face_mesh.binarypb"},listeners:[{wants:["multi_face_geometry","image_transformed","multi_face_landmarks"],outs:{image:"image_transformed",multiFaceGeometry:{type:"proto_list",stream:"multi_face_geometry",transform:function(g){return g.map(Ti)}},multiFaceLandmarks:{type:"proto_list",stream:"multi_face_landmarks",transform:function(g){return g.map(function(w){return ds(Yo(w),er).map(eo)})}}}}],inputs:{image:{type:"video",stream:"input_frames_gpu"}},options:{useCpuInference:{type:0,graphOptionXref:{calculatorType:"InferenceCalculator",fieldName:"use_cpu_inference"},default:"iPad Simulator;iPhone Simulator;iPod Simulator;iPad;iPhone;iPod".split(";").includes(navigator.platform)||navigator.userAgent.includes("Mac")&&"ontouchend"in document},enableFaceGeometry:{type:0,graphOptionXref:{calculatorName:"EnableFaceGeometryConstant",calculatorType:"ConstantSidePacketCalculator",fieldName:"bool_value"}},selfieMode:{type:0,graphOptionXref:{calculatorType:"GlScalerCalculator",calculatorIndex:1,fieldName:"flip_horizontal"}},maxNumFaces:{type:1,graphOptionXref:{calculatorType:"ConstantSidePacketCalculator",calculatorName:"ConstantSidePacketCalculatorNumFaces",fieldName:"int_value"}},refineLandmarks:{type:0,graphOptionXref:{calculatorType:"ConstantSidePacketCalculator",calculatorName:"ConstantSidePacketCalculatorRefineLandmarks",fieldName:"bool_value"}},minDetectionConfidence:{type:1,graphOptionXref:{calculatorType:"TensorsToDetectionsCalculator",calculatorName:"facelandmarkfrontgpu__facedetectionshortrangegpu__facedetectionshortrangecommon__TensorsToDetectionsCalculator",fieldName:"min_score_thresh"}},minTrackingConfidence:{type:1,graphOptionXref:{calculatorType:"ThresholdingCalculator",calculatorName:"facelandmarkfrontgpu__facelandmarkgpu__ThresholdingCalculator",fieldName:"threshold"}},cameraNear:{type:1,graphOptionXref:{calculatorType:"FaceGeometryEnvGeneratorCalculator",fieldName:"near"}},cameraFar:{type:1,graphOptionXref:{calculatorType:"FaceGeometryEnvGeneratorCalculator",fieldName:"far"}},cameraVerticalFovDegrees:{type:1,graphOptionXref:{calculatorType:"FaceGeometryEnvGeneratorCalculator",fieldName:"vertical_fov_degrees"}}}},so=[[61,146],[146,91],[91,181],[181,84],[84,17],[17,314],[314,405],[405,321],[321,375],[375,291],[61,185],[185,40],[40,39],[39,37],[37,0],[0,267],[267,269],[269,270],[270,409],[409,291],[78,95],[95,88],[88,178],[178,87],[87,14],[14,317],[317,402],[402,318],[318,324],[324,308],[78,191],[191,80],[80,81],[81,82],[82,13],[13,312],[312,311],[311,310],[310,415],[415,308]],oo=[[263,249],[249,390],[390,373],[373,374],[374,380],[380,381],[381,382],[382,362],[263,466],[466,388],[388,387],[387,386],[386,385],[385,384],[384,398],[398,362]],ao=[[276,283],[283,282],[282,295],[295,285],[300,293],[293,334],[334,296],[296,336]],io=[[33,7],[7,163],[163,144],[144,145],[145,153],[153,154],[154,155],[155,133],[33,246],[246,161],[161,160],[160,159],[159,158],[158,157],[157,173],[173,133]],uo=[[46,53],[53,52],[52,65],[65,55],[70,63],[63,105],[105,66],[66,107]],co=[[10,338],[338,297],[297,332],[332,284],[284,251],[251,389],[389,356],[356,454],[454,323],[323,361],[361,288],[288,397],[397,365],[365,379],[379,378],[378,400],[400,377],[377,152],[152,148],[148,176],[176,149],[149,150],[150,136],[136,172],[172,58],[58,132],[132,93],[93,234],[234,127],[127,162],[162,21],[21,54],[54,103],[103,67],[67,109],[109,10]],sa=[].concat(u(so),u(oo),u(ao),u(io),u(uo),u(co));function oa(g){g=g||{},g=Object.assign(Object.assign({},ro),g),this.g=new Pn(g)}n=oa.prototype,n.close=function(){return this.g.close(),Promise.resolve()},n.onResults=function(g){this.g.onResults(g)},n.initialize=function(){return ct(this,function g(){var w=this;return B(g,function(S){return I(S,w.g.initialize(),0)})})},n.reset=function(){this.g.reset()},n.send=function(g){return ct(this,function w(){var S=this;return B(w,function(D){return I(D,S.g.send(g),0)})})},n.setOptions=function(g){this.g.setOptions(g)},te("FACE_GEOMETRY",{Layout:{COLUMN_MAJOR:0,ROW_MAJOR:1,0:"COLUMN_MAJOR",1:"ROW_MAJOR"},PrimitiveType:{TRIANGLE:0,0:"TRIANGLE"},VertexType:{VERTEX_PT:0,0:"VERTEX_PT"},DEFAULT_CAMERA_PARAMS:{verticalFovDegrees:63,near:1,far:1e4}}),te("FaceMesh",oa),te("FACEMESH_LIPS",so),te("FACEMESH_LEFT_EYE",oo),te("FACEMESH_LEFT_EYEBROW",ao),te("FACEMESH_LEFT_IRIS",[[474,475],[475,476],[476,477],[477,474]]),te("FACEMESH_RIGHT_EYE",io),te("FACEMESH_RIGHT_EYEBROW",uo),te("FACEMESH_RIGHT_IRIS",[[469,470],[470,471],[471,472],[472,469]]),te("FACEMESH_FACE_OVAL",co),te("FACEMESH_CONTOURS",sa),te("FACEMESH_TESSELATION",[[127,34],[34,139],[139,127],[11,0],[0,37],[37,11],[232,231],[231,120],[120,232],[72,37],[37,39],[39,72],[128,121],[121,47],[47,128],[232,121],[121,128],[128,232],[104,69],[69,67],[67,104],[175,171],[171,148],[148,175],[118,50],[50,101],[101,118],[73,39],[39,40],[40,73],[9,151],[151,108],[108,9],[48,115],[115,131],[131,48],[194,204],[204,211],[211,194],[74,40],[40,185],[185,74],[80,42],[42,183],[183,80],[40,92],[92,186],[186,40],[230,229],[229,118],[118,230],[202,212],[212,214],[214,202],[83,18],[18,17],[17,83],[76,61],[61,146],[146,76],[160,29],[29,30],[30,160],[56,157],[157,173],[173,56],[106,204],[204,194],[194,106],[135,214],[214,192],[192,135],[203,165],[165,98],[98,203],[21,71],[71,68],[68,21],[51,45],[45,4],[4,51],[144,24],[24,23],[23,144],[77,146],[146,91],[91,77],[205,50],[50,187],[187,205],[201,200],[200,18],[18,201],[91,106],[106,182],[182,91],[90,91],[91,181],[181,90],[85,84],[84,17],[17,85],[206,203],[203,36],[36,206],[148,171],[171,140],[140,148],[92,40],[40,39],[39,92],[193,189],[189,244],[244,193],[159,158],[158,28],[28,159],[247,246],[246,161],[161,247],[236,3],[3,196],[196,236],[54,68],[68,104],[104,54],[193,168],[168,8],[8,193],[117,228],[228,31],[31,117],[189,193],[193,55],[55,189],[98,97],[97,99],[99,98],[126,47],[47,100],[100,126],[166,79],[79,218],[218,166],[155,154],[154,26],[26,155],[209,49],[49,131],[131,209],[135,136],[136,150],[150,135],[47,126],[126,217],[217,47],[223,52],[52,53],[53,223],[45,51],[51,134],[134,45],[211,170],[170,140],[140,211],[67,69],[69,108],[108,67],[43,106],[106,91],[91,43],[230,119],[119,120],[120,230],[226,130],[130,247],[247,226],[63,53],[53,52],[52,63],[238,20],[20,242],[242,238],[46,70],[70,156],[156,46],[78,62],[62,96],[96,78],[46,53],[53,63],[63,46],[143,34],[34,227],[227,143],[123,117],[117,111],[111,123],[44,125],[125,19],[19,44],[236,134],[134,51],[51,236],[216,206],[206,205],[205,216],[154,153],[153,22],[22,154],[39,37],[37,167],[167,39],[200,201],[201,208],[208,200],[36,142],[142,100],[100,36],[57,212],[212,202],[202,57],[20,60],[60,99],[99,20],[28,158],[158,157],[157,28],[35,226],[226,113],[113,35],[160,159],[159,27],[27,160],[204,202],[202,210],[210,204],[113,225],[225,46],[46,113],[43,202],[202,204],[204,43],[62,76],[76,77],[77,62],[137,123],[123,116],[116,137],[41,38],[38,72],[72,41],[203,129],[129,142],[142,203],[64,98],[98,240],[240,64],[49,102],[102,64],[64,49],[41,73],[73,74],[74,41],[212,216],[216,207],[207,212],[42,74],[74,184],[184,42],[169,170],[170,211],[211,169],[170,149],[149,176],[176,170],[105,66],[66,69],[69,105],[122,6],[6,168],[168,122],[123,147],[147,187],[187,123],[96,77],[77,90],[90,96],[65,55],[55,107],[107,65],[89,90],[90,180],[180,89],[101,100],[100,120],[120,101],[63,105],[105,104],[104,63],[93,137],[137,227],[227,93],[15,86],[86,85],[85,15],[129,102],[102,49],[49,129],[14,87],[87,86],[86,14],[55,8],[8,9],[9,55],[100,47],[47,121],[121,100],[145,23],[23,22],[22,145],[88,89],[89,179],[179,88],[6,122],[122,196],[196,6],[88,95],[95,96],[96,88],[138,172],[172,136],[136,138],[215,58],[58,172],[172,215],[115,48],[48,219],[219,115],[42,80],[80,81],[81,42],[195,3],[3,51],[51,195],[43,146],[146,61],[61,43],[171,175],[175,199],[199,171],[81,82],[82,38],[38,81],[53,46],[46,225],[225,53],[144,163],[163,110],[110,144],[52,65],[65,66],[66,52],[229,228],[228,117],[117,229],[34,127],[127,234],[234,34],[107,108],[108,69],[69,107],[109,108],[108,151],[151,109],[48,64],[64,235],[235,48],[62,78],[78,191],[191,62],[129,209],[209,126],[126,129],[111,35],[35,143],[143,111],[117,123],[123,50],[50,117],[222,65],[65,52],[52,222],[19,125],[125,141],[141,19],[221,55],[55,65],[65,221],[3,195],[195,197],[197,3],[25,7],[7,33],[33,25],[220,237],[237,44],[44,220],[70,71],[71,139],[139,70],[122,193],[193,245],[245,122],[247,130],[130,33],[33,247],[71,21],[21,162],[162,71],[170,169],[169,150],[150,170],[188,174],[174,196],[196,188],[216,186],[186,92],[92,216],[2,97],[97,167],[167,2],[141,125],[125,241],[241,141],[164,167],[167,37],[37,164],[72,38],[38,12],[12,72],[38,82],[82,13],[13,38],[63,68],[68,71],[71,63],[226,35],[35,111],[111,226],[101,50],[50,205],[205,101],[206,92],[92,165],[165,206],[209,198],[198,217],[217,209],[165,167],[167,97],[97,165],[220,115],[115,218],[218,220],[133,112],[112,243],[243,133],[239,238],[238,241],[241,239],[214,135],[135,169],[169,214],[190,173],[173,133],[133,190],[171,208],[208,32],[32,171],[125,44],[44,237],[237,125],[86,87],[87,178],[178,86],[85,86],[86,179],[179,85],[84,85],[85,180],[180,84],[83,84],[84,181],[181,83],[201,83],[83,182],[182,201],[137,93],[93,132],[132,137],[76,62],[62,183],[183,76],[61,76],[76,184],[184,61],[57,61],[61,185],[185,57],[212,57],[57,186],[186,212],[214,207],[207,187],[187,214],[34,143],[143,156],[156,34],[79,239],[239,237],[237,79],[123,137],[137,177],[177,123],[44,1],[1,4],[4,44],[201,194],[194,32],[32,201],[64,102],[102,129],[129,64],[213,215],[215,138],[138,213],[59,166],[166,219],[219,59],[242,99],[99,97],[97,242],[2,94],[94,141],[141,2],[75,59],[59,235],[235,75],[24,110],[110,228],[228,24],[25,130],[130,226],[226,25],[23,24],[24,229],[229,23],[22,23],[23,230],[230,22],[26,22],[22,231],[231,26],[112,26],[26,232],[232,112],[189,190],[190,243],[243,189],[221,56],[56,190],[190,221],[28,56],[56,221],[221,28],[27,28],[28,222],[222,27],[29,27],[27,223],[223,29],[30,29],[29,224],[224,30],[247,30],[30,225],[225,247],[238,79],[79,20],[20,238],[166,59],[59,75],[75,166],[60,75],[75,240],[240,60],[147,177],[177,215],[215,147],[20,79],[79,166],[166,20],[187,147],[147,213],[213,187],[112,233],[233,244],[244,112],[233,128],[128,245],[245,233],[128,114],[114,188],[188,128],[114,217],[217,174],[174,114],[131,115],[115,220],[220,131],[217,198],[198,236],[236,217],[198,131],[131,134],[134,198],[177,132],[132,58],[58,177],[143,35],[35,124],[124,143],[110,163],[163,7],[7,110],[228,110],[110,25],[25,228],[356,389],[389,368],[368,356],[11,302],[302,267],[267,11],[452,350],[350,349],[349,452],[302,303],[303,269],[269,302],[357,343],[343,277],[277,357],[452,453],[453,357],[357,452],[333,332],[332,297],[297,333],[175,152],[152,377],[377,175],[347,348],[348,330],[330,347],[303,304],[304,270],[270,303],[9,336],[336,337],[337,9],[278,279],[279,360],[360,278],[418,262],[262,431],[431,418],[304,408],[408,409],[409,304],[310,415],[415,407],[407,310],[270,409],[409,410],[410,270],[450,348],[348,347],[347,450],[422,430],[430,434],[434,422],[313,314],[314,17],[17,313],[306,307],[307,375],[375,306],[387,388],[388,260],[260,387],[286,414],[414,398],[398,286],[335,406],[406,418],[418,335],[364,367],[367,416],[416,364],[423,358],[358,327],[327,423],[251,284],[284,298],[298,251],[281,5],[5,4],[4,281],[373,374],[374,253],[253,373],[307,320],[320,321],[321,307],[425,427],[427,411],[411,425],[421,313],[313,18],[18,421],[321,405],[405,406],[406,321],[320,404],[404,405],[405,320],[315,16],[16,17],[17,315],[426,425],[425,266],[266,426],[377,400],[400,369],[369,377],[322,391],[391,269],[269,322],[417,465],[465,464],[464,417],[386,257],[257,258],[258,386],[466,260],[260,388],[388,466],[456,399],[399,419],[419,456],[284,332],[332,333],[333,284],[417,285],[285,8],[8,417],[346,340],[340,261],[261,346],[413,441],[441,285],[285,413],[327,460],[460,328],[328,327],[355,371],[371,329],[329,355],[392,439],[439,438],[438,392],[382,341],[341,256],[256,382],[429,420],[420,360],[360,429],[364,394],[394,379],[379,364],[277,343],[343,437],[437,277],[443,444],[444,283],[283,443],[275,440],[440,363],[363,275],[431,262],[262,369],[369,431],[297,338],[338,337],[337,297],[273,375],[375,321],[321,273],[450,451],[451,349],[349,450],[446,342],[342,467],[467,446],[293,334],[334,282],[282,293],[458,461],[461,462],[462,458],[276,353],[353,383],[383,276],[308,324],[324,325],[325,308],[276,300],[300,293],[293,276],[372,345],[345,447],[447,372],[352,345],[345,340],[340,352],[274,1],[1,19],[19,274],[456,248],[248,281],[281,456],[436,427],[427,425],[425,436],[381,256],[256,252],[252,381],[269,391],[391,393],[393,269],[200,199],[199,428],[428,200],[266,330],[330,329],[329,266],[287,273],[273,422],[422,287],[250,462],[462,328],[328,250],[258,286],[286,384],[384,258],[265,353],[353,342],[342,265],[387,259],[259,257],[257,387],[424,431],[431,430],[430,424],[342,353],[353,276],[276,342],[273,335],[335,424],[424,273],[292,325],[325,307],[307,292],[366,447],[447,345],[345,366],[271,303],[303,302],[302,271],[423,266],[266,371],[371,423],[294,455],[455,460],[460,294],[279,278],[278,294],[294,279],[271,272],[272,304],[304,271],[432,434],[434,427],[427,432],[272,407],[407,408],[408,272],[394,430],[430,431],[431,394],[395,369],[369,400],[400,395],[334,333],[333,299],[299,334],[351,417],[417,168],[168,351],[352,280],[280,411],[411,352],[325,319],[319,320],[320,325],[295,296],[296,336],[336,295],[319,403],[403,404],[404,319],[330,348],[348,349],[349,330],[293,298],[298,333],[333,293],[323,454],[454,447],[447,323],[15,16],[16,315],[315,15],[358,429],[429,279],[279,358],[14,15],[15,316],[316,14],[285,336],[336,9],[9,285],[329,349],[349,350],[350,329],[374,380],[380,252],[252,374],[318,402],[402,403],[403,318],[6,197],[197,419],[419,6],[318,319],[319,325],[325,318],[367,364],[364,365],[365,367],[435,367],[367,397],[397,435],[344,438],[438,439],[439,344],[272,271],[271,311],[311,272],[195,5],[5,281],[281,195],[273,287],[287,291],[291,273],[396,428],[428,199],[199,396],[311,271],[271,268],[268,311],[283,444],[444,445],[445,283],[373,254],[254,339],[339,373],[282,334],[334,296],[296,282],[449,347],[347,346],[346,449],[264,447],[447,454],[454,264],[336,296],[296,299],[299,336],[338,10],[10,151],[151,338],[278,439],[439,455],[455,278],[292,407],[407,415],[415,292],[358,371],[371,355],[355,358],[340,345],[345,372],[372,340],[346,347],[347,280],[280,346],[442,443],[443,282],[282,442],[19,94],[94,370],[370,19],[441,442],[442,295],[295,441],[248,419],[419,197],[197,248],[263,255],[255,359],[359,263],[440,275],[275,274],[274,440],[300,383],[383,368],[368,300],[351,412],[412,465],[465,351],[263,467],[467,466],[466,263],[301,368],[368,389],[389,301],[395,378],[378,379],[379,395],[412,351],[351,419],[419,412],[436,426],[426,322],[322,436],[2,164],[164,393],[393,2],[370,462],[462,461],[461,370],[164,0],[0,267],[267,164],[302,11],[11,12],[12,302],[268,12],[12,13],[13,268],[293,300],[300,301],[301,293],[446,261],[261,340],[340,446],[330,266],[266,425],[425,330],[426,423],[423,391],[391,426],[429,355],[355,437],[437,429],[391,327],[327,326],[326,391],[440,457],[457,438],[438,440],[341,382],[382,362],[362,341],[459,457],[457,461],[461,459],[434,430],[430,394],[394,434],[414,463],[463,362],[362,414],[396,369],[369,262],[262,396],[354,461],[461,457],[457,354],[316,403],[403,402],[402,316],[315,404],[404,403],[403,315],[314,405],[405,404],[404,314],[313,406],[406,405],[405,313],[421,418],[418,406],[406,421],[366,401],[401,361],[361,366],[306,408],[408,407],[407,306],[291,409],[409,408],[408,291],[287,410],[410,409],[409,287],[432,436],[436,410],[410,432],[434,416],[416,411],[411,434],[264,368],[368,383],[383,264],[309,438],[438,457],[457,309],[352,376],[376,401],[401,352],[274,275],[275,4],[4,274],[421,428],[428,262],[262,421],[294,327],[327,358],[358,294],[433,416],[416,367],[367,433],[289,455],[455,439],[439,289],[462,370],[370,326],[326,462],[2,326],[326,370],[370,2],[305,460],[460,455],[455,305],[254,449],[449,448],[448,254],[255,261],[261,446],[446,255],[253,450],[450,449],[449,253],[252,451],[451,450],[450,252],[256,452],[452,451],[451,256],[341,453],[453,452],[452,341],[413,464],[464,463],[463,413],[441,413],[413,414],[414,441],[258,442],[442,441],[441,258],[257,443],[443,442],[442,257],[259,444],[444,443],[443,259],[260,445],[445,444],[444,260],[467,342],[342,445],[445,467],[459,458],[458,250],[250,459],[289,392],[392,290],[290,289],[290,328],[328,460],[460,290],[376,433],[433,435],[435,376],[250,290],[290,392],[392,250],[411,416],[416,433],[433,411],[341,463],[463,464],[464,341],[453,464],[464,465],[465,453],[357,465],[465,412],[412,357],[343,412],[412,399],[399,343],[360,363],[363,440],[440,360],[437,399],[399,456],[456,437],[420,456],[456,363],[363,420],[401,435],[435,288],[288,401],[372,383],[383,353],[353,372],[339,255],[255,249],[249,339],[448,261],[261,255],[255,448],[133,243],[243,190],[190,133],[133,155],[155,112],[112,133],[33,246],[246,247],[247,33],[33,130],[130,25],[25,33],[398,384],[384,286],[286,398],[362,398],[398,414],[414,362],[362,463],[463,341],[341,362],[263,359],[359,467],[467,263],[263,249],[249,255],[255,263],[466,467],[467,260],[260,466],[75,60],[60,166],[166,75],[238,239],[239,79],[79,238],[162,127],[127,139],[139,162],[72,11],[11,37],[37,72],[121,232],[232,120],[120,121],[73,72],[72,39],[39,73],[114,128],[128,47],[47,114],[233,232],[232,128],[128,233],[103,104],[104,67],[67,103],[152,175],[175,148],[148,152],[119,118],[118,101],[101,119],[74,73],[73,40],[40,74],[107,9],[9,108],[108,107],[49,48],[48,131],[131,49],[32,194],[194,211],[211,32],[184,74],[74,185],[185,184],[191,80],[80,183],[183,191],[185,40],[40,186],[186,185],[119,230],[230,118],[118,119],[210,202],[202,214],[214,210],[84,83],[83,17],[17,84],[77,76],[76,146],[146,77],[161,160],[160,30],[30,161],[190,56],[56,173],[173,190],[182,106],[106,194],[194,182],[138,135],[135,192],[192,138],[129,203],[203,98],[98,129],[54,21],[21,68],[68,54],[5,51],[51,4],[4,5],[145,144],[144,23],[23,145],[90,77],[77,91],[91,90],[207,205],[205,187],[187,207],[83,201],[201,18],[18,83],[181,91],[91,182],[182,181],[180,90],[90,181],[181,180],[16,85],[85,17],[17,16],[205,206],[206,36],[36,205],[176,148],[148,140],[140,176],[165,92],[92,39],[39,165],[245,193],[193,244],[244,245],[27,159],[159,28],[28,27],[30,247],[247,161],[161,30],[174,236],[236,196],[196,174],[103,54],[54,104],[104,103],[55,193],[193,8],[8,55],[111,117],[117,31],[31,111],[221,189],[189,55],[55,221],[240,98],[98,99],[99,240],[142,126],[126,100],[100,142],[219,166],[166,218],[218,219],[112,155],[155,26],[26,112],[198,209],[209,131],[131,198],[169,135],[135,150],[150,169],[114,47],[47,217],[217,114],[224,223],[223,53],[53,224],[220,45],[45,134],[134,220],[32,211],[211,140],[140,32],[109,67],[67,108],[108,109],[146,43],[43,91],[91,146],[231,230],[230,120],[120,231],[113,226],[226,247],[247,113],[105,63],[63,52],[52,105],[241,238],[238,242],[242,241],[124,46],[46,156],[156,124],[95,78],[78,96],[96,95],[70,46],[46,63],[63,70],[116,143],[143,227],[227,116],[116,123],[123,111],[111,116],[1,44],[44,19],[19,1],[3,236],[236,51],[51,3],[207,216],[216,205],[205,207],[26,154],[154,22],[22,26],[165,39],[39,167],[167,165],[199,200],[200,208],[208,199],[101,36],[36,100],[100,101],[43,57],[57,202],[202,43],[242,20],[20,99],[99,242],[56,28],[28,157],[157,56],[124,35],[35,113],[113,124],[29,160],[160,27],[27,29],[211,204],[204,210],[210,211],[124,113],[113,46],[46,124],[106,43],[43,204],[204,106],[96,62],[62,77],[77,96],[227,137],[137,116],[116,227],[73,41],[41,72],[72,73],[36,203],[203,142],[142,36],[235,64],[64,240],[240,235],[48,49],[49,64],[64,48],[42,41],[41,74],[74,42],[214,212],[212,207],[207,214],[183,42],[42,184],[184,183],[210,169],[169,211],[211,210],[140,170],[170,176],[176,140],[104,105],[105,69],[69,104],[193,122],[122,168],[168,193],[50,123],[123,187],[187,50],[89,96],[96,90],[90,89],[66,65],[65,107],[107,66],[179,89],[89,180],[180,179],[119,101],[101,120],[120,119],[68,63],[63,104],[104,68],[234,93],[93,227],[227,234],[16,15],[15,85],[85,16],[209,129],[129,49],[49,209],[15,14],[14,86],[86,15],[107,55],[55,9],[9,107],[120,100],[100,121],[121,120],[153,145],[145,22],[22,153],[178,88],[88,179],[179,178],[197,6],[6,196],[196,197],[89,88],[88,96],[96,89],[135,138],[138,136],[136,135],[138,215],[215,172],[172,138],[218,115],[115,219],[219,218],[41,42],[42,81],[81,41],[5,195],[195,51],[51,5],[57,43],[43,61],[61,57],[208,171],[171,199],[199,208],[41,81],[81,38],[38,41],[224,53],[53,225],[225,224],[24,144],[144,110],[110,24],[105,52],[52,66],[66,105],[118,229],[229,117],[117,118],[227,34],[34,234],[234,227],[66,107],[107,69],[69,66],[10,109],[109,151],[151,10],[219,48],[48,235],[235,219],[183,62],[62,191],[191,183],[142,129],[129,126],[126,142],[116,111],[111,143],[143,116],[118,117],[117,50],[50,118],[223,222],[222,52],[52,223],[94,19],[19,141],[141,94],[222,221],[221,65],[65,222],[196,3],[3,197],[197,196],[45,220],[220,44],[44,45],[156,70],[70,139],[139,156],[188,122],[122,245],[245,188],[139,71],[71,162],[162,139],[149,170],[170,150],[150,149],[122,188],[188,196],[196,122],[206,216],[216,92],[92,206],[164,2],[2,167],[167,164],[242,141],[141,241],[241,242],[0,164],[164,37],[37,0],[11,72],[72,12],[12,11],[12,38],[38,13],[13,12],[70,63],[63,71],[71,70],[31,226],[226,111],[111,31],[36,101],[101,205],[205,36],[203,206],[206,165],[165,203],[126,209],[209,217],[217,126],[98,165],[165,97],[97,98],[237,220],[220,218],[218,237],[237,239],[239,241],[241,237],[210,214],[214,169],[169,210],[140,171],[171,32],[32,140],[241,125],[125,237],[237,241],[179,86],[86,178],[178,179],[180,85],[85,179],[179,180],[181,84],[84,180],[180,181],[182,83],[83,181],[181,182],[194,201],[201,182],[182,194],[177,137],[137,132],[132,177],[184,76],[76,183],[183,184],[185,61],[61,184],[184,185],[186,57],[57,185],[185,186],[216,212],[212,186],[186,216],[192,214],[214,187],[187,192],[139,34],[34,156],[156,139],[218,79],[79,237],[237,218],[147,123],[123,177],[177,147],[45,44],[44,4],[4,45],[208,201],[201,32],[32,208],[98,64],[64,129],[129,98],[192,213],[213,138],[138,192],[235,59],[59,219],[219,235],[141,242],[242,97],[97,141],[97,2],[2,141],[141,97],[240,75],[75,235],[235,240],[229,24],[24,228],[228,229],[31,25],[25,226],[226,31],[230,23],[23,229],[229,230],[231,22],[22,230],[230,231],[232,26],[26,231],[231,232],[233,112],[112,232],[232,233],[244,189],[189,243],[243,244],[189,221],[221,190],[190,189],[222,28],[28,221],[221,222],[223,27],[27,222],[222,223],[224,29],[29,223],[223,224],[225,30],[30,224],[224,225],[113,247],[247,225],[225,113],[99,60],[60,240],[240,99],[213,147],[147,215],[215,213],[60,20],[20,166],[166,60],[192,187],[187,213],[213,192],[243,112],[112,244],[244,243],[244,233],[233,245],[245,244],[245,128],[128,188],[188,245],[188,114],[114,174],[174,188],[134,131],[131,220],[220,134],[174,217],[217,236],[236,174],[236,198],[198,134],[134,236],[215,177],[177,58],[58,215],[156,143],[143,124],[124,156],[25,110],[110,7],[7,25],[31,228],[228,25],[25,31],[264,356],[356,368],[368,264],[0,11],[11,267],[267,0],[451,452],[452,349],[349,451],[267,302],[302,269],[269,267],[350,357],[357,277],[277,350],[350,452],[452,357],[357,350],[299,333],[333,297],[297,299],[396,175],[175,377],[377,396],[280,347],[347,330],[330,280],[269,303],[303,270],[270,269],[151,9],[9,337],[337,151],[344,278],[278,360],[360,344],[424,418],[418,431],[431,424],[270,304],[304,409],[409,270],[272,310],[310,407],[407,272],[322,270],[270,410],[410,322],[449,450],[450,347],[347,449],[432,422],[422,434],[434,432],[18,313],[313,17],[17,18],[291,306],[306,375],[375,291],[259,387],[387,260],[260,259],[424,335],[335,418],[418,424],[434,364],[364,416],[416,434],[391,423],[423,327],[327,391],[301,251],[251,298],[298,301],[275,281],[281,4],[4,275],[254,373],[373,253],[253,254],[375,307],[307,321],[321,375],[280,425],[425,411],[411,280],[200,421],[421,18],[18,200],[335,321],[321,406],[406,335],[321,320],[320,405],[405,321],[314,315],[315,17],[17,314],[423,426],[426,266],[266,423],[396,377],[377,369],[369,396],[270,322],[322,269],[269,270],[413,417],[417,464],[464,413],[385,386],[386,258],[258,385],[248,456],[456,419],[419,248],[298,284],[284,333],[333,298],[168,417],[417,8],[8,168],[448,346],[346,261],[261,448],[417,413],[413,285],[285,417],[326,327],[327,328],[328,326],[277,355],[355,329],[329,277],[309,392],[392,438],[438,309],[381,382],[382,256],[256,381],[279,429],[429,360],[360,279],[365,364],[364,379],[379,365],[355,277],[277,437],[437,355],[282,443],[443,283],[283,282],[281,275],[275,363],[363,281],[395,431],[431,369],[369,395],[299,297],[297,337],[337,299],[335,273],[273,321],[321,335],[348,450],[450,349],[349,348],[359,446],[446,467],[467,359],[283,293],[293,282],[282,283],[250,458],[458,462],[462,250],[300,276],[276,383],[383,300],[292,308],[308,325],[325,292],[283,276],[276,293],[293,283],[264,372],[372,447],[447,264],[346,352],[352,340],[340,346],[354,274],[274,19],[19,354],[363,456],[456,281],[281,363],[426,436],[436,425],[425,426],[380,381],[381,252],[252,380],[267,269],[269,393],[393,267],[421,200],[200,428],[428,421],[371,266],[266,329],[329,371],[432,287],[287,422],[422,432],[290,250],[250,328],[328,290],[385,258],[258,384],[384,385],[446,265],[265,342],[342,446],[386,387],[387,257],[257,386],[422,424],[424,430],[430,422],[445,342],[342,276],[276,445],[422,273],[273,424],[424,422],[306,292],[292,307],[307,306],[352,366],[366,345],[345,352],[268,271],[271,302],[302,268],[358,423],[423,371],[371,358],[327,294],[294,460],[460,327],[331,279],[279,294],[294,331],[303,271],[271,304],[304,303],[436,432],[432,427],[427,436],[304,272],[272,408],[408,304],[395,394],[394,431],[431,395],[378,395],[395,400],[400,378],[296,334],[334,299],[299,296],[6,351],[351,168],[168,6],[376,352],[352,411],[411,376],[307,325],[325,320],[320,307],[285,295],[295,336],[336,285],[320,319],[319,404],[404,320],[329,330],[330,349],[349,329],[334,293],[293,333],[333,334],[366,323],[323,447],[447,366],[316,15],[15,315],[315,316],[331,358],[358,279],[279,331],[317,14],[14,316],[316,317],[8,285],[285,9],[9,8],[277,329],[329,350],[350,277],[253,374],[374,252],[252,253],[319,318],[318,403],[403,319],[351,6],[6,419],[419,351],[324,318],[318,325],[325,324],[397,367],[367,365],[365,397],[288,435],[435,397],[397,288],[278,344],[344,439],[439,278],[310,272],[272,311],[311,310],[248,195],[195,281],[281,248],[375,273],[273,291],[291,375],[175,396],[396,199],[199,175],[312,311],[311,268],[268,312],[276,283],[283,445],[445,276],[390,373],[373,339],[339,390],[295,282],[282,296],[296,295],[448,449],[449,346],[346,448],[356,264],[264,454],[454,356],[337,336],[336,299],[299,337],[337,338],[338,151],[151,337],[294,278],[278,455],[455,294],[308,292],[292,415],[415,308],[429,358],[358,355],[355,429],[265,340],[340,372],[372,265],[352,346],[346,280],[280,352],[295,442],[442,282],[282,295],[354,19],[19,370],[370,354],[285,441],[441,295],[295,285],[195,248],[248,197],[197,195],[457,440],[440,274],[274,457],[301,300],[300,368],[368,301],[417,351],[351,465],[465,417],[251,301],[301,389],[389,251],[394,395],[395,379],[379,394],[399,412],[412,419],[419,399],[410,436],[436,322],[322,410],[326,2],[2,393],[393,326],[354,370],[370,461],[461,354],[393,164],[164,267],[267,393],[268,302],[302,12],[12,268],[312,268],[268,13],[13,312],[298,293],[293,301],[301,298],[265,446],[446,340],[340,265],[280,330],[330,425],[425,280],[322,426],[426,391],[391,322],[420,429],[429,437],[437,420],[393,391],[391,326],[326,393],[344,440],[440,438],[438,344],[458,459],[459,461],[461,458],[364,434],[434,394],[394,364],[428,396],[396,262],[262,428],[274,354],[354,457],[457,274],[317,316],[316,402],[402,317],[316,315],[315,403],[403,316],[315,314],[314,404],[404,315],[314,313],[313,405],[405,314],[313,421],[421,406],[406,313],[323,366],[366,361],[361,323],[292,306],[306,407],[407,292],[306,291],[291,408],[408,306],[291,287],[287,409],[409,291],[287,432],[432,410],[410,287],[427,434],[434,411],[411,427],[372,264],[264,383],[383,372],[459,309],[309,457],[457,459],[366,352],[352,401],[401,366],[1,274],[274,4],[4,1],[418,421],[421,262],[262,418],[331,294],[294,358],[358,331],[435,433],[433,367],[367,435],[392,289],[289,439],[439,392],[328,462],[462,326],[326,328],[94,2],[2,370],[370,94],[289,305],[305,455],[455,289],[339,254],[254,448],[448,339],[359,255],[255,446],[446,359],[254,253],[253,449],[449,254],[253,252],[252,450],[450,253],[252,256],[256,451],[451,252],[256,341],[341,452],[452,256],[414,413],[413,463],[463,414],[286,441],[441,414],[414,286],[286,258],[258,441],[441,286],[258,257],[257,442],[442,258],[257,259],[259,443],[443,257],[259,260],[260,444],[444,259],[260,467],[467,445],[445,260],[309,459],[459,250],[250,309],[305,289],[289,290],[290,305],[305,290],[290,460],[460,305],[401,376],[376,435],[435,401],[309,250],[250,392],[392,309],[376,411],[411,433],[433,376],[453,341],[341,464],[464,453],[357,453],[453,465],[465,357],[343,357],[357,412],[412,343],[437,343],[343,399],[399,437],[344,360],[360,440],[440,344],[420,437],[437,456],[456,420],[360,420],[420,363],[363,360],[361,401],[401,288],[288,361],[265,372],[372,353],[353,265],[390,339],[339,249],[249,390],[339,448],[448,255],[255,339]]),te("matrixDataToMatrix",function(g){for(var w=g.getCols(),S=g.getRows(),D=g.getPackedDataList(),z=[],Y=0;Y<S;Y++)z.push(Array(w));for(Y=0;Y<S;Y++)for(var K=0;K<w;K++){var J=g.getLayout()===1?Y*w+K:K*S+Y;z[Y][K]=D[J]}return z}),te("VERSION","0.4.1633559619")}).call(Ui)),Ui}var dA=hA();const pA=j();pA.registerFlag("KEEP_INTERMEDIATE_TENSORS",()=>!1,n=>{n&&console.warn("Keep intermediate tensors is ON. This will print the values of all intermediate tensors during model inference. Not all models support this mode. For details, check e2e/benchmarks/ model_config.js. This significantly impacts performance.")});var Ft;(function(n){n[n.DT_INVALID=0]="DT_INVALID",n[n.DT_FLOAT=1]="DT_FLOAT",n[n.DT_DOUBLE=2]="DT_DOUBLE",n[n.DT_INT32=3]="DT_INT32",n[n.DT_UINT8=4]="DT_UINT8",n[n.DT_INT16=5]="DT_INT16",n[n.DT_INT8=6]="DT_INT8",n[n.DT_STRING=7]="DT_STRING",n[n.DT_COMPLEX64=8]="DT_COMPLEX64",n[n.DT_INT64=9]="DT_INT64",n[n.DT_BOOL=10]="DT_BOOL",n[n.DT_QINT8=11]="DT_QINT8",n[n.DT_QUINT8=12]="DT_QUINT8",n[n.DT_QINT32=13]="DT_QINT32",n[n.DT_BFLOAT16=14]="DT_BFLOAT16",n[n.DT_QINT16=15]="DT_QINT16",n[n.DT_QUINT16=16]="DT_QUINT16",n[n.DT_UINT16=17]="DT_UINT16",n[n.DT_COMPLEX128=18]="DT_COMPLEX128",n[n.DT_HALF=19]="DT_HALF",n[n.DT_RESOURCE=20]="DT_RESOURCE",n[n.DT_VARIANT=21]="DT_VARIANT",n[n.DT_UINT32=22]="DT_UINT32",n[n.DT_UINT64=23]="DT_UINT64",n[n.DT_FLOAT_REF=101]="DT_FLOAT_REF",n[n.DT_DOUBLE_REF=102]="DT_DOUBLE_REF",n[n.DT_INT32_REF=103]="DT_INT32_REF",n[n.DT_UINT8_REF=104]="DT_UINT8_REF",n[n.DT_INT16_REF=105]="DT_INT16_REF",n[n.DT_INT8_REF=106]="DT_INT8_REF",n[n.DT_STRING_REF=107]="DT_STRING_REF",n[n.DT_COMPLEX64_REF=108]="DT_COMPLEX64_REF",n[n.DT_INT64_REF=109]="DT_INT64_REF",n[n.DT_BOOL_REF=110]="DT_BOOL_REF",n[n.DT_QINT8_REF=111]="DT_QINT8_REF",n[n.DT_QUINT8_REF=112]="DT_QUINT8_REF",n[n.DT_QINT32_REF=113]="DT_QINT32_REF",n[n.DT_BFLOAT16_REF=114]="DT_BFLOAT16_REF",n[n.DT_QINT16_REF=115]="DT_QINT16_REF",n[n.DT_QUINT16_REF=116]="DT_QUINT16_REF",n[n.DT_UINT16_REF=117]="DT_UINT16_REF",n[n.DT_COMPLEX128_REF=118]="DT_COMPLEX128_REF",n[n.DT_HALF_REF=119]="DT_HALF_REF",n[n.DT_RESOURCE_REF=120]="DT_RESOURCE_REF",n[n.DT_VARIANT_REF=121]="DT_VARIANT_REF",n[n.DT_UINT32_REF=122]="DT_UINT32_REF",n[n.DT_UINT64_REF=123]="DT_UINT64_REF"})(Ft||(Ft={}));var Vl;(function(n){(function(e){e[e.LEGACY=0]="LEGACY",e[e.V1=1]="V1",e[e.V2=2]="V2"})(n.CheckpointFormatVersion||(n.CheckpointFormatVersion={}))})(Vl||(Vl={}));const fA={};function yg(n){return fA[n]}function v(n,e,t,r,s){const o=e.inputParams[n];if(o&&o.inputIndexStart!==void 0){const i=o.inputIndexStart,u=o.inputIndexEnd===0?void 0:o.inputIndexEnd===void 0?i+1:o.inputIndexEnd,c=i<0?e.inputNames.length+i:i;if(o.type==="tensor")return ht(e.inputNames[c],t,r,s);if(o.type==="tensors"){const d=e.inputs.slice(i,u);return e.inputNames.slice(i,u).filter((f,b)=>{var y;return((y=d[b])===null||y===void 0?void 0:y.op)!=="NoOp"}).map(f=>ht(f,t,r,s))}const l=ht(e.inputNames[c],t,r,s),h=l.dataSync();return o.type==="number"?h[0]:nu(l.shape,h)}const a=e.attrParams[n];return a&&a.value}function ht(n,e,t,r){const[s,o]=Pt(n,t);if(r!=null){const i=r.getHashTableHandleByName(s);if(i!=null)return i}const a=t.currentContextIds.find(i=>!!e[Ha(s,i)]);return a!==void 0?e[Ha(s,a)][o]:void 0}function Ml(n,e,t){return e[Ha(n,t.currentContextId)]}function Ln(n,e){const[t,r,s]=Pt(n,e);return[Ha(t,e&&e.currentContextId),r,s]}function Ha(n,e){return e?`${n}-${e}`:n}function Pt(n,e){if(n==="")return["",0,void 0];const t=e!=null&&e.parseNodeNameCache!=null;if(t){const o=e.parseNodeNameCache.get(n);if(o!=null)return o}const r=n.split(":");let s;if(r.length===1)s=[n,0,void 0];else{const o=r[0],a=r.length===3?r[1]:void 0,i=Number(r[r.length-1]);s=[o,i,a]}return t&&e.parseNodeNameCache.set(n,s),s}function Ra(n,e,t){let r=v("pad",n,e,t);if(r==="explicit"){r=v("explicitPaddings",n,e,t);const s=[[0,0],[0,0],[0,0],[0,0]];for(let o=0;o<4;o++)s[o][0]=r[o*2],s[o][1]=r[o*2+1];return s}return r}function Bn(n){return n.kept?n:lr(n)}const mA=[{tfOpName:"Add",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"AddV2",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"AddN",category:"arithmetic",inputs:[{start:0,end:0,name:"tensors",type:"tensors"}]},{tfOpName:"BiasAdd",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0}]},{tfOpName:"Sub",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"RealDiv",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Div",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"DivNoNan",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"FloorDiv",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Mul",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Maximum",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Minimum",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Pow",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"SquaredDifference",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Mod",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"FloorMod",category:"arithmetic",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]}],gA=Object.freeze(Object.defineProperty({__proto__:null,json:mA},Symbol.toStringTag,{value:"Module"}));const yA=[{tfOpName:"Abs",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Acos",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Asin",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Atan",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Atan2",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"y",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Ceil",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"ClipByValue",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"clipValueMin",type:"number"},{start:2,name:"clipValueMax",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Complex",category:"basic_math",inputs:[{start:0,name:"real",type:"tensor"},{start:1,name:"imag",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"ComplexAbs",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Cos",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Cosh",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Elu",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Exp",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Floor",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Log",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Imag",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"Tout",name:"outputType",type:"dtype",notSupported:!0}]},{tfOpName:"Neg",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Real",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"Tout",name:"outputType",type:"dtype",notSupported:!0}]},{tfOpName:"Prelu",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"alpha",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Relu",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Relu6",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Selu",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Sigmoid",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Sin",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Sinh",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Sqrt",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Rsqrt",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Square",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Tan",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Tanh",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Sign",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Round",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Expm1",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Log1p",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Reciprocal",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Softplus",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Asinh",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Acosh",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Atanh",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Erf",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"LeakyRelu",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"alpha",name:"alpha",type:"number",defaultValue:.2},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"IsNan",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"IsFinite",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"IsInf",category:"basic_math",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]}],xA=Object.freeze(Object.defineProperty({__proto__:null,json:yA},Symbol.toStringTag,{value:"Module"}));const bA=[{tfOpName:"EmptyTensorList",category:"control",inputs:[{start:0,name:"elementShape",type:"shape"},{start:1,name:"maxNumElements",type:"number"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"LoopCond",category:"control",inputs:[{start:0,name:"pred",type:"tensor"}]},{tfOpName:"Switch",category:"control",inputs:[{start:0,name:"data",type:"tensor"},{start:1,name:"pred",type:"tensor"}]},{tfOpName:"Merge",category:"control",inputs:[{start:0,end:0,name:"tensors",type:"tensors"}]},{tfOpName:"Enter",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"frame_name",name:"frameName",type:"string"},{tfName:"is_constant",name:"isConstant",type:"bool"}]},{tfOpName:"Exit",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"NextIteration",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"TensorArrayV3",category:"control",inputs:[{start:0,name:"size",type:"number"}],attrs:[{tfName:"dtype",name:"dtype",type:"dtype"},{tfName:"element_shape",name:"elementShape",type:"shape"},{tfName:"dynamic_size",name:"dynamicSize",type:"bool"},{tfName:"clear_after_read",name:"clearAfterRead",type:"bool"},{tfName:"identical_element_shapes",name:"identicalElementShapes",type:"bool"},{tfName:"tensor_array_name",name:"name",type:"string"}]},{tfOpName:"TensorArrayWriteV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"index",type:"number"},{start:2,name:"tensor",type:"tensor"},{start:3,name:"flowIn",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"TensorArrayReadV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"index",type:"number"},{start:2,name:"flowIn",type:"number"}],attrs:[{tfName:"dtype",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"TensorArrayGatherV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"indices",type:"number[]"},{start:2,name:"flowIn",type:"number"}],attrs:[{tfName:"dtype",name:"dtype",type:"dtype"},{tfName:"element_shape",name:"elementShape",type:"shape"}]},{tfOpName:"TensorArrayScatterV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"indices",type:"number[]"},{start:2,name:"tensor",type:"tensor"},{start:3,name:"flowIn",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"TensorArrayConcatV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"flowIn",type:"number"}],attrs:[{tfName:"dtype",name:"dtype",type:"dtype"},{tfName:"element_shape_except0",name:"elementShapeExcept0",type:"shape",notSupported:!0}]},{tfOpName:"TensorArraySplitV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"tensor",type:"tensor"},{start:2,name:"lengths",type:"number[]"},{start:3,name:"flowIn",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"TensorArraySizeV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"},{start:1,name:"flowIn",type:"number"}]},{tfOpName:"TensorArrayCloseV3",category:"control",inputs:[{start:0,name:"tensorArrayId",type:"tensor"}]},{tfOpName:"StatelessIf",category:"control",inputs:[{start:0,name:"cond",type:"tensor"},{start:1,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"then_branch",name:"thenBranch",type:"func"},{tfName:"else_branch",name:"elseBranch",type:"func"}]},{tfOpName:"If",category:"control",inputs:[{start:0,name:"cond",type:"tensor"},{start:1,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"then_branch",name:"thenBranch",type:"func"},{tfName:"else_branch",name:"elseBranch",type:"func"}]},{tfOpName:"StatelessWhile",category:"control",inputs:[{start:0,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"cond",name:"cond",type:"func"},{tfName:"body",name:"body",type:"func"}]},{tfOpName:"While",category:"control",inputs:[{start:0,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"cond",name:"cond",type:"func"},{tfName:"body",name:"body",type:"func"}]},{tfOpName:"TensorListScatter",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"},{start:1,name:"indices",type:"number[]"},{start:2,name:"elementShape",type:"shape"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListScatterV2",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"},{start:1,name:"indices",type:"number[]"},{start:2,name:"elementShape",type:"shape"},{start:3,name:"numElements",type:"number"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListGather",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"indices",type:"number[]"},{start:2,name:"elementShape",type:"shape"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListGetItem",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"index",type:"number"},{start:2,name:"elementShape",type:"shape"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListSetItem",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"index",type:"number"},{start:2,name:"tensor",type:"tensor"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListReserve",category:"control",inputs:[{start:0,name:"elementShape",type:"shape"},{start:1,name:"numElements",type:"number"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListFromTensor",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"},{start:1,name:"elementShape",type:"shape"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListStack",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"elementShape",type:"shape"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"},{tfName:"num_elements",name:"numElements",type:"dtype"}]},{tfOpName:"TensorListSplit",category:"control",inputs:[{start:0,name:"tensor",type:"tensor"},{start:1,name:"elementShape",type:"shape"},{start:2,name:"lengths",type:"number[]"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListConcat",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"}],attrs:[{tfName:"element_shape",name:"elementShape",type:"shape"},{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListConcatV2",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"}],attrs:[{tfName:"element_shape",name:"elementShape",type:"shape"},{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListPopBack",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"elementShape",type:"shape"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListPushBack",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"tensor",type:"tensor"}],attrs:[{tfName:"element_dtype",name:"elementDType",type:"dtype"}]},{tfOpName:"TensorListLength",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"}]},{tfOpName:"TensorListResize",category:"control",inputs:[{start:0,name:"tensorListId",type:"tensor"},{start:1,name:"size",type:"number"}]}],vA=Object.freeze(Object.defineProperty({__proto__:null,json:bA},Symbol.toStringTag,{value:"Module"}));const wA=[{tfOpName:"AvgPool",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0},{tfName:"ksize",name:"kernelSize",type:"number[]"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"MaxPool",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0},{tfName:"ksize",name:"kernelSize",type:"number[]"},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[],notSupported:!0},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"MaxPoolWithArgmax",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"ksize",name:"kernelSize",type:"number[]"},{tfName:"include_batch_in_index",name:"includeBatchInIndex",type:"bool"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"AvgPool3D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0},{tfName:"ksize",name:"kernelSize",type:"number[]"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"MaxPool3D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0},{tfName:"ksize",name:"kernelSize",type:"number[]"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Conv1D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"}],attrs:[{tfName:"stride",name:"stride",type:"number"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NWC"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"dilation",name:"dilation",type:"number",defaultValue:1}]},{tfOpName:"Conv2D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"useCudnnOnGpu",name:"useCudnnOnGpu",type:"bool"},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NHWC"},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[]},{tfName:"dilations",name:"dilations",type:"number[]"}]},{tfOpName:"_FusedConv2D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"},{start:2,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"num_args",name:"numArgs",type:"number"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[]},{tfName:"use_cudnn_on_gpu",name:"useCudnnOnGpu",type:"bool",defaultValue:!0},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NHWC"},{tfName:"dilations",name:"dilations",type:"number[]",defaultValue:[1,1,1,1]},{tfName:"fused_ops",name:"fusedOps",type:"string[]",defaultValue:[]},{tfName:"epsilon",name:"epsilon",type:"number",defaultValue:1e-4},{tfName:"leakyrelu_alpha",name:"leakyreluAlpha",type:"number",defaultValue:.2}]},{tfOpName:"Conv2DBackpropInput",category:"convolution",inputs:[{start:2,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"},{start:0,name:"outputShape",type:"number[]"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[]},{tfName:"dilations",name:"dilations",type:"number[]",notSupported:!0}]},{tfOpName:"DepthwiseConv2d",category:"convolution",inputs:[{start:0,name:"input",type:"tensor"},{start:1,name:"filter",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NHWC"},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[]},{tfName:"dilations",name:"dilations",type:"number[]"}]},{tfOpName:"DepthwiseConv2dNative",category:"convolution",inputs:[{start:0,name:"input",type:"tensor"},{start:1,name:"filter",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NHWC"},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[]},{tfName:"dilations",name:"dilations",type:"number[]"}]},{tfOpName:"FusedDepthwiseConv2dNative",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"},{start:2,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"num_args",name:"numArgs",type:"number"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NHWC"},{tfName:"dilations",name:"dilations",type:"number[]",defaultValue:[1,1,1,1]},{tfName:"fused_ops",name:"fusedOps",type:"string[]",defaultValue:[]},{tfName:"explicit_paddings",name:"explicitPaddings",type:"number[]",defaultValue:[]}]},{tfOpName:"Conv3D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"padding",name:"pad",type:"string"},{tfName:"data_format",name:"dataFormat",type:"string",defaultValue:"NHWC"},{tfName:"dilations",name:"dilations",type:"number[]"}]},{tfOpName:"Dilation2D",category:"convolution",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"filter",type:"tensor"}],attrs:[{tfName:"strides",name:"strides",type:"number[]"},{tfName:"rates",name:"dilations",type:"number[]"},{tfName:"padding",name:"pad",type:"string"}]}],$A=Object.freeze(Object.defineProperty({__proto__:null,json:wA},Symbol.toStringTag,{value:"Module"}));const SA=[{tfOpName:"Fill",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"},{start:1,name:"value",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"LinSpace",category:"creation",inputs:[{start:0,name:"start",type:"number"},{start:1,name:"stop",type:"number"},{start:2,name:"num",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"OneHot",category:"creation",inputs:[{start:0,name:"indices",type:"tensor"},{start:1,name:"depth",type:"number"},{start:2,name:"onValue",type:"number",defaultValue:1},{start:3,name:"offValue",type:"number",defaultValue:0}],attrs:[{tfName:"axis",name:"axis",type:"number",notSupported:!0},{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"Ones",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"}],attrs:[{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"OnesLike",category:"creation",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"dtype",name:"dtype",type:"dtype"}]},{tfOpName:"RandomStandardNormal",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"}],attrs:[{tfName:"seed",name:"seed",type:"number",defaultValue:0},{tfName:"seed2",name:"seed2",type:"number",defaultValue:0,notSupported:!0},{tfName:"dtype",name:"dtype",type:"dtype"},{tfName:"T",name:"T",type:"number",notSupported:!0}]},{tfOpName:"RandomUniform",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"}],attrs:[{tfName:"minval",name:"minval",type:"number",defaultValue:0},{tfName:"maxval",name:"maxval",type:"number",defaultValue:1},{tfName:"dtype",name:"dtype",type:"dtype"},{tfName:"seed",name:"seed",type:"number",defaultValue:0},{tfName:"seed2",name:"seed2",type:"number",defaultValue:0,notSupported:!0},{tfName:"T",name:"T",type:"number",notSupported:!0}]},{tfOpName:"RandomUniformInt",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"}],attrs:[{tfName:"minval",name:"minval",type:"number"},{tfName:"maxval",name:"maxval",type:"number"},{tfName:"seed",name:"seed",type:"number",defaultValue:0},{tfName:"seed2",name:"seed2",type:"number",defaultValue:0,notSupported:!0}]},{tfOpName:"Range",category:"creation",inputs:[{start:0,name:"start",type:"number"},{start:1,name:"stop",type:"number"},{start:2,name:"step",type:"number",defaultValue:0}],attrs:[{tfName:"Tidx",name:"dtype",type:"dtype"}]},{tfOpName:"TruncatedNormal",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"}],attrs:[{tfName:"means",name:"mean",type:"number",defaultValue:0},{tfName:"stddev",name:"stdDev",type:"number",defaultValue:1},{tfName:"seed",name:"seed",type:"number"},{tfName:"seed2",name:"seed2",type:"number",defaultValue:0,notSupported:!0},{tfName:"dtype",name:"dtype",type:"dtype"},{tfName:"T",name:"T",type:"number",notSupported:!0}]},{tfOpName:"Zeros",category:"creation",inputs:[{start:0,name:"shape",type:"number[]"}],attrs:[{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"ZerosLike",category:"creation",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"Multinomial",category:"creation",inputs:[{start:0,name:"logits",type:"tensor"},{start:1,name:"numSamples",type:"number"}],attrs:[{tfName:"seed",name:"seed",type:"number"},{tfName:"seed2",name:"seed2",type:"number"},{tfName:"T",name:"dtype",type:"dtype"},{tfName:"output_dtype",name:"output_dtype",type:"dtype"}]}],CA=Object.freeze(Object.defineProperty({__proto__:null,json:SA},Symbol.toStringTag,{value:"Module"}));const TA=[{tfOpName:"NonMaxSuppressionV2",category:"dynamic",inputs:[{start:0,name:"boxes",type:"tensor"},{start:1,name:"scores",type:"tensor"},{start:2,name:"maxOutputSize",type:"number"},{start:3,name:"iouThreshold",type:"number"}]},{tfOpName:"NonMaxSuppressionV3",category:"dynamic",inputs:[{start:0,name:"boxes",type:"tensor"},{start:1,name:"scores",type:"tensor"},{start:2,name:"maxOutputSize",type:"number"},{start:3,name:"iouThreshold",type:"number"},{start:4,name:"scoreThreshold",type:"number"}]},{tfOpName:"NonMaxSuppressionV4",category:"dynamic",inputs:[{start:0,name:"boxes",type:"tensor"},{start:1,name:"scores",type:"tensor"},{start:2,name:"maxOutputSize",type:"number"},{start:3,name:"iouThreshold",type:"number"},{start:4,name:"scoreThreshold",type:"number"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0},{tfName:"T_threshold",name:"threshold",type:"dtype",notSupported:!0},{tfName:"pad_to_max_output_size",name:"padToMaxOutputSize",type:"bool"}]},{tfOpName:"NonMaxSuppressionV5",category:"dynamic",inputs:[{start:0,name:"boxes",type:"tensor"},{start:1,name:"scores",type:"tensor"},{start:2,name:"maxOutputSize",type:"number"},{start:3,name:"iouThreshold",type:"number"},{start:4,name:"scoreThreshold",type:"number"},{start:5,name:"softNmsSigma",type:"number"}]},{tfOpName:"Where",category:"dynamic",inputs:[{start:0,name:"condition",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"ListDiff",category:"dynamic",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"y",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]}],NA=Object.freeze(Object.defineProperty({__proto__:null,json:TA},Symbol.toStringTag,{value:"Module"}));const EA=[{tfOpName:"LowerBound",category:"evaluation",inputs:[{start:0,name:"sortedSequence",type:"tensor"},{start:1,name:"values",type:"tensor"}]},{tfOpName:"TopKV2",category:"evaluation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"k",type:"number"}],attrs:[{tfName:"sorted",name:"sorted",type:"bool"}]},{tfOpName:"UpperBound",category:"evaluation",inputs:[{start:0,name:"sortedSequence",type:"tensor"},{start:1,name:"values",type:"tensor"}]},{tfOpName:"Unique",category:"evaluation",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"UniqueV2",category:"evaluation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number"}]}],IA=Object.freeze(Object.defineProperty({__proto__:null,json:EA},Symbol.toStringTag,{value:"Module"}));const kA=[{tfOpName:"PlaceholderWithDefault",category:"graph",inputs:[{start:0,name:"default",type:"tensor"}],attrs:[{tfName:"shape",name:"shape",type:"shape"},{tfName:"dtype",name:"dtype",type:"dtype"}]},{tfOpName:"Placeholder",category:"graph",attrs:[{tfName:"shape",name:"shape",type:"shape"},{tfName:"dtype",name:"dtype",type:"dtype"}]},{tfOpName:"Const",category:"graph"},{tfOpName:"Identity",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"IdentityN",category:"graph",inputs:[{start:0,end:0,name:"x",type:"tensors"}]},{tfOpName:"Snapshot",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"Rank",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"Size",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"Shape",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"ShapeN",category:"graph",inputs:[{start:0,end:0,name:"x",type:"tensors"}]},{tfOpName:"Print",category:"graph",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"data",type:"tensors"}],attrs:[{tfName:"message",name:"message",type:"string"},{tfName:"first_n",name:"firstN",type:"number",notSupported:!0},{tfName:"summarize",name:"summarize",type:"number",defaultValue:3}]},{tfOpName:"NoOp",category:"graph",inputs:[]},{tfOpName:"StopGradient",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"FakeQuantWithMinMaxVars",category:"graph",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"min",name:"min",type:"number"},{tfName:"max",name:"max",type:"number"}]}],RA=Object.freeze(Object.defineProperty({__proto__:null,json:kA},Symbol.toStringTag,{value:"Module"}));const _A=[{tfOpName:"HashTable",category:"hash_table",inputs:[],attrs:[{tfName:"shared_name",name:"sharedName",type:"string"},{tfName:"use_node_name_sharing",name:"useNodeNameSharing",type:"bool"},{tfName:"key_dtype",name:"keyDType",type:"dtype"},{tfName:"value_dtype",name:"valueDType",type:"dtype"}]},{tfOpName:"HashTableV2",category:"hash_table",inputs:[],attrs:[{tfName:"shared_name",name:"sharedName",type:"string"},{tfName:"use_node_name_sharing",name:"useNodeNameSharing",type:"bool"},{tfName:"key_dtype",name:"keyDType",type:"dtype"},{tfName:"value_dtype",name:"valueDType",type:"dtype"}]},{tfOpName:"LookupTableImport",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"},{start:1,name:"keys",type:"tensor"},{start:2,name:"values",type:"tensor"}],attrs:[{tfName:"Tin",name:"tIn",type:"dtype",notSupported:!0},{tfName:"Tout",name:"tOut",type:"dtype",notSupported:!0}]},{tfOpName:"LookupTableImportV2",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"},{start:1,name:"keys",type:"tensor"},{start:2,name:"values",type:"tensor"}],attrs:[{tfName:"Tin",name:"tIn",type:"dtype",notSupported:!0},{tfName:"Tout",name:"tOut",type:"dtype",notSupported:!0}]},{tfOpName:"LookupTableFind",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"},{start:1,name:"keys",type:"tensor"},{start:2,name:"defaultValue",type:"tensor"}],attrs:[{tfName:"Tin",name:"tIn",type:"dtype",notSupported:!0},{tfName:"Tout",name:"tOut",type:"dtype",notSupported:!0}]},{tfOpName:"LookupTableFindV2",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"},{start:1,name:"keys",type:"tensor"},{start:2,name:"defaultValue",type:"tensor"}],attrs:[{tfName:"Tin",name:"tIn",type:"dtype",notSupported:!0},{tfName:"Tout",name:"tOut",type:"dtype",notSupported:!0}]},{tfOpName:"LookupTableSize",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"}]},{tfOpName:"LookupTableSizeV2",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"}]},{tfOpName:"InitializeTable",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"},{start:1,name:"keys",type:"tensor"},{start:2,name:"values",type:"tensor"}]},{tfOpName:"InitializeTableV2",category:"hash_table",inputs:[{start:0,name:"tableHandle",type:"tensor"},{start:1,name:"keys",type:"tensor"},{start:2,name:"values",type:"tensor"}]}],AA=Object.freeze(Object.defineProperty({__proto__:null,json:_A},Symbol.toStringTag,{value:"Module"}));const OA=[{tfOpName:"ResizeBilinear",category:"image",inputs:[{start:0,name:"images",type:"tensor"},{start:1,name:"size",type:"number[]"}],attrs:[{tfName:"align_corners",name:"alignCorners",type:"bool"},{tfName:"half_pixel_centers",name:"halfPixelCenters",type:"bool"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"ResizeNearestNeighbor",category:"image",inputs:[{start:0,name:"images",type:"tensor"},{start:1,name:"size",type:"number[]"}],attrs:[{tfName:"align_corners",name:"alignCorners",type:"bool"},{tfName:"half_pixel_centers",name:"halfPixelCenters",type:"bool"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"CropAndResize",category:"image",inputs:[{start:0,name:"image",type:"tensor"},{start:1,name:"boxes",type:"tensor"},{start:2,name:"boxInd",type:"tensor"},{start:3,name:"cropSize",type:"number[]"}],attrs:[{tfName:"method",name:"method",type:"string"},{tfName:"extrapolation_value",name:"extrapolationValue",type:"number"}]},{tfOpName:"ImageProjectiveTransformV3",category:"image",inputs:[{start:0,name:"images",type:"tensor"},{start:1,name:"transforms",type:"tensor"},{start:2,name:"outputShape",type:"number[]"},{start:3,name:"fillValue",type:"number"}],attrs:[{tfName:"interpolation",name:"interpolation",type:"string"},{tfName:"fill_mode",name:"fillMode",type:"string"}]}],DA=Object.freeze(Object.defineProperty({__proto__:null,json:OA},Symbol.toStringTag,{value:"Module"}));const FA=[{tfOpName:"Equal",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"NotEqual",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Greater",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"GreaterEqual",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Less",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"LessEqual",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"LogicalAnd",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"LogicalNot",category:"logical",inputs:[{start:0,name:"a",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"LogicalOr",category:"logical",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Select",category:"logical",inputs:[{start:0,name:"condition",type:"tensor"},{start:1,name:"a",type:"tensor"},{start:2,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"SelectV2",category:"logical",inputs:[{start:0,name:"condition",type:"tensor"},{start:1,name:"a",type:"tensor"},{start:2,name:"b",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"BitwiseAnd",category:"logical",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"y",type:"tensor"}]}],PA=Object.freeze(Object.defineProperty({__proto__:null,json:FA},Symbol.toStringTag,{value:"Module"}));const LA=[{tfOpName:"_FusedMatMul",category:"matrices",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"},{start:2,end:0,name:"args",type:"tensors"}],attrs:[{tfName:"num_args",name:"numArgs",type:"number"},{tfName:"fused_ops",name:"fusedOps",type:"string[]",defaultValue:[]},{tfName:"epsilon",name:"epsilon",type:"number",defaultValue:1e-4},{tfName:"transpose_a",name:"transposeA",type:"bool",defaultValue:!1},{tfName:"transpose_b",name:"transposeB",type:"bool",defaultValue:!1},{tfName:"leakyrelu_alpha",name:"leakyreluAlpha",type:"number",defaultValue:.2},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"MatMul",category:"matrices",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"transpose_a",name:"transposeA",type:"bool",defaultValue:!1},{tfName:"transpose_b",name:"transposeB",type:"bool",defaultValue:!1},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"BatchMatMul",category:"matrices",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"adj_x",name:"transposeA",type:"bool",defaultValue:!1},{tfName:"adj_y",name:"transposeB",type:"bool",defaultValue:!1},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"BatchMatMulV2",category:"matrices",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"b",type:"tensor"}],attrs:[{tfName:"adj_x",name:"transposeA",type:"bool",defaultValue:!1},{tfName:"adj_y",name:"transposeB",type:"bool",defaultValue:!1},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Transpose",category:"matrices",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"perm",type:"number[]"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Einsum",category:"matrices",inputs:[{start:0,end:0,name:"tensors",type:"tensors"}],attrs:[{tfName:"equation",name:"equation",type:"string"},{tfName:"N",name:"n",type:"number",defaultValue:2},{tfName:"T",name:"dtype",type:"dtype"}]},{tfOpName:"MatrixBandPart",category:"matrices",inputs:[{start:0,name:"a",type:"tensor"},{start:1,name:"numLower",type:"tensor"},{start:1,name:"numUpper",type:"tensor"}]}],BA=Object.freeze(Object.defineProperty({__proto__:null,json:LA},Symbol.toStringTag,{value:"Module"}));const VA=[{tfOpName:"EuclideanNorm",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool",defaultValue:!1}]},{tfOpName:"FusedBatchNorm",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"scale",type:"tensor"},{start:2,name:"offset",type:"tensor"},{start:3,name:"mean",type:"tensor"},{start:4,name:"variance",type:"tensor"}],attrs:[{tfName:"epsilon",name:"epsilon",type:"number",defaultValue:.001},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0}]},{tfOpName:"FusedBatchNormV2",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"scale",type:"tensor"},{start:2,name:"offset",type:"tensor"},{start:3,name:"mean",type:"tensor"},{start:4,name:"variance",type:"tensor"}],attrs:[{tfName:"epsilon",name:"epsilon",type:"number",defaultValue:.001},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0}]},{tfOpName:"FusedBatchNormV3",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"scale",type:"tensor"},{start:2,name:"offset",type:"tensor"},{start:3,name:"mean",type:"tensor"},{start:4,name:"variance",type:"tensor"}],attrs:[{tfName:"epsilon",name:"epsilon",type:"number",defaultValue:.001},{tfName:"data_format",name:"dataFormat",type:"string",notSupported:!0}]},{tfOpName:"LRN",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"depth_radius",name:"radius",type:"number",defaultValue:5},{tfName:"bias",name:"bias",type:"number",defaultValue:1},{tfName:"alpha",name:"alpha",type:"number",defaultValue:1},{tfName:"beta",name:"beta",type:"number",defaultValue:.5}]},{tfOpName:"Softmax",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"LogSoftmax",category:"normalization",inputs:[{start:0,name:"x",type:"tensor"}]}],MA=Object.freeze(Object.defineProperty({__proto__:null,json:VA},Symbol.toStringTag,{value:"Module"}));const UA=[{tfOpName:"Bincount",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"size",type:"number"},{start:2,name:"weights",type:"tensor"}]},{tfOpName:"DenseBincount",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"size",type:"number"},{start:2,name:"weights",type:"tensor"}],attrs:[{tfName:"binary_output",name:"binaryOutput",type:"bool"}]},{tfOpName:"Max",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"}]},{tfOpName:"Mean",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"}]},{tfOpName:"Min",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"}]},{tfOpName:"Sum",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"}]},{tfOpName:"All",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"}]},{tfOpName:"Any",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"}]},{tfOpName:"ArgMax",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number"}]},{tfOpName:"ArgMin",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number"}]},{tfOpName:"Prod",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}],attrs:[{tfName:"keep_dims",name:"keepDims",type:"bool"},{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"Cumprod",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number"}],attrs:[{tfName:"exclusive",name:"exclusive",type:"bool"},{tfName:"reverse",name:"reverse",type:"bool"}]},{tfOpName:"Cumsum",category:"reduction",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number"}],attrs:[{tfName:"exclusive",name:"exclusive",type:"bool"},{tfName:"reverse",name:"reverse",type:"bool"}]}],WA=Object.freeze(Object.defineProperty({__proto__:null,json:UA},Symbol.toStringTag,{value:"Module"}));const zA=[{tfOpName:"ConcatV2",category:"slice_join",inputs:[{start:0,end:-1,name:"tensors",type:"tensors"},{start:-1,name:"axis",type:"number"}],attrs:[{tfName:"N",name:"n",type:"number",defaultValue:2}]},{tfOpName:"Concat",category:"slice_join",inputs:[{start:1,end:0,name:"tensors",type:"tensors"},{start:0,name:"axis",type:"number"}],attrs:[{tfName:"N",name:"n",type:"number",defaultValue:2}]},{tfOpName:"GatherV2",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"indices",type:"tensor"},{start:2,name:"axis",type:"number",defaultValue:0}],attrs:[{tfName:"batch_dims",name:"batchDims",type:"number",defaultValue:0}]},{tfOpName:"Gather",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"indices",type:"tensor"}],attrs:[{tfName:"validate_indices",name:"validateIndices",type:"bool",notSupported:!0}]},{tfOpName:"Reverse",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"dims",type:"bool[]"}]},{tfOpName:"ReverseV2",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number[]"}]},{tfOpName:"Slice",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"begin",type:"number[]"},{start:2,name:"size",type:"number[]"}]},{tfOpName:"StridedSlice",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"begin",type:"number[]"},{start:2,name:"end",type:"number[]"},{start:3,name:"strides",type:"number[]"}],attrs:[{tfName:"begin_mask",name:"beginMask",type:"number",defaultValue:0},{tfName:"end_mask",name:"endMask",type:"number",defaultValue:0},{tfName:"new_axis_mask",name:"newAxisMask",type:"number",defaultValue:0},{tfName:"ellipsis_mask",name:"ellipsisMask",type:"number",defaultValue:0},{tfName:"shrink_axis_mask",name:"shrinkAxisMask",type:"number",defaultValue:0}]},{tfOpName:"Pack",category:"slice_join",inputs:[{start:0,end:0,name:"tensors",type:"tensors"}],attrs:[{tfName:"axis",name:"axis",type:"number",defaultValue:0}]},{tfOpName:"Unpack",category:"slice_join",inputs:[{start:0,name:"tensor",type:"tensor"}],attrs:[{tfName:"axis",name:"axis",type:"number",defaultValue:0},{tfName:"num",name:"num",type:"number",defaultValue:0,notSupported:!0}]},{tfOpName:"Tile",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"reps",type:"number[]"}]},{tfOpName:"Split",category:"slice_join",inputs:[{start:0,name:"axis",type:"number",defaultValue:0},{start:1,name:"x",type:"tensor"}],attrs:[{tfName:"num_split",name:"numOrSizeSplits",type:"number",defaultValue:1}]},{tfOpName:"SplitV",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"numOrSizeSplits",type:"number[]"},{start:2,name:"axis",type:"number",defaultValue:0}]},{tfOpName:"ScatterNd",category:"slice_join",inputs:[{start:0,name:"indices",type:"tensor"},{start:1,name:"values",type:"tensor"},{start:2,name:"shape",type:"number[]"}]},{tfOpName:"GatherNd",category:"slice_join",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"indices",type:"tensor"}]},{tfOpName:"SparseToDense",category:"slice_join",inputs:[{start:0,name:"sparseIndices",type:"tensor"},{start:1,name:"outputShape",type:"number[]"},{start:2,name:"sparseValues",type:"tensor"},{start:3,name:"defaultValue",type:"tensor"}],attrs:[{tfName:"validate_indices",name:"validateIndices",type:"bool",defaultValue:!1,notSupported:!0}]},{tfOpName:"TensorScatterUpdate",category:"slice_join",inputs:[{start:0,name:"tensor",type:"tensor"},{start:1,name:"indices",type:"tensor"},{start:2,name:"values",type:"tensor"}]}],GA=Object.freeze(Object.defineProperty({__proto__:null,json:zA},Symbol.toStringTag,{value:"Module"}));const jA=[{tfOpName:"SparseFillEmptyRows",category:"sparse",inputs:[{start:0,name:"indices",type:"tensor"},{start:1,name:"values",type:"tensor"},{start:2,name:"denseShape",type:"tensor"},{start:3,name:"defaultValue",type:"tensor"}]},{tfOpName:"SparseReshape",category:"sparse",inputs:[{start:0,name:"inputIndices",type:"tensor"},{start:1,name:"inputShape",type:"tensor"},{start:2,name:"newShape",type:"tensor"}],attrs:[{tfName:"T",name:"dtype",type:"dtype",notSupported:!0}]},{tfOpName:"SparseSegmentMean",category:"sparse",inputs:[{start:0,name:"data",type:"tensor"},{start:1,name:"indices",type:"tensor"},{start:2,name:"segmentIds",type:"tensor"}]},{tfOpName:"SparseSegmentSum",category:"sparse",inputs:[{start:0,name:"data",type:"tensor"},{start:1,name:"indices",type:"tensor"},{start:2,name:"segmentIds",type:"tensor"}]}],HA=Object.freeze(Object.defineProperty({__proto__:null,json:jA},Symbol.toStringTag,{value:"Module"}));const KA=[{tfOpName:"FFT",category:"spectral",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"IFFT",category:"spectral",inputs:[{start:0,name:"x",type:"tensor"}]},{tfOpName:"RFFT",category:"spectral",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"fft_length",type:"number",notSupported:!0}]},{tfOpName:"IRFFT",category:"spectral",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"fft_length",type:"number",notSupported:!0}]}],XA=Object.freeze(Object.defineProperty({__proto__:null,json:KA},Symbol.toStringTag,{value:"Module"}));const qA=[{tfOpName:"StaticRegexReplace",category:"string",inputs:[{start:0,name:"input",type:"tensor"}],attrs:[{tfName:"pattern",name:"pattern",type:"string"},{tfName:"rewrite",name:"rewrite",type:"string"},{tfName:"replace_global",name:"replaceGlobal",type:"bool"}]},{tfOpName:"StringNGrams",category:"string",inputs:[{start:0,name:"data",type:"tensor"},{start:1,name:"dataSplits",type:"tensor"}],attrs:[{tfName:"separator",name:"separator",type:"string"},{tfName:"ngram_widths",name:"nGramWidths",type:"number[]"},{tfName:"left_pad",name:"leftPad",type:"string"},{tfName:"right_pad",name:"rightPad",type:"string"},{tfName:"pad_width",name:"padWidth",type:"number"},{tfName:"preserve_short_sequences",name:"preserveShortSequences",type:"bool"}],outputs:["ngrams","ngrams_splits"]},{tfOpName:"StringSplit",category:"string",inputs:[{start:0,name:"input",type:"tensor"},{start:1,name:"delimiter",type:"tensor"}],attrs:[{tfName:"skip_empty",name:"skipEmpty",type:"bool"}],outputs:["indices","values","shape"]},{tfOpName:"StringToHashBucketFast",category:"string",inputs:[{start:0,name:"input",type:"tensor"}],attrs:[{tfName:"num_buckets",name:"numBuckets",type:"number"}]}],YA=Object.freeze(Object.defineProperty({__proto__:null,json:qA},Symbol.toStringTag,{value:"Module"}));const QA=[{tfOpName:"Cast",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"SrcT",name:"sdtype",type:"dtype",notSupported:!0},{tfName:"DstT",name:"dtype",type:"dtype"}]},{tfOpName:"ExpandDims",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"axis",type:"number"}]},{tfOpName:"MirrorPad",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"padding",type:"number[]"}],attrs:[{tfName:"mode",name:"mode",type:"string"}]},{tfOpName:"Pad",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"padding",type:"number[]"}],attrs:[{tfName:"constant_value",name:"constantValue",type:"number",defaultValue:0}]},{tfOpName:"PadV2",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"padding",type:"number[]"},{start:2,name:"constantValue",type:"number",defaultValue:0}]},{tfOpName:"Reshape",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"shape",type:"number[]"}]},{tfOpName:"EnsureShape",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"shape",type:"number[]"}]},{tfOpName:"Squeeze",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"axis",tfDeprecatedName:"squeeze_dims",name:"axis",type:"number[]"}]},{tfOpName:"SpaceToBatchND",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"blockShape",type:"number[]"},{start:2,name:"paddings",type:"number[]"}]},{tfOpName:"BatchToSpaceND",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"blockShape",type:"number[]"},{start:2,name:"crops",type:"number[]"}]},{tfOpName:"DepthToSpace",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"}],attrs:[{tfName:"block_size",name:"blockSize",type:"number"},{tfName:"data_format",name:"dataFormat",type:"string"}]},{tfOpName:"BroadcastTo",category:"transformation",inputs:[{start:0,name:"x",type:"tensor"},{start:1,name:"shape",type:"number[]"}],attrs:[]},{tfOpName:"BroadcastArgs",category:"transformation",inputs:[{start:0,name:"s0",type:"tensor"},{start:1,name:"s1",type:"tensor"}],attrs:[]}],ZA=Object.freeze(Object.defineProperty({__proto__:null,json:QA},Symbol.toStringTag,{value:"Module"}));class Ul{static get Instance(){return this._instance||(this._instance=new this)}constructor(){const e=[gA,xA,vA,$A,CA,NA,IA,RA,AA,DA,PA,BA,MA,WA,GA,HA,XA,YA,ZA],t=[].concat(...e.map(r=>r.json));this.opMappers=t.reduce((r,s)=>(r[s.tfOpName]=s,r),{})}transformGraph(e,t={}){const r=e.node,s=[],o=[],a=[],i=r.reduce((b,y)=>(b[y.name]=this.mapNode(y),y.op.startsWith("Placeholder")?s.push(b[y.name]):y.op==="Const"?o.push(b[y.name]):(y.input==null||y.input.length===0)&&a.push(b[y.name]),b),{});let u=[];const c=[];let l={},h={};t!=null&&(l=this.mapSignatureEntries(t.inputs),h=this.mapSignatureEntries(t.outputs));const d=Object.keys(i);d.forEach(b=>{const y=i[b];y.inputNames.forEach((x,C)=>{const[I,,k]=Ln(x),P=i[I];if(P.outputs!=null){const W=P.outputs.indexOf(k);if(W!==-1){const H=`${I}:${W}`;y.inputNames[C]=H}}y.inputs.push(P),P.children.push(y)})}),Object.keys(h).length===0?d.forEach(b=>{const y=i[b];y.children.length===0&&c.push(y)}):Object.keys(h).forEach(b=>{const[y]=Ln(b),x=i[y];x!=null&&(x.signatureKey=h[b],c.push(x))}),Object.keys(l).length>0?Object.keys(l).forEach(b=>{const[y]=Ln(b),x=i[y];x&&(x.signatureKey=l[b],u.push(x))}):u=s;let p={};e.library!=null&&e.library.function!=null&&(p=e.library.function.reduce((b,y)=>(b[y.signature.name]=this.mapFunction(y),b),{}));const f={nodes:i,inputs:u,outputs:c,weights:o,placeholders:s,signature:t,functions:p};return a.length>0&&(f.initNodes=a),f}mapSignatureEntries(e){return Object.keys(e||{}).reduce((t,r)=>(t[e[r].name]=r,t),{})}mapNode(e){const t=yg(e.op)||this.opMappers[e.op]||{};e.attr==null&&(e.attr={});const r={name:e.name,op:e.op,category:t.category,inputNames:(e.input||[]).map(s=>s.startsWith("^")?s.slice(1):s),inputs:[],children:[],inputParams:{},attrParams:{},rawAttrs:e.attr,outputs:t.outputs};return t.inputs!=null&&(r.inputParams=t.inputs.reduce((s,o)=>(s[o.name]={type:o.type,inputIndexStart:o.start,inputIndexEnd:o.end},s),{})),t.attrs!=null&&(r.attrParams=t.attrs.reduce((s,o)=>{const a=o.type;let i;switch(o.type){case"string":i=_u(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=_u(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"string[]":i=Bu(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Bu(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"number":i=Ou(e.attr,o.tfName,o.defaultValue||0),i===void 0&&o.tfDeprecatedName&&(i=Ou(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"number[]":i=Lu(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Lu(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"bool":i=Au(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Au(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"bool[]":i=Mu(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Mu(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"shape":i=Pu(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Pu(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"shape[]":i=Vu(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Vu(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"dtype":i=Du(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Du(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"dtype[]":i=Fu(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Fu(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"func":i=Wl(e.attr,o.tfName,o.defaultValue),i===void 0&&o.tfDeprecatedName&&(i=Wl(e.attr,o.tfDeprecatedName,o.defaultValue));break;case"tensor":case"tensors":break;default:throw new Error(`Unsupported param type: ${o.type} for op: ${e.op}`)}return s[o.name]={value:i,type:a},s},{})),r}mapFunction(e){const t=e.nodeDef,r=[],s=[];let o={};t!=null&&(o=t.reduce((h,d)=>(h[d.name]=this.mapNode(d),d.op==="Const"&&s.push(h[d.name]),h),{}));const a=[],i=[];e.signature.inputArg.forEach(h=>{const[d]=Ln(h.name),p={name:d,op:"Placeholder",inputs:[],inputNames:[],category:"graph",inputParams:{},attrParams:{dtype:{value:Rc(h.type),type:"dtype"}},children:[]};p.signatureKey=h.name,a.push(p),o[d]=p}),Object.keys(o).forEach(h=>{const d=o[h];d.inputNames.forEach((p,f)=>{const[b,,y]=Ln(p),x=o[b];if(x.outputs!=null){const C=x.outputs.indexOf(y);if(C!==-1){const I=`${b}:${C}`;d.inputNames[f]=I}}d.inputs.push(x),x.children.push(d)})});const c=e.ret;e.signature.outputArg.forEach(h=>{const[d,p]=Ln(c[h.name]),f=o[d];f!=null&&(f.defaultOutput=p,i.push(f))});const l=this.mapArgsToSignature(e);return{nodes:o,inputs:a,outputs:i,weights:s,placeholders:r,signature:l}}mapArgsToSignature(e){return{methodName:e.signature.name,inputs:e.signature.inputArg.reduce((t,r)=>(t[r.name]=this.mapArgToTensorInfo(r),t),{}),outputs:e.signature.outputArg.reduce((t,r)=>(t[r.name]=this.mapArgToTensorInfo(r,e.ret),t),{})}}mapArgToTensorInfo(e,t){let r=e.name;return t!=null&&(r=t[r]),{name:r,dtype:e.type}}}function JA(n){const e=j().global;if(typeof e.atob<"u")return e.atob(n);if(typeof Buffer<"u")return new Buffer(n,"base64").toString();throw new Error("Unable to decode base64 in this environment. Missing built-in atob() or Buffer()")}function xg(n,e){const t=Array.isArray(n)?String.fromCharCode.apply(null,n):JA(n);return e?t:t.toLowerCase()}function _u(n,e,t,r=!1){const s=n[e];return s!=null?xg(s.s,r):t}function Au(n,e,t){const r=n[e];return r?r.b:t}function Ou(n,e,t){const r=n[e]||{},s=r.i!=null?r.i:r.f!=null?r.f:t;return typeof s=="number"?s:parseInt(s,10)}function Rc(n){switch(typeof n=="string"&&(n=Ft[n]),n){case Ft.DT_FLOAT:case Ft.DT_HALF:return"float32";case Ft.DT_INT32:case Ft.DT_INT64:case Ft.DT_INT8:case Ft.DT_UINT8:return"int32";case Ft.DT_BOOL:return"bool";case Ft.DT_DOUBLE:return"float32";case Ft.DT_STRING:return"string";case Ft.DT_COMPLEX64:case Ft.DT_COMPLEX128:return"complex64";default:return null}}function Wl(n,e,t){const r=n[e];return r&&r.func?r.func.name:t}function Du(n,e,t){const r=n[e];return r&&r.type?Rc(r.type):t}function Fu(n,e,t){const r=n[e];return r&&r.list&&r.list.type?r.list.type.map(s=>Rc(s)):t}function bg(n){if(!n.unknownRank)return n.dim!=null?n.dim.map(e=>typeof e.size=="number"?e.size:parseInt(e.size,10)):[]}function Pu(n,e,t){const r=n[e];return r&&r.shape?bg(r.shape):t}function Lu(n,e,t){const r=n[e];return r?((r.list.f&&r.list.f.length?r.list.f:r.list.i)||[]).map(s=>typeof s=="number"?s:parseInt(s,10)):t}function Bu(n,e,t,r=!1){const s=n[e];return s&&s.list&&s.list.s?s.list.s.map(o=>xg(o,r)):t}function Vu(n,e,t){const r=n[e];return r&&r.list&&r.list.shape?r.list.shape.map(s=>bg(s)):t}function Mu(n,e,t){const r=n[e];return r&&r.list&&r.list.b?r.list.b:t}class eO{constructor(e,t,r){this.node=e,this.tensorMap=t,this.context=r,this.inputs=[],this.attrs={},this.inputs=e.inputNames.map(s=>this.getInput(s)),e.rawAttrs!=null&&(this.attrs=Object.keys(e.rawAttrs).reduce((s,o)=>(s[o]=this.getAttr(o),s),{}))}getInput(e){return ht(e,this.tensorMap,this.context)}getAttr(e,t){const r=this.node.rawAttrs[e];if(r.tensor!=null)return ht(e,this.tensorMap,this.context);if(r.i!=null||r.f!=null)return Ou(this.node.rawAttrs,e,t);if(r.s!=null)return _u(this.node.rawAttrs,e,t);if(r.b!=null)return Au(this.node.rawAttrs,e,t);if(r.shape!=null)return Pu(this.node.rawAttrs,e,t);if(r.type!=null)return Du(this.node.rawAttrs,e,t);if(r.list!=null){if(r.list.i!=null||r.list.f!=null)return Lu(this.node.rawAttrs,e,t);if(r.list.s!=null)return Bu(this.node.rawAttrs,e,t);if(r.list.shape!=null)return Vu(this.node.rawAttrs,e,t);if(r.list.b!=null)return Mu(this.node.rawAttrs,e,t);if(r.list.type!=null)return Fu(this.node.rawAttrs,e,t)}return t}}const mt=Object.freeze(Object.defineProperty({__proto__:null,OP_SCOPE_SUFFIX:gf,abs:zt,acos:R0,acosh:A0,add:me,addN:D0,all:P0,any:B0,argMax:M0,argMin:W0,asin:G0,asinh:H0,atan:X0,atan2:Y0,atanh:Z0,avgPool:Af,avgPool3d:a3,basicLSTMCell:p3,batchNorm:Ja,batchNorm2d:x3,batchNorm3d:v3,batchNorm4d:$3,batchToSpaceND:Of,bincount:Df,bitwiseAnd:T3,booleanMaskAsync:hv,broadcastArgs:E3,broadcastTo:xo,buffer:Ye,cast:He,ceil:R3,clipByValue:Ff,clone:lr,complex:mr,concat:pt,concat1d:O3,concat2d:F3,concat3d:L3,concat4d:V3,conv1d:W3,conv2d:ei,conv2dTranspose:j3,conv3d:K3,conv3dTranspose:Q3,cos:J3,cosh:ty,cosineWindow:hc,cumprod:ry,cumsum:oy,denseBincount:iy,depthToSpace:cy,depthwiseConv2d:ec,diag:dy,dilation2d:fy,div:ke,divNoNan:by,dot:wy,dropout:Cv,einsum:ws,elu:Vf,enclosingPowerOfTwo:pm,ensureShape:Ty,equal:Bf,erf:Ey,euclideanNorm:Py,exp:zn,expandDims:rn,expm1:My,eye:Wf,fft:uc,fill:Po,floor:zf,floorDiv:Rf,fused:Vv,gather:Gf,gatherND:wv,greater:ni,greaterEqual:jf,ifft:Ma,imag:ri,image:Ls,inTopKAsync:Nv,irfft:am,isFinite:qy,isInf:Qy,isNaN:Jy,leakyRelu:Hf,less:wu,lessEqual:rc,linalg:x$,linspace:r4,localResponseNormalization:o4,log:Co,log1p:Kf,logSigmoid:d4,logSoftmax:m4,logSumExp:qf,logicalAnd:La,logicalNot:Yf,logicalOr:Qf,logicalXor:w4,losses:b$,lowerBound:S4,matMul:Be,max:Ts,maxPool:Zf,maxPool3d:N4,maxPoolWithArgmax:I4,maximum:Jf,mean:Ba,meshgrid:_4,min:vu,minimum:Va,mirrorPad:D4,mod:P4,moments:B4,movingAverage:fv,mul:oe,multiRNNCell:M4,multinomial:W4,neg:_n,norm:ti,notEqual:em,oneHot:j4,ones:Ur,onesLike:K4,op:L,outerProduct:q4,pad:Lo,pad1d:Z4,pad2d:ex,pad3d:nx,pad4d:sx,pool:cx,pow:So,prelu:nm,print:kf,prod:dx,raggedGather:fx,raggedRange:gx,raggedTensorToTensor:xx,rand:vx,randomGamma:Wx,randomNormal:rm,randomStandardNormal:jx,randomUniform:ic,randomUniformInt:Xx,range:To,real:No,reciprocal:Qx,relu:si,relu6:sm,reshape:Z,reverse:Qr,reverse1d:nb,reverse2d:sb,reverse3d:ab,reverse4d:ub,rfft:cc,round:om,rsqrt:hb,scalar:Re,scatterND:gv,searchSorted:sc,selu:pb,separableConv2d:mb,setdiff1dAsync:yb,sigmoid:zr,sign:bb,signal:y$,sin:wb,sinh:Sb,slice:Ce,slice1d:Tb,slice2d:Eb,slice3d:kb,slice4d:_b,softmax:Ob,softplus:Xf,spaceToBatchND:tm,sparse:v$,sparseToDense:bv,spectral:g$,split:Eo,sqrt:Wn,square:xn,squaredDifference:im,squeeze:st,stack:jn,step:um,stridedSlice:Gb,string:w$,sub:Te,sum:je,tan:Hb,tanh:bu,tensor:Rn,tensor1d:xt,tensor2d:dr,tensor3d:cm,tensor4d:Kb,tensor5d:Xb,tensor6d:qb,tensorScatterUpdate:Qb,tile:bo,topk:Jb,transpose:$u,truncatedNormal:tv,unique:rv,unsortedSegmentSum:ov,unstack:rs,upperBound:iv,variable:uv,where:hr,whereAsync:dm,zeros:Yr,zerosLike:jt},Symbol.toStringTag,{value:"Module"}));const tO=(n,e,t,r=mt)=>{switch(n.op){case"BiasAdd":case"AddV2":case"Add":return[r.add(v("a",n,e,t),v("b",n,e,t))];case"AddN":return[r.addN(v("tensors",n,e,t))];case"FloorMod":case"Mod":return[r.mod(v("a",n,e,t),v("b",n,e,t))];case"Mul":return[r.mul(v("a",n,e,t),v("b",n,e,t))];case"RealDiv":case"Div":return[r.div(v("a",n,e,t),v("b",n,e,t))];case"DivNoNan":return[r.divNoNan(v("a",n,e,t),v("b",n,e,t))];case"FloorDiv":return[r.floorDiv(v("a",n,e,t),v("b",n,e,t))];case"Sub":return[r.sub(v("a",n,e,t),v("b",n,e,t))];case"Minimum":return[r.minimum(v("a",n,e,t),v("b",n,e,t))];case"Maximum":return[r.maximum(v("a",n,e,t),v("b",n,e,t))];case"Pow":return[r.pow(v("a",n,e,t),v("b",n,e,t))];case"SquaredDifference":return[r.squaredDifference(v("a",n,e,t),v("b",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const nO=(n,e,t,r=mt)=>{switch(n.op){case"Abs":case"ComplexAbs":return[r.abs(v("x",n,e,t))];case"Acos":return[r.acos(v("x",n,e,t))];case"Acosh":return[r.acosh(v("x",n,e,t))];case"Asin":return[r.asin(v("x",n,e,t))];case"Asinh":return[r.asinh(v("x",n,e,t))];case"Atan":return[r.atan(v("x",n,e,t))];case"Atan2":return[r.atan2(v("x",n,e,t),v("y",n,e,t))];case"Atanh":return[r.atanh(v("x",n,e,t))];case"Ceil":return[r.ceil(v("x",n,e,t))];case"Complex":return[r.complex(v("real",n,e,t),v("imag",n,e,t))];case"Cos":return[r.cos(v("x",n,e,t))];case"Cosh":return[r.cosh(v("x",n,e,t))];case"Elu":return[r.elu(v("x",n,e,t))];case"Erf":return[r.erf(v("x",n,e,t))];case"Exp":return[r.exp(v("x",n,e,t))];case"Expm1":return[r.expm1(v("x",n,e,t))];case"Floor":return[r.floor(v("x",n,e,t))];case"Log":return[r.log(v("x",n,e,t))];case"Log1p":return[r.log1p(v("x",n,e,t))];case"Imag":return[r.imag(v("x",n,e,t))];case"Neg":return[r.neg(v("x",n,e,t))];case"Reciprocal":return[r.reciprocal(v("x",n,e,t))];case"Real":return[r.real(v("x",n,e,t))];case"Relu":return[r.relu(v("x",n,e,t))];case"Round":return[r.round(v("x",n,e,t))];case"Selu":return[r.selu(v("x",n,e,t))];case"Sigmoid":return[r.sigmoid(v("x",n,e,t))];case"Sin":return[r.sin(v("x",n,e,t))];case"Sign":return[r.sign(v("x",n,e,t))];case"Sinh":return[r.sinh(v("x",n,e,t))];case"Softplus":return[r.softplus(v("x",n,e,t))];case"Sqrt":return[r.sqrt(v("x",n,e,t))];case"Square":return[r.square(v("x",n,e,t))];case"Tanh":return[r.tanh(v("x",n,e,t))];case"Tan":return[r.tan(v("x",n,e,t))];case"ClipByValue":return[r.clipByValue(v("x",n,e,t),v("clipValueMin",n,e,t),v("clipValueMax",n,e,t))];case"Relu6":return[r.relu6(v("x",n,e,t))];case"Rsqrt":return[r.rsqrt(ht(n.inputNames[0],e,t))];case"LeakyRelu":return[r.leakyRelu(v("x",n,e,t),v("alpha",n,e,t))];case"Prelu":return[r.prelu(v("x",n,e,t),v("alpha",n,e,t))];case"IsNan":return[r.isNaN(ht(n.inputNames[0],e,t))];case"IsInf":return[r.isInf(ht(n.inputNames[0],e,t))];case"IsFinite":return[r.isFinite(ht(n.inputNames[0],e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};function nn(n,e,t=""){if(!(typeof n=="number"||typeof e=="number")){_(n.length===e.length,()=>t+` Shapes ${n} and ${e} must match`);for(let r=0;r<n.length;r++){const s=n[r],o=e[r];_(s<0||o<0||s===o,()=>t+` Shapes ${n} and ${e} must match`)}}}function zl(n){return!(typeof n=="number"||n.some(e=>e<0))}function po(n,e,t){let r=Uu(n,t);const s=!zl(r);if(s&&e.length===0)throw new Error(`Tried to calculate elements of an empty list with non-fully-defined elementShape: ${r}`);if(s&&e.forEach(o=>{r=Uu(o.shape,r)}),!zl(r))throw new Error(`Non-fully-defined elementShape: ${r}`);return r}function Uu(n,e){if(typeof n=="number")return e;if(typeof e=="number")return n;if(n.length!==e.length)throw new Error(`Incompatible ranks during merge: ${n} vs. ${e}`);const t=[];for(let r=0;r<n.length;++r){const s=n[r],o=e[r];if(s>=0&&o>=0&&s!==o)throw new Error(`Incompatible shape during merge: ${n} vs. ${e}`);t[r]=s>=0?s:o}return t}class rO{constructor(e,t,r,s,o,a,i){this.name=e,this.dtype=t,this.maxSize=r,this.elementShape=s,this.identicalElementShapes=o,this.dynamicSize=a,this.clearAfterRead=i,this.tensors=[],this.closed_=!1,this.idTensor=Re(0),In(this.idTensor)}get id(){return this.idTensor.id}get closed(){return this.closed_}clearAndClose(e){this.tensors.forEach(t=>{(e==null||!e.has(t.tensor.id))&&t.tensor.dispose()}),this.tensors=[],this.closed_=!0,this.idTensor.dispose()}size(){return this.tensors.length}read(e){if(this.closed_)throw new Error(`TensorArray ${this.name} has already been closed.`);if(e<0||e>=this.size())throw new Error(`Tried to read from index ${e}, but array size is: ${this.size()}`);const t=this.tensors[e];if(t.cleared)throw new Error(`TensorArray ${this.name}: Could not read index ${e} twice because it was cleared after a previous read (perhaps try setting clear_after_read = false?).`);return this.clearAfterRead&&(t.cleared=!0),t.read=!0,t.tensor}readMany(e){return e.map(t=>this.read(t))}write(e,t){if(this.closed_)throw new Error(`TensorArray ${this.name} has already been closed.`);if(e<0||!this.dynamicSize&&e>=this.maxSize)throw new Error(`Tried to write to index ${e}, but array is not resizeable and size is: ${this.maxSize}`);const r=this.tensors[e]||{};if(t.dtype!==this.dtype)throw new Error(`TensorArray ${this.name}: Could not write to TensorArray index ${e},
+          because the value dtype is ${t.dtype}, but TensorArray dtype is ${this.dtype}.`);if(this.size()===0&&(this.elementShape==null||this.elementShape.length===0)&&(this.elementShape=t.shape),nn(this.elementShape,t.shape,`TensorArray ${this.name}: Could not write to TensorArray index ${e}.`),r.read)throw new Error(`TensorArray ${this.name}: Could not write to TensorArray index ${e}, because it has already been read.`);if(r.written)throw new Error(`TensorArray ${this.name}: Could not write to TensorArray index ${e}, because it has already been written.`);r.tensor=t,In(t),r.written=!0,this.tensors[e]=r}writeMany(e,t){if(e.length!==t.length)throw new Error(`TensorArray ${this.name}: could not write multiple tensors,because the index size: ${e.length} is not the same as tensors size: ${t.length}.`);e.forEach((r,s)=>this.write(r,t[s]))}gather(e,t){if(t&&t!==this.dtype)throw new Error(`TensorArray dtype is ${this.dtype} but gather requested dtype ${t}`);if(e)e=e.slice(0,this.size());else{e=[];for(let s=0;s<this.size();s++)e.push(s)}if(e.length===0)return Rn([],[0].concat(this.elementShape));const r=this.readMany(e);return nn(this.elementShape,r[0].shape,"TensorArray shape mismatch: "),jn(r,0)}concat(e){if(e&&e!==this.dtype)throw new Error(`TensorArray dtype is ${this.dtype} but concat requested dtype ${e}`);if(this.size()===0)return Rn([],[0].concat(this.elementShape));const t=[];for(let s=0;s<this.size();s++)t.push(s);const r=this.readMany(t);return nn(this.elementShape,r[0].shape,`TensorArray shape mismatch: tensor array shape (${this.elementShape}) vs first tensor shape (${r[0].shape})`),pt(r,0)}scatter(e,t){if(t.dtype!==this.dtype)throw new Error(`TensorArray dtype is ${this.dtype} but tensor has dtype ${t.dtype}`);if(e.length!==t.shape[0])throw new Error(`Expected len(indices) == tensor.shape[0], but saw: ${e.length} vs. ${t.shape[0]}`);const r=Math.max(...e);if(!this.dynamicSize&&r>=this.maxSize)throw new Error(`Max index must be < array size (${r}  vs. ${this.maxSize})`);this.writeMany(e,rs(t,0))}split(e,t){if(t.dtype!==this.dtype)throw new Error(`TensorArray dtype is ${this.dtype} but tensor has dtype ${t.dtype}`);let r=0;const s=e.map(u=>(r+=u,r));if(r!==t.shape[0])throw new Error(`Expected sum of lengths to be equal to
+          tensor.shape[0], but sum of lengths is
+        ${r}, and tensor's shape is: ${t.shape}`);if(!this.dynamicSize&&e.length!==this.maxSize)throw new Error(`TensorArray's size is not equal to the size of lengths (${this.maxSize} vs. ${e.length}), and the TensorArray is not marked as dynamically resizeable`);const o=r===0?0:t.size/r,a=[];we(()=>{t=Z(t,[1,r,o]);for(let u=0;u<e.length;++u){const l=[0,u===0?0:s[u-1],0],h=[1,e[u],o];a[u]=Z(Ce(t,l,h),this.elementShape)}return a});const i=[];for(let u=0;u<e.length;u++)i[u]=u;this.writeMany(i,a)}}class ts{get id(){return this.idTensor.id}constructor(e,t,r,s=-1){this.tensors=e,this.elementShape=t,this.elementDtype=r,e?.forEach(o=>{if(r!==o.dtype)throw new Error(`Invalid data types; op elements ${r}, but list elements ${o.dtype}`);nn(t,o.shape,"TensorList shape mismatch: "),In(o)}),this.idTensor=Re(0),this.maxNumElements=s,In(this.idTensor)}copy(){return new ts([...this.tensors],this.elementShape,this.elementDtype)}clearAndClose(e){this.tensors.forEach(t=>{(e==null||!e.has(t.id))&&t.dispose()}),this.tensors.length=0,this.idTensor.dispose()}size(){return this.tensors.length}stack(e,t,r=-1){if(t!==this.elementDtype)throw new Error(`Invalid data types; op elements ${t}, but list elements ${this.elementDtype}`);if(r!==-1&&this.tensors.length!==r)throw new Error(`Operation expected a list with ${r} elements but got a list with ${this.tensors.length} elements.`);nn(e,this.elementShape,"TensorList shape mismatch: ");const s=po(this.elementShape,this.tensors,e);return we(()=>{const o=this.tensors.map(a=>Z(a,s));return jn(o,0)})}popBack(e,t){if(t!==this.elementDtype)throw new Error(`Invalid data types; op elements ${t}, but list elements ${this.elementDtype}`);if(this.size()===0)throw new Error("Trying to pop from an empty list.");const r=po(this.elementShape,this.tensors,e),s=this.tensors.pop();return s.kept=!1,nn(s.shape,e,"TensorList shape mismatch: "),Z(s,r)}pushBack(e){if(e.dtype!==this.elementDtype)throw new Error(`Invalid data types; op elements ${e.dtype}, but list elements ${this.elementDtype}`);if(nn(e.shape,this.elementShape,"TensorList shape mismatch: "),this.maxNumElements===this.size())throw new Error("Trying to push element into a full list.");In(e),this.tensors.push(e)}resize(e){if(e<0)throw new Error(`TensorListResize expects size to be non-negative. Got: ${e}`);if(this.maxNumElements!==-1&&e>this.maxNumElements)throw new Error(`TensorListResize input size ${e} is greater maxNumElement ${this.maxNumElements}.`);const t=new ts([],this.elementShape,this.elementDtype,this.maxNumElements);t.tensors.length=e;for(let r=0;r<Math.min(this.tensors.length,e);++r)t.tensors[r]=this.tensors[r];return t}getItem(e,t,r){if(r!==this.elementDtype)throw new Error(`Invalid data types; op elements ${r}, but list elements ${this.elementDtype}`);if(e<0||e>this.tensors.length)throw new Error(`Trying to access element ${e} in a list with ${this.tensors.length} elements.`);if(this.tensors[e]==null)throw new Error(`element at index ${e} is null.`);nn(this.tensors[e].shape,t,"TensorList shape mismatch: ");const s=po(this.elementShape,this.tensors,t);return Z(this.tensors[e],s)}setItem(e,t){if(t.dtype!==this.elementDtype)throw new Error(`Invalid data types; op elements ${t.dtype}, but list elements ${this.elementDtype}`);if(e<0||this.maxNumElements!==-1&&e>=this.maxNumElements)throw new Error(`Trying to set element ${e} in a list with max ${this.maxNumElements} elements.`);nn(this.elementShape,t.shape,"TensorList shape mismatch: "),In(t),this.tensors[e]!=null&&(this.tensors[e].kept=!1),this.tensors[e]=t}gather(e,t,r){if(t!==this.elementDtype)throw new Error(`Invalid data types; op elements ${t}, but list elements ${this.elementDtype}`);nn(this.elementShape,r,"TensorList shape mismatch: "),e=e.slice(0,this.size());const s=po(this.elementShape,this.tensors,r);return e.length===0?Rn([],[0].concat(s)):we(()=>{const o=e.map(a=>Z(this.tensors[a],s));return jn(o,0)})}concat(e,t){if(e&&e!==this.elementDtype)throw new Error(`TensorList dtype is ${this.elementDtype} but concat requested dtype ${e}`);nn(this.elementShape,t,"TensorList shape mismatch: ");const r=po(this.elementShape,this.tensors,t);return this.size()===0?Rn([],[0].concat(r)):we(()=>{const s=this.tensors.map(o=>Z(o,r));return pt(s,0)})}}function sO(n,e,t){const r=n.dtype;if(n.shape.length<1)throw new Error(`Tensor must be at least a vector, but saw shape: ${n.shape}`);if(n.dtype!==t)throw new Error(`Invalid data types; op elements ${n.dtype}, but list elements ${t}`);const s=n.shape.slice(1);nn(s,e,"TensorList shape mismatch: ");const o=rs(n);return new ts(o,e,r)}function oO(n,e,t,r){return new ts([],n,e,r)}function aO(n,e,t,r){if(e.length!==n.shape[0])throw new Error(`Expected len(indices) == tensor.shape[0], but saw: ${e.length} vs. ${n.shape[0]}`);const s=Math.max(...e);if(r!=null&&r!==-1&&s>=r)throw new Error(`Max index must be < array size (${s}  vs. ${r})`);const o=new ts([],t,n.dtype,r),a=rs(n,0);return e.forEach((i,u)=>{o.setItem(i,a[u])}),o}function iO(n,e,t){let r=0;const s=e.map(l=>(r+=l,r));if(r!==n.shape[0])throw new Error(`Expected sum of lengths to be equal to
+          tensor.shape[0], but sum of lengths is
+        ${r}, and tensor's shape is: ${n.shape}`);const o=n.shape.slice(1),a=Uu(o,t),i=r===0?0:n.size/r,u=we(()=>{const l=[];n=Z(n,[1,r,i]);for(let h=0;h<e.length;++h){const p=[0,h===0?0:s[h-1],0],f=[1,e[h],i];l[h]=Z(Ce(n,p,f),a)}return n.dispose(),l}),c=new ts([],t,n.dtype,e.length);for(let l=0;l<u.length;l++)c.setItem(l,u[l]);return c}const uO=async(n,e,t)=>{switch(n.op){case"If":case"StatelessIf":{const r=v("thenBranch",n,e,t),s=v("elseBranch",n,e,t),o=v("cond",n,e,t),a=v("args",n,e,t);return(await o.data())[0]?t.functionMap[r].executeFunctionAsync(a,t.tensorArrayMap,t.tensorListMap):t.functionMap[s].executeFunctionAsync(a,t.tensorArrayMap,t.tensorListMap)}case"While":case"StatelessWhile":{const r=v("body",n,e,t),s=v("cond",n,e,t),o=v("args",n,e,t),a=await t.functionMap[s].executeFunctionAsync(o,t.tensorArrayMap,t.tensorListMap),i=o.map(l=>l.id);let u=await a[0].data();a.forEach(l=>{!l.kept&&i.indexOf(l.id)===-1&&l.dispose()});let c=o;for(;u[0];){const l=c;c=await t.functionMap[r].executeFunctionAsync(c,t.tensorArrayMap,t.tensorListMap);const h=c.map(p=>p.id);l.forEach(p=>{!p.kept&&i.indexOf(p.id)===-1&&h.indexOf(p.id)===-1&&p.dispose()});const d=await t.functionMap[s].executeFunctionAsync(c,t.tensorArrayMap,t.tensorListMap);u=await d[0].data(),d.forEach(p=>{!p.kept&&i.indexOf(p.id)===-1&&h.indexOf(p.id)===-1&&p.dispose()})}return c}case"LoopCond":{const r=v("pred",n,e,t);return[Bn(r)]}case"Switch":{const r=v("pred",n,e,t);let s=v("data",n,e,t);return s.kept||(s=Bn(s)),(await r.data())[0]?[void 0,s]:[s,void 0]}case"Merge":{const r=n.inputNames.find(s=>ht(s,e,t)!==void 0);if(r){const s=ht(r,e,t);return[Bn(s)]}return}case"Enter":{const r=v("frameName",n,e,t),s=v("tensor",n,e,t);return t.enterFrame(r),[Bn(s)]}case"Exit":{const r=v("tensor",n,e,t);return t.exitFrame(),[Bn(r)]}case"NextIteration":{const r=v("tensor",n,e,t);return t.nextIteration(),[Bn(r)]}case"TensorArrayV3":{const r=v("size",n,e,t),s=v("dtype",n,e,t),o=v("elementShape",n,e,t),a=v("dynamicSize",n,e,t),i=v("clearAfterRead",n,e,t),u=v("identicalElementShapes",n,e,t),c=v("name",n,e,t),l=new rO(c,s,r,o,u,a,i);return t.addTensorArray(l),[l.idTensor,Re(1)]}case"TensorArrayWriteV3":{const r=v("tensorArrayId",n,e,t),s=v("index",n,e,t),o=v("tensor",n,e,t),a=t.getTensorArray(r.id);return a.write(s,o),[a.idTensor]}case"TensorArrayReadV3":{const r=v("tensorArrayId",n,e,t),s=v("index",n,e,t);return[t.getTensorArray(r.id).read(s)]}case"TensorArrayGatherV3":{const r=v("tensorArrayId",n,e,t),s=v("indices",n,e,t),o=v("dtype",n,e,t);return[t.getTensorArray(r.id).gather(s,o)]}case"TensorArrayScatterV3":{const r=v("tensorArrayId",n,e,t),s=v("indices",n,e,t),o=v("tensor",n,e,t),a=t.getTensorArray(r.id);return a.scatter(s,o),[a.idTensor]}case"TensorArrayConcatV3":{const r=v("tensorArrayId",n,e,t),s=t.getTensorArray(r.id),o=v("dtype",n,e,t);return[s.concat(o)]}case"TensorArraySplitV3":{const r=v("tensorArrayId",n,e,t),s=v("tensor",n,e,t),o=v("lengths",n,e,t),a=t.getTensorArray(r.id);return a.split(o,s),[a.idTensor]}case"TensorArraySizeV3":{const r=v("tensorArrayId",n,e,t),s=t.getTensorArray(r.id);return[Re(s.size(),"int32")]}case"TensorArrayCloseV3":{const r=v("tensorArrayId",n,e,t),s=t.getTensorArray(r.id);return s.clearAndClose(),[s.idTensor]}case"TensorListSetItem":{const r=v("tensorListId",n,e,t),s=v("index",n,e,t),o=v("tensor",n,e,t),a=t.getTensorList(r.id);return a.setItem(s,o),[a.idTensor]}case"TensorListGetItem":{const r=v("tensorListId",n,e,t),s=v("index",n,e,t),o=v("elementShape",n,e,t),a=v("elementDType",n,e,t);return[t.getTensorList(r.id).getItem(s,o,a)]}case"TensorListScatterV2":case"TensorListScatter":{const r=v("indices",n,e,t),s=v("tensor",n,e,t),o=v("elementShape",n,e,t),a=v("numElements",n,e,t),i=aO(s,r,o,a);return t.addTensorList(i),[i.idTensor]}case"TensorListReserve":case"EmptyTensorList":{const r=v("elementShape",n,e,t),s=v("elementDType",n,e,t);let o;n.op==="TensorListReserve"?o="numElements":o="maxNumElements";const a=v(o,n,e,t),i=n.op==="TensorListReserve"?-1:a,u=oO(r,s,a,i);return t.addTensorList(u),[u.idTensor]}case"TensorListGather":{const r=v("tensorListId",n,e,t),s=v("indices",n,e,t),o=v("elementShape",n,e,t),a=v("elementDType",n,e,t);return[t.getTensorList(r.id).gather(s,a,o)]}case"TensorListStack":{const r=v("tensorListId",n,e,t),s=v("elementShape",n,e,t),o=v("elementDType",n,e,t),a=v("numElements",n,e,t);return[t.getTensorList(r.id).stack(s,o,a)]}case"TensorListFromTensor":{const r=v("tensor",n,e,t),s=v("elementShape",n,e,t),o=v("elementDType",n,e,t),a=sO(r,s,o);return t.addTensorList(a),[a.idTensor]}case"TensorListConcat":case"TensorListConcatV2":{const r=v("tensorListId",n,e,t),s=t.getTensorList(r.id),o=v("dtype",n,e,t),a=v("elementShape",n,e,t);return[s.concat(o,a)]}case"TensorListPushBack":{const r=v("tensorListId",n,e,t),s=v("tensor",n,e,t),o=t.getTensorList(r.id);return o.pushBack(s),[o.idTensor]}case"TensorListPopBack":{const r=v("tensorListId",n,e,t),s=v("elementShape",n,e,t),o=v("elementDType",n,e,t);return[t.getTensorList(r.id).popBack(s,o)]}case"TensorListSplit":{const r=v("tensor",n,e,t),s=v("elementShape",n,e,t),o=v("lengths",n,e,t),a=iO(r,o,s);return t.addTensorList(a),[a.idTensor]}case"TensorListLength":{const r=v("tensorListId",n,e,t),s=t.getTensorList(r.id);return[Re(s.size(),"int32")]}case"TensorListResize":{const r=v("tensorListId",n,e,t),s=v("size",n,e,t),a=t.getTensorList(r.id).resize(s);return t.addTensorList(a),[a.idTensor]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};function Gl(n,e,t){const[r,s]=v("fusedOps",n,e,t),o=r==="biasadd",a=!o,i=s==="prelu",u=r==="fusedbatchnorm",c=v("numArgs",n,e,t);if(o){if(i&&c!==2)throw new Error("FusedConv2d and DepthwiseConv2d with BiasAdd and Prelu must have two extra arguments: bias and alpha.");if(!i&&o&&c!==1)throw new Error("FusedConv2d and DepthwiseConv2d with BiasAdd must have one extra argument: bias.")}if(u)throw new Error("FusedConv2d and DepthwiseConv2d with FusedBatchNorm is not supported");const l=v("strides",n,e,t),h=Ra(n,e,t),d=v("dataFormat",n,e,t).toUpperCase(),p=v("dilations",n,e,t);let[f,b]=v("args",n,e,t);a&&(b=f,f=void 0);const y=v("leakyreluAlpha",n,e,t);return{stride:l,pad:h,dataFormat:d,dilations:p,biasArg:f,preluArg:b,activationFunc:s,leakyreluAlpha:y}}const cO=(n,e,t,r=mt)=>{switch(n.op){case"Conv1D":{const s=v("stride",n,e,t),o=v("pad",n,e,t),a=v("dataFormat",n,e,t).toUpperCase(),i=v("dilation",n,e,t);return[r.conv1d(v("x",n,e,t),v("filter",n,e,t),s,o,a,i)]}case"Conv2D":{const s=v("strides",n,e,t),o=Ra(n,e,t),a=v("dataFormat",n,e,t).toUpperCase(),i=v("dilations",n,e,t);return[r.conv2d(v("x",n,e,t),v("filter",n,e,t),[s[1],s[2]],o,a,[i[1],i[2]])]}case"_FusedConv2D":{const{stride:s,pad:o,dataFormat:a,dilations:i,biasArg:u,preluArg:c,activationFunc:l,leakyreluAlpha:h}=Gl(n,e,t);return[r.fused.conv2d({x:v("x",n,e,t),filter:v("filter",n,e,t),strides:[s[1],s[2]],pad:o,dataFormat:a,dilations:[i[1],i[2]],bias:u,activation:l,preluActivationWeights:c,leakyreluAlpha:h})]}case"FusedDepthwiseConv2dNative":{const{stride:s,pad:o,dataFormat:a,dilations:i,biasArg:u,preluArg:c,activationFunc:l,leakyreluAlpha:h}=Gl(n,e,t);return[r.fused.depthwiseConv2d({x:v("x",n,e,t),filter:v("filter",n,e,t),strides:[s[1],s[2]],pad:o,dataFormat:a,dilations:[i[1],i[2]],bias:u,activation:l,preluActivationWeights:c,leakyreluAlpha:h})]}case"Conv2DBackpropInput":case"Conv2dTranspose":{const s=v("outputShape",n,e,t),o=v("strides",n,e,t),a=Ra(n,e,t);return[r.conv2dTranspose(v("x",n,e,t),v("filter",n,e,t),s,[o[1],o[2]],a)]}case"DepthwiseConv2dNative":case"DepthwiseConv2d":{const s=v("strides",n,e,t),o=Ra(n,e,t),a=v("dilations",n,e,t),i=v("dataFormat",n,e,t).toUpperCase();return[r.depthwiseConv2d(v("input",n,e,t),v("filter",n,e,t),[s[1],s[2]],o,i,[a[1],a[2]])]}case"Conv3D":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("dataFormat",n,e,t).toUpperCase(),i=v("dilations",n,e,t);return[r.conv3d(v("x",n,e,t),v("filter",n,e,t),[s[1],s[2],s[3]],o,a,[i[1],i[2],i[3]])]}case"AvgPool":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("kernelSize",n,e,t);return[r.avgPool(v("x",n,e,t),[a[1],a[2]],[s[1],s[2]],o)]}case"MaxPool":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("kernelSize",n,e,t);return[r.maxPool(v("x",n,e,t),[a[1],a[2]],[s[1],s[2]],o)]}case"MaxPoolWithArgmax":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("kernelSize",n,e,t),i=v("includeBatchInIndex",n,e,t),{result:u,indexes:c}=r.maxPoolWithArgmax(v("x",n,e,t),[a[1],a[2]],[s[1],s[2]],o,i);return[u,c]}case"AvgPool3D":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("kernelSize",n,e,t);return[r.avgPool3d(v("x",n,e,t),[a[1],a[2],a[3]],[s[1],s[2],s[3]],o)]}case"MaxPool3D":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("kernelSize",n,e,t);return[r.maxPool3d(v("x",n,e,t),[a[1],a[2],a[3]],[s[1],s[2],s[3]],o)]}case"Dilation2D":{const s=v("strides",n,e,t),o=v("pad",n,e,t),a=v("dilations",n,e,t),i=s[1],u=s[2],c=a[1],l=a[2];return[r.dilation2d(v("x",n,e,t),v("filter",n,e,t),[i,u],o,[c,l],"NHWC")]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};const lO=(n,e,t,r=mt)=>{switch(n.op){case"Fill":{const s=v("shape",n,e,t),o=v("dtype",n,e,t),a=v("value",n,e,t);return[r.fill(s,a,o)]}case"LinSpace":{const s=v("start",n,e,t),o=v("stop",n,e,t),a=v("num",n,e,t);return[r.linspace(s,o,a)]}case"Multinomial":{const s=v("logits",n,e,t),o=v("numSamples",n,e,t),a=v("seed",n,e,t);return[r.multinomial(s,o,a)]}case"OneHot":{const s=v("indices",n,e,t),o=v("depth",n,e,t),a=v("onValue",n,e,t),i=v("offValue",n,e,t),u=v("dtype",n,e,t);return[r.oneHot(s,o,a,i,u)]}case"Ones":return[r.ones(v("shape",n,e,t),v("dtype",n,e,t))];case"OnesLike":return[r.onesLike(v("x",n,e,t))];case"RandomStandardNormal":return[r.randomStandardNormal(v("shape",n,e,t),v("dtype",n,e,t),v("seed",n,e,t))];case"RandomUniform":return[r.randomUniform(v("shape",n,e,t),v("minval",n,e,t),v("maxval",n,e,t),v("dtype",n,e,t))];case"RandomUniformInt":return[r.randomUniformInt(v("shape",n,e,t),v("minval",n,e,t),v("maxval",n,e,t),v("seed",n,e,t))];case"Range":{const s=v("start",n,e,t),o=v("stop",n,e,t),a=v("step",n,e,t);return[r.range(s,o,a,v("dtype",n,e,t))]}case"TruncatedNormal":{const s=v("shape",n,e,t),o=v("mean",n,e,t),a=v("stdDev",n,e,t),i=v("seed",n,e,t);return[r.truncatedNormal(s,o,a,v("dtype",n,e,t),i)]}case"Zeros":return[r.zeros(v("shape",n,e,t),v("dtype",n,e,t))];case"ZerosLike":return[r.zerosLike(v("x",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};function Wi(n,e,t){const r=v("boxes",n,e,t),s=v("scores",n,e,t),o=v("maxOutputSize",n,e,t),a=v("iouThreshold",n,e,t),i=v("scoreThreshold",n,e,t),u=v("softNmsSigma",n,e,t);return{boxes:r,scores:s,maxOutputSize:o,iouThreshold:a,scoreThreshold:i,softNmsSigma:u}}const hO=async(n,e,t,r,s=mt)=>{switch(n.op){case"NonMaxSuppressionV5":{const{boxes:o,scores:a,maxOutputSize:i,iouThreshold:u,scoreThreshold:c,softNmsSigma:l}=Wi(n,e,t),h=await s.image.nonMaxSuppressionWithScoreAsync(o,a,i,u,c,l);return[h.selectedIndices,h.selectedScores]}case"NonMaxSuppressionV4":{const{boxes:o,scores:a,maxOutputSize:i,iouThreshold:u,scoreThreshold:c}=Wi(n,e,t),l=v("padToMaxOutputSize",n,e,t),h=await s.image.nonMaxSuppressionPaddedAsync(o,a,i,u,c,l);return[h.selectedIndices,h.validOutputs]}case"NonMaxSuppressionV3":case"NonMaxSuppressionV2":{const{boxes:o,scores:a,maxOutputSize:i,iouThreshold:u,scoreThreshold:c}=Wi(n,e,t);return[await s.image.nonMaxSuppressionAsync(o,a,i,u,c)]}case"Where":{const o=s.cast(v("condition",n,e,t),"bool"),a=[await s.whereAsync(o)];return o.dispose(),a}case"ListDiff":return s.setdiff1dAsync(v("x",n,e,t),v("y",n,e,t));default:throw TypeError(`Node type ${n.op} is not implemented`)}};const dO=(n,e,t,r=mt)=>{switch(n.op){case"LowerBound":{const s=v("sortedSequence",n,e,t),o=v("values",n,e,t);return[r.lowerBound(s,o)]}case"TopKV2":{const s=v("x",n,e,t),o=v("k",n,e,t),a=v("sorted",n,e,t),i=r.topk(s,o,a);return[i.values,i.indices]}case"UpperBound":{const s=v("sortedSequence",n,e,t),o=v("values",n,e,t);return[r.upperBound(s,o)]}case"Unique":{const s=v("x",n,e,t),o=r.unique(s);return[o.values,o.indices]}case"UniqueV2":{const s=v("x",n,e,t),o=v("axis",n,e,t),a=r.unique(s,o);return[a.values,a.indices]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};const pO=(n,e,t,r=mt)=>{switch(n.op){case"Const":return e[n.name];case"PlaceholderWithDefault":const s=v("default",n,e,t);return[ht(n.name,e,t)||s];case"Placeholder":return[ht(n.name,e,t)];case"Identity":case"StopGradient":case"FakeQuantWithMinMaxVars":{const l=v("x",n,e,t);return[Bn(l)]}case"IdentityN":return v("x",n,e,t).map(l=>Bn(l));case"Snapshot":const o=v("x",n,e,t);return[Bn(o)];case"Shape":return[r.tensor1d(v("x",n,e,t).shape,"int32")];case"ShapeN":return v("x",n,e,t).map(l=>r.tensor1d(l.shape));case"Size":return[r.scalar(v("x",n,e,t).size,"int32")];case"Rank":return[r.scalar(v("x",n,e,t).rank,"int32")];case"NoOp":return[r.scalar(1)];case"Print":const a=v("x",n,e,t),i=v("data",n,e,t),u=v("message",n,e,t),c=v("summarize",n,e,t);console.warn("The graph has a tf.print() operation,usually used for debugging, which slows down performance."),console.log(u);for(let l=0;l<i.length;l++)console.log(Array.prototype.slice.call(i[l].dataSync()).slice(0,c));return[a];default:throw TypeError(`Node type ${n.op} is not implemented`)}};class fO{get id(){return this.handle.id}constructor(e,t){this.keyDType=e,this.valueDType=t,this.handle=Re(0),this.tensorMap=new Map,In(this.handle)}clearAndClose(){this.tensorMap.forEach(e=>e.dispose()),this.tensorMap.clear(),this.handle.dispose()}size(){return this.tensorMap.size}tensorSize(){return Re(this.size(),"int32")}async import(e,t){this.checkKeyAndValueTensor(e,t);const r=await e.data();return this.tensorMap.forEach(s=>s.dispose()),this.tensorMap.clear(),we(()=>{const s=rs(t),o=r.length,a=s.length;_(o===a,()=>`The number of elements doesn't match, keys has ${o} elements, the values has ${a} elements.`);for(let i=0;i<o;i++){const u=r[i],c=s[i];In(c),this.tensorMap.set(u,c)}return this.handle})}async find(e,t){this.checkKeyAndValueTensor(e,t);const r=await e.data();return we(()=>{const s=[];for(let o=0;o<r.length;o++){const a=r[o],i=this.findWithDefault(a,t);s.push(i)}return jn(s)})}findWithDefault(e,t){const r=this.tensorMap.get(e);return r??t}checkKeyAndValueTensor(e,t){if(e.dtype!==this.keyDType)throw new Error(`Expect key dtype ${this.keyDType}, but got ${e.dtype}`);if(t.dtype!==this.valueDType)throw new Error(`Expect value dtype ${this.valueDType}, but got ${t.dtype}`)}}const mO=async(n,e,t,r)=>{switch(n.op){case"HashTable":case"HashTableV2":{const s=r.getHashTableHandleByName(n.name);if(s!=null)return[s];{const o=v("keyDType",n,e,t),a=v("valueDType",n,e,t),i=new fO(o,a);return r.addHashTable(n.name,i),[i.handle]}}case"InitializeTable":case"InitializeTableV2":case"LookupTableImport":case"LookupTableImportV2":{const s=v("tableHandle",n,e,t,r),o=v("keys",n,e,t),a=v("values",n,e,t);return[await r.getHashTableById(s.id).import(o,a)]}case"LookupTableFind":case"LookupTableFindV2":{const s=v("tableHandle",n,e,t,r),o=v("keys",n,e,t),a=v("defaultValue",n,e,t);return[await r.getHashTableById(s.id).find(o,a)]}case"LookupTableSize":case"LookupTableSizeV2":{const s=v("tableHandle",n,e,t,r);return[r.getHashTableById(s.id).tensorSize()]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};const gO=(n,e,t,r=mt)=>{switch(n.op){case"ResizeBilinear":{const s=v("images",n,e,t),o=v("size",n,e,t),a=v("alignCorners",n,e,t),i=v("halfPixelCenters",n,e,t);return[r.image.resizeBilinear(s,[o[0],o[1]],a,i)]}case"ResizeNearestNeighbor":{const s=v("images",n,e,t),o=v("size",n,e,t),a=v("alignCorners",n,e,t),i=v("halfPixelCenters",n,e,t);return[r.image.resizeNearestNeighbor(s,[o[0],o[1]],a,i)]}case"CropAndResize":{const s=v("image",n,e,t),o=v("boxes",n,e,t),a=v("boxInd",n,e,t),i=v("cropSize",n,e,t),u=v("method",n,e,t),c=v("extrapolationValue",n,e,t);return[r.image.cropAndResize(s,o,a,i,u,c)]}case"ImageProjectiveTransformV3":{const s=v("images",n,e,t),o=v("transforms",n,e,t),a=v("outputShape",n,e,t),i=v("fillValue",n,e,t),u=v("interpolation",n,e,t),c=v("fillMode",n,e,t);return[r.image.transform(s,o,u.toLowerCase(),c.toLowerCase(),i,a)]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};const yO=(n,e,t,r=mt)=>{switch(n.op){case"Equal":return[r.equal(v("a",n,e,t),v("b",n,e,t))];case"NotEqual":return[r.notEqual(v("a",n,e,t),v("b",n,e,t))];case"Greater":return[r.greater(v("a",n,e,t),v("b",n,e,t))];case"GreaterEqual":return[r.greaterEqual(v("a",n,e,t),v("b",n,e,t))];case"Less":return[r.less(v("a",n,e,t),v("b",n,e,t))];case"LessEqual":return[r.lessEqual(v("a",n,e,t),v("b",n,e,t))];case"LogicalAnd":return[r.logicalAnd(v("a",n,e,t),v("b",n,e,t))];case"LogicalNot":return[r.logicalNot(v("a",n,e,t))];case"LogicalOr":return[r.logicalOr(v("a",n,e,t),v("b",n,e,t))];case"Select":case"SelectV2":return[r.where(v("condition",n,e,t),v("a",n,e,t),v("b",n,e,t))];case"BitwiseAnd":return[r.bitwiseAnd(v("a",n,e,t),v("b",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const xO=(n,e,t,r=mt)=>{switch(n.op){case"BatchMatMul":case"BatchMatMulV2":case"MatMul":return[r.matMul(v("a",n,e,t),v("b",n,e,t),v("transposeA",n,e,t),v("transposeB",n,e,t))];case"Einsum":return[r.einsum(v("equation",n,e,t),...v("tensors",n,e,t))];case"Transpose":return[r.transpose(v("x",n,e,t),v("perm",n,e,t))];case"_FusedMatMul":const[s,o]=v("fusedOps",n,e,t),a=s==="biasadd",i=o==="prelu",u=v("numArgs",n,e,t),c=v("leakyreluAlpha",n,e,t);if(a){if(i&&u!==2)throw new Error("Fused MatMul with BiasAdd and Prelu must have two extra arguments: bias and alpha.");if(!i&&u!==1)throw new Error("Fused MatMul with BiasAdd must have one extra argument: bias.")}const[l,h]=v("args",n,e,t);return[r.fused.matMul({a:v("a",n,e,t),b:v("b",n,e,t),transposeA:v("transposeA",n,e,t),transposeB:v("transposeB",n,e,t),bias:l,activation:o,preluActivationWeights:h,leakyreluAlpha:c})];case"MatrixBandPart":return[r.linalg.bandPart(v("a",n,e,t),v("numLower",n,e,t),v("numUpper",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const bO=(n,e,t,r=mt)=>{switch(n.op){case"EuclideanNorm":return[r.euclideanNorm(v("x",n,e,t),v("axis",n,e,t),v("keepDims",n,e,t))];case"FusedBatchNorm":case"FusedBatchNormV2":return[r.batchNorm(v("x",n,e,t),v("mean",n,e,t),v("variance",n,e,t),v("offset",n,e,t),v("scale",n,e,t),v("epsilon",n,e,t))];case"FusedBatchNormV3":return[r.batchNorm(v("x",n,e,t),v("mean",n,e,t),v("variance",n,e,t),v("offset",n,e,t),v("scale",n,e,t),v("epsilon",n,e,t))];case"LRN":return[r.localResponseNormalization(v("x",n,e,t),v("radius",n,e,t),v("bias",n,e,t),v("alpha",n,e,t),v("beta",n,e,t))];case"Softmax":return[r.softmax(v("x",n,e,t))];case"LogSoftmax":return[r.logSoftmax(v("x",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const vO=(n,e,t,r=mt)=>{switch(n.op){case"RaggedGather":{const{outputNestedSplits:s,outputDenseValues:o}=r.raggedGather(v("paramsNestedSplits",n,e,t),v("paramsDenseValues",n,e,t),v("indices",n,e,t),v("outputRaggedRank",n,e,t));return s.concat(o)}case"RaggedRange":{const{rtNestedSplits:s,rtDenseValues:o}=r.raggedRange(v("starts",n,e,t),v("limits",n,e,t),v("splits",n,e,t));return[s,o]}case"RaggedTensorToTensor":return[r.raggedTensorToTensor(v("shape",n,e,t),v("values",n,e,t),v("defaultValue",n,e,t),v("rowPartitionTensors",n,e,t),v("rowPartitionTypes",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const wO=(n,e,t,r=mt)=>{switch(n.op){case"Max":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.max(v("x",n,e,t),i,u)]}case"Mean":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.mean(v("x",n,e,t),i,u)]}case"Min":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.min(v("x",n,e,t),i,u)]}case"Sum":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.sum(v("x",n,e,t),i,u)]}case"All":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.all(v("x",n,e,t),i,u)]}case"Any":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.any(v("x",n,e,t),i,u)]}case"ArgMax":{const i=v("axis",n,e,t);return[r.argMax(v("x",n,e,t),i)]}case"ArgMin":{const i=v("axis",n,e,t);return[r.argMin(v("x",n,e,t),i)]}case"Prod":{const i=v("axis",n,e,t),u=v("keepDims",n,e,t);return[r.prod(v("x",n,e,t),i,u)]}case"Cumprod":{const i=v("axis",n,e,t),u=v("exclusive",n,e,t),c=v("reverse",n,e,t);return[r.cumprod(v("x",n,e,t),i,u,c)]}case"Cumsum":{const i=v("axis",n,e,t),u=v("exclusive",n,e,t),c=v("reverse",n,e,t);return[r.cumsum(v("x",n,e,t),i,u,c)]}case"Bincount":const s=v("x",n,e,t),o=v("weights",n,e,t),a=v("size",n,e,t);return[r.bincount(s,o,a)];case"DenseBincount":{const i=v("x",n,e,t),u=v("weights",n,e,t),c=v("size",n,e,t),l=v("binaryOutput",n,e,t);return[r.denseBincount(i,u,c,l)]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};const $O=(n,e,t,r=mt)=>{switch(n.op){case"ConcatV2":case"Concat":{const s=v("n",n,e,t),o=v("axis",n,e,t);let a=v("tensors",n,e,t);return a=a.slice(0,s),[r.concat(a,o)]}case"Gather":{const s=v("x",n,e,t),o=v("indices",n,e,t);return[r.gather(s,r.cast(o,"int32"),0)]}case"GatherV2":{const s=v("axis",n,e,t),o=v("batchDims",n,e,t),a=v("x",n,e,t),i=v("indices",n,e,t);return[r.gather(a,r.cast(i,"int32"),s,o)]}case"Reverse":{const s=v("dims",n,e,t),o=[];for(let i=0;i<s.length;i++)s[i]&&o.push(i);const a=v("x",n,e,t);return[r.reverse(a,o)]}case"ReverseV2":{const s=v("axis",n,e,t),o=v("x",n,e,t);return[r.reverse(o,s)]}case"Slice":{const s=v("begin",n,e,t),o=v("size",n,e,t);return[r.slice(v("x",n,e,t),s,o)]}case"StridedSlice":{const s=v("begin",n,e,t),o=v("end",n,e,t),a=v("strides",n,e,t),i=v("beginMask",n,e,t),u=v("endMask",n,e,t),c=v("ellipsisMask",n,e,t),l=v("newAxisMask",n,e,t),h=v("shrinkAxisMask",n,e,t),d=v("x",n,e,t);return[r.stridedSlice(d,s,o,a,i,u,c,l,h)]}case"Pack":return we(()=>{const s=v("axis",n,e,t),o=v("tensors",n,e,t),a=o[0].shape,i=r.squeeze(o[0]).shape,u=o.map(c=>{const l=qe(c.shape,a);if(!l&&!qe(r.squeeze(c).shape,i))throw new Error("the input tensors shape does not match");return l?c:r.reshape(c,a)});return[r.stack(u,s)]});case"Unpack":{const s=v("axis",n,e,t),o=v("tensor",n,e,t);return r.unstack(o,s)}case"Tile":{const s=v("reps",n,e,t);return[r.tile(v("x",n,e,t),s)]}case"Split":case"SplitV":{const s=v("axis",n,e,t),o=v("numOrSizeSplits",n,e,t),a=v("x",n,e,t);return r.split(a,o,s)}case"ScatterNd":{const s=v("indices",n,e,t),o=v("values",n,e,t),a=v("shape",n,e,t);return[r.scatterND(s,o,a)]}case"GatherNd":{const s=v("x",n,e,t),o=v("indices",n,e,t);return[r.gatherND(s,o)]}case"SparseToDense":{const s=v("sparseIndices",n,e,t),o=v("outputShape",n,e,t),a=v("sparseValues",n,e,t),i=v("defaultValue",n,e,t);return[r.sparseToDense(s,a,o,a.dtype===i.dtype?i:r.cast(i,a.dtype))]}case"TensorScatterUpdate":{const s=v("indices",n,e,t),o=v("values",n,e,t),a=v("tensor",n,e,t);return[r.tensorScatterUpdate(a,s,o)]}default:throw TypeError(`Node type ${n.op} is not implemented`)}};const SO=(n,e,t,r=mt)=>{switch(n.op){case"SparseFillEmptyRows":{const{outputIndices:s,outputValues:o,emptyRowIndicator:a,reverseIndexMap:i}=r.sparse.sparseFillEmptyRows(v("indices",n,e,t),v("values",n,e,t),v("denseShape",n,e,t),v("defaultValue",n,e,t));return[s,o,a,i]}case"SparseReshape":{const{outputIndices:s,outputShape:o}=r.sparse.sparseReshape(v("inputIndices",n,e,t),v("inputShape",n,e,t),v("newShape",n,e,t));return[s,o]}case"SparseSegmentMean":return[r.sparse.sparseSegmentMean(v("data",n,e,t),v("indices",n,e,t),v("segmentIds",n,e,t))];case"SparseSegmentSum":return[r.sparse.sparseSegmentSum(v("data",n,e,t),v("indices",n,e,t),v("segmentIds",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const CO=(n,e,t,r=mt)=>{switch(n.op){case"FFT":return[r.fft(v("x",n,e,t))];case"IFFT":return[r.ifft(v("x",n,e,t))];case"RFFT":return[r.rfft(v("x",n,e,t))];case"IRFFT":return[r.irfft(v("x",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const TO=(n,e,t,r=mt)=>{switch(n.op){case"StaticRegexReplace":return[r.string.staticRegexReplace(v("input",n,e,t),v("pattern",n,e,t),v("rewrite",n,e,t),v("replaceGlobal",n,e,t))];case"StringNGrams":{const{nGrams:s,nGramsSplits:o}=r.string.stringNGrams(v("data",n,e,t),v("dataSplits",n,e,t),v("separator",n,e,t),v("nGramWidths",n,e,t),v("leftPad",n,e,t),v("rightPad",n,e,t),v("padWidth",n,e,t),v("preserveShortSequences",n,e,t));return[s,o]}case"StringSplit":{const{indices:s,values:o,shape:a}=r.string.stringSplit(v("input",n,e,t),v("delimiter",n,e,t),v("skipEmpty",n,e,t));return[s,o,a]}case"StringToHashBucketFast":return[r.string.stringToHashBucketFast(v("input",n,e,t),v("numBuckets",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};const NO=(n,e,t,r=mt)=>{switch(n.op){case"Cast":return[r.cast(v("x",n,e,t),v("dtype",n,e,t))];case"ExpandDims":{const s=v("axis",n,e,t);return[r.expandDims(v("x",n,e,t),s)]}case"Squeeze":{const s=v("axis",n,e,t);return[r.squeeze(v("x",n,e,t),s)]}case"Reshape":return[r.reshape(v("x",n,e,t),v("shape",n,e,t))];case"EnsureShape":return[r.ensureShape(v("x",n,e,t),v("shape",n,e,t))];case"MirrorPad":return[r.mirrorPad(v("x",n,e,t),v("padding",n,e,t),v("mode",n,e,t))];case"PadV2":case"Pad":return[r.pad(v("x",n,e,t),v("padding",n,e,t),v("constantValue",n,e,t))];case"SpaceToBatchND":{const s=v("blockShape",n,e,t),o=v("paddings",n,e,t);return[r.spaceToBatchND(v("x",n,e,t),s,o)]}case"BatchToSpaceND":{const s=v("blockShape",n,e,t),o=v("crops",n,e,t);return[r.batchToSpaceND(v("x",n,e,t),s,o)]}case"DepthToSpace":{const s=v("blockSize",n,e,t),o=v("dataFormat",n,e,t).toUpperCase();return[r.depthToSpace(v("x",n,e,t),s,o)]}case"BroadcastTo":return[r.broadcastTo(v("x",n,e,t),v("shape",n,e,t))];case"BroadcastArgs":return[r.broadcastArgs(v("s0",n,e,t),v("s1",n,e,t))];default:throw TypeError(`Node type ${n.op} is not implemented`)}};function jl(n,e,t,r,s=we){const o=((a,i,u)=>{switch(a.category){case"arithmetic":return s(()=>tO(a,i,u));case"basic_math":return s(()=>nO(a,i,u));case"control":return uO(a,i,u);case"convolution":return s(()=>cO(a,i,u));case"creation":return s(()=>lO(a,i,u));case"dynamic":return hO(a,i,u);case"evaluation":return s(()=>dO(a,i,u));case"image":return s(()=>gO(a,i,u));case"graph":return s(()=>pO(a,i,u));case"logical":return s(()=>yO(a,i,u));case"matrices":return s(()=>xO(a,i,u));case"normalization":return s(()=>bO(a,i,u));case"ragged":return s(()=>vO(a,i,u));case"reduction":return s(()=>wO(a,i,u));case"slice_join":return s(()=>$O(a,i,u));case"sparse":return s(()=>SO(a,i,u));case"spectral":return s(()=>CO(a,i,u));case"string":return s(()=>TO(a,i,u));case"transformation":return s(()=>NO(a,i,u));case"hash_table":return mO(a,i,u,r);case"custom":const c=yg(a.op);if(c&&c.customExecutor)return c.customExecutor(new eO(a,i,u));throw TypeError(`Custom op ${a.op} is not registered.`);default:throw TypeError(`Unknown op '${a.op}'. File an issue at https://github.com/tensorflow/tfjs/issues so we can add it, or register a custom execution with tf.registerOp()`)}})(n,e,t);return Gr(o)?o.then(a=>[].concat(a)):[].concat(o)}class Hl{constructor(e={},t={},r={},s={},o){this.weightMap=e,this.tensorArrayMap=t,this.tensorListMap=r,this.functionMap=s,this.parseNodeNameCache=o,this.rootContext={id:0,frameName:"",iterationId:0},this.contexts=[this.rootContext],this.lastId=0,this.generateCurrentContextIds()}newFrame(e,t){return{id:e,frameName:t,iterationId:0}}set currentContext(e){this.contexts!==e&&(this.contexts=e,this.generateCurrentContextIds())}get currentContext(){return this.contexts}get currentContextId(){return this._currentContextIds[0]}get currentContextIds(){return this._currentContextIds}generateCurrentContextIds(){const e=[];for(let t=0;t<this.contexts.length-1;t++){const r=this.contexts.slice(0,this.contexts.length-t);e.push(this.contextIdforContexts(r))}e.push(""),this._currentContextIds=e}contextIdforContexts(e){return e?e.map(t=>t.id===0&&t.iterationId===0?"":`${t.frameName}-${t.iterationId}`).join("/"):""}enterFrame(e){this.contexts&&(this.lastId++,this.contexts=this.contexts.slice(),this.contexts.push(this.newFrame(this.lastId,e)),this._currentContextIds.unshift(this.contextIdforContexts(this.contexts)))}exitFrame(){if(this.contexts&&this.contexts.length>1)this.contexts=this.contexts.slice(),this.contexts.splice(-1),this.currentContextIds.shift();else throw new Error("Cannot exit frame, the context is empty")}nextIteration(){if(this.contexts&&this.contexts.length>0){this.contexts=this.contexts.slice(),this.lastId++;const e=Object.assign({},this.contexts[this.contexts.length-1]);e.iterationId+=1,e.id=this.lastId,this.contexts.splice(-1,1,e),this._currentContextIds.splice(0,1,this.contextIdforContexts(this.contexts))}else throw new Error("Cannot increase frame iteration, the context is empty")}getWeight(e){return this.weightMap[e]}addTensorArray(e){this.tensorArrayMap[e.id]=e}getTensorArray(e){return this.tensorArrayMap[e]}addTensorList(e){this.tensorListMap[e.id]=e}getTensorList(e){return this.tensorListMap[e]}dispose(e){for(const t in this.tensorArrayMap)this.tensorArrayMap[t].clearAndClose(e);for(const t in this.tensorListMap)this.tensorListMap[t].clearAndClose(e)}}function Kl(n,e,t,r){const s=new Set,o=[];let a=null,i=null;const u=new Set,c=new Set(Object.keys(n).map(d=>Pt(d)[0]));r=r||[];const l=new Set(r.map(d=>Pt(d.name)[0])),h=[...e];for(;h.length>0;){const d=h.pop();if((Vr(d)||DO(d)||FO(d))&&a==null&&(a=d,i=a.children.map(p=>p.name).filter(p=>s.has(p))),s.add(d.name),t[d.name]==null&&!c.has(d.name)&&!l.has(d.name)){if(d.inputs.length===0){o.push(d.name);continue}d.inputs.forEach(p=>{u.has(p.name)||(u.add(p.name),h.push(p))})}}return{inputs:n,outputs:e,usedNodes:s,missingInputs:o,dynamicNode:a,syncInputs:i}}function EO(n,e){const{usedNodes:t,inputs:r}=e,s=Object.keys(r).map(y=>Pt(y)[0]).map(y=>n.nodes[y]),o=n.initNodes||[],a=y=>t.has(typeof y=="string"?y:y.name);function i(y){return[...new Map(y.map(x=>[x.name,x])).values()]}const u=i([...s,...n.weights,...o]).filter(a),c=i([...u,...Object.values(n.nodes)]).filter(a),l=new Map(c.map(y=>[y.name,y])),h={};for(const y of c){h[y.name]=h[y.name]||0;for(const x of y.children)a(x)||(h[x.name]=Number.POSITIVE_INFINITY),h[x.name]=(h[x.name]||0)+1}const d=Object.entries(h).filter(([,y])=>y===0).map(([y])=>y),p=[...d];for(;d.length>0;){const y=d.pop(),x=l.get(y);for(const C of x.children.filter(a))--h[C.name]===0&&(p.push(C.name),d.push(C.name))}const f=p.map(y=>l.get(y)),b=IO(f,u);return kO(b,u),b}function IO(n,e){const t=new Map(n.map(a=>[a.name,a])),r=e.map(a=>a.name),s=new Set(r);for(;r.length>0;){const a=r.pop(),i=t.get(a);for(const u of i.children)!t.has(u.name)||s.has(u.name)||(s.add(u.name),r.push(u.name))}return n.filter(a=>s.has(a.name))}class ya extends Error{constructor(e){super(`NodesExecutionOrderError: ${e}`)}}function kO(n,e){const t=new Map(n.map((i,u)=>[i.name,u])),r=new Set(e.map(i=>i.name)),s=i=>r.has(typeof i=="string"?i:i.name),o=new Set(n.map(i=>i.name)),a=i=>o.has(typeof i=="string"?i:i.name);for(const i of n){for(const u of i.children.filter(a)){if(!t.has(u.name))throw new ya(`Child ${u.name} of node ${i.name} is unreachable.`);if(t.get(i.name)>t.get(u.name))throw new ya(`Node ${i.name} is scheduled to run after its child ${u.name}.`)}if(!s(i))for(const u of i.inputs){if(!t.has(u.name))throw new ya(`Input ${u.name} of node ${i.name} is unreachable.`);if(t.get(u.name)>t.get(i.name))throw new ya(`Node ${i.name} is scheduled to run before its input ${u.name}.`)}}}function RO(n){const e=new Map(n.map((i,u)=>[i.name,u])),t=Number.MAX_SAFE_INTEGER,r=n.map((i,u)=>Vr(i)?t:u),s=i=>{const u=r[e.get(i.name)];return u??-1},o=n.map((i,u)=>i.children.map(s).reduce((c,l)=>Math.max(c,l),r[u])),a=new Map;for(let i=0;i<n.length;++i){const u=o[i];if(u===t)continue;const c=n[i],l=n[u];a.has(l.name)||a.set(l.name,[]),a.get(l.name).push(c)}return a}const _O=new Set(["Switch","Merge","Enter","Exit","NextIteration","StatelessIf","StatelessWhile","if","While"]),AO=new Set(["NonMaxSuppressionV2","NonMaxSuppressionV3","NonMaxSuppressionV5","Where"]),OO=new Set(["HashTable","HashTableV2","LookupTableImport","LookupTableImportV2","LookupTableFind","LookupTableFindV2","LookupTableSize","LookupTableSizeV2"]);function Vr(n){return _O.has(n.op)}function DO(n){return AO.has(n.op)}function FO(n){return OO.has(n.op)}class Ka{get weightIds(){return this.parent?this.parent.weightIds:this._weightIds}get functionExecutorMap(){return this.parent?this.parent.functionExecutorMap:this._functionExecutorMap}get weightMap(){return this.parent?this.parent.weightMap:this._weightMap}set weightMap(e){const t=Object.keys(e).map(r=>e[r].map(s=>s.id));this._weightIds=[].concat(...t),this._weightMap=e}set resourceManager(e){this._resourceManager=e}get inputs(){return this._inputs.map(e=>({name:e.name,shape:e.attrParams.shape?e.attrParams.shape.value:void 0,dtype:e.attrParams.dtype?e.attrParams.dtype.value:void 0}))}get outputs(){return this._outputs.map(e=>({name:e.name,shape:e.attrParams.shape?e.attrParams.shape.value:void 0,dtype:e.attrParams.dtype?e.attrParams.dtype.value:void 0}))}get inputNodes(){return this._inputs.map(e=>e.signatureKey||e.name)}get outputNodes(){return this._outputs.map(e=>{const t=e.signatureKey||e.name;return e.defaultOutput?`${t}:${e.defaultOutput}`:t})}get functions(){return Object.keys(this._functions).reduce((e,t)=>(e[t]=this._functions[t].signature,e),{})}constructor(e,t){this.graph=e,this.parent=t,this.compiledMap=new Map,this.parseNodeNameCache=new Map,this._weightMap={},this.SEPARATOR=",",this._functions={},this._functionExecutorMap={},this.keepIntermediateTensors=!1,this._outputs=e.outputs,this._inputs=e.inputs,this._initNodes=e.initNodes,this._signature=e.signature,this._functions=e.functions,e.functions!=null&&Object.keys(e.functions).forEach(r=>{this._functionExecutorMap[r]=new Ka(e.functions[r],this)})}getCompilationKey(e,t){const r=e.map(o=>o.name).sort(),s=t.map(o=>o.name).sort();return r.join(this.SEPARATOR)+"--"+s.join(this.SEPARATOR)}compile(e,t){const r=Kl(e,t,this.weightMap,this._initNodes),{missingInputs:s,dynamicNode:o,syncInputs:a}=r;if(o!=null)throw new Error(`This execution contains the node '${o.name}', which has the dynamic op '${o.op}'. Please use model.executeAsync() instead. Alternatively, to avoid the dynamic ops, specify the inputs [${a}]`);if(s.length>0){const c=t.map(h=>h.name),l=Object.keys(e);throw new Error(`Cannot compute the outputs [${c}] from the provided inputs [${l}]. Missing the following inputs: [${s}]`)}const i=EO(this.graph,r),u=RO(i);return{orderedNodes:i,nodeLiveUntilMap:u}}cloneAndKeepTensor(e){if(e==null)return null;const t=e.clone();return In(t),t}cloneTensorList(e){return e?e.map(r=>this.cloneAndKeepTensor(r)):null}cloneTensorMap(e){return Object.fromEntries(Object.entries(e).map(([t,r])=>[t,this.cloneTensorList(r)]))}execute(e,t){this.disposeIntermediateTensors(),e=this.mapInputs(e);const r=Object.keys(e).sort();this.checkInputs(e),this.checkInputShapeAndType(e),t=this.mapOutputs(t),this.checkOutputs(t);const s=r.map(d=>this.graph.nodes[Pt(d)[0]]),o=t.map(d=>Pt(d)[0]),a=new Set(o);let i=o.map(d=>this.graph.nodes[d]);i.length===0&&(i=this._outputs);const u=this.getCompilationKey(s,i);let c=this.compiledMap.get(u);c==null&&(c=this.compile(e,i),this.compiledMap.set(u,c));try{this.keepIntermediateTensors=j().getBool("KEEP_INTERMEDIATE_TENSORS")}catch(d){this.keepIntermediateTensors=!1,console.warn(d.message)}const l={},h={};return we(()=>{const d=new Hl(this.weightMap,l,h,this.functionExecutorMap,this.parseNodeNameCache),p=Object.assign({},this.weightMap);this.keepIntermediateTensors&&(this.clonedTensorsMap=this.cloneTensorMap(this.weightMap)),Object.keys(e).forEach(x=>{const[C,I]=Pt(x,d),k=[];k[I]=e[x],p[C]=k,this.keepIntermediateTensors&&(this.clonedTensorsMap[C]=this.cloneTensorList(k))});const f=this.getFrozenTensorIds(p),{orderedNodes:b,nodeLiveUntilMap:y}=c;for(const x of b){if(p[x.name])continue;const C=jl(x,p,d,this._resourceManager);if(Gr(C))throw new Error(`The execution of the op '${x.op}' returned a promise. Please use model.executeAsync() instead.`);p[x.name]=C,this.keepIntermediateTensors&&(this.clonedTensorsMap[x.name]=this.cloneTensorList(C)),this.checkTensorForDisposalWithNodeLiveUntilInfo(x,p,d,f,a,y.get(x.name))}return this.parent==null&&d.dispose(f),t.map(x=>ht(x,p,d))})}getFrozenTensorIds(e){const t=[].concat.apply([],Object.keys(e).map(r=>e[r]).map(r=>r.map(s=>s.id)));return new Set(t)}checkTensorForDisposal(e,t,r,s,o,a,i){if(!(Vr(t)||a.has(e))){for(const u of r[e])u!=null&&(i[u.id]=(i[u.id]||0)+t.children.length);for(const u of t.inputs){if(Vr(u))continue;const c=Ml(u.name,r,s);if(c!=null)for(const l of c){if(!l||l.kept||o.has(l.id))continue;const h=i[l.id];h===1?(l.dispose(),delete i[l.id]):h!=null&&i[l.id]--}}}}checkTensorForDisposalWithNodeLiveUntilInfo(e,t,r,s,o,a){function i(u){return Vr(u)||o.has(u.name)}if(!(Vr(e)||a==null))for(const u of a){if(i(u))continue;const c=Ml(u.name,t,r);for(const l of c)!l||l.kept||s.has(l.id)||l.dispose()}}async executeAsync(e,t){return this._executeAsync(e,t)}disposeIntermediateTensors(){this.clonedTensorsMap&&(Object.values(this.clonedTensorsMap).forEach(e=>{for(const t of e)t&&!t.isDisposed&&t.dispose()}),this.clonedTensorsMap=null)}getIntermediateTensors(){return this.clonedTensorsMap}async _executeAsync(e,t,r=!1,s={},o={}){this.disposeIntermediateTensors(),r||(e=this.mapInputs(e),this.checkInputs(e),this.checkInputShapeAndType(e),t=this.mapOutputs(t),this.checkOutputs(t));try{this.keepIntermediateTensors=j().getBool("KEEP_INTERMEDIATE_TENSORS")}catch(d){this.keepIntermediateTensors=!1,console.warn(d.message)}const a=new Hl(this.weightMap,s,o,this.functionExecutorMap,this.parseNodeNameCache);this.keepIntermediateTensors&&(this.clonedTensorsMap=this.cloneTensorMap(this.weightMap));const i=await this.executeWithControlFlow(e,a,t,r),u=t.map(d=>ht(d,i,a)),c=u.map(d=>d.id),l=Object.keys(e).map(d=>e[d].id),h=new Set([...c,...l,...this.weightIds]);return Object.values(i).forEach(d=>{d.forEach(p=>{p&&!p.isDisposed&&!h.has(p.id)&&p.dispose()})}),this.parent==null&&a.dispose(h),u}async executeFunctionAsync(e,t,r){const s=e.reduce((o,a,i)=>(o[this.inputs[i].name]=a,o),{});return this._executeAsync(s,this.outputNodes,!0,t,r)}async executeWithControlFlow(e,t,r,s){const o=Object.keys(e),a=o.map(k=>this.graph.nodes[Pt(k)[0]]),i=r.map(k=>Pt(k)[0]),u=new Set(i);let c=i.map(k=>this.graph.nodes[k]);c.length===0&&(c=this._outputs);const{usedNodes:l,missingInputs:h,dynamicNode:d,syncInputs:p}=Kl(e,c,this.weightMap,this._initNodes),f=[...a,...this.graph.weights,...this._initNodes||[]].map(k=>({node:k,contexts:t.currentContext})),b=Object.assign({},this.weightMap);Object.keys(e).forEach(k=>{const[P,W]=Pt(k),H=[];H[W]=e[k],b[P]=H});const y={},x=this.getFrozenTensorIds(b),C={};for(;f.length>0;){const k=this.processStack(a,f,t,b,C,x,u,y,l);await Promise.all(k)}d==null&&!s&&console.warn("This model execution did not contain any nodes with control flow or dynamic output shapes. You can use model.execute() instead.");const I=c.filter(k=>!Vr(k)&&!ht(k.name,b,t)).map(k=>k.name);if(I.length>0){let k="";throw d!=null&&(k=`Alternatively, to avoid the dynamic ops, use model.execute() and specify the inputs [${p}]`),new Error(`Cannot compute the outputs [${I}] from the provided inputs [${o}]. Consider providing the following inputs: [${h}]. ${k}`)}return b}processStack(e,t,r,s,o,a,i,u,c){const l=[];for(;t.length>0;){const h=t.pop();r.currentContext=h.contexts;let d="";if(h.node.op==="Enter"&&v("isConstant",h.node,s,r)&&([d]=Ln(h.node.name,r)),s[h.node.name]==null){const p=jl(h.node,s,r,this._resourceManager);d||([d]=Ln(h.node.name,r));const f=r.currentContext;Gr(p)?l.push(p.then(b=>(s[d]=b,this.keepIntermediateTensors&&(this.clonedTensorsMap[d]=this.cloneTensorList(b)),r.currentContext=f,this.checkTensorForDisposal(d,h.node,s,r,a,i,u),this.processChildNodes(h.node,t,r,s,o,c),b))):(s[d]=p,this.keepIntermediateTensors&&(this.clonedTensorsMap[d]=this.cloneTensorList(p)),this.checkTensorForDisposal(d,h.node,s,r,a,i,u),this.processChildNodes(h.node,t,r,s,o,c))}else this.processChildNodes(h.node,t,r,s,o,c)}return l}processChildNodes(e,t,r,s,o,a){e.children.forEach(i=>{const[u]=Ln(i.name,r);o[u]||!a.has(i.name)||(i.op==="Merge"?i.inputNames.some(c=>!!ht(c,s,r))&&(o[u]=!0,t.push({contexts:r.currentContext,node:i})):i.inputNames.every(c=>!!ht(c,s,r))&&(o[u]=!0,t.push({contexts:r.currentContext,node:i})))})}dispose(){Object.keys(this.weightMap).forEach(e=>this.weightMap[e].forEach(t=>t.dispose()))}checkInputShapeAndType(e){Object.keys(e).forEach(t=>{const r=e[t],[s]=Pt(t),o=this.graph.nodes[s];if(o.attrParams.shape&&o.attrParams.shape.value){const a=o.attrParams.shape.value,i=a.length===r.shape.length&&r.shape.every((u,c)=>a[c]===-1||a[c]===u);_(i,()=>`The shape of dict['${o.name}'] provided in model.execute(dict) must be [${a}], but was [${r.shape}]`)}o.attrParams.dtype&&o.attrParams.dtype.value&&_(r.dtype===o.attrParams.dtype.value,()=>`The dtype of dict['${o.name}'] provided in model.execute(dict) must be ${o.attrParams.dtype.value}, but was ${r.dtype}`)})}mapInputs(e){var t,r;const s={};for(const o in e){const a=(r=(t=this._signature)===null||t===void 0?void 0:t.inputs)===null||r===void 0?void 0:r[o];a!=null?s[a.name]=e[o]:s[o]=e[o]}return s}checkInputs(e){const t=Object.keys(e).filter(r=>{const[s]=Pt(r);return this.graph.nodes[s]==null});if(t.length>0)throw new Error(`The dict provided in model.execute(dict) has keys: [${t}] that are not part of graph`)}mapOutputs(e){return e.map(t=>{var r,s;const o=(s=(r=this._signature)===null||r===void 0?void 0:r.outputs)===null||s===void 0?void 0:s[t];return o!=null?o.name:t},{})}checkOutputs(e){e.forEach(t=>{const[r]=Pt(t);if(!this.graph.nodes[r])throw new Error(`The output '${t}' is not found in the graph`)})}}class PO{constructor(e={},t={}){this.hashTableNameToHandle=e,this.hashTableMap=t}addHashTable(e,t){this.hashTableNameToHandle[e]=t.handle,this.hashTableMap[t.id]=t}getHashTableHandleByName(e){return this.hashTableNameToHandle[e]}getHashTableById(e){return this.hashTableMap[e]}dispose(){for(const e in this.hashTableMap)this.hashTableMap[e].clearAndClose(),delete this.hashTableMap[e];for(const e in this.hashTableNameToHandle)this.hashTableNameToHandle[e].dispose(),delete this.hashTableNameToHandle[e]}}const LO="?tfjs-format=file",BO="model.json";class VO{get modelVersion(){return this.version}get inputNodes(){return this.executor.inputNodes}get outputNodes(){return this.executor.outputNodes}get inputs(){return this.executor.inputs}get outputs(){return this.executor.outputs}get weights(){return this.executor.weightMap}get metadata(){return this.artifacts.userDefinedMetadata}get modelSignature(){return this.signature}get modelStructuredOutputKeys(){return this.structuredOutputKeys}constructor(e,t={},r=Tm){this.modelUrl=e,this.loadOptions=t,this.version="n/a",this.io=r,t==null&&(this.loadOptions={}),this.resourceManager=new PO}findIOHandler(){const e=this.modelUrl;if(e.load!=null)this.handler=e;else if(this.loadOptions.requestInit!=null)this.handler=this.io.browserHTTPRequest(e,this.loadOptions);else{const t=this.io.getLoadHandlers(e,this.loadOptions);if(t.length===0)t.push(this.io.browserHTTPRequest(e,this.loadOptions));else if(t.length>1)throw new Error(`Found more than one (${t.length}) load handlers for URL '${[e]}'`);this.handler=t[0]}}load(){if(this.findIOHandler(),this.handler.load==null)throw new Error("Cannot proceed with model loading because the IOHandler provided does not have the `load` method implemented.");const e=this.handler.load();return Gr(e)?e.then(t=>t.getWeightStream==null?this.loadSync(t):this.loadStreaming(t)):this.loadSync(e)}loadSync(e){const t=this.io.decodeWeights(e.weightData,e.weightSpecs);return this.loadWithWeightMap(e,t)}async loadStreaming(e){if(e.getWeightStream==null)throw new Error("Model artifacts missing streamWeights function");const t=await bf(e.getWeightStream(),e.weightSpecs);return this.loadWithWeightMap(e,t)}loadWithWeightMap(e,t){this.artifacts=e;const r=this.artifacts.modelTopology;let s=this.artifacts.signature;if(this.artifacts.userDefinedMetadata!=null){const o=this.artifacts.userDefinedMetadata;o.signature!=null&&(s=o.signature),o.structuredOutputKeys!=null&&(this.structuredOutputKeys=o.structuredOutputKeys)}if(this.signature=s,this.version=`${r.versions.producer}.${r.versions.minConsumer}`,this.executor=new Ka(Ul.Instance.transformGraph(r,this.signature)),this.executor.weightMap=this.convertTensorMapToTensorsMap(t),this.executor.resourceManager=this.resourceManager,e.modelInitializer!=null&&e.modelInitializer.node!=null){const o=Ul.Instance.transformGraph(e.modelInitializer);this.initializer=new Ka(o),this.initializer.weightMap=this.executor.weightMap,this.initializer.resourceManager=this.resourceManager,this.initializerSignature=e.initializerSignature}return!0}async save(e,t){if(typeof e=="string"){const r=this.io.getSaveHandlers(e);if(r.length===0)throw new Error(`Cannot find any save handlers for URL '${e}'`);if(r.length>1)throw new Error(`Found more than one (${r.length}) save handlers for URL '${e}'`);e=r[0]}if(e.save==null)throw new Error("GraphModel.save() cannot proceed because the IOHandler provided does not have the `save` attribute defined.");return e.save(this.artifacts)}addStructuredOutputNames(e){if(this.structuredOutputKeys){const t=e instanceof Ze?[e]:e,r={};return t.forEach((s,o)=>r[this.structuredOutputKeys[o]]=s),r}return e}predict(e,t){const r=this.execute(e,this.outputNodes);return this.addStructuredOutputNames(r)}async predictAsync(e,t){const r=await this.executeAsync(e,this.outputNodes);return this.addStructuredOutputNames(r)}normalizeInputs(e){var t;if(!(e instanceof Ze)&&!Array.isArray(e)){const o=(t=this.signature)===null||t===void 0?void 0:t.inputs;if(o!=null)for(const a in o){const i=o[a];i.resourceId!=null&&(e[a]=this.resourceIdToCapturedInput[i.resourceId])}return e}e=Array.isArray(e)?e:[e];const r=Object.keys(this.resourceIdToCapturedInput).length;if(e.length+r!==this.inputNodes.length)throw new Error(`Input tensor count mismatch, the graph model has ${this.inputNodes.length-r} non-resource placeholders, while there are ${e.length} input tensors provided.`);let s=0;return this.inputNodes.reduce((o,a)=>{var i,u,c;const l=(c=(u=(i=this.signature)===null||i===void 0?void 0:i.inputs)===null||u===void 0?void 0:u[a])===null||c===void 0?void 0:c.resourceId;return l!=null?o[a]=this.resourceIdToCapturedInput[l]:o[a]=e[s++],o},{})}normalizeOutputs(e){return e=e||this.outputNodes,Array.isArray(e)?e:[e]}executeInitializerGraph(){return this.initializer==null?[]:this.initializerSignature==null?this.initializer.execute({},[]):this.initializer.execute({},Object.keys(this.initializerSignature.outputs))}async executeInitializerGraphAsync(){return this.initializer==null?[]:this.initializerSignature==null?this.initializer.executeAsync({},[]):this.initializer.executeAsync({},Object.keys(this.initializerSignature.outputs))}setResourceIdToCapturedInput(e){if(this.resourceIdToCapturedInput={},this.initializerSignature){const t=this.initializerSignature.outputs,r=Object.keys(t);for(let s=0;s<r.length;s++){const o=r[s],a=t[o];this.resourceIdToCapturedInput[a.resourceId]=e[s]}}}execute(e,t){this.resourceIdToCapturedInput==null&&this.setResourceIdToCapturedInput(this.executeInitializerGraph()),e=this.normalizeInputs(e),t=this.normalizeOutputs(t);const r=this.executor.execute(e,t);return r.length>1?r:r[0]}async executeAsync(e,t){this.resourceIdToCapturedInput==null&&this.setResourceIdToCapturedInput(await this.executeInitializerGraphAsync()),e=this.normalizeInputs(e),t=this.normalizeOutputs(t);const r=await this.executor.executeAsync(e,t);return r.length>1?r:r[0]}getIntermediateTensors(){return this.executor.getIntermediateTensors()}disposeIntermediateTensors(){this.executor.disposeIntermediateTensors()}convertTensorMapToTensorsMap(e){return Object.keys(e).reduce((t,r)=>(t[r]=[e[r]],t),{})}dispose(){this.executor.dispose(),this.initializer&&(this.initializer.dispose(),this.resourceIdToCapturedInput&&Xe(this.resourceIdToCapturedInput)),this.resourceManager.dispose()}}async function vg(n,e={},t=Tm){if(n==null)throw new Error("modelUrl in loadGraphModel() cannot be null. Please provide a url or an IOHandler that loads the model");e==null&&(e={}),e.fromTFHub&&typeof n=="string"&&(n=MO(n));const r=new VO(n,e,t);return await r.load(),r}function MO(n){return n.endsWith("/")||(n=n+"/"),`${n}${BO}${LO}`}var bn=function(){return bn=Object.assign||function(n){for(var e,t=1,r=arguments.length;t<r;t++)for(var s in e=arguments[t])Object.prototype.hasOwnProperty.call(e,s)&&(n[s]=e[s]);return n},bn.apply(this,arguments)};function Mn(n,e,t,r){return new(t||(t=Promise))((function(s,o){function a(c){try{u(r.next(c))}catch(l){o(l)}}function i(c){try{u(r.throw(c))}catch(l){o(l)}}function u(c){var l;c.done?s(c.value):(l=c.value,l instanceof t?l:new t((function(h){h(l)}))).then(a,i)}u((r=r.apply(n,[])).next())}))}function Un(n,e){var t,r,s,o,a={label:0,sent:function(){if(1&s[0])throw s[1];return s[1]},trys:[],ops:[]};return o={next:i(0),throw:i(1),return:i(2)},typeof Symbol=="function"&&(o[Symbol.iterator]=function(){return this}),o;function i(u){return function(c){return(function(l){if(t)throw new TypeError("Generator is already executing.");for(;a;)try{if(t=1,r&&(s=2&l[0]?r.return:l[0]?r.throw||((s=r.return)&&s.call(r),0):r.next)&&!(s=s.call(r,l[1])).done)return s;switch(r=0,s&&(l=[2&l[0],s.value]),l[0]){case 0:case 1:s=l;break;case 4:return a.label++,{value:l[1],done:!1};case 5:a.label++,r=l[1],l=[0];continue;case 7:l=a.ops.pop(),a.trys.pop();continue;default:if(s=a.trys,!((s=s.length>0&&s[s.length-1])||l[0]!==6&&l[0]!==2)){a=0;continue}if(l[0]===3&&(!s||l[1]>s[0]&&l[1]<s[3])){a.label=l[1];break}if(l[0]===6&&a.label<s[1]){a.label=s[1],s=l;break}if(s&&a.label<s[2]){a.label=s[2],a.ops.push(l);break}s[2]&&a.ops.pop(),a.trys.pop();continue}l=e.call(n,a)}catch(h){l=[6,h],r=0}finally{t=s=0}if(5&l[0])throw l[1];return{value:l[0]?l[1]:void 0,done:!0}})([u,c])}}}function or(n){var e=n.map((function(t){return t[0]}));return e.push(n[n.length-1][1]),e}var UO={lips:or([[61,146],[146,91],[91,181],[181,84],[84,17],[17,314],[314,405],[405,321],[321,375],[375,291],[61,185],[185,40],[40,39],[39,37],[37,0],[0,267],[267,269],[269,270],[270,409],[409,291],[78,95],[95,88],[88,178],[178,87],[87,14],[14,317],[317,402],[402,318],[318,324],[324,308],[78,191],[191,80],[80,81],[81,82],[82,13],[13,312],[312,311],[311,310],[310,415],[415,308]]),leftEye:or([[263,249],[249,390],[390,373],[373,374],[374,380],[380,381],[381,382],[382,362],[263,466],[466,388],[388,387],[387,386],[386,385],[385,384],[384,398],[398,362]]),leftEyebrow:or([[276,283],[283,282],[282,295],[295,285],[300,293],[293,334],[334,296],[296,336]]),leftIris:or([[474,475],[475,476],[476,477],[477,474]]),rightEye:or([[33,7],[7,163],[163,144],[144,145],[145,153],[153,154],[154,155],[155,133],[33,246],[246,161],[161,160],[160,159],[159,158],[158,157],[157,173],[173,133]]),rightEyebrow:or([[46,53],[53,52],[52,65],[65,55],[70,63],[63,105],[105,66],[66,107]]),rightIris:or([[469,470],[470,471],[471,472],[472,469]]),faceOval:or([[10,338],[338,297],[297,332],[332,284],[284,251],[251,389],[389,356],[356,454],[454,323],[323,361],[361,288],[288,397],[397,365],[365,379],[379,378],[378,400],[400,377],[377,152],[152,148],[148,176],[176,149],[149,150],[150,136],[136,172],[172,58],[58,132],[132,93],[93,234],[234,127],[127,162],[162,21],[21,54],[54,103],[103,67],[67,109],[109,10]])},WO=Object.entries(UO).map((function(n){var e=n[0];return n[1].map((function(t){return[t,e]}))})).flat(),wg=new Map(WO);function Wu(n){for(var e={locationData:{relativeKeypoints:[]}},t=Number.MAX_SAFE_INTEGER,r=Number.MIN_SAFE_INTEGER,s=Number.MAX_SAFE_INTEGER,o=Number.MIN_SAFE_INTEGER,a=0;a<n.length;++a){var i=n[a];t=Math.min(t,i.x),r=Math.max(r,i.x),s=Math.min(s,i.y),o=Math.max(o,i.y),e.locationData.relativeKeypoints.push({x:i.x,y:i.y})}return e.locationData.relativeBoundingBox={xMin:t,yMin:s,xMax:r,yMax:o,width:r-t,height:o-s},e}var zi={runtime:"mediapipe",maxFaces:1,refineLandmarks:!1},zO=(function(){function n(e){var t=this;this.width=0,this.height=0,this.selfieMode=!1,this.faceMeshSolution=new dA.FaceMesh({locateFile:function(r,s){return e.solutionPath?e.solutionPath.replace(/\/+$/,"")+"/"+r:s+"/"+r}}),this.faceMeshSolution.setOptions({refineLandmarks:e.refineLandmarks,selfieMode:this.selfieMode,maxNumFaces:e.maxFaces}),this.faceMeshSolution.onResults((function(r){if(t.height=r.image.height,t.width=r.image.width,t.faces=[],r.multiFaceLandmarks!==null)for(var s=r.multiFaceLandmarks,o=0;o<s.length;o++){var a=t.translateOutput(s[o]);t.faces.push({keypoints:a,box:Wu(a).locationData.relativeBoundingBox})}}))}return n.prototype.translateOutput=function(e){var t=this;return e.map((function(r,s){var o={x:r.x*t.width,y:r.y*t.height,z:r.z*t.width},a=wg.get(s);return a!=null&&(o.name=a),o}))},n.prototype.estimateFaces=function(e,t){return Mn(this,void 0,void 0,(function(){var r,s;return Un(this,(function(o){switch(o.label){case 0:return t&&t.flipHorizontal&&t.flipHorizontal!==this.selfieMode&&(this.selfieMode=t.flipHorizontal,this.faceMeshSolution.setOptions({selfieMode:this.selfieMode})),e instanceof Ze?(s=ImageData.bind,[4,Nm(e)]):[3,2];case 1:return r=new(s.apply(ImageData,[void 0,o.sent(),e.shape[1],e.shape[0]])),[3,3];case 2:r=e,o.label=3;case 3:return e=r,[4,this.faceMeshSolution.send({image:e})];case 4:return o.sent(),[2,this.faces]}}))}))},n.prototype.dispose=function(){this.faceMeshSolution.close()},n.prototype.reset=function(){this.faceMeshSolution.reset(),this.width=0,this.height=0,this.faces=null,this.selfieMode=!1},n.prototype.initialize=function(){return this.faceMeshSolution.initialize()},n})();function GO(n){return Mn(this,void 0,void 0,(function(){var e,t;return Un(this,(function(r){switch(r.label){case 0:return e=(function(s){if(s==null)return bn({},zi);var o=bn({},s);return o.runtime="mediapipe",o.maxFaces==null&&(o.maxFaces=zi.maxFaces),o.refineLandmarks==null&&(o.refineLandmarks=zi.refineLandmarks),o})(n),[4,(t=new zO(e)).initialize()];case 1:return r.sent(),[2,t]}}))}))}var Gi=typeof globalThis<"u"?globalThis:typeof window<"u"?window:typeof global<"u"?global:typeof self<"u"?self:{},jO={};(function(){var n;function e(m){var $=0;return function(){return $<m.length?{done:!1,value:m[$++]}:{done:!0}}}var t=typeof Object.defineProperties=="function"?Object.defineProperty:function(m,$,T){return m==Array.prototype||m==Object.prototype||(m[$]=T.value),m},r=(function(m){m=[typeof globalThis=="object"&&globalThis,m,typeof window=="object"&&window,typeof self=="object"&&self,typeof Gi=="object"&&Gi];for(var $=0;$<m.length;++$){var T=m[$];if(T&&T.Math==Math)return T}throw Error("Cannot find global object")})(this);function s(m,$){if($)e:{var T=r;m=m.split(".");for(var N=0;N<m.length-1;N++){var O=m[N];if(!(O in T))break e;T=T[O]}($=$(N=T[m=m[m.length-1]]))!=N&&$!=null&&t(T,m,{configurable:!0,writable:!0,value:$})}}function o(m){return(m={next:m})[Symbol.iterator]=function(){return this},m}function a(m){var $=typeof Symbol<"u"&&Symbol.iterator&&m[Symbol.iterator];return $?$.call(m):{next:e(m)}}function i(m){if(!(m instanceof Array)){m=a(m);for(var $,T=[];!($=m.next()).done;)T.push($.value);m=T}return m}s("Symbol",(function(m){function $(O,A){this.g=O,t(this,"description",{configurable:!0,writable:!0,value:A})}if(m)return m;$.prototype.toString=function(){return this.g};var T="jscomp_symbol_"+(1e9*Math.random()>>>0)+"_",N=0;return function O(A){if(this instanceof O)throw new TypeError("Symbol is not a constructor");return new $(T+(A||"")+"_"+N++,A)}})),s("Symbol.iterator",(function(m){if(m)return m;m=Symbol("Symbol.iterator");for(var $="Array Int8Array Uint8Array Uint8ClampedArray Int16Array Uint16Array Int32Array Uint32Array Float32Array Float64Array".split(" "),T=0;T<$.length;T++){var N=r[$[T]];typeof N=="function"&&typeof N.prototype[m]!="function"&&t(N.prototype,m,{configurable:!0,writable:!0,value:function(){return o(e(this))}})}return m}));var u,c=typeof Object.create=="function"?Object.create:function(m){function $(){}return $.prototype=m,new $};if(typeof Object.setPrototypeOf=="function")u=Object.setPrototypeOf;else{var l;e:{var h={};try{h.__proto__={a:!0},l=h.a;break e}catch{}l=!1}u=l?function(m,$){if(m.__proto__=$,m.__proto__!==$)throw new TypeError(m+" is not extensible");return m}:null}var d=u;function p(m,$){if(m.prototype=c($.prototype),m.prototype.constructor=m,d)d(m,$);else for(var T in $)if(T!="prototype")if(Object.defineProperties){var N=Object.getOwnPropertyDescriptor($,T);N&&Object.defineProperty(m,T,N)}else m[T]=$[T];m.na=$.prototype}function f(){this.l=!1,this.i=null,this.h=void 0,this.g=1,this.u=this.o=0,this.j=null}function b(m){if(m.l)throw new TypeError("Generator is already running");m.l=!0}function y(m,$){m.j={da:$,ea:!0},m.g=m.o||m.u}function x(m,$,T){return m.g=T,{value:$}}function C(m){this.g=new f,this.h=m}function I(m,$,T,N){try{var O=$.call(m.g.i,T);if(!(O instanceof Object))throw new TypeError("Iterator result "+O+" is not an object");if(!O.done)return m.g.l=!1,O;var A=O.value}catch(F){return m.g.i=null,y(m.g,F),k(m)}return m.g.i=null,N.call(m.g,A),k(m)}function k(m){for(;m.g.g;)try{var $=m.h(m.g);if($)return m.g.l=!1,{value:$.value,done:!1}}catch(T){m.g.h=void 0,y(m.g,T)}if(m.g.l=!1,m.g.j){if($=m.g.j,m.g.j=null,$.ea)throw $.da;return{value:$.return,done:!0}}return{value:void 0,done:!0}}function P(m){this.next=function($){return b(m.g),m.g.i?$=I(m,m.g.i.next,$,m.g.s):(m.g.s($),$=k(m)),$},this.throw=function($){return b(m.g),m.g.i?$=I(m,m.g.i.throw,$,m.g.s):(y(m.g,$),$=k(m)),$},this.return=function($){return(function(T,N){b(T.g);var O=T.g.i;return O?I(T,"return"in O?O.return:function(A){return{value:A,done:!0}},N,T.g.return):(T.g.return(N),k(T))})(m,$)},this[Symbol.iterator]=function(){return this}}function W(m){return(function($){function T(O){return $.next(O)}function N(O){return $.throw(O)}return new Promise((function(O,A){(function F(M){M.done?O(M.value):Promise.resolve(M.value).then(T,N).then(F,A)})($.next())}))})(new P(new C(m)))}f.prototype.s=function(m){this.h=m},f.prototype.return=function(m){this.j={return:m},this.g=this.u},s("Promise",(function(m){function $(F){this.h=0,this.i=void 0,this.g=[],this.s=!1;var M=this.j();try{F(M.resolve,M.reject)}catch(X){M.reject(X)}}function T(){this.g=null}function N(F){return F instanceof $?F:new $((function(M){M(F)}))}if(m)return m;T.prototype.h=function(F){if(this.g==null){this.g=[];var M=this;this.i((function(){M.l()}))}this.g.push(F)};var O=r.setTimeout;T.prototype.i=function(F){O(F,0)},T.prototype.l=function(){for(;this.g&&this.g.length;){var F=this.g;this.g=[];for(var M=0;M<F.length;++M){var X=F[M];F[M]=null;try{X()}catch(Q){this.j(Q)}}}this.g=null},T.prototype.j=function(F){this.i((function(){throw F}))},$.prototype.j=function(){function F(Q){return function(ee){X||(X=!0,Q.call(M,ee))}}var M=this,X=!1;return{resolve:F(this.D),reject:F(this.l)}},$.prototype.D=function(F){if(F===this)this.l(new TypeError("A Promise cannot resolve to itself"));else if(F instanceof $)this.H(F);else{e:switch(typeof F){case"object":var M=F!=null;break e;case"function":M=!0;break e;default:M=!1}M?this.A(F):this.o(F)}},$.prototype.A=function(F){var M=void 0;try{M=F.then}catch(X){return void this.l(X)}typeof M=="function"?this.I(M,F):this.o(F)},$.prototype.l=function(F){this.u(2,F)},$.prototype.o=function(F){this.u(1,F)},$.prototype.u=function(F,M){if(this.h!=0)throw Error("Cannot settle("+F+", "+M+"): Promise already settled in state"+this.h);this.h=F,this.i=M,this.h===2&&this.G(),this.B()},$.prototype.G=function(){var F=this;O((function(){if(F.C()){var M=r.console;M!==void 0&&M.error(F.i)}}),1)},$.prototype.C=function(){if(this.s)return!1;var F=r.CustomEvent,M=r.Event,X=r.dispatchEvent;return X===void 0||(typeof F=="function"?F=new F("unhandledrejection",{cancelable:!0}):typeof M=="function"?F=new M("unhandledrejection",{cancelable:!0}):(F=r.document.createEvent("CustomEvent")).initCustomEvent("unhandledrejection",!1,!0,F),F.promise=this,F.reason=this.i,X(F))},$.prototype.B=function(){if(this.g!=null){for(var F=0;F<this.g.length;++F)A.h(this.g[F]);this.g=null}};var A=new T;return $.prototype.H=function(F){var M=this.j();F.M(M.resolve,M.reject)},$.prototype.I=function(F,M){var X=this.j();try{F.call(M,X.resolve,X.reject)}catch(Q){X.reject(Q)}},$.prototype.then=function(F,M){function X(ae,ue){return typeof ae=="function"?function(xe){try{Q(ae(xe))}catch(Se){ee(Se)}}:ue}var Q,ee,se=new $((function(ae,ue){Q=ae,ee=ue}));return this.M(X(F,Q),X(M,ee)),se},$.prototype.catch=function(F){return this.then(void 0,F)},$.prototype.M=function(F,M){function X(){switch(Q.h){case 1:F(Q.i);break;case 2:M(Q.i);break;default:throw Error("Unexpected state: "+Q.h)}}var Q=this;this.g==null?A.h(X):this.g.push(X),this.s=!0},$.resolve=N,$.reject=function(F){return new $((function(M,X){X(F)}))},$.race=function(F){return new $((function(M,X){for(var Q=a(F),ee=Q.next();!ee.done;ee=Q.next())N(ee.value).M(M,X)}))},$.all=function(F){var M=a(F),X=M.next();return X.done?N([]):new $((function(Q,ee){function se(xe){return function(Se){ae[xe]=Se,--ue==0&&Q(ae)}}var ae=[],ue=0;do ae.push(void 0),ue++,N(X.value).M(se(ae.length-1),ee),X=M.next();while(!X.done)}))},$}));var H=typeof Object.assign=="function"?Object.assign:function(m,$){for(var T=1;T<arguments.length;T++){var N=arguments[T];if(N)for(var O in N)Object.prototype.hasOwnProperty.call(N,O)&&(m[O]=N[O])}return m};s("Object.assign",(function(m){return m||H})),s("Object.is",(function(m){return m||function($,T){return $===T?$!==0||1/$==1/T:$!=$&&T!=T}})),s("Array.prototype.includes",(function(m){return m||function($,T){var N=this;N instanceof String&&(N=String(N));var O=N.length;for(0>(T=T||0)&&(T=Math.max(T+O,0));T<O;T++){var A=N[T];if(A===$||Object.is(A,$))return!0}return!1}})),s("String.prototype.includes",(function(m){return m||function($,T){if(this==null)throw new TypeError("The 'this' value for String.prototype.includes must not be null or undefined");if($ instanceof RegExp)throw new TypeError("First argument to String.prototype.includes must not be a regular expression");return this.indexOf($,T||0)!==-1}})),s("Array.prototype.keys",(function(m){return m||function(){return(function($,T){$ instanceof String&&($+="");var N=0,O=!1,A={next:function(){if(!O&&N<$.length){var F=N++;return{value:T(F,$[F]),done:!1}}return O=!0,{done:!0,value:void 0}}};return A[Symbol.iterator]=function(){return A},A})(this,(function($){return $}))}}));var G=this||self;function B(m,$){m=m.split(".");var T,N=G;for((m[0]in N)||N.execScript===void 0||N.execScript("var "+m[0]);m.length&&(T=m.shift());)m.length||$===void 0?N=N[T]&&N[T]!==Object.prototype[T]?N[T]:N[T]={}:N[T]=$}function V(){throw Error("Invalid UTF8")}function R(m,$){return $=String.fromCharCode.apply(null,$),m==null?$:m+$}var q,te,he=typeof TextDecoder<"u",de=typeof TextEncoder<"u",ge={},be=null;function $e(m){var $;$===void 0&&($=0),_e(),$=ge[$];for(var T=Array(Math.floor(m.length/3)),N=$[64]||"",O=0,A=0;O<m.length-2;O+=3){var F=m[O],M=m[O+1],X=m[O+2],Q=$[F>>2];F=$[(3&F)<<4|M>>4],M=$[(15&M)<<2|X>>6],X=$[63&X],T[A++]=Q+F+M+X}switch(Q=0,X=N,m.length-O){case 2:X=$[(15&(Q=m[O+1]))<<2]||N;case 1:m=m[O],T[A]=$[m>>2]+$[(3&m)<<4|Q>>4]+X+N}return T.join("")}function Ie(m){var $=m.length,T=3*$/4;T%3?T=Math.floor(T):"=.".indexOf(m[$-1])!=-1&&(T="=.".indexOf(m[$-2])!=-1?T-2:T-1);var N=new Uint8Array(T),O=0;return(function(A,F){function M(ue){for(;X<A.length;){var xe=A.charAt(X++),Se=be[xe];if(Se!=null)return Se;if(!/^[\s\xa0]*$/.test(xe))throw Error("Unknown base64 encoding at char: "+xe)}return ue}_e();for(var X=0;;){var Q=M(-1),ee=M(0),se=M(64),ae=M(64);if(ae===64&&Q===-1)break;F(Q<<2|ee>>4),se!=64&&(F(ee<<4&240|se>>2),ae!=64&&F(se<<6&192|ae))}})(m,(function(A){N[O++]=A})),O!==T?N.subarray(0,O):N}function _e(){if(!be){be={};for(var m="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789".split(""),$=["+/=","+/","-_=","-_.","-_"],T=0;5>T;T++){var N=m.concat($[T].split(""));ge[T]=N;for(var O=0;O<N.length;O++){var A=N[O];be[A]===void 0&&(be[A]=O)}}}}var Le,Me=typeof Uint8Array=="function";function Qe(m){return Me&&m!=null&&m instanceof Uint8Array}function hn(m){if(this.L=m,m!==null&&m.length===0)throw Error("ByteString should be constructed with non-empty values")}var Qn=typeof Uint8Array.prototype.slice=="function",Vt=0;function Hs(m,$){return Error("Invalid wire type: "+m+" (at position "+$+")")}function cs(){return Error("Failed to read varint, encoding is invalid.")}function Yt(m,$){$=($=$===void 0?{}:$).v!==void 0&&$.v,this.h=null,this.g=this.i=this.j=0,this.v=$,m&&Qt(this,m)}function Qt(m,$){m.h=(function(T,N){if(T.constructor===Uint8Array)return T;if(T.constructor===ArrayBuffer)return new Uint8Array(T);if(T.constructor===Array)return new Uint8Array(T);if(T.constructor===String)return Ie(T);if(T.constructor===hn)return!N&&(N=T.L)&&N.constructor===Uint8Array?N:(N=(N=T.L)==null||Qe(N)?N:typeof N=="string"?Ie(N):null,(T=T.L=N)?new Uint8Array(T):Le||(Le=new Uint8Array(0)));if(T instanceof Uint8Array)return new Uint8Array(T.buffer,T.byteOffset,T.byteLength);throw Error("Type not convertible to a Uint8Array, expected a Uint8Array, an ArrayBuffer, a base64 encoded string, or Array of numbers")})($,m.v),m.j=0,m.i=m.h.length,m.g=m.j}function et(m){if(m.g>m.i)throw Error("Tried to read past the end of the data "+m.g+" > "+m.i)}function Zn(m){var $=m.h,T=$[m.g],N=127&T;if(128>T)return m.g+=1,et(m),N;if(N|=(127&(T=$[m.g+1]))<<7,128>T)return m.g+=2,et(m),N;if(N|=(127&(T=$[m.g+2]))<<14,128>T)return m.g+=3,et(m),N;if(N|=(127&(T=$[m.g+3]))<<21,128>T)return m.g+=4,et(m),N;if(T=$[m.g+4],m.g+=5,N|=(15&T)<<28,128>T)return et(m),N;if(128<=$[m.g++]&&128<=$[m.g++]&&128<=$[m.g++]&&128<=$[m.g++]&&128<=$[m.g++])throw cs();return et(m),N}Yt.prototype.reset=function(){this.g=this.j};var $r=[];function ls(){this.g=[]}function Zt(m,$){for(;127<$;)m.g.push(127&$|128),$>>>=7;m.g.push($)}function dn(m){var $={},T=$.W!==void 0&&$.W;this.l={v:$.v!==void 0&&$.v},this.W=T,$=this.l,$r.length?(T=$r.pop(),$&&(T.v=$.v),m&&Qt(T,m),m=T):m=new Yt(m,$),this.g=m,this.j=this.g.g,this.h=this.i=-1}function Jn(m){var $=m.g;if($.g==$.i)return!1;m.j=m.g.g;var T=Zn(m.g)>>>0;if($=T>>>3,!(0<=(T&=7)&&5>=T))throw Hs(T,m.j);if(1>$)throw Error("Invalid field number: "+$+" (at position "+m.j+")");return m.i=$,m.h=T,!0}function Rt(m){switch(m.h){case 0:if(m.h!=0)Rt(m);else e:{for(var $=(m=m.g).g,T=$+10;$<T;)if((128&m.h[$++])==0){m.g=$,et(m);break e}throw cs()}break;case 1:(m=m.g).g+=8,et(m);break;case 2:m.h!=2?Rt(m):($=Zn(m.g)>>>0,(m=m.g).g+=$,et(m));break;case 5:(m=m.g).g+=4,et(m);break;case 3:for($=m.i;;){if(!Jn(m))throw Error("Unmatched start-group tag: stream EOF");if(m.h==4){if(m.i!=$)throw Error("Unmatched end-group tag");break}Rt(m)}break;default:throw Hs(m.h,m.j)}}ls.prototype.length=function(){return this.g.length},ls.prototype.end=function(){var m=this.g;return this.g=[],m},dn.prototype.reset=function(){this.g.reset(),this.j=this.g.g,this.h=this.i=-1};var pn=[];function hs(){this.i=[],this.h=0,this.g=new ls}function rt(m,$){$.length!==0&&(m.i.push($),m.h+=$.length)}var Sr=typeof Symbol=="function"&&typeof Symbol()=="symbol"?Symbol(void 0):void 0;function Ks(m,$){Object.isFrozen(m)||(Sr?m[Sr]|=$:m.N!==void 0?m.N|=$:Object.defineProperties(m,{N:{value:$,configurable:!0,writable:!0,enumerable:!1}}))}function Xs(m){var $;return($=Sr?m[Sr]:m.N)==null?0:$}function Dn(m){return Ks(m,1),m}function Jt(m){return!!Array.isArray(m)&&!!(2&Xs(m))}function Cr(m){if(!Array.isArray(m))throw Error("cannot mark non-array as immutable");Ks(m,2)}function _t(m){return m!==null&&typeof m=="object"&&!Array.isArray(m)&&m.constructor===Object}var Tr=Object.freeze(Dn([]));function qs(m){if(Jt(m.m))throw Error("Cannot mutate an immutable Message")}var Ys,zo=typeof Symbol<"u"&&Symbol.hasInstance!==void 0;function Go(m){return{value:m,configurable:!1,writable:!1,enumerable:!1}}function gt(m,$,T){return $===-1?null:$>=m.i?m.g?m.g[$]:void 0:T!==void 0&&T&&m.g&&(T=m.g[$])!=null?T:m.m[$+m.h]}function tt(m,$,T,N){N=N!==void 0&&N,qs(m),$<m.i&&!N?m.m[$+m.h]=T:(m.g||(m.g=m.m[m.i+m.h]={}))[$]=T}function nt(m,$,T,N){T=T===void 0||T;var O=gt(m,$,N=N!==void 0&&N);return O==null&&(O=Tr),Jt(m.m)?T&&(Cr(O),Object.freeze(O)):(O===Tr||Jt(O))&&tt(m,$,O=Dn(O.slice()),N),O}function Tt(m,$,T){return(m=(m=gt(m,$))==null?m:+m)==null?T===void 0?0:T:m}function Nr(m,$,T,N){m.j||(m.j={});var O=Jt(m.m),A=m.j[T];if(!A){N=nt(m,T,!0,N!==void 0&&N),A=[],O=O||Jt(N);for(var F=0;F<N.length;F++)A[F]=new $(N[F]),O&&Cr(A[F].m);O&&(Cr(A),Object.freeze(A)),m.j[T]=A}return A}function We(m,$,T,N,O){var A=A!==void 0&&A;return qs(m),A=Nr(m,T,$,A),T=N||new T,m=nt(m,$),O!=null?(A.splice(O,0,T),m.splice(O,0,T.m)):(A.push(T),m.push(T.m)),T}function Er(m,$){return(m=gt(m,$))==null?0:m}function Qs(m,$){return(m=gt(m,$))==null?"":m}function Sn(m){var $=jo;return Ee(m,$=$===void 0?ds:$)}function Mt(m,$){if(m!=null){if(Array.isArray(m))m=Ee(m,$);else if(_t(m)){var T,N={};for(T in m)N[T]=Mt(m[T],$);m=N}else m=$(m);return m}}function Ee(m,$){for(var T=m.slice(),N=0;N<T.length;N++)T[N]=Mt(T[N],$);return Array.isArray(m)&&1&Xs(m)&&Dn(T),T}function jo(m){return m&&typeof m=="object"&&m.toJSON?m.toJSON():(m=(function($){switch(typeof $){case"number":return isFinite($)?$:String($);case"object":if($&&!Array.isArray($)){if(Qe($))return $e($);if($ instanceof hn){var T=$.L;return T=T==null||typeof T=="string"?T:Me&&T instanceof Uint8Array?$e(T):null,($.L=T)||""}}}return $})(m),Array.isArray(m)?Sn(m):m)}function ds(m){return Qe(m)?new Uint8Array(m):m}function Ir(m,$,T){m||(m=Ys),Ys=null;var N=this.constructor.h;if(m||(m=N?[N]:[]),this.h=(N?0:-1)-(this.constructor.g||0),this.j=void 0,this.m=m,m=(N=this.m.length)-1,N&&_t(N=this.m[m])?(this.i=m-this.h,this.g=N):$!==void 0&&-1<$?(this.i=Math.max($,m+1-this.h),this.g=void 0):this.i=Number.MAX_VALUE,T)for($=0;$<T.length;$++)if((m=T[$])<this.i)m+=this.h,(N=this.m[m])?Array.isArray(N)&&Dn(N):this.m[m]=Tr;else{var O=(N=this.g||(this.g=this.m[this.i+this.h]={}))[m];O?Array.isArray(O)&&Dn(O):N[m]=Tr}}function kr(){Ir.apply(this,arguments)}if(Ir.prototype.toJSON=function(){return Sn(this.m)},Ir.prototype.toString=function(){return this.m.toString()},p(kr,Ir),zo){var Cn={};Object.defineProperties(kr,(Cn[Symbol.hasInstance]=Go((function(){throw Error("Cannot perform instanceof checks for MutableMessage")})),Cn))}function ps(m,$,T){if(T){var N,O={};for(N in T){var A=T[N],F=A.ha;F||(O.F=A.la||A.fa.P,A.aa?(O.U=Ko(A.aa),F=(function(M){return function(X,Q,ee){return M.F(X,Q,ee,M.U)}})(O)):A.ca?(O.T=fs(A.X.g,A.ca),F=(function(M){return function(X,Q,ee){return M.F(X,Q,ee,M.T)}})(O)):F=O.F,A.ha=F),F($,m,A.X),O={F:O.F,U:O.U,T:O.T}}}(function(M,X){if(X=X.ba){rt(M,M.g.end());for(var Q=0;Q<X.length;Q++)rt(M,X[Q])}})($,m)}var Ut=Symbol();function Tn(m,$,T){return m[Ut]||(m[Ut]=function(N,O){return $(N,O,T)})}function Ho(m){var $=m[Ut];if(!$){var T=Zo(m);$=function(N,O){return Zs(N,O,T)},m[Ut]=$}return $}function gi(m){var $=(function(O){var A=O.aa;return A?Ho(A):(A=O.ka)?Tn(O.X.g,A,O.ca):void 0})(m),T=m.X,N=m.fa.O;return $?function(O,A){return N(O,A,T,$)}:function(O,A){return N(O,A,T)}}function ct(m,$,T,N,O,A){var F=0;for((m=m()).length&&typeof m[0]!="number"&&(T($,m[0]),F++);F<m.length;){T=m[F++];for(var M=F+1;M<m.length&&typeof m[M]!="number";)M++;var X=m[F++];switch(M-=F){case 0:N($,T,X);break;case 1:N($,T,X,m[F++]);break;case 2:O($,T,X,m[F++],m[F++]);break;case 3:M=m[F++];var Q=m[F++],ee=m[F++];Array.isArray(ee)?O($,T,X,M,Q,ee):A($,T,X,M,Q,ee);break;case 4:A($,T,X,m[F++],m[F++],m[F++],m[F++]);break;default:throw Error("unexpected number of binary field arguments: "+M)}}return $}var Nn=Symbol();function Ko(m){var $=m[Nn];if(!$){var T=Qo(m);$=function(N,O){return eo(N,O,T)},m[Nn]=$}return $}function fs(m,$){var T=m[Nn];return T||(T=function(N,O){return ps(N,O,$)},m[Nn]=T),T}var Xo=Symbol();function er(m,$){m.push($)}function yi(m,$,T){m.push($,T.P)}function qo(m,$,T,N,O){var A=Ko(O),F=T.P;m.push($,(function(M,X,Q){return F(M,X,Q,N,A)}))}function Yo(m,$,T,N,O,A){var F=fs(N,A),M=T.P;m.push($,(function(X,Q,ee){return M(X,Q,ee,N,F)}))}function Qo(m){var $=m[Xo];return $||ct(m,m[Xo]=[],er,yi,qo,Yo)}var ms=Symbol();function Fn(m,$){m[0]=$}function xi(m,$,T,N){var O=T.O;m[$]=N?function(A,F,M){return O(A,F,M,N)}:O}function bi(m,$,T,N,O,A){var F=T.O,M=Ho(O);m[$]=function(X,Q,ee){return F(X,Q,ee,N,M,A)}}function gs(m,$,T,N,O,A,F){var M=T.O,X=Tn(N,O,A);m[$]=function(Q,ee,se){return M(Q,ee,se,N,X,F)}}function Zo(m){var $=m[ms];return $||ct(m,m[ms]={},Fn,xi,bi,gs)}function Zs(m,$,T){for(;Jn($)&&$.h!=4;){var N=$.i,O=T[N];if(!O){var A=T[0];A&&(A=A[N])&&(O=T[N]=gi(A))}if(!(O&&O($,m,N)||(O=$,N=m,A=O.j,Rt(O),O.W))){var F=O.g.h;O=A===(O=O.g.g)?Le||(Le=new Uint8Array(0)):Qn?F.slice(A,O):new Uint8Array(F.subarray(A,O)),(A=N.ba)?A.push(O):N.ba=[O]}}return m}function Js(m,$,T){if(pn.length){var N=pn.pop();m&&(Qt(N.g,m),N.i=-1,N.h=-1),m=N}else m=new dn(m);try{return Zs(new $,m,Zo(T))}finally{($=m.g).h=null,$.j=0,$.i=0,$.g=0,$.v=!1,m.i=-1,m.h=-1,100>pn.length&&pn.push(m)}}function eo(m,$,T){for(var N=T.length,O=N%2==1,A=O?1:0;A<N;A+=2)(0,T[A+1])($,m,T[A]);ps(m,$,O?T[0]:void 0)}function Rr(m,$){var T=new hs;eo(m,T,Qo($)),rt(T,T.g.end()),m=new Uint8Array(T.h);for(var N=($=T.i).length,O=0,A=0;A<N;A++){var F=$[A];m.set(F,O),O+=F.length}return T.i=[m],m}function tr(m,$){return{O:m,P:$}}var Wt=tr((function(m,$,T){if(m.h!==5)return!1;var N=(m=m.g).h[m.g],O=m.h[m.g+1],A=m.h[m.g+2],F=m.h[m.g+3];return m.g+=4,et(m),m=2*((O=(N<<0|O<<8|A<<16|F<<24)>>>0)>>31)+1,N=O>>>23&255,O&=8388607,tt($,T,N==255?O?NaN:1/0*m:N==0?m*Math.pow(2,-149)*O:m*Math.pow(2,N-150)*(O+Math.pow(2,23))),!0}),(function(m,$,T){if(($=gt($,T))!=null){Zt(m.g,8*T+5),m=m.g;var N=$;(N=(T=0>N?1:0)?-N:N)===0?0<1/N?Vt=0:Vt=2147483648:isNaN(N)?Vt=2147483647:34028234663852886e22<N?Vt=(T<<31|2139095040)>>>0:11754943508222875e-54>N?(N=Math.round(N/Math.pow(2,-149)),Vt=(T<<31|N)>>>0):($=Math.floor(Math.log(N)/Math.LN2),N*=Math.pow(2,-$),16777216<=(N=Math.round(8388608*N))&&++$,Vt=(T<<31|$+127<<23|8388607&N)>>>0),T=Vt,m.g.push(T>>>0&255),m.g.push(T>>>8&255),m.g.push(T>>>16&255),m.g.push(T>>>24&255)}})),vi=tr((function(m,$,T){if(m.h!==0)return!1;for(var N=m.g,O=128,A=0,F=m=0;4>F&&128<=O;F++)O=N.h[N.g++],et(N),A|=(127&O)<<7*F;if(128<=O&&(O=N.h[N.g++],et(N),A|=(127&O)<<28,m|=(127&O)>>4),128<=O)for(F=0;5>F&&128<=O;F++)O=N.h[N.g++],et(N),m|=(127&O)<<7*F+3;if(!(128>O))throw cs();return N=A>>>0,(m=2147483648&(O=m>>>0))&&(O=~O>>>0,(N=1+~N>>>0)==0&&(O=O+1>>>0)),N=4294967296*O+(N>>>0),tt($,T,m?-N:N),!0}),(function(m,$,T){if(($=gt($,T))!=null&&$!=null){Zt(m.g,8*T),m=m.g;var N=$;for(T=0>N,$=(N=Math.abs(N))>>>0,N=Math.floor((N-$)/4294967296),N>>>=0,T&&(N=~N>>>0,4294967295<($=1+(~$>>>0))&&($=0,4294967295<++N&&(N=0))),T=Vt=$,$=N;0<$||127<T;)m.g.push(127&T|128),T=(T>>>7|$<<25)>>>0,$>>>=7;m.g.push(T)}})),wi=tr((function(m,$,T){return m.h===0&&(tt($,T,Zn(m.g)),!0)}),(function(m,$,T){if(($=gt($,T))!=null&&$!=null)if(Zt(m.g,8*T),m=m.g,0<=(T=$))Zt(m,T);else{for($=0;9>$;$++)m.g.push(127&T|128),T>>=7;m.g.push(1)}})),Jo=tr((function(m,$,T){if(m.h!==2)return!1;var N,O=Zn(m.g)>>>0,A=(m=m.g).g;if(m.g+=O,et(m),m=m.h,he)(N=q)||(N=q=new TextDecoder("utf-8",{fatal:!0})),N=N.decode(m.subarray(A,A+O));else{O=A+O;for(var F,M,X,Q=[],ee=null;A<O;)128>(F=m[A++])?Q.push(F):224>F?A>=O?V():(M=m[A++],194>F||(192&M)!=128?(A--,V()):Q.push((31&F)<<6|63&M)):240>F?A>=O-1?V():(192&(M=m[A++]))!=128||F===224&&160>M||F===237&&160<=M||(192&(N=m[A++]))!=128?(A--,V()):Q.push((15&F)<<12|(63&M)<<6|63&N):244>=F?A>=O-2?V():(192&(M=m[A++]))!=128||M-144+(F<<28)>>30!=0||(192&(N=m[A++]))!=128||(192&(X=m[A++]))!=128?(A--,V()):(F=(7&F)<<18|(63&M)<<12|(63&N)<<6|63&X,F-=65536,Q.push(55296+(F>>10&1023),56320+(1023&F))):V(),8192<=Q.length&&(ee=R(ee,Q),Q.length=0);N=R(ee,Q)}return tt($,T,N),!0}),(function(m,$,T){if(($=gt($,T))!=null){var N=!1;if(N=N!==void 0&&N,de){if(N&&/(?:[^\uD800-\uDBFF]|^)[\uDC00-\uDFFF]|[\uD800-\uDBFF](?![\uDC00-\uDFFF])/.test($))throw Error("Found an unpaired surrogate");$=(te||(te=new TextEncoder)).encode($)}else{for(var O=0,A=new Uint8Array(3*$.length),F=0;F<$.length;F++){var M=$.charCodeAt(F);if(128>M)A[O++]=M;else{if(2048>M)A[O++]=M>>6|192;else{if(55296<=M&&57343>=M){if(56319>=M&&F<$.length){var X=$.charCodeAt(++F);if(56320<=X&&57343>=X){M=1024*(M-55296)+X-56320+65536,A[O++]=M>>18|240,A[O++]=M>>12&63|128,A[O++]=M>>6&63|128,A[O++]=63&M|128;continue}F--}if(N)throw Error("Found an unpaired surrogate");M=65533}A[O++]=M>>12|224,A[O++]=M>>6&63|128}A[O++]=63&M|128}}$=A.subarray(0,O)}Zt(m.g,8*T+2),Zt(m.g,$.length),rt(m,m.g.end()),rt(m,$)}})),to=tr((function(m,$,T,N,O){if(m.h!==2)return!1;$=We($,T,N),T=m.g.i,N=Zn(m.g)>>>0;var A=m.g.g+N,F=A-T;if(0>=F&&(m.g.i=A,O($,m),F=A-m.g.g),F)throw Error("Message parsing ended unexpectedly. Expected to read "+N+" bytes, instead read "+(N-F)+" bytes, either the data ended unexpectedly or the message misreported its own length");return m.g.g=A,m.g.i=T,!0}),(function(m,$,T,N,O){if(($=Nr($,N,T))!=null)for(N=0;N<$.length;N++){var A=m;Zt(A.g,8*T+2);var F=A.g.end();rt(A,F),F.push(A.h),A=F,O($[N],m),F=m;var M=A.pop();for(M=F.h+F.g.length()-M;127<M;)A.push(127&M|128),M>>>=7,F.h++;A.push(M),F.h++}}));function At(){kr.apply(this,arguments)}if(p(At,kr),zo){var ea={};Object.defineProperties(At,(ea[Symbol.hasInstance]=Go(Object[Symbol.hasInstance]),ea))}function Pn(m){At.call(this,m)}function ta(){return[1,wi,2,Wt,3,Jo,4,Jo]}function no(m){At.call(this,m,-1,Si)}function $i(){return[1,to,Pn,ta]}p(Pn,At),p(no,At),no.prototype.addClassification=function(m,$){return We(this,1,Pn,m,$),this};var Si=[1];function nr(m){At.call(this,m)}function na(){return[1,Wt,2,Wt,3,Wt,4,Wt,5,Wt]}function ra(m){At.call(this,m,-1,Ti)}function Ci(){return[1,to,nr,na]}p(nr,At),p(ra,At);var Ti=[1];function ro(m){At.call(this,m)}function so(){return[1,Wt,2,Wt,3,Wt,4,Wt,5,Wt,6,vi]}p(ro,At);var oo=[[61,146],[146,91],[91,181],[181,84],[84,17],[17,314],[314,405],[405,321],[321,375],[375,291],[61,185],[185,40],[40,39],[39,37],[37,0],[0,267],[267,269],[269,270],[270,409],[409,291],[78,95],[95,88],[88,178],[178,87],[87,14],[14,317],[317,402],[402,318],[318,324],[324,308],[78,191],[191,80],[80,81],[81,82],[82,13],[13,312],[312,311],[311,310],[310,415],[415,308]],ao=[[263,249],[249,390],[390,373],[373,374],[374,380],[380,381],[381,382],[382,362],[263,466],[466,388],[388,387],[387,386],[386,385],[385,384],[384,398],[398,362]],io=[[276,283],[283,282],[282,295],[295,285],[300,293],[293,334],[334,296],[296,336]],uo=[[33,7],[7,163],[163,144],[144,145],[145,153],[153,154],[154,155],[155,133],[33,246],[246,161],[161,160],[160,159],[159,158],[158,157],[157,173],[173,133]],co=[[46,53],[53,52],[52,65],[65,55],[70,63],[63,105],[105,66],[66,107]],sa=[[10,338],[338,297],[297,332],[332,284],[284,251],[251,389],[389,356],[356,454],[454,323],[323,361],[361,288],[288,397],[397,365],[365,379],[379,378],[378,400],[400,377],[377,152],[152,148],[148,176],[176,149],[149,150],[150,136],[136,172],[172,58],[58,132],[132,93],[93,234],[234,127],[127,162],[162,21],[21,54],[54,103],[103,67],[67,109],[109,10]],oa=[].concat(i(oo),i(ao),i(io),i(uo),i(co),i(sa));function g(m,$,T){if(T=m.createShader(T===0?m.VERTEX_SHADER:m.FRAGMENT_SHADER),m.shaderSource(T,$),m.compileShader(T),!m.getShaderParameter(T,m.COMPILE_STATUS))throw Error(`Could not compile WebGL shader.
+
+`+m.getShaderInfoLog(T));return T}function w(m){return Nr(m,Pn,1).map((function($){return{index:Er($,1),ga:Tt($,2),label:gt($,3)!=null?Qs($,3):void 0,displayName:gt($,4)!=null?Qs($,4):void 0}}))}function S(m){return{x:Tt(m,1),y:Tt(m,2),z:Tt(m,3),visibility:gt(m,4)!=null?Tt(m,4):void 0}}function D(m,$){this.h=m,this.g=$,this.l=0}function z(m,$,T){return(function(N,O){var A=N.g;if(N.o===void 0){var F=g(A,`
+  attribute vec2 aVertex;
+  attribute vec2 aTex;
+  varying vec2 vTex;
+  void main(void) {
+    gl_Position = vec4(aVertex, 0.0, 1.0);
+    vTex = aTex;
+  }`,0),M=g(A,`
+  precision mediump float;
+  varying vec2 vTex;
+  uniform sampler2D sampler0;
+  void main(){
+    gl_FragColor = texture2D(sampler0, vTex);
+  }`,1),X=A.createProgram();if(A.attachShader(X,F),A.attachShader(X,M),A.linkProgram(X),!A.getProgramParameter(X,A.LINK_STATUS))throw Error(`Could not compile WebGL program.
+
+`+A.getProgramInfoLog(X));F=N.o=X,A.useProgram(F),M=A.getUniformLocation(F,"sampler0"),N.j={K:A.getAttribLocation(F,"aVertex"),J:A.getAttribLocation(F,"aTex"),ma:M},N.u=A.createBuffer(),A.bindBuffer(A.ARRAY_BUFFER,N.u),A.enableVertexAttribArray(N.j.K),A.vertexAttribPointer(N.j.K,2,A.FLOAT,!1,0,0),A.bufferData(A.ARRAY_BUFFER,new Float32Array([-1,-1,-1,1,1,1,1,-1]),A.STATIC_DRAW),A.bindBuffer(A.ARRAY_BUFFER,null),N.s=A.createBuffer(),A.bindBuffer(A.ARRAY_BUFFER,N.s),A.enableVertexAttribArray(N.j.J),A.vertexAttribPointer(N.j.J,2,A.FLOAT,!1,0,0),A.bufferData(A.ARRAY_BUFFER,new Float32Array([0,1,0,0,1,0,1,1]),A.STATIC_DRAW),A.bindBuffer(A.ARRAY_BUFFER,null),A.uniform1i(M,0)}F=N.j,A.useProgram(N.o),A.canvas.width=O.width,A.canvas.height=O.height,A.viewport(0,0,O.width,O.height),A.activeTexture(A.TEXTURE0),N.h.bindTexture2d(O.glName),A.enableVertexAttribArray(F.K),A.bindBuffer(A.ARRAY_BUFFER,N.u),A.vertexAttribPointer(F.K,2,A.FLOAT,!1,0,0),A.enableVertexAttribArray(F.J),A.bindBuffer(A.ARRAY_BUFFER,N.s),A.vertexAttribPointer(F.J,2,A.FLOAT,!1,0,0),A.bindFramebuffer(A.DRAW_FRAMEBUFFER?A.DRAW_FRAMEBUFFER:A.FRAMEBUFFER,null),A.clearColor(0,0,0,0),A.clear(A.COLOR_BUFFER_BIT),A.colorMask(!0,!0,!0,!0),A.drawArrays(A.TRIANGLE_FAN,0,4),A.disableVertexAttribArray(F.K),A.disableVertexAttribArray(F.J),A.bindBuffer(A.ARRAY_BUFFER,null),N.h.bindTexture2d(0)})(m,$),typeof m.g.canvas.transferToImageBitmap=="function"?Promise.resolve(m.g.canvas.transferToImageBitmap()):T?Promise.resolve(m.g.canvas):typeof createImageBitmap=="function"?createImageBitmap(m.g.canvas):(m.i===void 0&&(m.i=document.createElement("canvas")),new Promise((function(N){m.i.height=m.g.canvas.height,m.i.width=m.g.canvas.width,m.i.getContext("2d",{}).drawImage(m.g.canvas,0,0,m.g.canvas.width,m.g.canvas.height),N(m.i)})))}function Y(m){this.g=m}var K=new Uint8Array([0,97,115,109,1,0,0,0,1,4,1,96,0,0,3,2,1,0,10,9,1,7,0,65,0,253,15,26,11]);function J(m,$){return $+m}function re(m,$){window[m]=$}function le(m){if(this.g=m,this.listeners={},this.j={},this.H={},this.o={},this.u={},this.I=this.s=this.Z=!0,this.D=Promise.resolve(),this.Y="",this.C={},this.locateFile=m&&m.locateFile||J,typeof window=="object")var $=window.location.pathname.toString().substring(0,window.location.pathname.toString().lastIndexOf("/"))+"/";else{if(typeof location>"u")throw Error("solutions can only be loaded on a web page or in a web worker");$=location.pathname.toString().substring(0,location.pathname.toString().lastIndexOf("/"))+"/"}if(this.$=$,m.options)for(var T=($=a(Object.keys(m.options))).next();!T.done;T=$.next()){T=T.value;var N=m.options[T].default;N!==void 0&&(this.j[T]=typeof N=="function"?N():N)}}function ye(m){var $,T,N,O,A,F,M,X,Q,ee,se;return W((function(ae){switch(ae.g){case 1:return m.Z?($=m.g.files===void 0?[]:typeof m.g.files=="function"?m.g.files(m.j):m.g.files,x(ae,W((function(ue){switch(ue.g){case 1:return ue.o=2,x(ue,WebAssembly.instantiate(K),4);case 4:ue.g=3,ue.o=0;break;case 2:return ue.o=0,ue.j=null,ue.return(!1);case 3:return ue.return(!0)}})),2)):ae.return();case 2:if(T=ae.h,typeof window=="object")return re("createMediapipeSolutionsWasm",{locateFile:m.locateFile}),re("createMediapipeSolutionsPackedAssets",{locateFile:m.locateFile}),F=$.filter((function(ue){return ue.data!==void 0})),M=$.filter((function(ue){return ue.data===void 0})),X=Promise.all(F.map((function(ue){var xe=Ae(m,ue.url);if(ue.path!==void 0){var Se=ue.path;xe=xe.then((function(Ue){return m.overrideFile(Se,Ue),Promise.resolve(Ue)}))}return xe}))),Q=Promise.all(M.map((function(ue){return ue.simd===void 0||ue.simd&&T||!ue.simd&&!T?(function(xe){var Se=document.createElement("script");return Se.setAttribute("src",xe),Se.setAttribute("crossorigin","anonymous"),new Promise((function(Ue){Se.addEventListener("load",(function(){Ue()}),!1),Se.addEventListener("error",(function(){Ue()}),!1),document.body.appendChild(Se)}))})(m.locateFile(ue.url,m.$)):Promise.resolve()}))).then((function(){var ue,xe,Se;return W((function(Ue){if(Ue.g==1)return ue=window.createMediapipeSolutionsWasm,xe=window.createMediapipeSolutionsPackedAssets,Se=m,x(Ue,ue(xe),2);Se.h=Ue.h,Ue.g=0}))})),ee=W((function(ue){return m.g.graph&&m.g.graph.url?ue=x(ue,Ae(m,m.g.graph.url),0):(ue.g=0,ue=void 0),ue})),x(ae,Promise.all([Q,X,ee]),7);if(typeof importScripts!="function")throw Error("solutions can only be loaded on a web page or in a web worker");return N=$.filter((function(ue){return ue.simd===void 0||ue.simd&&T||!ue.simd&&!T})).map((function(ue){return m.locateFile(ue.url,m.$)})),importScripts.apply(null,i(N)),O=m,x(ae,createMediapipeSolutionsWasm(Module),6);case 6:O.h=ae.h,m.l=new OffscreenCanvas(1,1),m.h.canvas=m.l,A=m.h.GL.createContext(m.l,{antialias:!1,alpha:!1,ja:typeof WebGL2RenderingContext<"u"?2:1}),m.h.GL.makeContextCurrent(A),ae.g=4;break;case 7:if(m.l=document.createElement("canvas"),!(se=m.l.getContext("webgl2",{}))&&!(se=m.l.getContext("webgl",{})))return alert("Failed to create WebGL canvas context when passing video frame."),ae.return();m.G=se,m.h.canvas=m.l,m.h.createContext(m.l,!0,!0,{});case 4:m.i=new m.h.SolutionWasm,m.Z=!1,ae.g=0}}))}function Ae(m,$){var T,N;return W((function(O){return $ in m.H?O.return(m.H[$]):(T=m.locateFile($,""),N=fetch(T).then((function(A){return A.arrayBuffer()})),m.H[$]=N,O.return(N))}))}function Ne(m,$,T){var N,O,A,F,M,X,Q,ee,se,ae,ue,xe,Se,Ue;return W((function(Ge){switch(Ge.g){case 1:if(!T)return Ge.return($);for(N={},O=0,A=a(Object.keys(T)),F=A.next();!F.done;F=A.next())M=F.value,typeof(X=T[M])!="string"&&X.type==="texture"&&$[X.stream]!==void 0&&++O;1<O&&(m.I=!1),Q=a(Object.keys(T)),F=Q.next();case 2:if(F.done){Ge.g=4;break}if(ee=F.value,typeof(se=T[ee])=="string")return Se=N,Ue=ee,x(Ge,(function(_r,_c,ys){var aa;return W((function(Ni){return typeof ys=="number"||ys instanceof Uint8Array||ys instanceof _r.h.Uint8BlobList?Ni.return(ys):ys instanceof _r.h.Texture2dDataOut?((aa=_r.u[_c])||(aa=new D(_r.h,_r.G),_r.u[_c]=aa),Ni.return(z(aa,ys,_r.I))):Ni.return(void 0)}))})(m,ee,$[se]),14);if(ae=$[se.stream],se.type==="detection_list"){if(ae){for(var Nt=ae.getRectList(),en=ae.getLandmarksList(),Ot=ae.getClassificationsList(),Pe=[],yt=0;yt<Nt.size();++yt){var rr=Js(Nt.get(yt),ro,so);rr={boundingBox:{xCenter:Tt(rr,1),yCenter:Tt(rr,2),height:Tt(rr,3),width:Tt(rr,4),rotation:Tt(rr,5,0),rectId:Er(rr,6)},landmarks:Nr(Js(en.get(yt),ra,Ci),nr,1).map(S),V:w(Js(Ot.get(yt),no,$i))},Pe.push(rr)}Nt=Pe}else Nt=[];N[ee]=Nt,Ge.g=7;break}if(se.type==="proto_list"){if(ae){for(Nt=Array(ae.size()),en=0;en<ae.size();en++)Nt[en]=ae.get(en);ae.delete()}else Nt=[];N[ee]=Nt,Ge.g=7;break}if(ae===void 0){Ge.g=3;break}if(se.type==="float_list"){N[ee]=ae,Ge.g=7;break}if(se.type==="proto"){N[ee]=ae,Ge.g=7;break}if(se.type!=="texture")throw Error("Unknown output config type: '"+se.type+"'");return(ue=m.u[ee])||(ue=new D(m.h,m.G),m.u[ee]=ue),x(Ge,z(ue,ae,m.I),13);case 13:xe=Ge.h,N[ee]=xe;case 7:se.transform&&N[ee]&&(N[ee]=se.transform(N[ee])),Ge.g=3;break;case 14:Se[Ue]=Ge.h;case 3:F=Q.next(),Ge.g=2;break;case 4:return Ge.return(N)}}))}function ve(m,$){for(var T=$.name||"$",N=[].concat(i($.wants)),O=new m.h.StringList,A=a($.wants),F=A.next();!F.done;F=A.next())O.push_back(F.value);A=m.h.PacketListener.implement({onResults:function(M){for(var X={},Q=0;Q<$.wants.length;++Q)X[N[Q]]=M.get(Q);var ee=m.listeners[T];ee&&(m.D=Ne(m,X,$.outs).then((function(se){se=ee(se);for(var ae=0;ae<$.wants.length;++ae){var ue=X[N[ae]];typeof ue=="object"&&ue.hasOwnProperty&&ue.hasOwnProperty("delete")&&ue.delete()}se&&(m.D=se)})))}}),m.i.attachMultiListener(O,A),O.delete()}function fe(m){var $=this;m=m||{};var T={url:"face_detection_short.binarypb"},N={type:1,graphOptionXref:{calculatorType:"TensorsToDetectionsCalculator",calculatorName:"facedetectionshortrangegpu__facedetectionshortrangecommon__TensorsToDetectionsCalculator",fieldName:"min_score_thresh"}};this.g=new le({locateFile:m.locateFile,files:[{data:!0,url:"face_detection_short.binarypb"},{data:!0,url:"face_detection_short_range.tflite"},{simd:!0,url:"face_detection_solution_simd_wasm_bin.js"},{simd:!1,url:"face_detection_solution_wasm_bin.js"}],graph:T,listeners:[{wants:["detections","image_transformed"],outs:{image:"image_transformed",detections:{type:"detection_list",stream:"detections"}}}],inputs:{image:{type:"video",stream:"input_frames_gpu"}},options:{useCpuInference:{type:0,graphOptionXref:{calculatorType:"InferenceCalculator",fieldName:"use_cpu_inference"},default:typeof window=="object"&&window.navigator!==void 0&&("iPad Simulator;iPhone Simulator;iPod Simulator;iPad;iPhone;iPod".split(";").includes(navigator.platform)||navigator.userAgent.includes("Mac")&&"ontouchend"in document)},selfieMode:{type:0,graphOptionXref:{calculatorType:"GlScalerCalculator",calculatorIndex:1,fieldName:"flip_horizontal"}},model:{type:0,onChange:function(O){var A,F,M,X,Q;return W((function(ee){switch(ee.g){case 1:A=a(O==="short"?["face_detection_short_range.tflite"]:["face_detection_full_range_sparse.tflite"]),F=A.next();case 2:if(F.done){ee.g=4;break}return M=F.value,X="third_party/mediapipe/modules/face_detection/"+M,x(ee,Ae($.g,M),5);case 5:Q=ee.h,$.g.overrideFile(X,Q),F=A.next(),ee.g=2;break;case 4:return T.url=O==="short"?"face_detection_short.binarypb":"face_detection_full.binarypb",N.graphOptionXref.calculatorName=O==="short"?"facedetectionshortrangegpu__facedetectionshortrangecommon__TensorsToDetectionsCalculator":"facedetectionfullrangegpu__facedetectionfullrangecommon__TensorsToDetectionsCalculator",ee.return(!0)}}))}},minDetectionConfidence:N}})}(n=le.prototype).close=function(){return this.i&&this.i.delete(),Promise.resolve()},n.reset=function(){var m=this;return W((function($){m.i&&(m.i.reset(),m.o={},m.u={}),$.g=0}))},n.setOptions=function(m,$){var T=this;if($=$||this.g.options){for(var N=[],O=[],A={},F=a(Object.keys(m)),M=F.next();!M.done;A={R:A.R,S:A.S},M=F.next()){var X=M.value;X in this.j&&this.j[X]===m[X]||(this.j[X]=m[X],(M=$[X])!==void 0&&(M.onChange&&(A.R=M.onChange,A.S=m[X],N.push((function(Q){return function(){return W((function(ee){if(ee.g==1)return x(ee,Q.R(Q.S),2);ee.h===!0&&(T.s=!0),ee.g=0}))}})(A))),M.graphOptionXref&&(X={valueNumber:M.type===1?m[X]:0,valueBoolean:M.type===0&&m[X],valueString:M.type===2?m[X]:""},M=Object.assign(Object.assign(Object.assign({},{calculatorName:"",calculatorIndex:0}),M.graphOptionXref),X),O.push(M))))}N.length===0&&O.length===0||(this.s=!0,this.B=(this.B===void 0?[]:this.B).concat(O),this.A=(this.A===void 0?[]:this.A).concat(N))}},n.initialize=function(){var m=this;return W((function($){return $.g==1?x($,ye(m),2):$.g!=3?x($,(function(T){var N,O,A,F,M,X,Q,ee;return W((function(se){if(se.g==1)return T.g.graph&&T.g.graph.url&&T.Y===T.g.graph.url?se.return():(T.s=!0,T.g.graph&&T.g.graph.url?(T.Y=T.g.graph.url,x(se,Ae(T,T.g.graph.url),3)):void(se.g=2));for(se.g!=2&&(N=se.h,T.i.loadGraph(N)),O=a(Object.keys(T.C)),A=O.next();!A.done;A=O.next())F=A.value,T.i.overrideFile(F,T.C[F]);if(T.C={},T.g.listeners)for(M=a(T.g.listeners),X=M.next();!X.done;X=M.next())Q=X.value,ve(T,Q);ee=T.j,T.j={},T.setOptions(ee),se.g=0}))})(m),3):x($,(function(T){var N,O,A,F,M,X;return W((function(Q){switch(Q.g){case 1:if(!T.s)return Q.return();if(!T.A){Q.g=2;break}N=a(T.A),O=N.next();case 3:if(O.done){Q.g=5;break}return x(Q,(0,O.value)(),4);case 4:O=N.next(),Q.g=3;break;case 5:T.A=void 0;case 2:if(T.B){for(A=new T.h.GraphOptionChangeRequestList,F=a(T.B),M=F.next();!M.done;M=F.next())X=M.value,A.push_back(X);T.i.changeOptions(A),A.delete(),T.B=void 0}T.s=!1,Q.g=0}}))})(m),0)}))},n.overrideFile=function(m,$){this.i?this.i.overrideFile(m,$):this.C[m]=$},n.clearOverriddenFiles=function(){this.C={},this.i&&this.i.clearOverriddenFiles()},n.send=function(m,$){var T,N,O,A,F,M,X,Q,ee,se=this;return W((function(ae){switch(ae.g){case 1:return se.g.inputs?(T=1e3*($??performance.now()),x(ae,se.D,2)):ae.return();case 2:return x(ae,se.initialize(),3);case 3:for(N=new se.h.PacketDataList,O=a(Object.keys(m)),A=O.next();!A.done;A=O.next())if(F=A.value,M=se.g.inputs[F]){e:{var ue=m[F];switch(M.type){case"video":var xe=se.o[M.stream];if(xe||(xe=new D(se.h,se.G),se.o[M.stream]=xe),xe.l===0&&(xe.l=xe.h.createTexture()),typeof HTMLVideoElement<"u"&&ue instanceof HTMLVideoElement)var Se=ue.videoWidth,Ue=ue.videoHeight;else typeof HTMLImageElement<"u"&&ue instanceof HTMLImageElement?(Se=ue.naturalWidth,Ue=ue.naturalHeight):(Se=ue.width,Ue=ue.height);Ue={glName:xe.l,width:Se,height:Ue},(Se=xe.g).canvas.width=Ue.width,Se.canvas.height=Ue.height,Se.activeTexture(Se.TEXTURE0),xe.h.bindTexture2d(xe.l),Se.texImage2D(Se.TEXTURE_2D,0,Se.RGBA,Se.RGBA,Se.UNSIGNED_BYTE,ue),xe.h.bindTexture2d(0),xe=Ue;break e;case"detections":for((xe=se.o[M.stream])||(xe=new Y(se.h),se.o[M.stream]=xe),xe.data||(xe.data=new xe.g.DetectionListData),xe.data.reset(ue.length),Ue=0;Ue<ue.length;++Ue){Se=ue[Ue];var Ge=xe.data,Nt=Ge.setBoundingBox,en=Ue,Ot=Se.boundingBox,Pe=new ro;if(tt(Pe,1,Ot.xCenter),tt(Pe,2,Ot.yCenter),tt(Pe,3,Ot.height),tt(Pe,4,Ot.width),tt(Pe,5,Ot.rotation),tt(Pe,6,Ot.rectId),Ot=Rr(Pe,so),Nt.call(Ge,en,Ot),Se.landmarks)for(Ge=0;Ge<Se.landmarks.length;++Ge){var yt=!!(Pe=Se.landmarks[Ge]).visibility;en=(Nt=xe.data).addNormalizedLandmark,Ot=Ue,Pe=Object.assign(Object.assign({},Pe),{visibility:yt?Pe.visibility:0}),tt(yt=new nr,1,Pe.x),tt(yt,2,Pe.y),tt(yt,3,Pe.z),Pe.visibility&&tt(yt,4,Pe.visibility),Pe=Rr(yt,na),en.call(Nt,Ot,Pe)}if(Se.V)for(Ge=0;Ge<Se.V.length;++Ge)en=(Nt=xe.data).addClassification,Ot=Ue,Pe=Se.V[Ge],tt(yt=new Pn,2,Pe.ga),Pe.index&&tt(yt,1,Pe.index),Pe.label&&tt(yt,3,Pe.label),Pe.displayName&&tt(yt,4,Pe.displayName),Pe=Rr(yt,ta),en.call(Nt,Ot,Pe)}xe=xe.data;break e;default:xe={}}}switch(X=xe,Q=M.stream,M.type){case"video":N.pushTexture2d(Object.assign(Object.assign({},X),{stream:Q,timestamp:T}));break;case"detections":(ee=X).stream=Q,ee.timestamp=T,N.pushDetectionList(ee);break;default:throw Error("Unknown input config type: '"+M.type+"'")}}return se.i.send(N),x(ae,se.D,4);case 4:N.delete(),ae.g=0}}))},n.onResults=function(m,$){this.listeners[$||"$"]=m},B("Solution",le),B("OptionType",{BOOL:0,NUMBER:1,ia:2,0:"BOOL",1:"NUMBER",2:"STRING"}),(n=fe.prototype).close=function(){return this.g.close(),Promise.resolve()},n.onResults=function(m){this.g.onResults(m)},n.initialize=function(){var m=this;return W((function($){return x($,m.g.initialize(),0)}))},n.reset=function(){this.g.reset()},n.send=function(m){var $=this;return W((function(T){return x(T,$.g.send(m),0)}))},n.setOptions=function(m){this.g.setOptions(m)},B("FaceDetection",fe),B("FACEDETECTION_LIPS",oo),B("FACEDETECTION_LEFT_EYE",ao),B("FACEDETECTION_LEFT_EYEBROW",io),B("FACEDETECTION_RIGHT_EYE",uo),B("FACEDETECTION_RIGHT_EYEBROW",co),B("FACEDETECTION_FACE_OVAL",sa),B("FACEDETECTION_CONTOURS",oa),B("FACEDETECTION_TESSELATION",[[127,34],[34,139],[139,127],[11,0],[0,37],[37,11],[232,231],[231,120],[120,232],[72,37],[37,39],[39,72],[128,121],[121,47],[47,128],[232,121],[121,128],[128,232],[104,69],[69,67],[67,104],[175,171],[171,148],[148,175],[118,50],[50,101],[101,118],[73,39],[39,40],[40,73],[9,151],[151,108],[108,9],[48,115],[115,131],[131,48],[194,204],[204,211],[211,194],[74,40],[40,185],[185,74],[80,42],[42,183],[183,80],[40,92],[92,186],[186,40],[230,229],[229,118],[118,230],[202,212],[212,214],[214,202],[83,18],[18,17],[17,83],[76,61],[61,146],[146,76],[160,29],[29,30],[30,160],[56,157],[157,173],[173,56],[106,204],[204,194],[194,106],[135,214],[214,192],[192,135],[203,165],[165,98],[98,203],[21,71],[71,68],[68,21],[51,45],[45,4],[4,51],[144,24],[24,23],[23,144],[77,146],[146,91],[91,77],[205,50],[50,187],[187,205],[201,200],[200,18],[18,201],[91,106],[106,182],[182,91],[90,91],[91,181],[181,90],[85,84],[84,17],[17,85],[206,203],[203,36],[36,206],[148,171],[171,140],[140,148],[92,40],[40,39],[39,92],[193,189],[189,244],[244,193],[159,158],[158,28],[28,159],[247,246],[246,161],[161,247],[236,3],[3,196],[196,236],[54,68],[68,104],[104,54],[193,168],[168,8],[8,193],[117,228],[228,31],[31,117],[189,193],[193,55],[55,189],[98,97],[97,99],[99,98],[126,47],[47,100],[100,126],[166,79],[79,218],[218,166],[155,154],[154,26],[26,155],[209,49],[49,131],[131,209],[135,136],[136,150],[150,135],[47,126],[126,217],[217,47],[223,52],[52,53],[53,223],[45,51],[51,134],[134,45],[211,170],[170,140],[140,211],[67,69],[69,108],[108,67],[43,106],[106,91],[91,43],[230,119],[119,120],[120,230],[226,130],[130,247],[247,226],[63,53],[53,52],[52,63],[238,20],[20,242],[242,238],[46,70],[70,156],[156,46],[78,62],[62,96],[96,78],[46,53],[53,63],[63,46],[143,34],[34,227],[227,143],[123,117],[117,111],[111,123],[44,125],[125,19],[19,44],[236,134],[134,51],[51,236],[216,206],[206,205],[205,216],[154,153],[153,22],[22,154],[39,37],[37,167],[167,39],[200,201],[201,208],[208,200],[36,142],[142,100],[100,36],[57,212],[212,202],[202,57],[20,60],[60,99],[99,20],[28,158],[158,157],[157,28],[35,226],[226,113],[113,35],[160,159],[159,27],[27,160],[204,202],[202,210],[210,204],[113,225],[225,46],[46,113],[43,202],[202,204],[204,43],[62,76],[76,77],[77,62],[137,123],[123,116],[116,137],[41,38],[38,72],[72,41],[203,129],[129,142],[142,203],[64,98],[98,240],[240,64],[49,102],[102,64],[64,49],[41,73],[73,74],[74,41],[212,216],[216,207],[207,212],[42,74],[74,184],[184,42],[169,170],[170,211],[211,169],[170,149],[149,176],[176,170],[105,66],[66,69],[69,105],[122,6],[6,168],[168,122],[123,147],[147,187],[187,123],[96,77],[77,90],[90,96],[65,55],[55,107],[107,65],[89,90],[90,180],[180,89],[101,100],[100,120],[120,101],[63,105],[105,104],[104,63],[93,137],[137,227],[227,93],[15,86],[86,85],[85,15],[129,102],[102,49],[49,129],[14,87],[87,86],[86,14],[55,8],[8,9],[9,55],[100,47],[47,121],[121,100],[145,23],[23,22],[22,145],[88,89],[89,179],[179,88],[6,122],[122,196],[196,6],[88,95],[95,96],[96,88],[138,172],[172,136],[136,138],[215,58],[58,172],[172,215],[115,48],[48,219],[219,115],[42,80],[80,81],[81,42],[195,3],[3,51],[51,195],[43,146],[146,61],[61,43],[171,175],[175,199],[199,171],[81,82],[82,38],[38,81],[53,46],[46,225],[225,53],[144,163],[163,110],[110,144],[52,65],[65,66],[66,52],[229,228],[228,117],[117,229],[34,127],[127,234],[234,34],[107,108],[108,69],[69,107],[109,108],[108,151],[151,109],[48,64],[64,235],[235,48],[62,78],[78,191],[191,62],[129,209],[209,126],[126,129],[111,35],[35,143],[143,111],[117,123],[123,50],[50,117],[222,65],[65,52],[52,222],[19,125],[125,141],[141,19],[221,55],[55,65],[65,221],[3,195],[195,197],[197,3],[25,7],[7,33],[33,25],[220,237],[237,44],[44,220],[70,71],[71,139],[139,70],[122,193],[193,245],[245,122],[247,130],[130,33],[33,247],[71,21],[21,162],[162,71],[170,169],[169,150],[150,170],[188,174],[174,196],[196,188],[216,186],[186,92],[92,216],[2,97],[97,167],[167,2],[141,125],[125,241],[241,141],[164,167],[167,37],[37,164],[72,38],[38,12],[12,72],[38,82],[82,13],[13,38],[63,68],[68,71],[71,63],[226,35],[35,111],[111,226],[101,50],[50,205],[205,101],[206,92],[92,165],[165,206],[209,198],[198,217],[217,209],[165,167],[167,97],[97,165],[220,115],[115,218],[218,220],[133,112],[112,243],[243,133],[239,238],[238,241],[241,239],[214,135],[135,169],[169,214],[190,173],[173,133],[133,190],[171,208],[208,32],[32,171],[125,44],[44,237],[237,125],[86,87],[87,178],[178,86],[85,86],[86,179],[179,85],[84,85],[85,180],[180,84],[83,84],[84,181],[181,83],[201,83],[83,182],[182,201],[137,93],[93,132],[132,137],[76,62],[62,183],[183,76],[61,76],[76,184],[184,61],[57,61],[61,185],[185,57],[212,57],[57,186],[186,212],[214,207],[207,187],[187,214],[34,143],[143,156],[156,34],[79,239],[239,237],[237,79],[123,137],[137,177],[177,123],[44,1],[1,4],[4,44],[201,194],[194,32],[32,201],[64,102],[102,129],[129,64],[213,215],[215,138],[138,213],[59,166],[166,219],[219,59],[242,99],[99,97],[97,242],[2,94],[94,141],[141,2],[75,59],[59,235],[235,75],[24,110],[110,228],[228,24],[25,130],[130,226],[226,25],[23,24],[24,229],[229,23],[22,23],[23,230],[230,22],[26,22],[22,231],[231,26],[112,26],[26,232],[232,112],[189,190],[190,243],[243,189],[221,56],[56,190],[190,221],[28,56],[56,221],[221,28],[27,28],[28,222],[222,27],[29,27],[27,223],[223,29],[30,29],[29,224],[224,30],[247,30],[30,225],[225,247],[238,79],[79,20],[20,238],[166,59],[59,75],[75,166],[60,75],[75,240],[240,60],[147,177],[177,215],[215,147],[20,79],[79,166],[166,20],[187,147],[147,213],[213,187],[112,233],[233,244],[244,112],[233,128],[128,245],[245,233],[128,114],[114,188],[188,128],[114,217],[217,174],[174,114],[131,115],[115,220],[220,131],[217,198],[198,236],[236,217],[198,131],[131,134],[134,198],[177,132],[132,58],[58,177],[143,35],[35,124],[124,143],[110,163],[163,7],[7,110],[228,110],[110,25],[25,228],[356,389],[389,368],[368,356],[11,302],[302,267],[267,11],[452,350],[350,349],[349,452],[302,303],[303,269],[269,302],[357,343],[343,277],[277,357],[452,453],[453,357],[357,452],[333,332],[332,297],[297,333],[175,152],[152,377],[377,175],[347,348],[348,330],[330,347],[303,304],[304,270],[270,303],[9,336],[336,337],[337,9],[278,279],[279,360],[360,278],[418,262],[262,431],[431,418],[304,408],[408,409],[409,304],[310,415],[415,407],[407,310],[270,409],[409,410],[410,270],[450,348],[348,347],[347,450],[422,430],[430,434],[434,422],[313,314],[314,17],[17,313],[306,307],[307,375],[375,306],[387,388],[388,260],[260,387],[286,414],[414,398],[398,286],[335,406],[406,418],[418,335],[364,367],[367,416],[416,364],[423,358],[358,327],[327,423],[251,284],[284,298],[298,251],[281,5],[5,4],[4,281],[373,374],[374,253],[253,373],[307,320],[320,321],[321,307],[425,427],[427,411],[411,425],[421,313],[313,18],[18,421],[321,405],[405,406],[406,321],[320,404],[404,405],[405,320],[315,16],[16,17],[17,315],[426,425],[425,266],[266,426],[377,400],[400,369],[369,377],[322,391],[391,269],[269,322],[417,465],[465,464],[464,417],[386,257],[257,258],[258,386],[466,260],[260,388],[388,466],[456,399],[399,419],[419,456],[284,332],[332,333],[333,284],[417,285],[285,8],[8,417],[346,340],[340,261],[261,346],[413,441],[441,285],[285,413],[327,460],[460,328],[328,327],[355,371],[371,329],[329,355],[392,439],[439,438],[438,392],[382,341],[341,256],[256,382],[429,420],[420,360],[360,429],[364,394],[394,379],[379,364],[277,343],[343,437],[437,277],[443,444],[444,283],[283,443],[275,440],[440,363],[363,275],[431,262],[262,369],[369,431],[297,338],[338,337],[337,297],[273,375],[375,321],[321,273],[450,451],[451,349],[349,450],[446,342],[342,467],[467,446],[293,334],[334,282],[282,293],[458,461],[461,462],[462,458],[276,353],[353,383],[383,276],[308,324],[324,325],[325,308],[276,300],[300,293],[293,276],[372,345],[345,447],[447,372],[352,345],[345,340],[340,352],[274,1],[1,19],[19,274],[456,248],[248,281],[281,456],[436,427],[427,425],[425,436],[381,256],[256,252],[252,381],[269,391],[391,393],[393,269],[200,199],[199,428],[428,200],[266,330],[330,329],[329,266],[287,273],[273,422],[422,287],[250,462],[462,328],[328,250],[258,286],[286,384],[384,258],[265,353],[353,342],[342,265],[387,259],[259,257],[257,387],[424,431],[431,430],[430,424],[342,353],[353,276],[276,342],[273,335],[335,424],[424,273],[292,325],[325,307],[307,292],[366,447],[447,345],[345,366],[271,303],[303,302],[302,271],[423,266],[266,371],[371,423],[294,455],[455,460],[460,294],[279,278],[278,294],[294,279],[271,272],[272,304],[304,271],[432,434],[434,427],[427,432],[272,407],[407,408],[408,272],[394,430],[430,431],[431,394],[395,369],[369,400],[400,395],[334,333],[333,299],[299,334],[351,417],[417,168],[168,351],[352,280],[280,411],[411,352],[325,319],[319,320],[320,325],[295,296],[296,336],[336,295],[319,403],[403,404],[404,319],[330,348],[348,349],[349,330],[293,298],[298,333],[333,293],[323,454],[454,447],[447,323],[15,16],[16,315],[315,15],[358,429],[429,279],[279,358],[14,15],[15,316],[316,14],[285,336],[336,9],[9,285],[329,349],[349,350],[350,329],[374,380],[380,252],[252,374],[318,402],[402,403],[403,318],[6,197],[197,419],[419,6],[318,319],[319,325],[325,318],[367,364],[364,365],[365,367],[435,367],[367,397],[397,435],[344,438],[438,439],[439,344],[272,271],[271,311],[311,272],[195,5],[5,281],[281,195],[273,287],[287,291],[291,273],[396,428],[428,199],[199,396],[311,271],[271,268],[268,311],[283,444],[444,445],[445,283],[373,254],[254,339],[339,373],[282,334],[334,296],[296,282],[449,347],[347,346],[346,449],[264,447],[447,454],[454,264],[336,296],[296,299],[299,336],[338,10],[10,151],[151,338],[278,439],[439,455],[455,278],[292,407],[407,415],[415,292],[358,371],[371,355],[355,358],[340,345],[345,372],[372,340],[346,347],[347,280],[280,346],[442,443],[443,282],[282,442],[19,94],[94,370],[370,19],[441,442],[442,295],[295,441],[248,419],[419,197],[197,248],[263,255],[255,359],[359,263],[440,275],[275,274],[274,440],[300,383],[383,368],[368,300],[351,412],[412,465],[465,351],[263,467],[467,466],[466,263],[301,368],[368,389],[389,301],[395,378],[378,379],[379,395],[412,351],[351,419],[419,412],[436,426],[426,322],[322,436],[2,164],[164,393],[393,2],[370,462],[462,461],[461,370],[164,0],[0,267],[267,164],[302,11],[11,12],[12,302],[268,12],[12,13],[13,268],[293,300],[300,301],[301,293],[446,261],[261,340],[340,446],[330,266],[266,425],[425,330],[426,423],[423,391],[391,426],[429,355],[355,437],[437,429],[391,327],[327,326],[326,391],[440,457],[457,438],[438,440],[341,382],[382,362],[362,341],[459,457],[457,461],[461,459],[434,430],[430,394],[394,434],[414,463],[463,362],[362,414],[396,369],[369,262],[262,396],[354,461],[461,457],[457,354],[316,403],[403,402],[402,316],[315,404],[404,403],[403,315],[314,405],[405,404],[404,314],[313,406],[406,405],[405,313],[421,418],[418,406],[406,421],[366,401],[401,361],[361,366],[306,408],[408,407],[407,306],[291,409],[409,408],[408,291],[287,410],[410,409],[409,287],[432,436],[436,410],[410,432],[434,416],[416,411],[411,434],[264,368],[368,383],[383,264],[309,438],[438,457],[457,309],[352,376],[376,401],[401,352],[274,275],[275,4],[4,274],[421,428],[428,262],[262,421],[294,327],[327,358],[358,294],[433,416],[416,367],[367,433],[289,455],[455,439],[439,289],[462,370],[370,326],[326,462],[2,326],[326,370],[370,2],[305,460],[460,455],[455,305],[254,449],[449,448],[448,254],[255,261],[261,446],[446,255],[253,450],[450,449],[449,253],[252,451],[451,450],[450,252],[256,452],[452,451],[451,256],[341,453],[453,452],[452,341],[413,464],[464,463],[463,413],[441,413],[413,414],[414,441],[258,442],[442,441],[441,258],[257,443],[443,442],[442,257],[259,444],[444,443],[443,259],[260,445],[445,444],[444,260],[467,342],[342,445],[445,467],[459,458],[458,250],[250,459],[289,392],[392,290],[290,289],[290,328],[328,460],[460,290],[376,433],[433,435],[435,376],[250,290],[290,392],[392,250],[411,416],[416,433],[433,411],[341,463],[463,464],[464,341],[453,464],[464,465],[465,453],[357,465],[465,412],[412,357],[343,412],[412,399],[399,343],[360,363],[363,440],[440,360],[437,399],[399,456],[456,437],[420,456],[456,363],[363,420],[401,435],[435,288],[288,401],[372,383],[383,353],[353,372],[339,255],[255,249],[249,339],[448,261],[261,255],[255,448],[133,243],[243,190],[190,133],[133,155],[155,112],[112,133],[33,246],[246,247],[247,33],[33,130],[130,25],[25,33],[398,384],[384,286],[286,398],[362,398],[398,414],[414,362],[362,463],[463,341],[341,362],[263,359],[359,467],[467,263],[263,249],[249,255],[255,263],[466,467],[467,260],[260,466],[75,60],[60,166],[166,75],[238,239],[239,79],[79,238],[162,127],[127,139],[139,162],[72,11],[11,37],[37,72],[121,232],[232,120],[120,121],[73,72],[72,39],[39,73],[114,128],[128,47],[47,114],[233,232],[232,128],[128,233],[103,104],[104,67],[67,103],[152,175],[175,148],[148,152],[119,118],[118,101],[101,119],[74,73],[73,40],[40,74],[107,9],[9,108],[108,107],[49,48],[48,131],[131,49],[32,194],[194,211],[211,32],[184,74],[74,185],[185,184],[191,80],[80,183],[183,191],[185,40],[40,186],[186,185],[119,230],[230,118],[118,119],[210,202],[202,214],[214,210],[84,83],[83,17],[17,84],[77,76],[76,146],[146,77],[161,160],[160,30],[30,161],[190,56],[56,173],[173,190],[182,106],[106,194],[194,182],[138,135],[135,192],[192,138],[129,203],[203,98],[98,129],[54,21],[21,68],[68,54],[5,51],[51,4],[4,5],[145,144],[144,23],[23,145],[90,77],[77,91],[91,90],[207,205],[205,187],[187,207],[83,201],[201,18],[18,83],[181,91],[91,182],[182,181],[180,90],[90,181],[181,180],[16,85],[85,17],[17,16],[205,206],[206,36],[36,205],[176,148],[148,140],[140,176],[165,92],[92,39],[39,165],[245,193],[193,244],[244,245],[27,159],[159,28],[28,27],[30,247],[247,161],[161,30],[174,236],[236,196],[196,174],[103,54],[54,104],[104,103],[55,193],[193,8],[8,55],[111,117],[117,31],[31,111],[221,189],[189,55],[55,221],[240,98],[98,99],[99,240],[142,126],[126,100],[100,142],[219,166],[166,218],[218,219],[112,155],[155,26],[26,112],[198,209],[209,131],[131,198],[169,135],[135,150],[150,169],[114,47],[47,217],[217,114],[224,223],[223,53],[53,224],[220,45],[45,134],[134,220],[32,211],[211,140],[140,32],[109,67],[67,108],[108,109],[146,43],[43,91],[91,146],[231,230],[230,120],[120,231],[113,226],[226,247],[247,113],[105,63],[63,52],[52,105],[241,238],[238,242],[242,241],[124,46],[46,156],[156,124],[95,78],[78,96],[96,95],[70,46],[46,63],[63,70],[116,143],[143,227],[227,116],[116,123],[123,111],[111,116],[1,44],[44,19],[19,1],[3,236],[236,51],[51,3],[207,216],[216,205],[205,207],[26,154],[154,22],[22,26],[165,39],[39,167],[167,165],[199,200],[200,208],[208,199],[101,36],[36,100],[100,101],[43,57],[57,202],[202,43],[242,20],[20,99],[99,242],[56,28],[28,157],[157,56],[124,35],[35,113],[113,124],[29,160],[160,27],[27,29],[211,204],[204,210],[210,211],[124,113],[113,46],[46,124],[106,43],[43,204],[204,106],[96,62],[62,77],[77,96],[227,137],[137,116],[116,227],[73,41],[41,72],[72,73],[36,203],[203,142],[142,36],[235,64],[64,240],[240,235],[48,49],[49,64],[64,48],[42,41],[41,74],[74,42],[214,212],[212,207],[207,214],[183,42],[42,184],[184,183],[210,169],[169,211],[211,210],[140,170],[170,176],[176,140],[104,105],[105,69],[69,104],[193,122],[122,168],[168,193],[50,123],[123,187],[187,50],[89,96],[96,90],[90,89],[66,65],[65,107],[107,66],[179,89],[89,180],[180,179],[119,101],[101,120],[120,119],[68,63],[63,104],[104,68],[234,93],[93,227],[227,234],[16,15],[15,85],[85,16],[209,129],[129,49],[49,209],[15,14],[14,86],[86,15],[107,55],[55,9],[9,107],[120,100],[100,121],[121,120],[153,145],[145,22],[22,153],[178,88],[88,179],[179,178],[197,6],[6,196],[196,197],[89,88],[88,96],[96,89],[135,138],[138,136],[136,135],[138,215],[215,172],[172,138],[218,115],[115,219],[219,218],[41,42],[42,81],[81,41],[5,195],[195,51],[51,5],[57,43],[43,61],[61,57],[208,171],[171,199],[199,208],[41,81],[81,38],[38,41],[224,53],[53,225],[225,224],[24,144],[144,110],[110,24],[105,52],[52,66],[66,105],[118,229],[229,117],[117,118],[227,34],[34,234],[234,227],[66,107],[107,69],[69,66],[10,109],[109,151],[151,10],[219,48],[48,235],[235,219],[183,62],[62,191],[191,183],[142,129],[129,126],[126,142],[116,111],[111,143],[143,116],[118,117],[117,50],[50,118],[223,222],[222,52],[52,223],[94,19],[19,141],[141,94],[222,221],[221,65],[65,222],[196,3],[3,197],[197,196],[45,220],[220,44],[44,45],[156,70],[70,139],[139,156],[188,122],[122,245],[245,188],[139,71],[71,162],[162,139],[149,170],[170,150],[150,149],[122,188],[188,196],[196,122],[206,216],[216,92],[92,206],[164,2],[2,167],[167,164],[242,141],[141,241],[241,242],[0,164],[164,37],[37,0],[11,72],[72,12],[12,11],[12,38],[38,13],[13,12],[70,63],[63,71],[71,70],[31,226],[226,111],[111,31],[36,101],[101,205],[205,36],[203,206],[206,165],[165,203],[126,209],[209,217],[217,126],[98,165],[165,97],[97,98],[237,220],[220,218],[218,237],[237,239],[239,241],[241,237],[210,214],[214,169],[169,210],[140,171],[171,32],[32,140],[241,125],[125,237],[237,241],[179,86],[86,178],[178,179],[180,85],[85,179],[179,180],[181,84],[84,180],[180,181],[182,83],[83,181],[181,182],[194,201],[201,182],[182,194],[177,137],[137,132],[132,177],[184,76],[76,183],[183,184],[185,61],[61,184],[184,185],[186,57],[57,185],[185,186],[216,212],[212,186],[186,216],[192,214],[214,187],[187,192],[139,34],[34,156],[156,139],[218,79],[79,237],[237,218],[147,123],[123,177],[177,147],[45,44],[44,4],[4,45],[208,201],[201,32],[32,208],[98,64],[64,129],[129,98],[192,213],[213,138],[138,192],[235,59],[59,219],[219,235],[141,242],[242,97],[97,141],[97,2],[2,141],[141,97],[240,75],[75,235],[235,240],[229,24],[24,228],[228,229],[31,25],[25,226],[226,31],[230,23],[23,229],[229,230],[231,22],[22,230],[230,231],[232,26],[26,231],[231,232],[233,112],[112,232],[232,233],[244,189],[189,243],[243,244],[189,221],[221,190],[190,189],[222,28],[28,221],[221,222],[223,27],[27,222],[222,223],[224,29],[29,223],[223,224],[225,30],[30,224],[224,225],[113,247],[247,225],[225,113],[99,60],[60,240],[240,99],[213,147],[147,215],[215,213],[60,20],[20,166],[166,60],[192,187],[187,213],[213,192],[243,112],[112,244],[244,243],[244,233],[233,245],[245,244],[245,128],[128,188],[188,245],[188,114],[114,174],[174,188],[134,131],[131,220],[220,134],[174,217],[217,236],[236,174],[236,198],[198,134],[134,236],[215,177],[177,58],[58,215],[156,143],[143,124],[124,156],[25,110],[110,7],[7,25],[31,228],[228,25],[25,31],[264,356],[356,368],[368,264],[0,11],[11,267],[267,0],[451,452],[452,349],[349,451],[267,302],[302,269],[269,267],[350,357],[357,277],[277,350],[350,452],[452,357],[357,350],[299,333],[333,297],[297,299],[396,175],[175,377],[377,396],[280,347],[347,330],[330,280],[269,303],[303,270],[270,269],[151,9],[9,337],[337,151],[344,278],[278,360],[360,344],[424,418],[418,431],[431,424],[270,304],[304,409],[409,270],[272,310],[310,407],[407,272],[322,270],[270,410],[410,322],[449,450],[450,347],[347,449],[432,422],[422,434],[434,432],[18,313],[313,17],[17,18],[291,306],[306,375],[375,291],[259,387],[387,260],[260,259],[424,335],[335,418],[418,424],[434,364],[364,416],[416,434],[391,423],[423,327],[327,391],[301,251],[251,298],[298,301],[275,281],[281,4],[4,275],[254,373],[373,253],[253,254],[375,307],[307,321],[321,375],[280,425],[425,411],[411,280],[200,421],[421,18],[18,200],[335,321],[321,406],[406,335],[321,320],[320,405],[405,321],[314,315],[315,17],[17,314],[423,426],[426,266],[266,423],[396,377],[377,369],[369,396],[270,322],[322,269],[269,270],[413,417],[417,464],[464,413],[385,386],[386,258],[258,385],[248,456],[456,419],[419,248],[298,284],[284,333],[333,298],[168,417],[417,8],[8,168],[448,346],[346,261],[261,448],[417,413],[413,285],[285,417],[326,327],[327,328],[328,326],[277,355],[355,329],[329,277],[309,392],[392,438],[438,309],[381,382],[382,256],[256,381],[279,429],[429,360],[360,279],[365,364],[364,379],[379,365],[355,277],[277,437],[437,355],[282,443],[443,283],[283,282],[281,275],[275,363],[363,281],[395,431],[431,369],[369,395],[299,297],[297,337],[337,299],[335,273],[273,321],[321,335],[348,450],[450,349],[349,348],[359,446],[446,467],[467,359],[283,293],[293,282],[282,283],[250,458],[458,462],[462,250],[300,276],[276,383],[383,300],[292,308],[308,325],[325,292],[283,276],[276,293],[293,283],[264,372],[372,447],[447,264],[346,352],[352,340],[340,346],[354,274],[274,19],[19,354],[363,456],[456,281],[281,363],[426,436],[436,425],[425,426],[380,381],[381,252],[252,380],[267,269],[269,393],[393,267],[421,200],[200,428],[428,421],[371,266],[266,329],[329,371],[432,287],[287,422],[422,432],[290,250],[250,328],[328,290],[385,258],[258,384],[384,385],[446,265],[265,342],[342,446],[386,387],[387,257],[257,386],[422,424],[424,430],[430,422],[445,342],[342,276],[276,445],[422,273],[273,424],[424,422],[306,292],[292,307],[307,306],[352,366],[366,345],[345,352],[268,271],[271,302],[302,268],[358,423],[423,371],[371,358],[327,294],[294,460],[460,327],[331,279],[279,294],[294,331],[303,271],[271,304],[304,303],[436,432],[432,427],[427,436],[304,272],[272,408],[408,304],[395,394],[394,431],[431,395],[378,395],[395,400],[400,378],[296,334],[334,299],[299,296],[6,351],[351,168],[168,6],[376,352],[352,411],[411,376],[307,325],[325,320],[320,307],[285,295],[295,336],[336,285],[320,319],[319,404],[404,320],[329,330],[330,349],[349,329],[334,293],[293,333],[333,334],[366,323],[323,447],[447,366],[316,15],[15,315],[315,316],[331,358],[358,279],[279,331],[317,14],[14,316],[316,317],[8,285],[285,9],[9,8],[277,329],[329,350],[350,277],[253,374],[374,252],[252,253],[319,318],[318,403],[403,319],[351,6],[6,419],[419,351],[324,318],[318,325],[325,324],[397,367],[367,365],[365,397],[288,435],[435,397],[397,288],[278,344],[344,439],[439,278],[310,272],[272,311],[311,310],[248,195],[195,281],[281,248],[375,273],[273,291],[291,375],[175,396],[396,199],[199,175],[312,311],[311,268],[268,312],[276,283],[283,445],[445,276],[390,373],[373,339],[339,390],[295,282],[282,296],[296,295],[448,449],[449,346],[346,448],[356,264],[264,454],[454,356],[337,336],[336,299],[299,337],[337,338],[338,151],[151,337],[294,278],[278,455],[455,294],[308,292],[292,415],[415,308],[429,358],[358,355],[355,429],[265,340],[340,372],[372,265],[352,346],[346,280],[280,352],[295,442],[442,282],[282,295],[354,19],[19,370],[370,354],[285,441],[441,295],[295,285],[195,248],[248,197],[197,195],[457,440],[440,274],[274,457],[301,300],[300,368],[368,301],[417,351],[351,465],[465,417],[251,301],[301,389],[389,251],[394,395],[395,379],[379,394],[399,412],[412,419],[419,399],[410,436],[436,322],[322,410],[326,2],[2,393],[393,326],[354,370],[370,461],[461,354],[393,164],[164,267],[267,393],[268,302],[302,12],[12,268],[312,268],[268,13],[13,312],[298,293],[293,301],[301,298],[265,446],[446,340],[340,265],[280,330],[330,425],[425,280],[322,426],[426,391],[391,322],[420,429],[429,437],[437,420],[393,391],[391,326],[326,393],[344,440],[440,438],[438,344],[458,459],[459,461],[461,458],[364,434],[434,394],[394,364],[428,396],[396,262],[262,428],[274,354],[354,457],[457,274],[317,316],[316,402],[402,317],[316,315],[315,403],[403,316],[315,314],[314,404],[404,315],[314,313],[313,405],[405,314],[313,421],[421,406],[406,313],[323,366],[366,361],[361,323],[292,306],[306,407],[407,292],[306,291],[291,408],[408,306],[291,287],[287,409],[409,291],[287,432],[432,410],[410,287],[427,434],[434,411],[411,427],[372,264],[264,383],[383,372],[459,309],[309,457],[457,459],[366,352],[352,401],[401,366],[1,274],[274,4],[4,1],[418,421],[421,262],[262,418],[331,294],[294,358],[358,331],[435,433],[433,367],[367,435],[392,289],[289,439],[439,392],[328,462],[462,326],[326,328],[94,2],[2,370],[370,94],[289,305],[305,455],[455,289],[339,254],[254,448],[448,339],[359,255],[255,446],[446,359],[254,253],[253,449],[449,254],[253,252],[252,450],[450,253],[252,256],[256,451],[451,252],[256,341],[341,452],[452,256],[414,413],[413,463],[463,414],[286,441],[441,414],[414,286],[286,258],[258,441],[441,286],[258,257],[257,442],[442,258],[257,259],[259,443],[443,257],[259,260],[260,444],[444,259],[260,467],[467,445],[445,260],[309,459],[459,250],[250,309],[305,289],[289,290],[290,305],[305,290],[290,460],[460,305],[401,376],[376,435],[435,401],[309,250],[250,392],[392,309],[376,411],[411,433],[433,376],[453,341],[341,464],[464,453],[357,453],[453,465],[465,357],[343,357],[357,412],[412,343],[437,343],[343,399],[399,437],[344,360],[360,440],[440,344],[420,437],[437,456],[456,420],[360,420],[420,363],[363,360],[361,401],[401,288],[288,361],[265,372],[372,353],[353,265],[390,339],[339,249],[249,390],[339,448],[448,255],[255,339]]),B("VERSION","0.4.1646425229")}).call(Gi);var yr=function(){return yr=Object.assign||function(n){for(var e,t=1,r=arguments.length;t<r;t++)for(var s in e=arguments[t])Object.prototype.hasOwnProperty.call(e,s)&&(n[s]=e[s]);return n},yr.apply(this,arguments)};function Hn(n,e,t,r){return new(t||(t=Promise))((function(s,o){function a(c){try{u(r.next(c))}catch(l){o(l)}}function i(c){try{u(r.throw(c))}catch(l){o(l)}}function u(c){var l;c.done?s(c.value):(l=c.value,l instanceof t?l:new t((function(h){h(l)}))).then(a,i)}u((r=r.apply(n,[])).next())}))}function Kn(n,e){var t,r,s,o,a={label:0,sent:function(){if(1&s[0])throw s[1];return s[1]},trys:[],ops:[]};return o={next:i(0),throw:i(1),return:i(2)},typeof Symbol=="function"&&(o[Symbol.iterator]=function(){return this}),o;function i(u){return function(c){return(function(l){if(t)throw new TypeError("Generator is already executing.");for(;a;)try{if(t=1,r&&(s=2&l[0]?r.return:l[0]?r.throw||((s=r.return)&&s.call(r),0):r.next)&&!(s=s.call(r,l[1])).done)return s;switch(r=0,s&&(l=[2&l[0],s.value]),l[0]){case 0:case 1:s=l;break;case 4:return a.label++,{value:l[1],done:!1};case 5:a.label++,r=l[1],l=[0];continue;case 7:l=a.ops.pop(),a.trys.pop();continue;default:if(!((s=(s=a.trys).length>0&&s[s.length-1])||l[0]!==6&&l[0]!==2)){a=0;continue}if(l[0]===3&&(!s||l[1]>s[0]&&l[1]<s[3])){a.label=l[1];break}if(l[0]===6&&a.label<s[1]){a.label=s[1],s=l;break}if(s&&a.label<s[2]){a.label=s[2],a.ops.push(l);break}s[2]&&a.ops.pop(),a.trys.pop();continue}l=e.call(n,a)}catch(h){l=[6,h],r=0}finally{t=s=0}if(5&l[0])throw l[1];return{value:l[0]?l[1]:void 0,done:!0}})([u,c])}}}var $g=["rightEye","leftEye","noseTip","mouthCenter","rightEarTragion","leftEarTragion"],ji={modelType:"short",runtime:"mediapipe",maxFaces:1},HO=(function(){function n(e){var t=this;this.width=0,this.height=0,this.selfieMode=!1,this.faceDetectorSolution=new jO.FaceDetection({locateFile:function(r,s){if(e.solutionPath){var o=e.solutionPath.replace(/\/+$/,"");return"".concat(o,"/").concat(r)}return"".concat(s,"/").concat(r)}}),this.faceDetectorSolution.setOptions({selfieMode:this.selfieMode,model:e.modelType}),this.faceDetectorSolution.onResults((function(r){if(t.height=r.image.height,t.width=r.image.width,t.faces=[],r.detections!==null)for(var s=0,o=r.detections;s<o.length;s++){var a=o[s];t.faces.push(t.normalizedToAbsolute(a.landmarks,{xMin:u=(i=a.boundingBox).xCenter-i.width/2,xMax:u+i.width,yMin:c=i.yCenter-i.height/2,yMax:c+i.height,width:i.width,height:i.height}))}var i,u,c}))}return n.prototype.normalizedToAbsolute=function(e,t){var r=this;return{keypoints:e.map((function(s,o){return{x:s.x*r.width,y:s.y*r.height,name:$g[o]}})),box:{xMin:t.xMin*this.width,yMin:t.yMin*this.height,xMax:t.xMax*this.width,yMax:t.yMax*this.height,width:t.width*this.width,height:t.height*this.height}}},n.prototype.estimateFaces=function(e,t){return Hn(this,void 0,void 0,(function(){var r,s;return Kn(this,(function(o){switch(o.label){case 0:return t&&t.flipHorizontal&&t.flipHorizontal!==this.selfieMode&&(this.selfieMode=t.flipHorizontal,this.faceDetectorSolution.setOptions({selfieMode:this.selfieMode})),e instanceof Ze?(s=ImageData.bind,[4,Nm(e)]):[3,2];case 1:return r=new(s.apply(ImageData,[void 0,o.sent(),e.shape[1],e.shape[0]])),[3,3];case 2:r=e,o.label=3;case 3:return e=r,[4,this.faceDetectorSolution.send({image:e})];case 4:return o.sent(),[2,this.faces]}}))}))},n.prototype.dispose=function(){this.faceDetectorSolution.close()},n.prototype.reset=function(){this.faceDetectorSolution.reset(),this.width=0,this.height=0,this.faces=null,this.selfieMode=!1},n.prototype.initialize=function(){return this.faceDetectorSolution.initialize()},n})();function KO(n){return Hn(this,void 0,void 0,(function(){var e,t;return Kn(this,(function(r){switch(r.label){case 0:return e=(function(s){if(s==null)return yr({},ji);var o=yr({},s);return o.runtime="mediapipe",o.modelType==null&&(o.modelType=ji.modelType),o.maxFaces==null&&(o.maxFaces=ji.maxFaces),o})(n),[4,(t=new HO(e)).initialize()];case 1:return r.sent(),[2,t]}}))}))}function Sg(n){return n instanceof Ze?{height:n.shape[0],width:n.shape[1]}:{height:n.height,width:n.width}}function Cg(n){return n instanceof Ze?n:Em(n)}function Hi(n,e){_(n.width!==0,(function(){return"".concat(e," width cannot be 0.")})),_(n.height!==0,(function(){return"".concat(e," height cannot be 0.")}))}function XO(n,e,t){var r=e.outputTensorSize,s=e.keepAspectRatio,o=e.borderMode,a=e.outputTensorFloatRange,i=Sg(n),u=(function(d,p){return{xCenter:.5*d.width,yCenter:.5*d.height,width:d.width,height:d.height,rotation:0}})(i),c=(function(d,p,f){if(f===void 0&&(f=!1),!f)return{top:0,left:0,right:0,bottom:0};var b=p.height,y=p.width;Hi(p,"targetSize"),Hi(d,"roi");var x,C,I=b/y,k=d.height/d.width,P=0,W=0;return I>k?(x=d.width,C=d.width*I,W=(1-k/I)/2):(x=d.height/I,C=d.height,P=(1-I/k)/2),d.width=x,d.height=C,{top:W,left:P,right:P,bottom:W}})(u,r,s),l=(function(d,p,f,b){var y=d.width,x=d.height,C=1,I=Math.cos(d.rotation),k=Math.sin(d.rotation),P=d.xCenter,W=d.yCenter,H=1/p,G=1/f,B=new Array(16);return B[0]=y*I*C*H,B[1]=-x*k*H,B[2]=0,B[3]=(-.5*y*I*C+.5*x*k+P)*H,B[4]=y*k*C*G,B[5]=x*I*G,B[6]=0,B[7]=(-.5*x*I-.5*y*k*C+W)*G,B[8]=0,B[9]=0,B[10]=y*H,B[11]=0,B[12]=0,B[13]=0,B[14]=0,B[15]=1,(function(V){if(V.length!==16)throw new Error("Array length must be 16 but got ".concat(V.length));return[[V[0],V[1],V[2],V[3]],[V[4],V[5],V[6],V[7]],[V[8],V[9],V[10],V[11]],[V[12],V[13],V[14],V[15]]]})(B)})(u,i.width,i.height),h=we((function(){var d=Cg(n),p=dr((function(y,x,C){return Hi(C,"inputResolution"),[1/C.width*y[0][0]*x.width,1/C.height*y[0][1]*x.width,y[0][3]*x.width,1/C.width*y[1][0]*x.height,1/C.height*y[1][1]*x.height,y[1][3]*x.height,0,0]})(l,i,r),[1,8]),f=o==="zero"?"constant":"nearest",b=Ls.transform(rn(He(d,"float32")),p,"bilinear",f,0,[r.height,r.width]);return a!=null?(function(y,x){var C=(function(I,k,P,W){var H=(W-P)/255;return{scale:H,offset:P-0*H}})(0,0,x[0],x[1]);return we((function(){return me(oe(y,C.scale),C.offset)}))})(b,a):b}));return{imageTensor:h,padding:c,transformationMatrix:l}}function Xl(n){n.reduceBoxesInLowestLayer==null&&(n.reduceBoxesInLowestLayer=!1),n.interpolatedScaleAspectRatio==null&&(n.interpolatedScaleAspectRatio=1),n.fixedAnchorSize==null&&(n.fixedAnchorSize=!1);for(var e=[],t=0;t<n.numLayers;){for(var r=[],s=[],o=[],a=[],i=t;i<n.strides.length&&n.strides[i]===n.strides[t];){var u=ql(n.minScale,n.maxScale,i,n.strides.length);if(i===0&&n.reduceBoxesInLowestLayer)o.push(1),o.push(2),o.push(.5),a.push(.1),a.push(u),a.push(u);else{for(var c=0;c<n.aspectRatios.length;++c)o.push(n.aspectRatios[c]),a.push(u);if(n.interpolatedScaleAspectRatio>0){var l=i===n.strides.length-1?1:ql(n.minScale,n.maxScale,i+1,n.strides.length);a.push(Math.sqrt(u*l)),o.push(n.interpolatedScaleAspectRatio)}}i++}for(var h=0;h<o.length;++h){var d=Math.sqrt(o[h]);r.push(a[h]/d),s.push(a[h]*d)}var p=0,f=0;if(n.featureMapHeight.length>0)p=n.featureMapHeight[t],f=n.featureMapWidth[t];else{var b=n.strides[t];p=Math.ceil(n.inputSizeHeight/b),f=Math.ceil(n.inputSizeWidth/b)}for(var y=0;y<p;++y)for(var x=0;x<f;++x)for(var C=0;C<r.length;++C){var I={xCenter:(x+n.anchorOffsetX)/f,yCenter:(y+n.anchorOffsetY)/p,width:0,height:0};n.fixedAnchorSize?(I.width=1,I.height=1):(I.width=s[C],I.height=r[C]),e.push(I)}t=i}return e}function ql(n,e,t,r){return r===1?.5*(n+e):n+(e-n)*t/(r-1)}function Yl(n,e){var t=e[0],r=e[1];return[t*n[0]+r*n[1]+n[3],t*n[4]+r*n[5]+n[7]]}function qO(n,e,t,r){return Hn(this,void 0,void 0,(function(){var s,o,a,i,u;return Kn(this,(function(c){switch(c.label){case 0:return n.sort((function(l,h){return Math.max.apply(Math,h.score)-Math.max.apply(Math,l.score)})),s=dr(n.map((function(l){return[l.locationData.relativeBoundingBox.yMin,l.locationData.relativeBoundingBox.xMin,l.locationData.relativeBoundingBox.yMax,l.locationData.relativeBoundingBox.xMax]}))),o=xt(n.map((function(l){return l.score[0]}))),[4,Ls.nonMaxSuppressionAsync(s,o,e,t)];case 1:return[4,(a=c.sent()).array()];case 2:return i=c.sent(),u=n.filter((function(l,h){return i.indexOf(h)>-1})),Xe([s,o,a]),[2,u]}}))}))}function YO(n,e,t){return Hn(this,void 0,void 0,(function(){var r,s,o,a,i;return Kn(this,(function(u){switch(u.label){case 0:return r=n[0],s=n[1],o=(function(c,l,h){return we((function(){var d,p,f,b;h.reverseOutputOrder?(p=st(Ce(c,[0,h.boxCoordOffset+0],[-1,1])),d=st(Ce(c,[0,h.boxCoordOffset+1],[-1,1])),b=st(Ce(c,[0,h.boxCoordOffset+2],[-1,1])),f=st(Ce(c,[0,h.boxCoordOffset+3],[-1,1]))):(d=st(Ce(c,[0,h.boxCoordOffset+0],[-1,1])),p=st(Ce(c,[0,h.boxCoordOffset+1],[-1,1])),f=st(Ce(c,[0,h.boxCoordOffset+2],[-1,1])),b=st(Ce(c,[0,h.boxCoordOffset+3],[-1,1]))),p=me(oe(ke(p,h.xScale),l.w),l.x),d=me(oe(ke(d,h.yScale),l.h),l.y),h.applyExponentialOnBoxSize?(f=oe(zn(ke(f,h.hScale)),l.h),b=oe(zn(ke(b,h.wScale)),l.w)):(f=oe(ke(f,h.hScale),l.h),b=oe(ke(b,h.wScale),l.h));var y=Te(d,ke(f,2)),x=Te(p,ke(b,2)),C=me(d,ke(f,2)),I=me(p,ke(b,2)),k=pt([Z(y,[h.numBoxes,1]),Z(x,[h.numBoxes,1]),Z(C,[h.numBoxes,1]),Z(I,[h.numBoxes,1])],1);if(h.numKeypoints)for(var P=0;P<h.numKeypoints;++P){var W=h.keypointCoordOffset+P*h.numValuesPerKeypoint,H=void 0,G=void 0;h.reverseOutputOrder?(H=st(Ce(c,[0,W],[-1,1])),G=st(Ce(c,[0,W+1],[-1,1]))):(G=st(Ce(c,[0,W],[-1,1])),H=st(Ce(c,[0,W+1],[-1,1])));var B=me(oe(ke(H,h.xScale),l.w),l.x),V=me(oe(ke(G,h.yScale),l.h),l.y);k=pt([k,Z(B,[h.numBoxes,1]),Z(V,[h.numBoxes,1])],1)}return k}))})(s,e,t),a=we((function(){var c=r;return t.sigmoidScore?(t.scoreClippingThresh!=null&&(c=Ff(r,-t.scoreClippingThresh,t.scoreClippingThresh)),c=zr(c)):c})),[4,QO(o,a,t)];case 1:return i=u.sent(),Xe([o,a]),[2,i]}}))}))}function QO(n,e,t){return Hn(this,void 0,void 0,(function(){var r,s,o,a,i,u,c,l,h,d,p,f;return Kn(this,(function(b){switch(b.label){case 0:return r=[],[4,n.data()];case 1:return s=b.sent(),[4,e.data()];case 2:for(o=b.sent(),a=0;a<t.numBoxes;++a)if(!(t.minScoreThresh!=null&&o[a]<t.minScoreThresh||(i=a*t.numCoords,u=ZO(s[i+0],s[i+1],s[i+2],s[i+3],o[a],t.flipVertically,a),(c=u.locationData.relativeBoundingBox).width<0||c.height<0))){if(t.numKeypoints>0)for((l=u.locationData).relativeKeypoints=[],h=t.numKeypoints*t.numValuesPerKeypoint,d=0;d<h;d+=t.numValuesPerKeypoint)p=i+t.keypointCoordOffset+d,f={x:s[p+0],y:t.flipVertically?1-s[p+1]:s[p+1]},l.relativeKeypoints.push(f);r.push(u)}return[2,r]}}))}))}function ZO(n,e,t,r,s,o,a){return{score:[s],ind:a,locationData:{relativeBoundingBox:{xMin:e,yMin:o?1-t:n,xMax:r,yMax:o?1-n:t,width:r-e,height:t-n}}}}var Xa,JO={reduceBoxesInLowestLayer:!1,interpolatedScaleAspectRatio:1,featureMapHeight:[],featureMapWidth:[],numLayers:4,minScale:.1484375,maxScale:.75,inputSizeHeight:128,inputSizeWidth:128,anchorOffsetX:.5,anchorOffsetY:.5,strides:[8,16,16,16],aspectRatios:[1],fixedAnchorSize:!0},e9={reduceBoxesInLowestLayer:!1,interpolatedScaleAspectRatio:0,featureMapHeight:[],featureMapWidth:[],numLayers:1,minScale:.1484375,maxScale:.75,inputSizeHeight:192,inputSizeWidth:192,anchorOffsetX:.5,anchorOffsetY:.5,strides:[4],aspectRatios:[1],fixedAnchorSize:!0},Ki={runtime:"tfjs",modelType:"short",maxFaces:1,detectorModelUrl:"https://tfhub.dev/mediapipe/tfjs-model/face_detection/short/1"},t9={applyExponentialOnBoxSize:!1,flipVertically:!1,ignoreClasses:[],numClasses:1,numBoxes:896,numCoords:16,boxCoordOffset:0,keypointCoordOffset:4,numKeypoints:6,numValuesPerKeypoint:2,sigmoidScore:!0,scoreClippingThresh:100,reverseOutputOrder:!0,xScale:128,yScale:128,hScale:128,wScale:128,minScoreThresh:.5},n9={applyExponentialOnBoxSize:!1,flipVertically:!1,ignoreClasses:[],numClasses:1,numBoxes:2304,numCoords:16,boxCoordOffset:0,keypointCoordOffset:4,numKeypoints:6,numValuesPerKeypoint:2,sigmoidScore:!0,scoreClippingThresh:100,reverseOutputOrder:!0,xScale:192,yScale:192,hScale:192,wScale:192,minScoreThresh:.6},r9={outputTensorSize:{width:128,height:128},keepAspectRatio:!0,outputTensorFloatRange:[-1,1],borderMode:"zero"},s9={outputTensorSize:{width:192,height:192},keepAspectRatio:!0,outputTensorFloatRange:[-1,1],borderMode:"zero"},o9=(function(){function n(e,t,r){this.detectorModel=t,this.maxFaces=r,e==="full"?(this.imageToTensorConfig=s9,this.tensorsToDetectionConfig=n9,this.anchors=Xl(e9)):(this.imageToTensorConfig=r9,this.tensorsToDetectionConfig=t9,this.anchors=Xl(JO));var s=xt(this.anchors.map((function(u){return u.width}))),o=xt(this.anchors.map((function(u){return u.height}))),a=xt(this.anchors.map((function(u){return u.xCenter}))),i=xt(this.anchors.map((function(u){return u.yCenter})));this.anchorTensor={x:a,y:i,w:s,h:o}}return n.prototype.dispose=function(){this.detectorModel.dispose(),Xe([this.anchorTensor.x,this.anchorTensor.y,this.anchorTensor.w,this.anchorTensor.h])},n.prototype.reset=function(){},n.prototype.detectFaces=function(e,t){return t===void 0&&(t=!1),Hn(this,void 0,void 0,(function(){var r,s,o,a,i,u,c,l,h,d,p;return Kn(this,(function(f){switch(f.label){case 0:return e==null?(this.reset(),[2,[]]):(r=we((function(){var b=He(Cg(e),"float32");return t&&(b=st(Ls.flipLeftRight(rn(b,0)),[0])),b})),s=XO(r,this.imageToTensorConfig),o=s.imageTensor,a=s.transformationMatrix,i=this.detectorModel.execute(o,"Identity:0"),u=(function(b){return we((function(){var y=(function(I){return we((function(){return[Ce(I,[0,0,0],[1,-1,1]),Ce(I,[0,0,1],[1,-1,-1])]}))})(b),x=y[0],C=y[1];return{boxes:st(C),logits:st(x)}}))})(i),c=u.boxes,[4,YO([l=u.logits,c],this.anchorTensor,this.tensorsToDetectionConfig)]);case 1:return(h=f.sent()).length===0?(Xe([r,o,i,l,c]),[2,h]):[4,qO(h,this.maxFaces,.3)];case 2:return d=f.sent(),p=(function(b,y){b===void 0&&(b=[]);var x,C=(x=y,[].concat.apply([],x));return b.forEach((function(I){var k=I.locationData;k.relativeKeypoints.forEach((function(V){var R=Yl(C,[V.x,V.y]),q=R[0],te=R[1];V.x=q,V.y=te}));var P=k.relativeBoundingBox,W=Number.MAX_VALUE,H=Number.MAX_VALUE,G=Number.MIN_VALUE,B=Number.MIN_VALUE;[[P.xMin,P.yMin],[P.xMin+P.width,P.yMin],[P.xMin+P.width,P.yMin+P.height],[P.xMin,P.yMin+P.height]].forEach((function(V){var R=Yl(C,V),q=R[0],te=R[1];W=Math.min(W,q),G=Math.max(G,q),H=Math.min(H,te),B=Math.max(B,te)})),k.relativeBoundingBox={xMin:W,xMax:G,yMin:H,yMax:B,width:G-W,height:B-H}})),b})(d,a),Xe([r,o,i,l,c]),[2,p]}}))}))},n.prototype.estimateFaces=function(e,t){return Hn(this,void 0,void 0,(function(){var r,s;return Kn(this,(function(o){return r=Sg(e),s=!!t&&t.flipHorizontal,[2,this.detectFaces(e,s).then((function(a){return a.map((function(i){for(var u=i.locationData.relativeKeypoints.map((function(f,b){return yr(yr({},f),{x:f.x*r.width,y:f.y*r.height,name:$g[b]})})),c=i.locationData.relativeBoundingBox,l=0,h=["width","xMax","xMin"];l<h.length;l++)c[h[l]]*=r.width;for(var d=0,p=["height","yMax","yMin"];d<p.length;d++)c[p[d]]*=r.height;return{keypoints:u,box:c}}))}))]}))}))},n})();function a9(n){return Hn(this,void 0,void 0,(function(){var e,t,r;return Kn(this,(function(s){switch(s.label){case 0:return e=(function(o){if(o==null)return yr({},Ki);var a=yr({},o);return a.modelType==null&&(a.modelType=Ki.modelType),a.maxFaces==null&&(a.maxFaces=Ki.maxFaces),a.detectorModelUrl==null&&(a.modelType==="full"?a.detectorModelUrl="https://tfhub.dev/mediapipe/tfjs-model/face_detection/full/1":a.detectorModelUrl="https://tfhub.dev/mediapipe/tfjs-model/face_detection/short/1"),a})(n),t=typeof e.detectorModelUrl=="string"&&e.detectorModelUrl.indexOf("https://tfhub.dev")>-1,[4,vg(e.detectorModelUrl,{fromTFHub:t})];case 1:return r=s.sent(),[2,new o9(e.modelType,r,e.maxFaces)]}}))}))}function i9(n,e){return Hn(this,void 0,void 0,(function(){var t,r;return Kn(this,(function(s){if(n===Xa.MediaPipeFaceDetector){if(r=void 0,(t=e)!=null){if(t.runtime==="tfjs")return[2,a9(t)];if(t.runtime==="mediapipe")return[2,KO(t)];r=t.runtime}throw new Error("Expect modelConfig.runtime to be either 'tfjs' "+"or 'mediapipe', but got ".concat(r))}throw new Error("".concat(n," is not a supported model name."))}))}))}function Xi(n){return n.width*n.height}function Ql(n){var e=n.xCenter-n.width/2,t=e+n.width,r=n.yCenter-n.height/2;return{xMin:e,xMax:t,yMin:r,yMax:r+n.height,width:n.width,height:n.height}}function u9(n,e){var t=Ql(n),r=Ql(e);if(!(function(a,i){return!(a.xMax<i.xMin||i.xMax<a.xMin||a.yMax<i.yMin||i.yMax<a.yMin)})(t,r))return 0;var s=Xi((function(a,i){var u=Math.max(a.xMin,i.xMin),c=Math.min(a.xMax,i.xMax),l=Math.max(a.yMin,i.yMin),h=Math.min(a.yMax,i.yMax);return{xMin:u,xMax:c,yMin:l,yMax:h,width:Math.max(c-u,0),height:Math.max(h-l,0)}})(t,r)),o=Xi(t)+Xi(r)-s;return o>0?s/o:0}function c9(n,e,t,r){var s=n.width,o=n.height,a=1,i=Math.cos(n.rotation),u=Math.sin(n.rotation),c=n.xCenter,l=n.yCenter,h=1/e,d=1/t,p=new Array(16);return p[0]=s*i*a*h,p[1]=-o*u*h,p[2]=0,p[3]=(-.5*s*i*a+.5*o*u+c)*h,p[4]=s*u*a*d,p[5]=o*i*d,p[6]=0,p[7]=(-.5*o*i-.5*s*u*a+l)*d,p[8]=0,p[9]=0,p[10]=s*h,p[11]=0,p[12]=0,p[13]=0,p[14]=0,p[15]=1,(function(f){if(f.length!==16)throw new Error("Array length must be 16 but got "+f.length);return[[f[0],f[1],f[2],f[3]],[f[4],f[5],f[6],f[7]],[f[8],f[9],f[10],f[11]],[f[12],f[13],f[14],f[15]]]})(p)}function Tg(n){return n instanceof Ze?{height:n.shape[0],width:n.shape[1]}:{height:n.height,width:n.width}}function Ng(n){return n-2*Math.PI*Math.floor((n+Math.PI)/(2*Math.PI))}function Eg(n){return n instanceof Ze?n:Em(n)}function qi(n,e){_(n.width!==0,(function(){return e+" width cannot be 0."})),_(n.height!==0,(function(){return e+" height cannot be 0."}))}function l9(n,e){var t=(function(r,s,o,a){var i=s-r,u=a-o,c=u/i;return{scale:c,offset:o-r*c}})(0,255,e[0],e[1]);return we((function(){return me(oe(n,t.scale),t.offset)}))}function h9(n,e,t){var r=e.outputTensorSize,s=e.keepAspectRatio,o=e.outputTensorFloatRange,a=Tg(n),i=(function(h,d){return d?{xCenter:d.xCenter*h.width,yCenter:d.yCenter*h.height,width:d.width*h.width,height:d.height*h.height,rotation:d.rotation}:{xCenter:.5*h.width,yCenter:.5*h.height,width:h.width,height:h.height,rotation:0}})(a,t),u=(function(h,d,p){if(p===void 0&&(p=!1),!p)return{top:0,left:0,right:0,bottom:0};var f=d.height,b=d.width;qi(d,"targetSize"),qi(h,"roi");var y,x,C=f/b,I=h.height/h.width,k=0,P=0;return C>I?(y=h.width,x=h.width*C,P=(1-I/C)/2):(y=h.height/C,x=h.height,k=(1-C/I)/2),h.width=y,h.height=x,{top:P,left:k,right:k,bottom:P}})(i,r,s),c=c9(i,a.width,a.height),l=we((function(){var h=Eg(n),d=dr((function(b,y,x){return qi(x,"inputResolution"),[1/x.width*b[0][0]*y.width,1/x.height*b[0][1]*y.width,b[0][3]*y.width,1/x.width*b[1][0]*y.height,1/x.height*b[1][1]*y.height,b[1][3]*y.height,0,0]})(c,a,r),[1,8]),p="nearest",f=Ls.transform(rn(He(h,"float32")),d,"bilinear",p,0,[r.height,r.width]);return o!=null?l9(f,o):f}));return{imageTensor:l,padding:u,transformationMatrix:c}}function Zl(n){return{xCenter:n.xMin+n.width/2,yCenter:n.yMin+n.height/2,width:n.width,height:n.height}}function d9(n){var e=n.relativeKeypoints;if(e.length<=1)throw new Error("2 or more keypoints required to calculate a rect.");var t=Number.MAX_VALUE,r=Number.MAX_VALUE,s=Number.MIN_VALUE,o=Number.MIN_VALUE;return e.forEach((function(a){t=Math.min(t,a.x),s=Math.max(s,a.x),r=Math.min(r,a.y),o=Math.max(o,a.y)})),{xCenter:(t+s)/2,yCenter:(r+o)/2,width:s-t,height:o-r}}function Jl(n,e,t,r,s){var o=t==="rect"?(function(a,i,u){var c,l=a.locationData;return c=Zl(l.boundingBox),c})(n):(function(a,i){var u=a.locationData;return i==="boundingbox"?Zl(u.relativeBoundingBox):d9(u)})(n,e);return s&&(o.rotation=(function(a,i,u){var c,l=a.locationData,h=u.rotationVectorStartKeypointIndex,d=u.rotationVectorEndKeypointIndex;c=u.rotationVectorTargetAngle?u.rotationVectorTargetAngle:Math.PI*u.rotationVectorTargetAngleDegree/180;var p=l.relativeKeypoints[h].x*i.width,f=l.relativeKeypoints[h].y*i.height,b=l.relativeKeypoints[d].x*i.width,y=l.relativeKeypoints[d].y*i.height;return Ng(c-Math.atan2(-(y-f),b-p))})(n,r,s)),o}function p9(n,e,t){for(var r=0;r<e.length;++r){var s=e[r],o=t[n[r]];o.x=s.x,o.y=s.y}}function f9(n,e,t,r){if(typeof e=="string"){if(e==="copy")for(var s=0;s<t.length;++s)r[n[s]].z=t[s].z}else{var o=(function(a,i){for(var u=0,c=0;c<i.length;++c)u+=a[i[c]].z;return u/i.length})(r,e);for(s=0;s<n.length;++s)r[n[s]].z=o}}function m9(n,e){for(var t=(function(i){var u=[].concat.apply([],i.map((function(p){return p.indexesMapping})));if(u.length===0)throw new Error("There should be at least one landmark in indexes mapping");var c=u[0],l=u[0],h=new Set(u);h.forEach((function(p){c=Math.min(c,p),l=Math.max(l,p)}));var d=h.size;if(c!==0)throw new Error("Indexes are expected to start with 0 instead of "+c);if(l+1!==d)throw new Error("Indexes should have no gaps but "+(l-d+1)+" indexes are missing");return d})(e),r=new Array(t).fill(null).map(Object),s=0;s<n.length;++s){var o=n[s],a=e[s];if(o.length!==a.indexesMapping.length)throw new Error("There are "+o.length+" refinement landmarks while mapping has "+a.indexesMapping.length);p9(a.indexesMapping,o,r),f9(a.indexesMapping,a.zRefinement,o,r)}return r}function g9(n,e){return n.map((function(t){var r=bn(bn({},t),{x:t.x*e.width,y:t.y*e.height});return t.z!=null&&(r.z=t.z*e.width),r}))}function y9(n,e){return n==="none"?e:(function(t){return 1/(1+Math.exp(-t))})(e)}function Dr(n,e,t,r){return Mn(this,void 0,void 0,(function(){var s,o,a,i,u,c,l,h;return Un(this,(function(d){switch(d.label){case 0:return t=t||e.flipHorizontally||!1,r=r||e.flipVertically||!1,s=n.size,o=s/e.numLandmarks,[4,n.data()];case 1:for(a=d.sent(),i=[],u=0;u<e.numLandmarks;++u)c=u*o,(h={x:0,y:0}).x=t?e.inputImageWidth-a[c]:a[c],o>1&&(h.y=r?e.inputImageHeight-a[c+1]:a[c+1]),o>2&&(h.z=a[c+2]),o>3&&(h.score=y9(e.visibilityActivation,a[c+3])),i.push(h);for(l=0;l<i.length;++l)(h=i[l]).x=h.x/e.inputImageWidth,h.y=h.y/e.inputImageHeight,h.z=h.z/e.inputImageWidth/(e.normalizeZ||1);return[2,i]}}))}))}function eh(n,e,t){var r=n.width,s=n.height,o=n.rotation;if(t.rotation==null&&t.rotationDegree==null||(o=(function(c,l){return l.rotation!=null?c+=l.rotation:l.rotationDegree!=null&&(c+=Math.PI*l.rotationDegree/180),Ng(c)})(o,t)),o===0)n.xCenter=n.xCenter+r*t.shiftX,n.yCenter=n.yCenter+s*t.shiftY;else{var a=(e.width*r*t.shiftX*Math.cos(o)-e.height*s*t.shiftY*Math.sin(o))/e.width,i=(e.width*r*t.shiftX*Math.sin(o)+e.height*s*t.shiftY*Math.cos(o))/e.height;n.xCenter=n.xCenter+a,n.yCenter=n.yCenter+i}{var u=Math.max(r*e.width,s*e.height);r=u/e.width,s=u/e.height}return n.width=r*t.scaleX,n.height=s*t.scaleY,n}(Xa||(Xa={})).MediaPipeFaceDetector="MediaPipeFaceDetector";var Yi={runtime:"tfjs",maxFaces:1,refineLandmarks:!1,landmarkModelUrl:"https://tfhub.dev/mediapipe/tfjs-model/face_landmarks_detection/face_mesh/1"},Qi={flipHorizontal:!1,staticImageMode:!1},th={shiftX:0,shiftY:0,scaleX:1.5,scaleY:1.5},x9={outputTensorSize:{width:192,height:192},outputTensorFloatRange:[0,1]},nh={numLandmarks:468,inputImageWidth:192,inputImageHeight:192,visibilityActivation:"none",flipHorizontally:!1,flipVertically:!1},b9={numLandmarks:80,inputImageWidth:192,inputImageHeight:192,visibilityActivation:"none",flipHorizontally:!1,flipVertically:!1},rh={numLandmarks:71,inputImageWidth:192,inputImageHeight:192,visibilityActivation:"none",flipHorizontally:!1,flipVertically:!1},sh={numLandmarks:5,inputImageWidth:192,inputImageHeight:192,visibilityActivation:"none",flipHorizontally:!1,flipVertically:!1},v9={indexesMapping:Array.from(Array(468).keys()),zRefinement:"copy"},w9={indexesMapping:[61,146,91,181,84,17,314,405,321,375,291,185,40,39,37,0,267,269,270,409,78,95,88,178,87,14,317,402,318,324,308,191,80,81,82,13,312,311,310,415,76,77,90,180,85,16,315,404,320,307,306,184,74,73,72,11,302,303,304,408,62,96,89,179,86,15,316,403,319,325,292,183,42,41,38,12,268,271,272,407],zRefinement:"none"},$9={indexesMapping:[33,7,163,144,145,153,154,155,133,246,161,160,159,158,157,173,130,25,110,24,23,22,26,112,243,247,30,29,27,28,56,190,226,31,228,229,230,231,232,233,244,113,225,224,223,222,221,189,35,124,46,53,52,65,143,111,117,118,119,120,121,128,245,156,70,63,105,66,107,55,193],zRefinement:"none"},S9={indexesMapping:[263,249,390,373,374,380,381,382,362,466,388,387,386,385,384,398,359,255,339,254,253,252,256,341,463,467,260,259,257,258,286,414,446,261,448,449,450,451,452,453,464,342,445,444,443,442,441,413,265,353,276,283,282,295,372,340,346,347,348,349,350,357,465,383,300,293,334,296,336,285,417],zRefinement:"none"},C9={indexesMapping:[468,469,470,471,472],zRefinement:[33,7,163,144,145,153,154,155,133,246,161,160,159,158,157,173]},T9={indexesMapping:[473,474,475,476,477],zRefinement:[263,249,390,373,374,380,381,382,362,466,388,387,386,385,384,398]},qa,N9=(function(){function n(e,t,r,s){this.detector=e,this.landmarkModel=t,this.maxFaces=r,this.withAttention=s,this.prevFaceRectsFromLandmarks=null}return n.prototype.estimateFaces=function(e,t){return Mn(this,void 0,void 0,(function(){var r,s,o,a,i,u,c,l,h,d,p,f,b,y=this;return Un(this,(function(x){switch(x.label){case 0:return r=(function(k){if(k==null)return bn({},Qi);var P=bn({},k);return P.flipHorizontal==null&&(P.flipHorizontal=Qi.flipHorizontal),P.staticImageMode==null&&(P.staticImageMode=Qi.staticImageMode),P})(t),e==null?(this.reset(),[2,[]]):(s=Tg(e),o=we((function(){var k=He(Eg(e),"float32");return r.flipHorizontal&&(k=st(Ls.flipLeftRight(rn(k,0)),[0])),k})),a=this.prevFaceRectsFromLandmarks,r.staticImageMode||a==null||a.length<this.maxFaces?[4,this.detector.detectFaces(o,!1)]:[3,2]);case 1:return(u=x.sent()).length===0?(this.reset(),o.dispose(),[2,[]]):(i=u.map((function(k){return y.faceDetectionFrontDetectionToRoi(k,s)})),[3,3]);case 2:i=[],x.label=3;case 3:return C=.5,I=[],[i,a||[]].forEach((function(k){return k.forEach((function(P){(I=I.filter((function(W){return u9(P,W)<=C}))).push(P)}))})),c=I,[4,Promise.all(c.map((function(k){return y.faceLandmark(k,o)})))];case 4:for(l=x.sent(),h=[],this.prevFaceRectsFromLandmarks=[],d=0;d<l.length;++d)(p=l[d])!=null&&(this.prevFaceRectsFromLandmarks.push(this.faceLandmarksToRoi(p,s)),(f=g9(p,s))!=null&&f.forEach((function(k,P){var W=wg.get(P);W!=null&&(k.name=W)})),b=Wu(f),h.push({keypoints:f,box:b.locationData.relativeBoundingBox}));return o.dispose(),[2,h]}var C,I}))}))},n.prototype.dispose=function(){this.detector.dispose(),this.landmarkModel.dispose()},n.prototype.reset=function(){this.detector.reset(),this.prevFaceRectsFromLandmarks=null},n.prototype.faceDetectionFrontDetectionToRoi=function(e,t){return eh(Jl(e,"boundingbox","normRect",t,{rotationVectorStartKeypointIndex:0,rotationVectorEndKeypointIndex:1,rotationVectorTargetAngleDegree:0}),t,th)},n.prototype.faceLandmark=function(e,t){return Mn(this,void 0,void 0,(function(){var r,s,o,a,i,u,c;return Un(this,(function(l){switch(l.label){case 0:return r=h9(t,x9,e).imageTensor,s=["output_faceflag"].concat(this.withAttention?["output_mesh_identity","output_lips","Identity_6:0","Identity_1:0","Identity_2:0","Identity_5:0"]:["output_mesh"]),o=this.landmarkModel.execute(r,s),a=o[0],i=o.slice(1),[4,a.data()];case 1:return l.sent()[0]<.5?(Xe(o),Xe(r),[2,null]):this.withAttention?[4,this.tensorsToFaceLandmarksWithAttention(i)]:[3,3];case 2:return u=l.sent(),[3,5];case 3:return[4,this.tensorsToFaceLandmarks(i)];case 4:u=l.sent(),l.label=5;case 5:return c=(function(h,d,p){p===void 0&&(p={ignoreRotation:!1});for(var f=[],b=0,y=h;b<y.length;b++){var x=y[b],C=x.x-.5,I=x.y-.5,k=p.ignoreRotation?0:d.rotation,P=Math.cos(k)*C-Math.sin(k)*I,W=Math.sin(k)*C+Math.cos(k)*I;P=P*d.width+d.xCenter,W=W*d.height+d.yCenter;var H=x.z*d.width,G=bn({},x);G.x=P,G.y=W,G.z=H,f.push(G)}return f})(u,e),Xe(o),Xe(r),[2,c]}}))}))},n.prototype.tensorsToFaceLandmarks=function(e){return Mn(this,void 0,void 0,(function(){return Un(this,(function(t){return[2,Dr(e[0],nh)]}))}))},n.prototype.tensorsToFaceLandmarksWithAttention=function(e){return Mn(this,void 0,void 0,(function(){var t,r,s,o,a,i;return Un(this,(function(u){switch(u.label){case 0:return[4,Dr(e[0],nh)];case 1:return t=u.sent(),[4,Dr(e[1],b9)];case 2:return r=u.sent(),[4,Dr(e[3],rh)];case 3:return s=u.sent(),[4,Dr(e[5],rh)];case 4:return o=u.sent(),[4,Dr(e[4],sh)];case 5:return a=u.sent(),[4,Dr(e[2],sh)];case 6:return i=u.sent(),[2,m9([t,r,s,o,a,i],[v9,w9,$9,S9,C9,T9])]}}))}))},n.prototype.faceLandmarksToRoi=function(e,t){return eh(Jl(Wu(e),"boundingbox","normRect",t,{rotationVectorStartKeypointIndex:33,rotationVectorEndKeypointIndex:263,rotationVectorTargetAngleDegree:0}),t,th)},n})();function E9(n){return Mn(this,void 0,void 0,(function(){var e,t,r,s;return Un(this,(function(o){switch(o.label){case 0:return e=(function(a){if(a==null)return bn({},Yi);var i=bn({},a);return i.runtime="tfjs",i.maxFaces==null&&(i.maxFaces=Yi.maxFaces),i.refineLandmarks==null&&(i.refineLandmarks=Yi.refineLandmarks),i.landmarkModelUrl==null&&(i.landmarkModelUrl=i.refineLandmarks?"https://tfhub.dev/mediapipe/tfjs-model/face_landmarks_detection/attention_mesh/1":"https://tfhub.dev/mediapipe/tfjs-model/face_landmarks_detection/face_mesh/1"),i})(n),t=typeof e.landmarkModelUrl=="string"&&e.landmarkModelUrl.indexOf("https://tfhub.dev")>-1,[4,vg(e.landmarkModelUrl,{fromTFHub:t})];case 1:return r=o.sent(),[4,i9(Xa.MediaPipeFaceDetector,{modelType:"short",maxFaces:e.maxFaces,detectorModelUrl:e.detectorModelUrl,runtime:e.runtime})];case 2:return s=o.sent(),[2,new N9(s,r,e.maxFaces,e.refineLandmarks)]}}))}))}function I9(n,e){return Mn(this,void 0,void 0,(function(){var t,r;return Un(this,(function(s){if(n===qa.MediaPipeFaceMesh){if(r=void 0,(t=e)!=null){if(t.runtime==="tfjs")return[2,E9(t)];if(t.runtime==="mediapipe")return[2,GO(t)];r=t.runtime}throw new Error("Expect modelConfig.runtime to be either 'tfjs' or 'mediapipe', but got "+r)}throw new Error(n+" is not a supported model name.")}))}))}(function(n){n.MediaPipeFaceMesh="MediaPipeFaceMesh"})(qa||(qa={}));const En={STRAIGHT:"STRAIGHT",LEFT:"LEFT",RIGHT:"RIGHT",UP:"UP",DOWN:"DOWN"};function k9(n){if(!n||n.length<468)return null;const e=n[1],t=n[33],r=n[263],s=n[10],o=n[152],a=Math.abs(e.x-t.x),i=Math.abs(e.x-r.x),u=a/i,c=Math.abs(e.y-s.y),l=Math.abs(e.y-o.y),h=c/l;return u<.6?En.RIGHT:u>1.6?En.LEFT:h<.6?En.UP:h>1.5?En.DOWN:En.STRAIGHT}let Zi=null;async function R9(){return Zi||(Zi=(async()=>{await B2();const n=qa.MediaPipeFaceMesh;return I9(n,{runtime:"mediapipe",refineLandmarks:!1,maxFaces:1,solutionPath:"https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh"})})()),Zi}function _9(n){const[e,t]=ot.useState(null),[r,s]=ot.useState(null),[o,a]=ot.useState(!0),i=ot.useRef(null);return ot.useEffect(()=>{let u=!0;async function c(){try{const l=await R9();u&&(t(l),a(!1))}catch(l){console.error("Failed to load face detection model:",l)}}return c(),()=>{u=!1}},[]),ot.useEffect(()=>{let u=!0;async function c(){if(!e||!n.current||n.current.readyState<2){u&&(i.current=requestAnimationFrame(c));return}try{const l=await e.estimateFaces(n.current);if(l&&l.length>0){const h=k9(l[0].keypoints);s(h)}else s(null)}catch(l){console.error("Detection runtime error:",l)}u&&(i.current=requestAnimationFrame(c))}return e&&(i.current=requestAnimationFrame(c)),()=>{u=!1,i.current&&cancelAnimationFrame(i.current)}},[e,n]),{currentPose:r,isModelLoading:o}}function A9(n){if(!n)return null;const e=document.createElement("canvas");return e.width=n.videoWidth,e.height=n.videoHeight,e.getContext("2d").drawImage(n,0,0,e.width,e.height),e.toDataURL("image/jpeg",.85)}async function O9(n){return new Promise(e=>{setTimeout(()=>{console.log("Uploading photos payload:",n),e({success:!0,message:"Identity verified successfully!"})},2e3)})}const xa=[{id:0,pose:En.STRAIGHT,label:"Look Straight"},{id:1,pose:En.LEFT,label:"Turn Head Left"},{id:2,pose:En.RIGHT,label:"Turn Head Right"},{id:3,pose:En.UP,label:"Look Up"},{id:4,pose:En.DOWN,label:"Look Down"}];function D9(n,e){const[t,r]=ot.useState(0),[s,o]=ot.useState({}),[a,i]=ot.useState("READY"),[u,c]=ot.useState(0),[l,h]=ot.useState(!1),d=ot.useRef(!1),p=ot.useMemo(()=>xa[t]||{id:-1,pose:null,label:"Processing..."},[t]),f=ot.useCallback(async x=>{i("PROCESSING");try{(await O9(x)).success?i("SUCCESS"):i("FAILED")}catch{i("FAILED")}},[]),b=ot.useCallback(()=>{if(d.current)return;d.current=!0;const x=A9(e.current);if(!x||!p.pose){d.current=!1;return}h(!1),c(0);const C={...s,[p.pose]:x};o(C),t===xa.length-1?f(C):r(I=>I+1),setTimeout(()=>{d.current=!1},500)},[p,s,t,f,e]);ot.useEffect(()=>{const x=setTimeout(()=>{h(!0)},800);return()=>clearTimeout(x)},[t]),ot.useEffect(()=>{if(a!=="READY"||!l||!p.pose||d.current)return;const x=setInterval(()=>{c(C=>{if(!(n===p.pose))return 0;const k=C+25;return k>=100?(clearInterval(x),setTimeout(()=>{b()},0),0):k})},200);return()=>clearInterval(x)},[n,p,a,l,b]);const y=()=>{d.current=!1,r(0),o({}),i("READY"),c(0),h(!1)};return{activeStep:l?p:{...p,label:`Get Ready... ${p.label}`},steps:xa,currentStepIdx:Math.min(t,xa.length-1),holdProgress:u,status:a,capturedImages:s,reset:y}}function L9(){const n=ot.useRef(null),{currentPose:e,isModelLoading:t}=_9(n),{activeStep:r,steps:s,currentStepIdx:o,holdProgress:a,status:i,capturedImages:u,reset:c}=D9(e,n);return t?De.jsx("div",{className:"loading-screen",children:"Loading Face Tracking Engines..."}):De.jsxs("div",{className:"face-verify-page",style:{position:"relative"},children:[De.jsx("h2",{children:"Biometric Identity Liveness Check"}),De.jsxs("div",{className:"interface-wrapper",children:[De.jsx(_g,{videoRef:n}),i==="READY"&&De.jsx(Ag,{holdProgress:a,instruction:r.label})]}),De.jsx(Og,{progress:a}),De.jsx(Dg,{steps:s,currentStepIdx:o}),De.jsx(Fg,{currentPose:e,status:i,onReset:c}),Object.keys(u).length>0&&De.jsxs("div",{className:"test-panel-overlay",children:[De.jsx("h5",{className:"test-panel-title",children:"🔬 Test Snaps"}),Object.entries(u).map(([l,h])=>De.jsxs("div",{className:"test-panel-card",children:[De.jsx("div",{className:"test-panel-badge",children:l}),De.jsx("img",{src:h,alt:l,className:"test-panel-img"})]},l))]})]})}export{L9 as default};
