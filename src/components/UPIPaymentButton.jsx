@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import copyIcon from "../assets/social/iinstagram.png";
+import copyIcon from "../assets/social/instagram.png";
 
 export default function UPIPaymentButton({ upiId, buttonText = "Pay with UPI" }) {
   
