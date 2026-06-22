@@ -6,7 +6,7 @@ export default function OffersSlider({ offers = [] }) {
 
   // 👉 check expiry
   const isExpired = (endDate) => {
-    if (!endDate) return false; // no expiry = always show
+    if (!endDate) return false;
     return new Date(endDate) <= new Date();
   };
 
@@ -16,7 +16,6 @@ export default function OffersSlider({ offers = [] }) {
 
     const now = new Date();
     const expiry = new Date(endDate);
-
     const diffTime = expiry - now;
 
     if (diffTime <= 0) return "Expired";
@@ -28,23 +27,16 @@ export default function OffersSlider({ offers = [] }) {
       minute: "2-digit",
     });
 
-    if (diffDays === 0) {
-      return `Expires today at ${timeString}`;
-    }
-
-    if (diffDays === 1) {
-      return `Expires tomorrow at ${timeString}`;
-    }
+    if (diffDays === 0) return `Expires today at ${timeString}`;
+    if (diffDays === 1) return `Expires tomorrow at ${timeString}`;
 
     return `Expires in ${diffDays} days at ${timeString}`;
   };
 
-  // 👉 FILTER ACTIVE OFFERS ONLY
-  const activeOffers = offers.filter(
-    (offer) => !isExpired(offer.end_date)
-  );
+  // 👉 SHOW ALL (design mode)
+  const activeOffers = offers;
 
-  // 👉 Clone slides (infinite loop)
+  // 👉 Infinite loop clones
   const loopedOffers =
     activeOffers.length > 1
       ? [
@@ -54,7 +46,16 @@ export default function OffersSlider({ offers = [] }) {
         ]
       : activeOffers;
 
-  // 👉 Auto slide
+  // 👉 initial position fix
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const width = slider.clientWidth;
+    slider.scrollLeft = width; // jump to first real slide
+  }, []);
+
+  // 👉 auto slide
   useEffect(() => {
     if (activeOffers.length <= 1) return;
 
@@ -65,12 +66,12 @@ export default function OffersSlider({ offers = [] }) {
     return () => clearInterval(interval);
   }, [activeOffers.length]);
 
-  // 👉 Move slider
+  // 👉 move slider
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;
 
-    const width = slider.offsetWidth;
+    const width = slider.clientWidth;
 
     slider.style.scrollBehavior = "smooth";
     slider.scrollLeft = width * index;
@@ -81,7 +82,7 @@ export default function OffersSlider({ offers = [] }) {
         slider.style.scrollBehavior = "auto";
         slider.scrollLeft = width;
         setIndex(1);
-      }, 400);
+      }, 300);
     }
 
     // 👉 first clone → reset
@@ -90,37 +91,55 @@ export default function OffersSlider({ offers = [] }) {
         slider.style.scrollBehavior = "auto";
         slider.scrollLeft = width * (loopedOffers.length - 2);
         setIndex(loopedOffers.length - 2);
-      }, 400);
+      }, 300);
     }
   }, [index, loopedOffers.length]);
 
-  // 👉 EMPTY STATE
   if (!activeOffers.length) return null;
 
   return (
     <div className="offers-section">
       <div className="offers-slider" ref={sliderRef}>
         {loopedOffers.map((offer, i) => {
-          const tagText =
-            offer.discount_type === "FLAT"
-              ? `₹${offer.discount_value} OFF`
-              : offer.tag || "SPECIAL";
+          // 👉 Badge logic
+          let tagText = "LIMITED";
+          let badgeClass = "";
+
+          if (offer.end_date) {
+            if (offer.discount_type === "FLAT") {
+              tagText = `₹${offer.discount_value} OFF`;
+              badgeClass = "green";
+            } else if (offer.discount_type === "UPTO") {
+              tagText = `UPTO ${offer.discount_value}`;
+              badgeClass = "purple";
+            } else {
+              tagText = offer.tag || "SPECIAL";
+            }
+          }
 
           const expiryText = getExpiryText(offer.end_date);
 
           return (
-            <div key={i} className="offer-card">
-              <div className="offer-badge">{tagText}</div>
+            <div
+              key={i}
+              className={`offer-card ${
+                isExpired(offer.end_date) ? "expired" : ""
+              }`}
+            >
+              <div className={`offer-badge ${badgeClass}`}>
+                {tagText}
+              </div>
 
               <div className="offer-content">
                 <h4>{offer.title}</h4>
                 <p>{offer.description}</p>
 
-                {/* 👉 show expiry only if exists */}
-                {expiryText && (
-                  <span className="offer-expiry">
-                    {expiryText}
-                  </span>
+                {/* 👉 expiry pill UI */}
+                {offer.end_date && (
+                  <div className="offer-expiry-box">
+                    <span className="dot"></span>
+                    <span>{expiryText}</span>
+                  </div>
                 )}
               </div>
             </div>
@@ -128,13 +147,14 @@ export default function OffersSlider({ offers = [] }) {
         })}
       </div>
 
-      {/* 🔥 DOTS */}
+      {/* 👉 DOTS */}
       <div className="offer-dots">
         {activeOffers.map((_, i) => (
           <span
             key={i}
             className={
-              i === (index - 1 + activeOffers.length) %
+              i ===
+              (index - 1 + activeOffers.length) %
                 activeOffers.length
                 ? "active"
                 : ""

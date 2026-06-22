@@ -1,82 +1,231 @@
-.business-reviews-card{
-  background:#fff;
-  border-radius:16px;
-  padding:20px;
-  border:1px solid #eef2f7;
-  margin-top:20px;
-  margin: 20px;
-}
-
-.reviews-header{
-  margin-bottom:15px;
-}
-
-.reviews-header h3{
-  font-size:18px;
-  font-weight:700;
-  margin-top: 0px;
-}
-
-.no-reviews{
-  text-align:center;
-}
-
-.no-reviews p{
-  color:#8891a3;
-  margin-bottom:12px;
-  margin-bottom: 25px;
-}
-
-.write-review-btn{
-  background:#ffffff;
-   color:#2563eb;          /* text blue */
-  border:1px solid #2563eb; 
-
-  padding:10px 16px;
-  border-radius:8px;
-  cursor:pointer;
-  font-size:14px;
- 
+/* ================= BASE ================= */
+.business-reviews-wrapper {
   width: 100%;
-  font-weight:600;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+
 }
 
-
-
-/* Reviews list */
-
-.reviews-list{
-  display:flex;
-  flex-direction:column;
-  gap:15px;
+/* ================= CARD ================= */
+.business-reviews-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #eef2f7;
+  width: 100%;
+  max-width: 520px;
+  transition: all 0.3s ease;
 }
 
-.review-item{
-  border:1px solid #f1f5f9;
-  padding:14px;
-  border-radius:12px;
+/* ================= HEADER ================= */
+.reviews-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
-.review-top{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:6px;
+.reviews-header h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
 }
 
-.review-user{
-  font-weight:600;
+/* ⭐ RATING */
+.rating-summary {
+  margin-top: 4px;
+  font-size: 15px;
+  font-weight: 600;
 }
 
-.review-rating{
-  color:#f59e0b;
+.rating-summary .count {
+  color: #6b7280;
 }
 
-.review-text{
-  font-size:14px;
-  color:#374151;
+/* VIEW ALL */
+.view-all {
+  font-size: 14px;
+  color: #6366f1;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
-.review-date{
-  font-size:12px;
-  color:#9ca3af;
+/* ================= LIST ================= */
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ================= ITEM ================= */
+.review-item {
+  border: 1px solid #f1f5f9;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+/* ROW */
+.review-row {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+/* AVATAR */
+.review-avatar img,
+.default-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.default-avatar {
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+/* CONTENT */
+.review-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* TOP */
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.review-user {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.review-rating {
+  color: #f59e0b;
+  font-size: 14px;
+}
+
+/* TEXT */
+.review-text {
+  font-size: 13px;
+  color: #374151;
+  margin-top: 3px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* ================= SMALL MOBILE ================= */
+@media (max-width: 360px) {
+  .business-reviews-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .review-avatar img,
+  .default-avatar {
+    width: 32px;
+    height: 32px;
+    font-size: 12px;
+  }
+
+  .review-user {
+    font-size: 12px;
+  }
+
+  .review-rating {
+    font-size: 12px;
+  }
+
+  .review-text {
+    font-size: 12px;
+  }
+
+  .rating-summary {
+    font-size: 13px;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+  .business-reviews-card {
+    padding: 14px;
+  }
+
+  .review-avatar img,
+  .default-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .review-user {
+    font-size: 13px;
+  }
+
+  .review-text {
+    font-size: 12.5px;
+  }
+}
+
+/* ================= TABLET ================= */
+@media (min-width: 481px) and (max-width: 768px) {
+  .business-reviews-card {
+    max-width: 90%;
+    padding: 18px;
+  }
+
+  .review-text {
+    font-size: 14px;
+  }
+}
+
+/* ================= LAPTOP ================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .business-reviews-card {
+    max-width: 600px;
+    padding: 20px;
+  }
+
+  .review-user {
+    font-size: 15px;
+  }
+
+  .review-text {
+    font-size: 14px;
+  }
+}
+
+/* ================= DESKTOP ================= */
+@media (min-width: 1025px) {
+  .business-reviews-card {
+    max-width: 700px;
+    padding: 22px;
+  }
+
+  .review-user {
+    font-size: 16px;
+  }
+
+  .review-text {
+    font-size: 15px;
+  }
+
+  .rating-summary {
+    font-size: 16px;
+  }
+}
+
+/* ================= LARGE SCREENS ================= */
+@media (min-width: 1400px) {
+  .business-reviews-card {
+    max-width: 800px;
+    padding: 24px;
+    
+  }
 }
