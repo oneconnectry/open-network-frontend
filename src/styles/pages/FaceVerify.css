@@ -407,13 +407,20 @@ h2 {
     border: none; /* Removes outer borders to mimic native app view on phones */
     background: transparent; /* Seamless blend on deep body dark */
     box-shadow: none;
+    width: 90%;
+    
   }
   
-  .interface-wrapper {
+ .interface-wrapper {
     margin: 12px 0;
-    border-radius: 24px; /* Matches device frame parameters */
+    border-radius: 24px; 
+    aspect-ratio: 3 / 3;      /* Changes ratio from landscape to vertical/taller */
+    min-height: 320px;        /* Forces a solid baseline height on very small screens */
   }
-
+.face-oval {
+    width: min(200px, 52vw);
+    height: min(266px, 70vw);
+  }
   /* Repositions the diagnostic panel overlay on phone layouts so it doesn't block the screen center */
   .test-panel-overlay {
     top: auto;
