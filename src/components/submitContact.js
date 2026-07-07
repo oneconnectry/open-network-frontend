@@ -35,7 +35,7 @@ export default function useSendVisitorMessage() {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}:5000/api/vist/visitor/message`, {
+      const response = await fetch(`${API_BASE_URL}/api/vist/visitor/message`, {
         method: "POST",
         body: formData,
       });

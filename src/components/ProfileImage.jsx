@@ -7,7 +7,7 @@ export default function ProfileImage({ url }) {
   return (
     <div className="profile-image">
       <img
-        src={`${API_BASE_URL}${url}`}
+        src={url}
         alt="Profile"
       />
     </div>

@@ -7,7 +7,7 @@ export default function CoverImage({ url, birthYear, gender }) {
   const age = birthYear ? currentYear - birthYear : null;
 
   const coverSrc = url
-    ? `${API_BASE_URL}${url}`
+    ? `${url}`
     : defaultCover;
 
   return (

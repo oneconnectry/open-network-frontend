@@ -43,7 +43,7 @@ export async function fetchUserProfile(userId) {
 
     // 👉 Normal profile
     const data = await fetchJSON(
-      `${API_BASE_URL}/api/public/profile/${userId}`
+      `${API_BASE_URL}/api/discover/public/profile/${userId}`
     );
 
     return data;

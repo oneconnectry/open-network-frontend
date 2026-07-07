@@ -25,7 +25,7 @@ export default function ProfileAgeAndGender({
       <div className="profile-info">
         <img
           className="profile-image-avatar"
-          src={profileUrl ? `${API_BASE_URL}${profileUrl}` : "/default-avatar.png"}
+          src={profileUrl ? `${profileUrl}` : "/default-avatar.png"}
           alt={name}
         />
 

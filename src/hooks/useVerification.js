@@ -1,7 +1,15 @@
 // src/hooks/useVerification.js
 
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  useRef,
+} from "react";
+
 import { DETECTED_POSES } from "../utils/poseUtils";
+
 import {
   captureCanvasFrame,
   uploadVerificationPayload,
@@ -20,9 +28,9 @@ export function useVerification(currentPose, videoRef) {
   const [capturedImages, setCapturedImages] = useState({});
   const [status, setStatus] = useState("READY");
   const [holdTime, setHoldTime] = useState(0);
-  const [isReadyForInput, setIsReadyForInput] = useState(false);
+  const [isReadyForInput, setIsReadyForInput] =
+    useState(false);
 
-  // Prevent duplicate captures
   const captureLock = useRef(false);
 
   const activeStep = useMemo(() => {
@@ -34,22 +42,6 @@ export function useVerification(currentPose, videoRef) {
       }
     );
   }, [currentStepIdx]);
-
-  const handleSubmit = useCallback(async (images) => {
-    setStatus("PROCESSING");
-
-    try {
-      const result = await uploadVerificationPayload(images);
-
-      if (result.success) {
-        setStatus("SUCCESS");
-      } else {
-        setStatus("FAILED");
-      }
-    } catch {
-      setStatus("FAILED");
-    }
-  }, []);
 
   const handleStepCapture = useCallback(() => {
     if (captureLock.current) return;
@@ -74,7 +66,7 @@ export function useVerification(currentPose, videoRef) {
     setCapturedImages(updatedImages);
 
     if (currentStepIdx === STEPS.length - 1) {
-      handleSubmit(updatedImages);
+      setStatus("COMPLETED");
     } else {
       setCurrentStepIdx((prev) => prev + 1);
     }
@@ -86,14 +78,10 @@ export function useVerification(currentPose, videoRef) {
     activeStep,
     capturedImages,
     currentStepIdx,
-    handleSubmit,
     videoRef,
   ]);
 
-  // Wait before asking for next pose
   useEffect(() => {
-
-
     const timer = setTimeout(() => {
       setIsReadyForInput(true);
     }, 800);
@@ -101,7 +89,6 @@ export function useVerification(currentPose, videoRef) {
     return () => clearTimeout(timer);
   }, [currentStepIdx]);
 
-  // Hold timer
   useEffect(() => {
     if (
       status !== "READY" ||
@@ -114,7 +101,8 @@ export function useVerification(currentPose, videoRef) {
 
     const interval = setInterval(() => {
       setHoldTime((prev) => {
-        const matching = currentPose === activeStep.pose;
+        const matching =
+          currentPose === activeStep.pose;
 
         if (!matching) {
           return 0;
@@ -145,6 +133,34 @@ export function useVerification(currentPose, videoRef) {
     handleStepCapture,
   ]);
 
+  const submitVerification = useCallback(
+    async (doc1, doc2) => {
+      setStatus("UPLOADING");
+
+      try {
+        const result =
+          await uploadVerificationPayload({
+            faceImages: capturedImages,
+            document1: doc1,
+            document2: doc2,
+          });
+
+        if (result.success) {
+          setStatus("SUCCESS");
+          return true;
+        }
+
+        setStatus("FAILED");
+        return false;
+      } catch (err) {
+        console.error(err);
+        setStatus("FAILED");
+        return false;
+      }
+    },
+    [capturedImages]
+  );
+
   const reset = () => {
     captureLock.current = false;
     setCurrentStepIdx(0);
@@ -163,10 +179,14 @@ export function useVerification(currentPose, videoRef) {
         },
 
     steps: STEPS,
-    currentStepIdx: Math.min(currentStepIdx, STEPS.length - 1),
+    currentStepIdx: Math.min(
+      currentStepIdx,
+      STEPS.length - 1
+    ),
     holdProgress: holdTime,
     status,
     capturedImages,
     reset,
+    submitVerification,
   };
 }
