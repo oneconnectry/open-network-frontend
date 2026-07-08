@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 import CameraView from "../components/CameraView";
 import FaceGuide from "../components/FaceGuide";
-import Countdown from "../components/Countdown";
+
 import ProgressSteps from "../components/ProgressSteps";
 import StatusBar from "../components/StatusBar";
 
@@ -160,8 +160,6 @@ export default function FaceVerify() {
           </div>
         </div>
       )}
-
-      <Countdown progress={holdProgress} />
 
       <ProgressSteps
         steps={steps}

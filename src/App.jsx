@@ -5,10 +5,6 @@ import "./index.css";
 
 const Home = lazy(() => import("./pages/HomePage"));
 const PublicProfile = lazy(() => import("./pages/PublicProfile"));
-const FaceVerify = lazy(() => import("./pages/FaceVerify"));
-const VerificationSuccess = lazy(() =>
-  import("./pages/VerificationSuccess")
-);
 
 export default function App() {
   return (
@@ -31,11 +27,7 @@ export default function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/face-verify" element={<FaceVerify />} />
-          <Route
-              path="/verification-success"
-              element={<VerificationSuccess />}
-            />
+         
           <Route path="/u/:userId" element={<PublicProfile />} />
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
