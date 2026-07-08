@@ -35,7 +35,7 @@ export default defineConfig({
     }),
   ],
 
-  base: "/open-network-frontend/",
+  base: "/",
 
   build: {
     chunkSizeWarningLimit: 1000,
