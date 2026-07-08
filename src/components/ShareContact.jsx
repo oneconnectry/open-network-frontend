@@ -265,34 +265,31 @@ const handleScroll = () => {
 
               {/* Photo preview */}
               {photoPreview && (
-                <div style={{ textAlign: "center", marginBottom: "12px" }}>
-                  <img
-                    src={photoPreview}
-                    alt="Captured"
-                    style={{
-                      width: "100%",
-                      maxHeight: "200px",
-                      borderRadius: "10px",
-                      objectFit: "cover",
-                    }}
-                  />
-                  <button
-                    type="button"
-                    className="camera-btn"
-                    onClick={async () => {
-                      // Reset previous photo
-                      setPhotoPreview(null);
-                      setPhotoBlob(null);
+  <div style={{ textAlign: "center", marginBottom: "12px" }}>
+    <img
+      src={photoPreview}
+      alt="Captured"
+      style={{
+        width: "100%",
+        height: "auto",
+        borderRadius: "10px",
+        display: "block",
+      }}
+    />
 
-                      // Start camera fresh
-                      await startCamera();
-                    }}
-                  >
-                    🔄 Retake
-                  </button>
-                </div>
-              )}
-
+    <button
+      type="button"
+      className="camera-btn"
+      onClick={async () => {
+        setPhotoPreview(null);
+        setPhotoBlob(null);
+        await startCamera();
+      }}
+    >
+      🔄 Retake
+    </button>
+  </div>
+)}
               <canvas ref={canvasRef} hidden />
             
               <div className="modal-buttons">

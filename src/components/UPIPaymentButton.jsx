@@ -28,7 +28,7 @@ export default function UPIPaymentButton({ upiId, buttonText = "Pay with UPI" })
   if (!upiId) return null;
 
   const payWithUPI = () => {
-    const amount = 1;
+    const amount = 0;
     const name = "UPI Payment";
     const upiUrl = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(
       name
