@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 import "./index.css";
@@ -12,7 +12,7 @@ const VerificationSuccess = lazy(() =>
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Suspense
         fallback={
           <div
@@ -40,6 +40,6 @@ export default function App() {
           <Route path="*" element={<div>Page Not Found</div>} />
         </Routes>
       </Suspense>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
