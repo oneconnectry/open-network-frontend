@@ -1,1 +1,0 @@
-import{j as e}from"./index-4-X6XG7H.js";import"./react-Bce9NwRC.js";function n(){return e.jsxs("div",{style:{minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",alignItems:"center"},children:[e.jsx("h1",{children:"Verification Successful ✅"}),e.jsx("p",{children:"Your identity verification has been completed."})]})}export{n as default};
