@@ -1,46 +1,71 @@
 /* ================= SAVE CONTACT BUTTON ================= */
 .save-contact-btn {
   display: flex;
-  justify-content: center;   /* horizontally center text */
-  align-items: center;       /* vertically center text */
+  justify-content: center;
+  align-items: center;
 
   position: fixed;
-  bottom: 20px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
 
   width: 90%;
-  max-width: 720px;   /* maximum width */
-  min-width: 280px;   /* minimum width */
+  max-width: 720px;
+  min-width: 280px;
 
+  /* Premium gradient */
   background: linear-gradient(135deg, #4f46e5, #3b82f6);
-  color: #fff;
+  color: #ffffff;
   border: none;
-  padding: 14px 22px;
-  border-radius: 10px;
+  padding: 16px 24px;
+  border-radius: 12px;
 
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
+  letter-spacing: 0.5px;
   cursor: pointer;
+  
+  /* Prevents text from being highlighted if the user taps repeatedly */
+  user-select: none; 
+  -webkit-tap-highlight-color: transparent; 
 
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  /* Colored shadow looks much better than a black shadow */
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+  
+  /* Smoother transition for all properties */
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   z-index: 9999;
-  text-align: center;        /* ensure text stays centered */
+  text-align: center;
+
+  /* Stops mobile double-tap delay so it clicks instantly */
+  touch-action: manipulation;
 }
 
-/* Hover effect */
-.save-contact-btn:hover {
-  transform: translateX(-50%) translateY(-2px);
-  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+/* Hover effect: Button lifts up */
+@media (hover: hover) {
+  .save-contact-btn:hover {
+    transform: translateX(-50%) translateY(-3px);
+    box-shadow: 0 14px 28px rgba(59, 130, 246, 0.45);
+  }
 }
 
+/* ======================================================
+  ACTIVE EFFECT (This is what gives it the "click" feel) 
+  ======================================================
+*/
+/* Make sure the active state scales down enough to be noticed */
+.save-contact-btn:active {
+  transform: translateX(-50%) translateY(3px) scale(0.92) !important;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4) !important;
+  background: linear-gradient(135deg, #4338ca, #2563eb);
+}
 /* Mobile adjustments */
 @media (max-width: 360px) {
   .save-contact-btn {
-    width: calc(100% - 20px); /* 10px margin each side */
-    padding: 12px 16px;
+    width: calc(100% - 32px); /* 16px margin each side for breathing room */
+    padding: 14px 16px;
     font-size: 14px;
+    bottom: 16px;
   }
 }
