@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.uniorbita.app",
+      "sha256_cert_fingerprints": [
+        "FC:3D:D8:5E:43:10:4E:88:7F:03:C6:D0:B8:FA:FE:10:A2:D1:8B:68:ED:5A:C3:48:8D:59:93:2B:D3:FD:80:46"
+      ]
+    }
+  }
+]
