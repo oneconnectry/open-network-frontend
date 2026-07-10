@@ -1,6 +1,8 @@
-const API_BASE = 'https://api.uniorbit.com/api';
+
+const API_BASE = 'https://api.uniorbita.com/api';
 
 export async function apiPost(path, body, sessionToken) {
+    console.log(path,body,sessionToken)
   const res = await fetch(`${API_BASE}${path}`, {
     method: 'POST',
     headers: {

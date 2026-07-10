@@ -22,6 +22,7 @@ export default function Subscribe() {
 
     (async () => {
       try {
+        console.log("i do strt ")
         const { sessionToken, intent } = await apiPost('/auth/web-login', { token: loginToken });
         sessionTokenRef.current = sessionToken;
 
