@@ -8,17 +8,20 @@ const PublicProfile = lazy(() => import("./pages/PublicProfile"));
 const Subscribe = lazy(() => import("./pages/Subscribe"));
 const SubscribeSuccess = lazy(() => import("./pages/SubscribeSuccess"));
 
-// If root is loaded with ?token=..., this is the WebView activation flow —
+// If ANY path is loaded with ?token=..., this is the WebView activation flow —
 // redirect into /subscribe (client-side, no server round-trip) while
-// keeping the token in the querystring. Otherwise, show the normal Home page.
-function RootRoute() {
+// keeping the token in the querystring. Skip if already on /subscribe to
+// avoid a redirect loop. Otherwise render routes normally, same as /u/:userId
+// always resolving to PublicProfile regardless of path.
+function TokenGate({ children }) {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
+  const alreadyOnSubscribe = window.location.pathname.startsWith("/subscribe");
 
-  if (token) {
+  if (token && !alreadyOnSubscribe) {
     return <Navigate to={`/subscribe?token=${token}`} replace />;
   }
-  return <Home />;
+  return children;
 }
 
 export default function App() {
@@ -40,13 +43,15 @@ export default function App() {
           </div>
         }
       >
-        <Routes>
-          <Route path="/" element={<RootRoute />} />
-          <Route path="/u/:userId" element={<PublicProfile />} />
-          <Route path="/subscribe" element={<Subscribe />} />
-          <Route path="/subscribe/success" element={<SubscribeSuccess />} />
-          <Route path="*" element={<div>Page Not Found</div>} />
-        </Routes>
+        <TokenGate>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/u/:userId" element={<PublicProfile />} />
+            <Route path="/subscribe" element={<Subscribe />} />
+            <Route path="/subscribe/success" element={<SubscribeSuccess />} />
+            <Route path="*" element={<div>Page Not Found</div>} />
+          </Routes>
+        </TokenGate>
       </Suspense>
     </BrowserRouter>
   );
