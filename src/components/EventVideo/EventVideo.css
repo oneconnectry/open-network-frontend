@@ -1,0 +1,449 @@
+.event-video-section {
+  width: 100%;
+  margin: 20px 0;
+}
+
+/* =========================
+   VIDEO CONTAINER
+========================= */
+
+.event-video-container {
+  position: relative;
+
+  width: 100%;
+
+  background: #000;
+
+  border-radius: 16px;
+
+  overflow: hidden;
+}
+
+/* =========================
+   NORMAL VIDEO
+========================= */
+
+.event-video {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  object-fit: contain;
+
+  cursor: pointer;
+}
+
+/* =========================
+   FULLSCREEN CONTAINER
+========================= */
+
+.event-video-container.is-fullscreen {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  border-radius: 0;
+
+  background: #000;
+}
+
+/* =========================
+   FULLSCREEN VIDEO
+========================= */
+
+.event-video-container.is-fullscreen .event-video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: contain;
+}
+
+/* =========================
+   ROTATE VIDEO
+========================= */
+
+.event-video-container.is-rotated .event-video {
+  transform: rotate(90deg);
+
+  transition: transform 0.3s ease;
+}
+
+/* Rotated fullscreen video */
+
+.event-video-container.is-fullscreen.is-rotated .event-video {
+  width: 100vh;
+  height: 100vw;
+
+  max-width: none;
+  max-height: none;
+
+  object-fit: contain;
+}
+
+/* =========================
+   CENTER PLAY BUTTON
+========================= */
+
+.video-center-play {
+  position: absolute;
+
+  top: 50%;
+  left: 50%;
+
+  z-index: 10;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 74px;
+  height: 74px;
+
+  padding: 0;
+
+  transform: translate(-50%, -50%);
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  color: white;
+
+  font-size: 34px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   COMMON ICON BUTTON
+========================= */
+
+.video-icon-btn {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(0, 0, 0, 0.55);
+
+  color: white;
+
+  font-size: 18px;
+
+  cursor: pointer;
+}
+
+/* =========================
+   VIDEO DURATION
+   BEFORE PLAYING
+========================= */
+
+.video-duration {
+  position: absolute;
+
+  right: 12px;
+  bottom: 12px;
+
+  z-index: 20;
+
+  color: white;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  text-shadow: 0 1px 3px black;
+}
+
+/* =========================
+   NORMAL MODE
+   FULLSCREEN BUTTON
+   TOP RIGHT
+========================= */
+
+.video-normal-fullscreen-btn {
+  position: absolute;
+
+  top: 12px;
+  right: 12px;
+
+  z-index: 20;
+}
+
+/* =========================
+   NORMAL MODE
+   MUTE BUTTON
+   BOTTOM RIGHT
+========================= */
+
+.video-normal-mute-btn {
+  position: absolute;
+
+  right: 12px;
+  bottom: 12px;
+
+  z-index: 20;
+}
+
+/* =========================
+   NORMAL MODE
+   INSTAGRAM PROGRESS
+========================= */
+
+.video-normal-progress {
+  position: absolute;
+
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 20;
+
+  height: 4px;
+
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.video-normal-progress .video-progress-fill {
+  height: 100%;
+
+  background: white;
+
+  transition: width 0.1s linear;
+}
+
+/* =========================
+   FULLSCREEN CLOSE
+   TOP LEFT
+========================= */
+
+.video-fullscreen-close {
+  position: absolute;
+
+  top: 16px;
+  left: 16px;
+
+  z-index: 30;
+}
+/* Fullscreen Rotate - Top Right */
+
+.video-fullscreen-rotate {
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  z-index: 30;
+}
+
+/* Fullscreen Mute - Bottom Right */
+
+.video-fullscreen-mute {
+  position: absolute;
+
+  right: 16px;
+  bottom: 60px;
+
+  z-index: 30;
+}
+
+/* =========================
+   FULLSCREEN CONTROLS
+   TOP RIGHT
+========================= */
+
+.video-fullscreen-controls {
+  position: absolute;
+
+  top: 16px;
+  right: 16px;
+
+  z-index: 30;
+
+  display: flex;
+
+  gap: 10px;
+}
+
+/* =========================
+   FULLSCREEN PROGRESS
+========================= */
+
+.video-fullscreen-progress {
+  position: absolute;
+
+  right: 16px;
+  bottom: 14px;
+  left: 16px;
+
+  z-index: 20;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+/* Current / total time */
+
+.video-time {
+  min-width: 36px;
+
+  color: white;
+
+  font-size: 13px;
+
+  text-align: center;
+
+  text-shadow: 0 1px 3px black;
+}
+
+/* Seek bar */
+
+.video-seek-bar {
+  flex: 1;
+
+  height: 4px;
+
+  appearance: none;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.35);
+
+  cursor: pointer;
+}
+
+/* Chrome / Safari slider thumb */
+
+.video-seek-bar::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+
+  appearance: none;
+
+  border-radius: 50%;
+
+  background: white;
+
+  cursor: pointer;
+}
+
+/* Firefox slider thumb */
+
+.video-seek-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: white;
+
+  cursor: pointer;
+}
+
+/* =========================
+   TABLET / MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  .video-center-play {
+    width: 62px;
+    height: 62px;
+
+    font-size: 28px;
+  }
+
+  .video-icon-btn {
+    width: 36px;
+    height: 36px;
+
+    font-size: 16px;
+  }
+
+  .video-duration {
+    right: 10px;
+    bottom: 10px;
+
+    font-size: 12px;
+  }
+
+  .video-fullscreen-controls {
+    top: 12px;
+    right: 12px;
+  }
+
+  .video-fullscreen-close {
+    top: 12px;
+    left: 12px;
+  }
+}
+
+/* =========================
+   SMALL MOBILE
+========================= */
+
+@media (max-width: 480px) {
+  .event-video-container {
+    border-radius: 12px;
+  }
+
+  .video-center-play {
+    width: 56px;
+    height: 56px;
+
+    font-size: 24px;
+  }
+
+  .video-icon-btn {
+    width: 32px;
+    height: 32px;
+
+    font-size: 15px;
+  }
+
+  .video-normal-fullscreen-btn {
+    top: 8px;
+    right: 8px;
+  }
+
+  .video-normal-mute-btn {
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .video-duration {
+    right: 8px;
+    bottom: 8px;
+  }
+
+  .video-fullscreen-progress {
+    right: 10px;
+    bottom: 10px;
+    left: 10px;
+
+    gap: 6px;
+  }
+
+  .video-time {
+    min-width: 32px;
+
+    font-size: 11px;
+  }
+}

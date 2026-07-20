@@ -13,6 +13,7 @@ import CustomLinks from "../CustomLinks";
 import ShareContact from "../ShareContact";
 import SaveContactButton from "../saveContact/SaveContactButton";
 import BusinessReviews from "../BusinessReviews";
+import EventVideo from "../EventVideo";
 
 export default function EventProfile({ user, accountType }) {
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -56,6 +57,9 @@ export default function EventProfile({ user, accountType }) {
 
           {/* Custom Links */}
           <CustomLinks links={user.custom_links} />
+
+          {/* Event Video */}
+          <EventVideo eventVideo={user.event_video} />
 
           {/* Event Location */}
           <AddressSection

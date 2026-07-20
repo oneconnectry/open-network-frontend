@@ -9,7 +9,7 @@ import EventProfile from "./EventProfile";
 export default function ProfileRenderer({ user, accountType, offers = [] }) {
   if (!user) return null;
 
-  console.log("ProfileRenderer active, type =", user?.profile_type);
+ 
 
   switch (user.profile_type) {
     case "service":
